@@ -1,0 +1,105 @@
+/* General body styling */
+body {
+    background-color: #E3F2FD; /* Light blue background */
+    font-family: Arial, sans-serif;
+  }
+  
+  /* navbar */
+
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7589C2; /* Adjust as needed */
+    padding: 10px;
+  }
+  
+  .nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .nav-middle {
+    text-align: center;
+    flex-grow: 1;
+  }
+  
+  .nav-left span, .nav-middle h1 {
+    color: #fff; /* Adjust font color */
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin: 0;
+  }
+  
+  .fas {
+    font-size: 30px; /* Adjust icon size */
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+  
+  h2 {
+    color: #000;
+    font-size: 36px;
+    font-weight: bold;
+  }
+  
+  label {
+    font-size: 18px;
+    color: #000;
+    font-weight: 500;
+  }
+  
+  input[type="text"] {
+    background-color: #F4F4F4;
+    border-radius: 8px;
+    padding: 10px;
+    width: 100%;
+    font-size: 18px;
+    border: 1px solid #ccc;
+  }
+  
+  /* Profile icon and details */
+  .profile-info {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profile-icon i {
+    font-size: 60px;
+    color: #000;
+  }
+  
+  .profile-info p {
+    margin: 0;
+    font-size: 18px;
+    color: #000;
+  }
+  
+  /* Styling for the file links */
+  .file-link {
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 18px;
+  }
+  
+  .file-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Button styling */
+  .btn-proceed {
+    background-color: #F43B47;
+    color: white;
+    font-size: 18px;
+    padding: 10px 40px;
+    border-radius: 25px;
+    border: none;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-proceed:hover {
+    background-color: #C02C36;
+  }
