@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Notes</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+          <i class="fas fa-user-circle"></i>
+          <span>TUTEE</span>
+        </div>
+        <div class="nav-middle">
+          <h1>SMOOTutor</h1>
+        </div>
+        <div class="nav-right">
+          <i class="fas fa-comments"></i>
+          <i class="fas fa-bars"></i>
+        </div>
+    </div>
+    
+    <div class="notes-container">
+        <h2>Browse Notes</h2>
+
+        <div class="filter-section">
+            <div class="dropdown">
+                <select id="faculty" onchange="filterNotes()">
+                    <option value="all">All</option>
+                    <option value="scis">SCIS</option>
+                    <option value="soe">SOE</option>
+                </select>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" placeholder="Search..." id="search-input" oninput="searchNotes()">
+                <button id="search-btn">🔍</button>
+            </div>
+        </div>
+
+        <div class="notes-grid" id="notes-grid">
+            <!-- SCIS (IS) Modules -->
+            <div class="note-card scis" data-title="IS210: Business Process Analysis and Solutioning">
+                <h3>IS210: Business Process Analysis and Solutioning</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="note-card scis" data-title="IS212: Software Project Management">
+                <h3>IS212: Software Project Management</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="note-card scis" data-title="IS112: Database Management">
+                <h3>IS112: Database Management</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="note-card scis" data-title="IS214: Enterprise Solution Management">
+                <h3>IS214: Enterprise Solution Management</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- SOE Modules -->
+            <div class="note-card soe" data-title="STAT201: Financial Mathematics">
+                <h3>STAT201: Financial Mathematics</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="note-card soe" data-title="STAT203: Life Contingent Risks">
+                <h3>STAT203: Life Contingent Risks</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="note-card soe" data-title="STAT310: Risk Theory and Loss Models">
+                <h3>STAT310: Risk Theory and Loss Models</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="note-card soe" data-title="STAT311: Introduction to Statistical Theory">
+                <h3>STAT311: Introduction to Statistical Theory</h3>
+                <div class="note-footer">
+                    <button class="preview-btn">
+                        Preview <span class="lock-icon">🔒</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="notes.js"></script>
+</body>
+</html>
