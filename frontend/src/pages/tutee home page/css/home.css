@@ -1,0 +1,66 @@
+body {
+    background-color: #d1f1ff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7589C2; /* Adjust as needed */
+    padding: 10px;
+  }
+  
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+}
+  
+.nav-middle {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.nav-left span, .nav-middle h1 {
+    color: #fff; /* Adjust font color */
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.fas {
+    font-size: 30px; /* Adjust icon size */
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+h3 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #333;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: #5c68f0;
+}
+
+.carousel-item img {
+    width: 150px;
+    margin: 0 auto;
+}
+
+p {
+    font-size: 18px;
+}
+
+.carousel-inner {
+    padding: 20px;
+}
+
