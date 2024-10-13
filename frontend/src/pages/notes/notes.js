@@ -35,3 +35,14 @@ document.getElementById('search-input').addEventListener('keypress', function(ev
         searchNotes();
     }
 });
+
+// Function to toggle between Browse Notes and Saved Notes
+function showBrowseNotes() {
+    document.getElementById('browse-notes-section').style.display = 'grid'; // Show Browse Notes
+    document.getElementById('saved-notes-section').style.display = 'none';  // Hide Saved Notes
+}
+
+function showSavedNotes() {
+    document.getElementById('browse-notes-section').style.display = 'none'; // Hide Browse Notes
+    document.getElementById('saved-notes-section').style.display = 'grid';  // Show Saved Notes
+}
