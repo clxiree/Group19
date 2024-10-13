@@ -11,34 +11,19 @@
 </head>
 <body>
 
-  <!-- Top Bar -->
-  <!-- <div class="container-fluid bg-primary text-white">
-    <div class="row align-items-center">
-      <div class="col-1 text-center">
-        <i class="bi bi-person-circle"></i> TUTEE
-      </div>
-      <div class="col-9 text-center">
-        <h2>SMOOTutor</h2>
-      </div>
-      <div class="col-2 text-end">
-        <button class="btn btn-outline-light">Messages</button>
-      </div>
+    <div class="navbar">
+        <div class="nav-left">
+          <i class="fas fa-user-circle"></i>
+          <span>TUTEE</span>
+        </div>
+        <div class="nav-middle">
+          <h1>SMOOTutor</h1>
+        </div>
+        <div class="nav-right">
+          <i class="fas fa-comments"></i>
+          <i class="fas fa-bars"></i>
+        </div>
     </div>
-  </div> -->
-
-  <div class="navbar">
-    <div class="nav-left">
-      <i class="fas fa-user-circle"></i>
-      <span>TUTEE</span>
-    </div>
-    <div class="nav-middle">
-      <h1>SMOOTutor</h1>
-    </div>
-    <div class="nav-right">
-      <i class="fas fa-comments"></i>
-      <i class="fas fa-bars"></i>
-    </div>
-</div>
 
   <!-- Main Section -->
   <div class="container mt-4">
@@ -58,227 +43,48 @@
         <p>Showing 45 results for Tutors teaching LOL101...</p>
       </div>
 
-      
-
       <div class="col-md-3">
         <input class="form-control" type="search" placeholder="Search" aria-label="Search">
       </div>
     </div>
 
-    <hr class="bold-hr">
+    <hr class="bold-hr full-width">
 
-<!-- Tutor Card 1 -->
-<div class="row mb-3">
-    <!-- Repeat this card for multiple tutors -->
-    <div class="col-md-12">
-        <div class="card mb-3">
-            <div class="row g-0">
-                <!-- Image Column -->
-                <div class="col-md-3 text-center">
-                    <img src="photos/adam.png" class="" alt="Tutor">
+    <!-- Dynamic tutor cards will be appended here -->
+    <div id="tutor-list"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="tutorModal" tabindex="-1" aria-labelledby="tutorModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="tutorModalLabel">Tutor Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-
-                <!-- Info Column -->
-                <div class="col-md-7">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Adam Ng</h5>
-                        <p class="card-text">Qualifications: LOL101 A+, HEH202 A, POO303 A</p>
-                        <p class="card-text"><small class="text-muted">Teaching Subjects: LOL101, HEH202, POO303</small></p>
-                    </div>
+                <div class="modal-body text-center">
+                    <img src="" id="modal-tutor-image" class="img-fluid rounded mb-3" alt="Tutor">
+                    <h5 id="modal-tutor-name"></h5>
+                    <p><strong>Qualifications:</strong> <span id="modal-tutor-qualifications"></span></p>
+                    <p><strong>Teaching Subjects:</strong> <span id="modal-tutor-subjects"></span></p>
+                    <p><strong>Lesson Fees:</strong> <span id="modal-tutor-fees"></span></p>
+                    <p><strong>Average rating:</strong>
+                    <span id="modal-tutor-rating"></span> <!-- Dynamic star ratings will be shown here -->
+                    </p>
                 </div>
-
-                <div class="col-md-2 text-center >
-                    <p class="text-muted"><a href="#">+99 Reviews</a></p>
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-book" style="width: 30%; font-size: 14px ; padding: 10px; color: white;">Book</button>
+                    <button type="button" class="btn btn-secondary" style="width: 30%; padding: 10px; font-size: 14px;" data-bs-dismiss="modal">Close</button>
                 </div>
-
-            </div>
-
-            <div class="row g-0">
-
-                <div class="col-md-3 ">
-                    <button class="btn btn-success mt-3 btn-book">Book</button>
-                </div>
-
-                <div class="col-md-1"></div>
-
-                <div class="col-md-8">
-
-                    <div class="d-flex justify-content-between">
-                        <!-- <button class="btn btn-success mt-3 btn-book">Book</button> -->
-                        <button class="btn btn-primary me-2 ">View More</button>
-                        <button class="btn btn-primary">Message</button>
-                    </div>
-                </div>
-            </div>
-
-
-            
-        </div>
-    </div>
-</div>
-
-
-
-<!-- Tutor Card 2 -->
-<div class="row mb-3">
-    <!-- Repeat this card for multiple tutors -->
-    <div class="col-md-12">
-        <div class="card mb-3">
-            <div class="row g-0">
-                <!-- Image Column -->
-                <div class="col-md-3 text-center">
-                    <img src="photos/ananya.png" class="" alt="Tutor">
-                </div>
-
-                <!-- Info Column -->
-                <div class="col-md-7">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Ananya Chua</h5>
-                        <p class="card-text">Qualifications: LOL101 A+, HEH202 A, POO303 A</p>
-                        <p class="card-text"><small class="text-muted">Teaching Subjects: LOL101, HEH202, POO303</small></p>
-                    </div>
-                </div>
-
-                <div class="col-md-2 text-center >
-                    <p class="text-muted"><a href="#">+99 Reviews</a></p>
-                </div>
-
-            </div>
-
-            <div class="row g-0">
-
-                <div class="col-md-3 text-center">
-                    <button class="btn btn-success mt-3 btn-book">Book</button>
-                </div>
-
-                <div class="col-md-1"></div>
-
-                <div class="col-md-8">
-
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-primary me-2 ">View More</button>
-                        <button class="btn btn-primary">Message</button>
-                    </div>
-                </div>
-
-
-
             </div>
         </div>
     </div>
-</div>
+    
+  </div>
 
-
-
-
-<!-- Tutor Card 3 -->
-<div class="row mb-3">
-    <!-- Repeat this card for multiple tutors -->
-    <div class="col-md-12">
-        <div class="card mb-3">
-            <div class="row g-0">
-                <!-- Image Column -->
-                <div class="col-md-3 text-center">
-                    <img src="photos/april.png" class="" alt="Tutor">
-                </div>
-
-                <!-- Info Column -->
-                <div class="col-md-7">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">April Goh</h5>
-                        <p class="card-text">Qualifications: LOL101 A+, HEH202 A, POO303 A</p>
-                        <p class="card-text"><small class="text-muted">Teaching Subjects: LOL101, HEH202, POO303</small></p>
-                    </div>
-                </div>
-
-                <div class="col-md-2 text-center >
-                    <p class="text-muted"><a href="#">+99 Reviews</a></p>
-                </div>
-
-            </div>
-
-            <div class="row g-0">
-
-                <div class="col-md-3 text-center">
-                    <button class="btn btn-success mt-3 btn-book">Book</button>
-                </div>
-
-                <div class="col-md-1"></div>
-
-                <div class="col-md-8">
-
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-primary me-2 ">View More</button>
-                        <button class="btn btn-primary">Message</button>
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<!-- Tutor Card 4 -->
-<div class="row mb-3">
-    <!-- Repeat this card for multiple tutors -->
-    <div class="col-md-12">
-        <div class="card mb-3">
-            <div class="row g-0">
-                <!-- Image Column -->
-                <div class="col-md-3 text-center">
-                    <img src="photos/bill.png" class="" alt="Tutor">
-                </div>
-
-                <!-- Info Column -->
-                <div class="col-md-7">
-                    <div class="card-body text-center">
-                        <h5 class="card-title">Bill Lee</h5>
-                        <p class="card-text">Qualifications: LOL101 A+, HEH202 A, POO303 A</p>
-                        <p class="card-text"><small class="text-muted">Teaching Subjects: LOL101, HEH202, POO303</small></p>
-                    </div>
-                </div>
-
-                <div class="col-md-2 text-center >
-                    <p class="text-muted"><a href="#">+99 Reviews</a></p>
-                </div>
-
-            </div>
-
-            <div class="row g-0">
-
-                <div class="col-md-3 text-center">
-                    <button class="btn btn-success mt-3 btn-book">Book</button>
-                </div>
-
-                <div class="col-md-1"></div>
-
-                <div class="col-md-8">
-
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-primary me-2 ">View More</button>
-                        <button class="btn btn-primary">Message</button>
-                    </div>
-                </div>
-
-
-
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-
-
-
-  
-  
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Link to external JavaScript file -->
+  <script src="tutors.js"></script>
+
 </body>
 </html>
