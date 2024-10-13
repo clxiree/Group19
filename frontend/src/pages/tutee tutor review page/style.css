@@ -1,0 +1,109 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #eaf7ff; /* Light background for contrast */
+}
+
+.tutorpic {
+    display: block;
+    margin: 0 auto 20px auto; /* Centered with auto margins */
+    width: 200px; 
+    height: auto;
+}
+
+h3 {
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 35px;
+    color: #333;
+}
+
+a:hover {
+    color: #284fe2;
+    font-weight: 600;
+}
+
+.bold-hr.full-width {
+    height: 5px;
+    background-color: black;
+    margin: 0;
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.text-muted {
+    color: #555;
+}
+
+.rating ul {
+    display: inline;
+    margin-bottom: 20px;
+}
+
+.rating ul li {
+    display: inline;
+    padding: 2px;
+    color: gold;
+    font-size: 30px;
+}
+
+.ratestars {
+    color: black;
+    font-size: 18px;
+    padding: 5px;
+    margin-left: 10px;
+    text-align: center;
+}
+
+.row.mt-4 {
+    background-color: #b0e1ff;
+    display: flex;
+    justify-content: center; 
+    padding: 20px;
+}
+
+
+img {
+    width: 100px;
+    height: auto;
+    padding: 30px 0 30px 0; /* Padding for spacing around the image */
+}
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7589C2; /* Adjust as needed */
+    padding: 10px;
+    position:sticky;
+    top:0;
+  }
+  
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+}
+  
+.nav-middle {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.nav-left span, .nav-middle h1 {
+    color: #fff; /* Adjust font color */
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.fas {
+    font-size: 30px; /* Adjust icon size */
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
