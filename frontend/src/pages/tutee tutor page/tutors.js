@@ -6,7 +6,7 @@ fetch('gettutors.php')
     data.forEach(tutor => {
       // Create tutor card HTML
       const tutorCard = `
-      <div class="row mt-4">
+            <div class="row mt-4">
           <div class="row g-0 justify-content-center">
               <div class="col-md-3 text-center">
                   <img src="${tutor.image}" class="" alt="${tutor.name}">
@@ -40,6 +40,8 @@ fetch('gettutors.php')
               </div>
           </div>
       </div>
+
+          
       `;
       tutorList.insertAdjacentHTML('beforeend', tutorCard);
     });
