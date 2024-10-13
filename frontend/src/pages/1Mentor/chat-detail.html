@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Chat Detail</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Chat Container Styling */
+    .chat-history {
+      background-color: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .message {
+      padding: 10px 15px;
+      margin-bottom: 5px;
+      border-radius: 20px;
+      max-width: 75%;
+    }
+
+    .sent {
+      background-color: #007bff;
+      color: white;
+      margin-left: auto;
+    }
+
+    .received {
+      background-color: #e9ecef;
+      color: black;
+    }
+
+    .timestamp {
+      font-size: 0.8rem;
+      color: gray;
+      text-align: right;
+    }
+
+    #message-input {
+      resize: none;
+    }
+  </style>
+</head>
+
+<body>
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <h1 class="sitename">Mentor</h1>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container mt-4">
+      <h2 id="chat-participant" class="mb-4">Chat with Participant</h2>
+
+      <div id="chat-history" class="chat-history p-3 mb-3" style="height: 400px; overflow-y: scroll;">
+        <!-- Messages will be dynamically loaded here -->
+      </div>
+
+      <div class="d-flex">
+        <textarea id="message-input" class="form-control me-2" rows="2" placeholder="Type a message..."></textarea>
+        <button class="btn btn-primary" id="send-message">Send</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Sample chat data (replaceable with API call)
+    const chatData = {
+      1: { participant: "John Doe", messages: ["Hello!", "See you tomorrow!"] },
+      2: { participant: "Mary Smith", messages: ["Can we reschedule?", "Sure, what time?"] }
+    };
+
+    // List of possible auto-replies
+    const autoReplies = [
+      "Got it!",
+      "I'll get back to you shortly.",
+      "Let me know if you need anything else.",
+      "Sounds good!",
+      "I’m here to help.",
+      "Great, talk soon!"
+    ];
+
+    // Get chatId and participant name from URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const chatId = params.get('chatId');
+    const participant = params.get('name');
+
+    // Populate the chat page with participant name
+    document.getElementById('chat-participant').textContent = `Chat with ${participant}`;
+    const chatHistory = document.getElementById('chat-history');
+
+    // Load existing messages
+    chatData[chatId].messages.forEach(message => {
+      appendMessage(message, "received");
+    });
+
+    // Send message functionality
+    document.getElementById('send-message').addEventListener('click', () => {
+      const messageInput = document.getElementById('message-input');
+      const messageText = messageInput.value.trim();
+
+      if (messageText) {
+        appendMessage(messageText, "sent");
+        messageInput.value = '';
+        chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll to bottom
+
+        // Simulate an auto-reply after a short delay
+        setTimeout(() => {
+          const reply = autoReplies[Math.floor(Math.random() * autoReplies.length)];
+          appendMessage(reply, "received");
+          chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll again
+        }, 1000);
+      }
+    });
+
+    // Function to append messages to the chat history
+    function appendMessage(text, type) {
+      const messageElement = document.createElement('div');
+      messageElement.classList.add('message', type);
+
+      const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      messageElement.innerHTML = `
+        ${text}
+        <div class="timestamp">${timestamp}</div>
+      `;
+
+      chatHistory.appendChild(messageElement);
+    }
+  </script>
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
