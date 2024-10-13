@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Chat Detail</title>
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+</head>
+
+<body>
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <h1 class="sitename">Mentor</h1>
+      </a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="container mt-4">
+      <h2 id="chat-participant">Chat with Participant</h2>
+      <div id="chat-history" class="chat-history border p-3 mb-3" style="height: 300px; overflow-y: scroll;">
+        <!-- Messages will be dynamically loaded here -->
+      </div>
+
+      <textarea id="message-input" class="form-control" rows="2" placeholder="Type a message..."></textarea>
+      <button class="btn btn-primary mt-2" id="send-message">Send</button>
+    </div>
+  </main>
+
+  <script>
+    // Sample chat data (this can be replaced with an API call)
+    const chatData = {
+      1: { participant: "John Doe", messages: ["Hello!", "See you tomorrow!"] },
+      2: { participant: "Mary Smith", messages: ["Can we reschedule?", "Sure, what time?"] }
+    };
+
+    // Get chatId and participant name from URL parameters
+    const params = new URLSearchParams(window.location.search);
+    const chatId = params.get('chatId');
+    const participant = params.get('name');
+
+    // Populate the chat page
+    document.getElementById('chat-participant').textContent = `Chat with ${participant}`;
+    const chatHistory = document.getElementById('chat-history');
+    chatData[chatId].messages.forEach(message => {
+      const messageElement = document.createElement('p');
+      messageElement.textContent = message;
+      chatHistory.appendChild(messageElement);
+    });
+
+    // Send message functionality (for demonstration)
+    document.getElementById('send-message').addEventListener('click', () => {
+      const newMessage = document.getElementById('message-input').value;
+      if (newMessage) {
+        const messageElement = document.createElement('p');
+        messageElement.textContent = newMessage;
+        chatHistory.appendChild(messageElement);
+        document.getElementById('message-input').value = '';
+      }
+    });
+  </script>
+
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
