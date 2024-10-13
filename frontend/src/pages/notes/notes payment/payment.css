@@ -15,10 +15,10 @@ h1, h3, p {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #7589C2; /* Adjust as needed */
+    background-color: #7589C2;
     padding: 10px;
-  }
-  
+}
+
 .nav-left, .nav-right {
     display: flex;
     align-items: center;
@@ -30,10 +30,15 @@ h1, h3, p {
 }
 
 .nav-left span, .nav-middle h1 {
-    color: #fff; /* Adjust font color */
+    color: #fff;
 }
 
-h1 {
+.fas {
+    font-size: 30px;
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}h1 {
     font-size: 24px;
     margin: 0;
 }
