@@ -1703,6 +1703,35 @@ section,
   opacity: 1
 }
 
+/* Grid layout for details */
+.details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two columns */
+  gap: 20px; /* Space between the boxes */
+  margin-top: 20px; /* Space above the grid */
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns layout */
+  gap: 20px; /* Space between the boxes */
+}
+
+.detail-box {
+  padding: 15px;
+  background-color: #5f8acf;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  color: white;
+}
+
+/* Make Box 5 span both columns */
+.details-grid .detail-box:nth-child(5) {
+  grid-column: span 2;
+}
+
+
 
 /*--------------------------------------------------------------
 # Events Section
