@@ -32,7 +32,8 @@
     
     <div class="mb-4">
       <label for="description">Description of work:</label>
-      <input type="text" id="description">
+      <br>
+      <textarea id="description" placeholder="Please input the description of your work" rows="5" cols="145"></textarea>
     </div>
 
    
@@ -41,9 +42,9 @@
       <div class="col-md-6">
         <label for="fileUpload">File Upload:</label>
         <div class="custom-file-input">
-          <span id="file-name"></span> 
           <label for="fileUpload"><i class="fas fa-paperclip" style="color: black;"></i></label>
-          <input type="file" id="fileUpload" onchange="updateFileName(this, 'file-name')">
+          <input type="file" id="fileUpload">
+
         </div>
       </div>
       
@@ -53,10 +54,12 @@
         <div class="custom-file-input">
           <span id="grading-rubric-name"></span> 
           <label for="gradingRubric"><i class="fas fa-paperclip" style="color: black;"></i></label>
-          <input type="file" id="gradingRubric" onchange="updateFileName(this, 'grading-rubric-name')">
+          <input type="file" id="gradingRubric">
         </div>
       </div>
+
     </div>
+    
 
     
     <div class="row mb-4">
