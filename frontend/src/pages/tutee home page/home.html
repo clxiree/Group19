@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SMOOTutor</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/home.css">
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="nav-left">
+          <i class="fas fa-user-circle"></i>
+          <span>TUTEE</span>
+        </div>
+        <div class="nav-middle">
+          <h1>SMOOTutor</h1>
+        </div>
+        <div class="nav-right">
+          <i class="fas fa-comments"></i>
+          <i class="fas fa-bars"></i>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <div class="row">
+            <!-- Testimonials Section (left on large screens, top on medium screens) -->
+            <div class="col-md-12 col-lg-6 mb-3">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h3>Testimonials</h3>
+                        <!-- Testimonials Carousel -->
+                        <div id="testimonialsCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="images/zenny.jpg" alt="Tutor Image" class="img-fluid">
+                                    <p>Tutor Name: Zenny</p>
+                                    <p>Review: Super good, super patient</p>
+                                    <p>⭐⭐⭐⭐⭐</p>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="images/adam.png" alt="Tutor Image" class="img-fluid">
+                                    <p>Tutor Name: Adam</p>
+                                    <p>Review: Somewhat patient</p>
+                                    <p>⭐⭐⭐☆☆</p>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="images/ananya.png" alt="Tutor Image" class="img-fluid">
+                                    <p>Tutor Name: Ananya</p>
+                                    <p>Review: Best tutor in the world, always there for you</p>
+                                    <p>⭐⭐⭐⭐⭐</p>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="images/april.png" alt="Tutor Image" class="img-fluid">
+                                    <p>Tutor Name: April</p>
+                                    <p>Review: Kind and understanding</p>
+                                    <p>⭐⭐⭐⭐☆</p>
+                                </div>
+                                <div class="carousel-item">
+                                    <img src="images/bill.png" alt="Tutor Image" class="img-fluid">
+                                    <p>Tutor Name: Bill</p>
+                                    <p>Review: Always goes further and beyond</p>
+                                    <p>⭐⭐⭐⭐☆</p>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#testimonialsCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                              
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Upcoming Events Section (right on large screens, bottom on medium screens) -->
+            <div class="col-md-12 col-lg-6 mb-3">
+                <div class="card bg-light">
+                    <div class="card-body text-center">
+                        <h3>Upcoming Events</h3>
+                        <div id="eventsCarousel" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <img src="images/welfare.jpg" alt="Event Image" class="img-fluid" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    <p>Back2Skul Welfare Drive</p>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Back2Skul Welfare Drive</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Date: 6/10/24 </p>
+                                                    <p>Time: 19:00</p>
+                                                    <p>Location: SOE SR 2-3</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img src="images/zac.png" alt="Event Image" class="img-fluid" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                                    <p>Meet and Greet Zac</p>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Meet and Greet Zac</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Date: 6/11/24 </p>
+                                                    <p>Time: 18:00</p>
+                                                    <p>Location: SOB SR 3-4</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="carousel-item">
+                                    <img src="images/suzy.png" alt="Event Image" class="img-fluid" data-bs-toggle="modal" data-bs-target="#exampleModal3">
+                                    <p>Photo Taking with Suzy</p>
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModal3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="exampleModalLabel">Photo Taking with Suzy</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Date: 4/12/24 </p>
+                                                    <p>Time: 15:00</p>
+                                                    <p>Location: SCIS1 SR 3-10</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#eventsCarousel" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                               
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#eventsCarousel" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                
+                                
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and jQuery -->
+    <!-- Bootstrap JS and jQuery -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script>
+
+</body>
+</html>

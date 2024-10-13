@@ -26,19 +26,20 @@
   
 
   <div class="container-fluid mt-3">
-    <a href="bookings.html" class="mx-3 text-dark text-decoration-none"><h3>Bookings</h3></a>
-
-    <div class="d-flex justify-content-center mt-4">
-      <a href="pending.html" class="mx-3 text-dark text-decoration-none"><h4>PENDING</h4></a>
-      <a href="confirmed.html" class="mx-3 text-dark text-decoration-none"><h4>CONFIRMED</h4></a>
-      <a href="completed.html" class="mx-3 text-dark text-decoration-none"><h4>COMPLETED</h4></a>
+    <button type="button" class="btn mx-5" onclick="toBookings(this)"><h3>BOOKINGS</h3></button>
+    <hr>
+    <div id="buttons" class="d-flex justify-content-center mt-4">
+      <button type="button" class="btn mx-5" onclick="toPending(this)">PENDING</button>
+      <button type="button" class="btn mx-5" onclick="toConfirmed(this)">CONFIRMED</button>
+      <button type="button" class="btn mx-5" onclick="toCompleted(this)">COMPLETED</button>
     </div>
+    <hr>
 
     <div class="container mt-4">
       <div class="card mb-3">
         <div class="row g-0">
           <div class="col-md-3 d-flex align-items-center justify-content-center">
-            <img src="" class="img-fluid rounded-start" alt="Tutor">
+            <img src="../bookings/photos/britney.png" class="img-fluid rounded-start" alt="Tutor">
           </div>
           <div class="col-md-9">
             <div class="card-body">
@@ -49,39 +50,40 @@
               <p class="card-text">Location: SCIS 1 GSR 3-11</p>
               <div class="d-flex justify-content-end mt-auto">
                 <!-- Modal Trigger Button -->
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#Modal1">
                   Review Now!
                 </button>
   
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="Modal1" tabindex="-1" aria-labelledby="modallabel1" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Review </h5>
+                        <h5 class="modal-title" id="modallabel1">Review </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
                         <form>
                           <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                            <label class="form-label">Drop a rating!</label>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                      
                           </div>
                           <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
+                            <div class="form-text">Please give us your feedback!</div>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star checked"></span>
+                            <span class="fa fa-star"></span>
+                            <span class="fa fa-star"></span>
                           </div>
-                          <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Submit</button>
+
                         </form>
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
+                        <button type="submit" class="btn btn-primary">Submit</button>
                       </div>
                     </div>
                   </div>
@@ -92,70 +94,16 @@
           </div>
         </div>
       </div>
+
+      
     
 
       
-      <div class="card mb-3">
-        <div class="row g-0">
-          <div class="col-md-3 d-flex align-items-center justify-content-center">
-            <img src="path_to_teacher_image.png" class="img-fluid rounded-start" alt="Tutor">
-          </div>
-          <div class="col-md-9">
-            <div class="card-body">
-              <h5 class="card-title">#001 Completed Booking</h5>
-              <p class="card-text">Tutor: ABC</p>
-              <p class="card-text">Subject: LOL101</p>
-              <p class="card-text">Date: 01/01/2000</p>
-              <p class="card-text">Location: SCIS 1 GSR 3-11</p>
-              <div class="d-flex justify-content-end mt-auto">
-                <!-- Modal Trigger Button -->
-                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                  Review Now!
-                </button>
-  
-                <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                  <div class="modal-dialog">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Review </h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                      </div>
-                      <div class="modal-body">
-                        <form>
-                          <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
-                          </div>
-                          <div class="mb-3">
-                            <label for="exampleInputPassword1" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1">
-                          </div>
-                          <div class="mb-3 form-check">
-                            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                          </div>
-                          <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      
       
     </div>
   </div>
+  <script src="bookings.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
   

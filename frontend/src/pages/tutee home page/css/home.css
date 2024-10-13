@@ -1,0 +1,93 @@
+body {
+    background-color: #d1f1ff;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7589C2; /* Adjust as needed */
+    padding: 10px;
+  }
+  
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+}
+  
+.nav-middle {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.nav-left span, .nav-middle h1 {
+    color: #fff; /* Adjust font color */
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.fas {
+    font-size: 30px; /* Adjust icon size */
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+h3 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #333;
+}
+
+.card {
+    border-radius: 15px;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    background-color: transparent; /* Remove any background color */
+    background-image: none; /* Remove default icon */
+}
+
+.carousel-control-next-icon::before,
+.carousel-control-prev-icon::before {
+    content: '';
+    display: inline-block;
+    width: 20px; /* Adjust size if needed */
+    height: 20px;
+    border: solid 2px #5c68f0; /* Color for the border */
+    border-width: 0 3px 3px 0; /* Arrow-like border configuration */
+    transform: rotate(45deg); /* Creates the right arrow */
+}
+
+.carousel-control-next-icon::before {
+    transform: rotate(-45deg); /* Rotate to form the next (right) arrow */
+}
+
+.carousel-control-prev-icon::before {
+    transform: rotate(135deg); /* Rotate to form the previous (left) arrow */
+}
+
+
+.carousel-item img {
+    width: 300px; /* Set a fixed width */
+    height: 300px; /* Set a fixed height */
+    object-fit: contain; /* Ensures images cover the entire area */
+    margin: 0 auto;
+    border-radius: 10px; /* Optional: add some rounding to the image corners */
+}
+
+p {
+    font-size: 18px;
+}
+
+.carousel-inner {
+    padding: 20px;
+    height: 500px;
+}
+
+
+
