@@ -260,10 +260,10 @@
       <script>
         // Sample chat data (replace with API call if needed)
         const chatData = {
-          1: { participant: "John Doe", participantImage: "john_doe.jpg", messages: ["Hello!", "See you tomorrow!"] },
-          2: { participant: "Mary Smith", participantImage: "mary_smith.jpg", messages: ["Can we reschedule?", "Sure, what time?"] },
-          3: { participant: "Class Group", participantImage: "class_group.jpg", messages: ["Project submission?"] },
-          4: { participant: "Alice Tutor", participantImage: "alice_tutor.jpg", messages: ["Don't forget the quiz!"] }
+          1: { participant: "zenny", participantImage: "zenny.jpg", messages: ["Hello!", "See you tomorrow!"] },
+          2: { participant: "trainer-1", participantImage: "trainer-1.jpg", messages: ["Can we reschedule?", "Sure, what time?"] },
+          3: { participant: "trainer-2", participantImage: "trainer-2.jpg", messages: ["Project submission?"] },
+          4: { participant: "trainer-3", participantImage: "trainer-3.jpg", messages: ["Don't forget the quiz!"] }
         };
     
         // List of auto-replies (simple AI simulation)
@@ -287,7 +287,7 @@
     
         // Populate participant name and image
         document.getElementById('chat-participant').textContent = participant;
-        participantImage.src = `assets/img/users/${chatData[chatId].participantImage}`;
+        participantImage.src = `assets/img/trainers/${chatData[chatId].participantImage}`;
     
         // Load existing messages
         chatData[chatId].messages.forEach(message => {
