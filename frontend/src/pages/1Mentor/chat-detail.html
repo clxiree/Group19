@@ -4,139 +4,499 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Chat Detail</title>
+  <title>Chats - Mentor Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <!-- Custom CSS for Chats -->
+  <link href="assets/css/chats.css" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+  <!-- =======================================================
+  * Template Name: Mentor
+  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
   <style>
-    /* Chat Container Styling */
+    body {
+      background-color: #f5f5f5;
+    }
+
+    .chat-container {
+      max-width: 80%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      height: 55vh;
+      background-color: #fff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .chat-header {
+      padding: 15px;
+      background-color: #007bff;
+      color: #fff;
+      display: flex;
+      align-items: center;
+    }
+
+    .chat-header img {
+      border-radius: 50%;
+      margin-right: 15px;
+    }
+
+    .chat-header h5 {
+      margin: 0;
+    }
+
     .chat-history {
-      background-color: #f8f9fa;
-      border-radius: 10px;
+      flex: 1;
+      padding: 15px;
+      overflow-y: auto;
+      background-color: #f5f5f5;
     }
 
     .message {
+      display: flex;
+      margin-bottom: 15px;
+    }
+
+    .message.sent {
+      justify-content: flex-end;
+    }
+
+    .message.received {
+      justify-content: flex-start;
+    }
+
+    .message-content {
+      max-width: 60%;
       padding: 10px 15px;
-      margin-bottom: 5px;
       border-radius: 20px;
-      max-width: 75%;
+      position: relative;
+      word-wrap: break-word;
     }
 
-    .sent {
+    .message.sent .message-content {
       background-color: #007bff;
-      color: white;
-      margin-left: auto;
+      color: #fff;
+      border-bottom-right-radius: 0;
     }
 
-    .received {
+    .message.received .message-content {
       background-color: #e9ecef;
-      color: black;
+      color: #000;
+      border-bottom-left-radius: 0;
     }
 
-    .timestamp {
-      font-size: 0.8rem;
+    .message .timestamp {
+      font-size: 0.75rem;
       color: gray;
-      text-align: right;
+      margin-top: 5px;
     }
 
-    #message-input {
+    .chat-footer {
+      padding: 10px 15px;
+      background-color: #fff;
+      border-top: 1px solid #ddd;
+    }
+
+    .chat-footer .input-group {
+      display: flex;
+    }
+
+    .chat-footer .form-control {
+      border-radius: 20px;
       resize: none;
+    }
+
+    .chat-footer .btn {
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+
+    .typing-indicator {
+      display: none;
+      color: gray;
+      font-style: italic;
+      margin-left: 15px;
+      margin-bottom: 5px;
+    }
+
+    .back-button {
+      text-decoration: none;
+      color: #fff;
+      font-size: 1.2rem;
+      margin-right: 15px;
     }
   </style>
 </head>
 
-<body>
+<body class="chats-page">
+
+  <!-- ======= Header ======= -->
   <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl d-flex align-items-center">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <h1 class="sitename">Mentor</h1>
       </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home<br></a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="trainers.html">Trainers</a></li>
+          <li><a href="chats.html" class="active">Chats</a></li>
+          <li><a href="pricing.html">Pricing</a></li>
+          <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+            <ul>
+              <li><a href="#">Dropdown 1</a></li>
+              <li class="dropdown"><a href="#"><span>Deep Dropdown</span> <i
+                    class="bi bi-chevron-down toggle-dropdown"></i></a>
+                <ul>
+                  <li><a href="#">Deep Dropdown 1</a></li>
+                  <li><a href="#">Deep Dropdown 2</a></li>
+                  <li><a href="#">Deep Dropdown 3</a></li>
+                  <li><a href="#">Deep Dropdown 4</a></li>
+                  <li><a href="#">Deep Dropdown 5</a></li>
+                </ul>
+              </li>
+              <li><a href="#">Dropdown 2</a></li>
+              <li><a href="#">Dropdown 3</a></li>
+              <li><a href="#">Dropdown 4</a></li>
+            </ul>
+          </li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+      <a class="btn-getstarted" href="courses.html">Get Started</a>
+
     </div>
-  </header>
+  </header><!-- End Header -->
 
   <main class="main">
-    <div class="container mt-4">
-      <h2 id="chat-participant" class="mb-4">Chat with Participant</h2>
 
-      <div id="chat-history" class="chat-history p-3 mb-3" style="height: 400px; overflow-y: scroll;">
-        <!-- Messages will be dynamically loaded here -->
-      </div>
-
-      <div class="d-flex">
-        <textarea id="message-input" class="form-control me-2" rows="2" placeholder="Type a message..."></textarea>
-        <button class="btn btn-primary" id="send-message">Send</button>
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Chats</h1>
+              <p>Connect with your tutors and peers through our integrated chat system.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-  </main>
 
-  <script>
-    // Sample chat data (replaceable with API call)
-    const chatData = {
-      1: { participant: "John Doe", messages: ["Hello!", "See you tomorrow!"] },
-      2: { participant: "Mary Smith", messages: ["Can we reschedule?", "Sure, what time?"] }
-    };
+    <br>
 
-    // List of possible auto-replies
-    const autoReplies = [
-      "Got it!",
-      "I'll get back to you shortly.",
-      "Let me know if you need anything else.",
-      "Sounds good!",
-      "I’m here to help.",
-      "Great, talk soon!"
-    ];
+    <body>
+      <div class="chat-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <a href="chats.html" class="back-button"><i class="fas fa-arrow-left"></i></a>
+          <img id="participant-image" src="assets/img/users/default.jpg" alt="Participant" width="50" height="50">
+          <h5 id="chat-participant">Chat with Participant</h5>
+        </div>
+    
+        <!-- Chat History -->
+        <div id="chat-history" class="chat-history">
+          <!-- Messages will be dynamically loaded here -->
+        </div>
+    
+        <!-- Typing Indicator -->
+        <p id="typing-indicator" class="typing-indicator">Participant is typing...</p>
+    
+        <!-- Chat Footer -->
+        <div class="chat-footer">
+          <div class="input-group">
+            <textarea id="message-input" class="form-control" rows="1" placeholder="Type a message..."></textarea>
+            <button class="btn btn-secondary" id="attachment-button"><i class="fas fa-paperclip"></i></button>
+            <button class="btn btn-primary" id="send-message"><i class="fas fa-paper-plane"></i></button>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Attachment Input (Hidden) -->
+      <input type="file" id="attachment-input" style="display: none;">
+    
+      <!-- Vendor JS Files -->
+      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+      <!-- Custom JS -->
+      <script>
+        // Sample chat data (replace with API call if needed)
+        const chatData = {
+          1: { participant: "zenny", participantImage: "zenny.jpg", messages: ["Hello!", "See you tomorrow!"] },
+          2: { participant: "trainer-1", participantImage: "trainer-1.jpg", messages: ["Can we reschedule?", "Sure, what time?"] },
+          3: { participant: "trainer-2", participantImage: "trainer-2.jpg", messages: ["Project submission?"] },
+          4: { participant: "trainer-3", participantImage: "trainer-3.jpg", messages: ["Don't forget the quiz!"] }
+        };
+    
+        // List of auto-replies (simple AI simulation)
+        const autoReplies = [
+          "Got it!",
+          "I'll get back to you shortly.",
+          "Sounds good!",
+          "Sure thing!",
+          "Let me know if you need anything else.",
+          "Thanks for reaching out!"
+        ];
+    
+        const params = new URLSearchParams(window.location.search);
+        const chatId = params.get('chatId');
+        const participant = params.get('name');
+    
+        const chatHistory = document.getElementById('chat-history');
+        const typingIndicator = document.getElementById('typing-indicator');
+        const messageInput = document.getElementById('message-input');
+        const participantImage = document.getElementById('participant-image');
+    
+        // Populate participant name and image
+        document.getElementById('chat-participant').textContent = participant;
+        participantImage.src = `assets/img/trainers/${chatData[chatId].participantImage}`;
+    
+        // Load existing messages
+        chatData[chatId].messages.forEach(message => {
+          appendMessage(message, "received");
+        });
+    
+        // Function to send a message
+        function sendMessage() {
+          const messageText = messageInput.value.trim();
+    
+          if (messageText) {
+            appendMessage(messageText, "sent");
+            messageInput.value = '';
+            chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll to bottom
+    
+            // Simulate typing indicator and auto-reply
+            typingIndicator.style.display = 'block';
+    
+            setTimeout(() => {
+              typingIndicator.style.display = 'none';
+              const reply = generateReply(messageText);
+              appendMessage(reply, "received");
+              chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll again
+            }, 1000);
+          }
+        }
+    
+        // Send message with the Enter key
+        messageInput.addEventListener('keypress', (event) => {
+          if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault(); // Prevent new line
+            sendMessage();
+          }
+        });
+    
+        // Send message with the Send button
+        document.getElementById('send-message').addEventListener('click', sendMessage);
+    
+        // Attachment button click
+        document.getElementById('attachment-button').addEventListener('click', () => {
+          document.getElementById('attachment-input').click();
+        });
+    
+        // Handle attachment upload
+        document.getElementById('attachment-input').addEventListener('change', function () {
+          if (this.files && this.files[0]) {
+            const fileName = this.files[0].name;
+            appendAttachment(fileName, "sent");
+            chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll to bottom
+    
+            // Simulate typing indicator and auto-reply
+            typingIndicator.style.display = 'block';
+    
+            setTimeout(() => {
+              typingIndicator.style.display = 'none';
+              const reply = "Thanks for the attachment!";
+              appendMessage(reply, "received");
+              chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll again
+            }, 1000);
+          }
+        });
+    
+        // Function to append messages to the chat history
+        function appendMessage(text, type) {
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message', type);
+    
+          const messageContent = document.createElement('div');
+          messageContent.classList.add('message-content');
+          messageContent.innerHTML = text;
+    
+          const timestamp = document.createElement('div');
+          timestamp.classList.add('timestamp');
+          timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+          messageContent.appendChild(timestamp);
+          messageElement.appendChild(messageContent);
+          chatHistory.appendChild(messageElement);
+        }
+    
+        // Function to append attachments to the chat history
+        function appendAttachment(fileName, type) {
+          const messageElement = document.createElement('div');
+          messageElement.classList.add('message', type);
+    
+          const messageContent = document.createElement('div');
+          messageContent.classList.add('message-content');
+    
+          messageContent.innerHTML = `
+            <i class="fas fa-file"></i> ${fileName}
+            <div class="timestamp">${new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+          `;
+    
+          messageElement.appendChild(messageContent);
+          chatHistory.appendChild(messageElement);
+        }
+    
+        // Simple function to generate replies based on user input
+        function generateReply(userMessage) {
+          // Basic keyword matching for demo purposes
+          const keywords = ["hello", "hi", "thanks", "thank you", "help"];
+          const lowerCaseMessage = userMessage.toLowerCase();
+    
+          if (keywords.some(keyword => lowerCaseMessage.includes(keyword))) {
+            return "You're welcome!";
+          }
+    
+          // Return a random auto-reply
+          return autoReplies[Math.floor(Math.random() * autoReplies.length)];
+        }
+      </script>
+    </body>
 
-    // Get chatId and participant name from URL parameters
-    const params = new URLSearchParams(window.location.search);
-    const chatId = params.get('chatId');
-    const participant = params.get('name');
+    <br>
 
-    // Populate the chat page with participant name
-    document.getElementById('chat-participant').textContent = `Chat with ${participant}`;
-    const chatHistory = document.getElementById('chat-history');
+    <!-- ======= Footer ======= -->
+    <footer id="footer" class="footer position-relative light-background">
 
-    // Load existing messages
-    chatData[chatId].messages.forEach(message => {
-      appendMessage(message, "received");
-    });
+      <div class="container footer-top">
+        <div class="row gy-4">
+          <div class="col-lg-4 col-md-6 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">Mentor</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>A108 Adam Street</p>
+              <p>New York, NY 535022</p>
+              <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+              <p><strong>Email:</strong> <span>info@example.com</span></p>
+            </div>
+            <div class="social-links d-flex mt-4">
+              <a href=""><i class="bi bi-twitter"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
+            </div>
+          </div>
 
-    // Send message functionality
-    document.getElementById('send-message').addEventListener('click', () => {
-      const messageInput = document.getElementById('message-input');
-      const messageText = messageInput.value.trim();
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Useful Links</h4>
+            <ul>
+              <li><a href="#">Home</a></li>
+              <li><a href="#">About us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Terms of service</a></li>
+              <li><a href="#">Privacy policy</a></li>
+            </ul>
+          </div>
 
-      if (messageText) {
-        appendMessage(messageText, "sent");
-        messageInput.value = '';
-        chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll to bottom
+          <div class="col-lg-2 col-md-3 footer-links">
+            <h4>Our Services</h4>
+            <ul>
+              <li><a href="#">Web Design</a></li>
+              <li><a href="#">Web Development</a></li>
+              <li><a href="#">Product Management</a></li>
+              <li><a href="#">Marketing</a></li>
+              <li><a href="#">Graphic Design</a></li>
+            </ul>
+          </div>
 
-        // Simulate an auto-reply after a short delay
-        setTimeout(() => {
-          const reply = autoReplies[Math.floor(Math.random() * autoReplies.length)];
-          appendMessage(reply, "received");
-          chatHistory.scrollTop = chatHistory.scrollHeight; // Auto-scroll again
-        }, 1000);
-      }
-    });
+          <div class="col-lg-4 col-md-12 footer-newsletter">
+            <h4>Our Newsletter</h4>
+            <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+            <form action="forms/newsletter.php" method="post" class="php-email-form">
+              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe">
+              </div>
+              <div class="loading">Loading</div>
+              <div class="error-message"></div>
+              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+            </form>
+          </div>
 
-    // Function to append messages to the chat history
-    function appendMessage(text, type) {
-      const messageElement = document.createElement('div');
-      messageElement.classList.add('message', type);
+        </div>
+      </div>
 
-      const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      messageElement.innerHTML = `
-        ${text}
-        <div class="timestamp">${timestamp}</div>
-      `;
+      <div class="container copyright text-center mt-4">
+        <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
+        <div class="credits">
+          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+        </div>
+      </div>
 
-      chatHistory.appendChild(messageElement);
-    }
-  </script>
+    </footer><!-- End Footer -->
 
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+
+    <!-- Preloader -->
+    <div id="preloader"></div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
+
+    <!-- Custom JS for Chats -->
+    <script src="assets/js/chats.js"></script>
+
 </body>
+
+
+
+
 
 </html>
