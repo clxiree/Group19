@@ -1,0 +1,97 @@
+body {
+    background-color: #d1f1ff; /* Light blue background */
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #7589C2; /* Adjust as needed */
+    padding: 10px;
+  }
+  
+.nav-left, .nav-right {
+    display: flex;
+    align-items: center;
+}
+  
+.nav-middle {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.nav-left span, .nav-middle h1 {
+    color: #fff; /* Adjust font color */
+}
+
+h1 {
+    font-size: 24px;
+    margin: 0;
+}
+
+.fas {
+    font-size: 30px; /* Adjust icon size */
+    color: #fff;
+    margin-right: 10px;
+    cursor: pointer;
+}
+h2 {
+    font-family: 'Arial', sans-serif;
+    font-weight: bold;
+    color: #333;
+}
+
+hr {
+    border-top: 2px solid purple; /* Add the purple horizontal line under Profile */
+}
+
+form label {
+    font-weight: bold;
+}
+
+.form-control {
+    border-radius: 10px; /* Round the input fields */
+    padding: 10px;
+}
+
+.btn-danger {
+    border-radius: 50px; /* Round the Edit button */
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #ff4d4d; /* Red button for Edit */
+}
+
+.tag {
+    background-color: #e8e8e8;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 5px 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+.tag .btn-danger {
+    background-color: #ff4d4d;
+    border-radius: 50%;
+    color: white;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.tag .btn-danger:hover {
+    background-color: #d32f2f;
+}
+
+.img-fluid {
+    border-radius: 50%; /* Circular image for profile picture */
+}
+
+small {
+    font-size: 12px;
+}

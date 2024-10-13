@@ -46,14 +46,38 @@ h3 {
     border-radius: 15px;
 }
 
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-    background-color: #5c68f0;
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    background-color: transparent; /* Remove any background color */
+    background-image: none; /* Remove default icon */
 }
 
+.carousel-control-next-icon::before,
+.carousel-control-prev-icon::before {
+    content: '';
+    display: inline-block;
+    width: 20px; /* Adjust size if needed */
+    height: 20px;
+    border: solid 2px #5c68f0; /* Color for the border */
+    border-width: 0 3px 3px 0; /* Arrow-like border configuration */
+    transform: rotate(45deg); /* Creates the right arrow */
+}
+
+.carousel-control-next-icon::before {
+    transform: rotate(-45deg); /* Rotate to form the next (right) arrow */
+}
+
+.carousel-control-prev-icon::before {
+    transform: rotate(135deg); /* Rotate to form the previous (left) arrow */
+}
+
+
 .carousel-item img {
-    width: 150px;
+    width: 300px; /* Set a fixed width */
+    height: 300px; /* Set a fixed height */
+    object-fit: contain; /* Ensures images cover the entire area */
     margin: 0 auto;
+    border-radius: 10px; /* Optional: add some rounding to the image corners */
 }
 
 p {
@@ -62,5 +86,8 @@ p {
 
 .carousel-inner {
     padding: 20px;
+    height: 500px;
 }
+
+
 

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Proof Reading Marking</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" href="proofread_marking.css">
+</head>
+<body>
+
+    <div class="navbar">
+        <div class="nav-left">
+          <i class="fas fa-user-circle"></i>
+          <span>TUTEE</span>
+        </div>
+        <div class="nav-middle">
+          <h2 style="color: white">SMOOTutor</h2>
+        </div>
+        <div class="nav-right">
+          <i class="fas fa-comments"></i>
+          <i class="fas fa-bars"></i>
+        </div>
+    </div>
+
+  <!-- Proof Reading Marking Form -->
+  <div class="container mt-5">
+    <h2 class="text-center">PROOF READING MARKING</h2>
+    <hr>
+
+    <div class="profile-info mb-4">
+      <div class="d-flex align-items-center">
+        <div class="profile-icon me-3">
+          <i class="fas fa-user-circle fa-3x"></i>
+        </div>
+        <div>
+          <p><strong>Tutee:</strong> CHRISPI SIA</p>
+          <p><strong>Description:</strong> Math week3</p>
+        </div>
+      </div>
+    </div>
+
+    <form>
+      <!-- Description of marked work -->
+      <div class="mb-4">
+        <label for="description">Description of work:</label>
+        <textarea class="form-control mt-3" id="exampleFormControlTextarea1" rows="3" readonly>I need help with questions 2a,b,c. Please do help me check my work and give me a grade.</textarea>
+      </div>
+
+      <!-- Submitted attachments -->
+      <div class="mb-4">
+        <label>Submitted attachments from tutee:</label>
+        <div>
+          <a href="uploads/2024 S3_AM_WA3_COVID 19 Modelling_Individual.pdf" class="file-link">upload1.pdf</a><br>
+          <a href="uploads/WA1 (solution).pdf" class="file-link">upload2.pdf</a>
+        </div>
+      </div>
+
+      <!-- Proceed Button -->
+      <div class="text-center">
+        <button type="submit" class="btn btn-primary">PROCEED</button>
+      </div>
+    </form>
+  </div>
+
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
