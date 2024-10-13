@@ -27,6 +27,7 @@
   --contrast-color: #ffffff; /* Contrast color for text, ensuring readability against backgrounds of accent, heading, or default colors. */
 }
 
+
 /* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
 :root {
   --nav-color: #272828;  /* The default color of the main navmenu links */
@@ -1558,6 +1559,69 @@ section,
 /*--------------------------------------------------------------
 # Trainers Section
 --------------------------------------------------------------*/
+.trainers .member .member-img {
+  position: relative;
+  overflow: hidden;
+}
+
+.trainers .member .member-img .social, 
+.trainers .member .member-img .btn-book {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  padding-bottom: 20px;
+  transition: 0.3s;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.trainers .member .member-img .btn-book {
+  color: white;
+  font-size: 20px;
+  background-color: black;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}
+
+
+.trainers .member:hover .member-img .btn-book {
+  visibility: visible;
+  opacity: 1;
+}
+
+
+.btn-buy {
+  background-color: #5f8acf; /* Blue background */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-buy:hover{
+
+  background-color: #5f67a2; /* Blue background */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+
+}
+
 .trainers .member {
   position: relative;
 }
@@ -1590,7 +1654,6 @@ section,
   z-index: 2;
   padding-bottom: 20px;
   transition: 0.3s;
-  visibility: hidden;
   opacity: 0;
 }
 
@@ -1612,13 +1675,13 @@ section,
 .trainers .member .member-info h4 {
   font-weight: 700;
   margin-bottom: 6px;
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .trainers .member .member-info span {
   font-style: italic;
   display: block;
-  font-size: 15px;
+  font-size: 17px;
   color: color-mix(in srgb, var(--default-color), transparent 40%);
   margin-bottom: 10px;
 }
@@ -1631,8 +1694,9 @@ section,
 .trainers .member:hover .member-img .social {
   padding-bottom: 0;
   visibility: visible;
-  opacity: 1;
+  opacity: 1
 }
+
 
 /*--------------------------------------------------------------
 # Events Section
@@ -1735,6 +1799,13 @@ section,
   font-weight: 300;
 }
 
+.pricing .btn-wrap {
+  background: color-mix(in srgb, var(--default-color), transparent 95%);
+  margin: 0 -20px -20px -20px;
+  padding: 20px 15px;
+  text-align: center;
+}
+
 .pricing .pricing-item ul {
   padding: 15px 0;
   list-style: none;
@@ -1758,12 +1829,6 @@ section,
   text-decoration: line-through;
 }
 
-.pricing .btn-wrap {
-  background: color-mix(in srgb, var(--default-color), transparent 95%);
-  margin: 0 -20px -20px -20px;
-  padding: 20px 15px;
-  text-align: center;
-}
 
 .pricing .btn-buy {
   background: var(--accent-color);
@@ -1887,4 +1952,3 @@ section,
 .starter-section {
   /* Add your styles here */
 }
-
