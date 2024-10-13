@@ -1888,3 +1888,26 @@ section,
   /* Add your styles here */
 }
 
+/* carousel css */
+.carousel-inner .row {
+  display: flex;
+}
+
+.carousel-item {
+  padding: 20px 0; /* Add some vertical spacing between slides */
+}
+
+.member img {
+  width: 100%; /* Ensure images are responsive */
+  border-radius: 15px;
+}
+
+.member-content {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: #000;
+}
