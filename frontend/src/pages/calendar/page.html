@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Booking</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="nav-left">
+          <i class="fas fa-user-circle"></i>
+          <span>TUTEE</span>
+        </div>
+        <div class="nav-middle">
+          <h1>SMOOTutor</h1>
+        </div>
+        <div class="nav-right">
+          <i class="fas fa-comments"></i>
+          <i class="fas fa-bars"></i>
+        </div>
+    </div>
+    
+    <div class="lesson-container">
+        <h1 class="title">LESSON BOOKING</h1>
+
+        <div class="booking-details">
+            <div class="lesson-options">
+                <label for="tutor">Tutor: Ms ABC</label><br>
+                <label for="subject">Subject Chosen</label>
+                <select id="subject">
+                    <option value="LOLI101">LOLI101</option>
+                    <option value="MATH201">MATH201</option>
+                    <option value="SCIS202">SCIS202</option>
+                </select><br>
+                
+                <label for="mode">Mode of Lesson</label>
+                <select id="mode">
+                    <option value="Physical">Physical</option>
+                    <option value="Online">Online</option>
+                </select>
+                
+                <div class="calendar">
+                    <h3>Calendar</h3>
+                    <input type="date" id="date-picker" value="2024-05-20">
+                </div>
+            </div>
+
+            <div class="timeslots">
+                <h3>Available Timeslots for <span id="selected-date">20 May 2024</span>:</h3>
+                <button class="timeslot">10.00AM - 12.00PM ($40/H)</button>
+                <button class="timeslot">02.00PM - 04.00PM ($50/H)</button>
+                <button class="timeslot">06.00PM - 08.00PM ($40/H)</button>
+            </div>
+        </div>
+
+        <div class="confirm-section">
+            <button class="confirm-btn">Confirm</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
