@@ -42,7 +42,7 @@ fetch('gettutors.php')
       </div>
 
           
-      `;
+      
       tutorList.insertAdjacentHTML('beforeend', tutorCard);
     });
   });
