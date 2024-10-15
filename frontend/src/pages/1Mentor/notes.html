@@ -67,8 +67,9 @@
               Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a class="dropdown-item" href="#" onclick="switchToBrowseNotes(event)">Browse Notes</a></li>
-              <li><a class="dropdown-item" href="#" onclick="switchToSavedNotes(event)">Saved Notes</a></li>
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
             </ul>
           </li>
           
@@ -106,12 +107,69 @@
       </nav>
     </div>
 
-    <!-- Notes Sections -->
-    <section id="browse-notes-section" class="notes-section" style="display:block;">
+<section id="browse-notes-section" class="notes-section" style="display:block;">
       <div class="container">
         <h2>Browse Notes</h2>
         <p>Here you can browse notes from past year students.</p>
-        <!-- Add more browsing content here -->
+        <section id="courses" class="courses section">
+
+          <div class="container">
+    
+            <div class="row">
+    
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <div class="course-item">
+                  <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
+                  <div class="course-content">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <p class="category">IS216</p>
+                      <p class="price">$10</p>
+                    </div>
+                    <h3>Web Application 2</h3>
+                    <p class="description">Description: <b>Term1 AY23/24</b></p>
+                    <div class="trainer d-flex justify-content-between align-items-center">
+                      <div class="trainer-profile d-flex align-items-center">
+                        <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
+                        <a href="" class="trainer-link">Zenny Potato</a>
+                      </div>
+                      <div class="trainer-rank d-flex align-items-center">
+                        <a href="preview.html" class="preview-link" style="font-size: 15px;">Preview <span class="lock-icon">🔒</span></a>
+                      </div>         
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="course-item">
+                  <img src="assets/img/course-2.jpg" class="img-fluid" alt="...">
+                  <div class="course-content">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <p class="category">IS210</p>
+                      <p class="price">$10</p>
+                    </div>
+                    <h3>Business Processes and Solutioning</h3>
+                    <p class="description">Description: <b>Term2 AY23/24</b></p>
+                    <div class="trainer d-flex justify-content-between align-items-center">
+                      <div class="trainer-profile d-flex align-items-center">
+                        <img src="assets/img/trainers/trainer-2-2.jpg" class="img-fluid" alt="">
+                        <a href="" class="trainer-link">Lana</a>
+                      </div>
+                      <div class="trainer-rank d-flex align-items-center">
+                        <a href="preview.html" class="preview-link" style="font-size: 15px;">Preview <span class="lock-icon">🔒</span></a>
+                      </div>    
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              
+    
+            </div>
+    
+          </div>
+    
+        </section>
       </div>
     </section>
 
@@ -119,91 +177,91 @@
       <div class="container">
         <h2>Saved Notes</h2>
         <p>Here are your saved notes.</p>
-        <!-- Add more saved notes content here -->
+        <section id="courses" class="courses section">
+
+          <div class="container">
+    
+            <div class="row">
+    
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <div class="course-item">
+                  <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
+                  <div class="course-content">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <p class="category">IS216</p>
+                      
+                    </div>
+                    <h3>Web Application 2</h3>
+                    <p class="description">Description: <b>Term1 AY23/24</b></p>
+                    <div class="trainer d-flex justify-content-between align-items-center">
+                      <div class="trainer-profile d-flex align-items-center">
+                        <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
+                        <a href="" class="trainer-link">Zenny Potato</a>
+                      </div>
+                      <div class="trainer-rank d-flex align-items-center">
+                        <a href="view.html" class="view-link" style="font-size: 15px;">View</a>
+                      </div>         
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
+                <div class="course-item">
+                  <img src="assets/img/course-2.jpg" class="img-fluid" alt="...">
+                  <div class="course-content">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <p class="category">IS210</p>
+                 
+                    </div>
+                    <h3>Business Processes and Solutioning</h3>
+                    <p class="description">Description: <b>Term2 AY23/24</b></p>
+                    <div class="trainer d-flex justify-content-between align-items-center">
+                      <div class="trainer-profile d-flex align-items-center">
+                        <img src="assets/img/trainers/trainer-2-2.jpg" class="img-fluid" alt="">
+                        <a href="" class="trainer-link">Lana</a>
+                      </div>
+                      <div class="trainer-rank d-flex align-items-center">
+                        <a href="view.html" class="view-link" style="font-size: 15px;">View</a>
+                      </div>    
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+              <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
+                <div class="course-item">
+                  <img src="assets/img/course-3.jpg" class="img-fluid" alt="...">
+                  <div class="course-content">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <p class="category">COR-1702</p>
+               
+                    </div>
+                    <h3>Computational Thinking</h3>
+                    <p class="description">Description: <b>Term1 AY22/23</b></p>
+                    <div class="trainer d-flex justify-content-between align-items-center">
+                      <div class="trainer-profile d-flex align-items-center">
+                        <img src="assets/img/trainers/trainer-3-2.jpg" class="img-fluid" alt="">
+                        <a href="" class="trainer-link">Brandon</a>
+                      </div>
+                      <div class="trainer-rank d-flex align-items-center">
+                        <a href="view.html" class="view-link" style="font-size: 15px;">View</a>
+                      </div>    
+                    </div>
+                  </div>
+                </div>
+              </div>
+    
+            </div>
+    
+          </div>
+    
+        </section>
+         
       </div>
     </section>
 
-    <!-- Courses Section -->
-    <section id="courses" class="courses section">
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="course-item">
-              <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
-              <div class="course-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">IS216</p>
-                  <p class="price">$10</p>
-                </div>
-                <h3>Web Application 2</h3>
-                <p class="description">Description: <b>Term1 AY23/24</b></p>
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Zenny Potato</a>
-                  </div>
-                  <div class="trainer-rank d-flex align-items-center">
-                    <a href="preview.html" class="preview-link" style="font-size: 15px;">Preview <span class="lock-icon">🔒</span></a>
-                  </div>         
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-            <div class="course-item">
-              <img src="assets/img/course-2.jpg" class="img-fluid" alt="...">
-              <div class="course-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">IS210</p>
-                  <p class="price">$10</p>
-                </div>
-                <h3>Business Processes and Solutioning</h3>
-                <p class="description">Description: <b>Term2 AY23/24</b></p>
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-2-2.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Lana</a>
-                  </div>
-                  <div class="trainer-rank d-flex align-items-center">
-                    <a href="preview.html" class="preview-link" style="font-size: 15px;">Preview <span class="lock-icon">🔒</span></a>
-                  </div>    
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
-            <div class="course-item">
-              <img src="assets/img/course-3.jpg" class="img-fluid" alt="...">
-              <div class="course-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">COR-1702</p>
-                  <p class="price">$15</p>
-                </div>
-                <h3>Computational Thinking</h3>
-                <p class="description">Description: <b>Term1 AY22/23</b></p>
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-3-2.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Brandon</a>
-                  </div>
-                  <div class="trainer-rank d-flex align-items-center">
-                    <a href="preview.html" class="preview-link" style="font-size: 15px;">Preview <span class="lock-icon">🔒</span></a>
-                  </div>    
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section><!-- /Courses Section -->
+ 
 
   </main>
 
