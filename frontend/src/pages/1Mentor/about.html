@@ -58,8 +58,8 @@
               Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a class="dropdown-item" href="#" onclick="switchToBrowseNotes(event)">Browse Notes</a></li>
-              <li><a class="dropdown-item" href="#" onclick="switchToSavedNotes(event)">Saved Notes</a></li>
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
             </ul>
           </li>
           
@@ -394,6 +394,20 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
+<script>
+  function switchToBrowseNotes(event) {
+      event.preventDefault();
+      showBrowseNotes();
+      history.pushState({}, '', '?section=browse');
+    }
+  
+    // Function to switch to Saved Notes and update URL without reloading
+    function switchToSavedNotes(event) {
+      event.preventDefault();
+      showSavedNotes();
+      history.pushState({}, '', '?section=saved');
+    }
+</script>
 </body>
 
 </html>
