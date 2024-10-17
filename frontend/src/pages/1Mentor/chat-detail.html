@@ -227,9 +227,24 @@
         </div>
     
         <!-- Chat History -->
-        <div id="chat-history" class="chat-history">
-          <!-- Messages will be dynamically loaded here -->
-        </div>
+        <!-- <div id="chat-history" class="chat-history">
+            Messages will be dynamically loaded here
+        </div> -->
+        <div class="container" data-aos="fade-up">
+          <div class="chat-window">
+              <div class="chat-messages" id="chat-messages">
+                  <!-- Messages will be loaded here -->
+              </div>
+              <form id="message-form">
+                  <input type="hidden" id="chat_id" value="">
+                  <div class="input-group">
+                      <input type="text" class="form-control" id="message-content" placeholder="Type a message" required>
+                      <button class="btn btn-primary" type="submit">Send</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+      
     
         <!-- Typing Indicator -->
         <p id="typing-indicator" class="typing-indicator">Participant is typing...</p>
@@ -393,6 +408,83 @@
           return autoReplies[Math.floor(Math.random() * autoReplies.length)];
         }
       </script>
+
+<script>
+  $(document).ready(function() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var chat_id = urlParams.get('chat_id');
+      $('#chat_id').val(chat_id);
+  
+      function fetchMessages() {
+          $.ajax({
+              url: 'get_messages.php',
+              method: 'GET',
+              data: { chat_id: chat_id },
+              dataType: 'json',
+              success: function(messages) {
+                  if (messages.error) {
+                      alert(messages.error);
+                      window.location.href = 'login.html';
+                  } else {
+                      renderMessages(messages);
+                  }
+              },
+              error: function() {
+                  alert('An error occurred while fetching messages.');
+              }
+          });
+      }
+  
+      function renderMessages(messages) {
+          var chatMessages = $('#chat-messages');
+          chatMessages.empty();
+          messages.forEach(function(message) {
+              var messageItem =
+                  <div class='message ${message.sender_id == <?php echo $_SESSION["user_id"]; ?> ? "sent" : "received"}'>
+                      <div class="message-content">
+                          <strong>${message.username}</strong>: ${message.content}
+                          <div class="message-time">${message.sent_at}</div>
+                      </div>
+                  </div>
+              ;
+              chatMessages.append(messageItem);
+          });
+          chatMessages.scrollTop(chatMessages[0].scrollHeight);
+      }
+  
+      $('#message-form').submit(function(e) {
+          e.preventDefault();
+          var content = $('#message-content').val();
+          $.ajax({
+              url: 'send_message.php',
+              method: 'POST',
+              data: {
+                  chat_id: chat_id,
+                  content: content
+              },
+              dataType: 'json',
+              success: function(response) {
+                  if (response.error) {
+                      alert(response.error);
+                      window.location.href = 'login.html';
+                  } else {
+                      $('#message-content').val('');
+                      fetchMessages();
+                  }
+              },
+              error: function() {
+                  alert('An error occurred while sending the message.');
+              }
+          });
+      });
+  
+      // Fetch messages initially and set an interval
+      fetchMessages();
+      setInterval(fetchMessages, 5000); // Refresh messages every 5 seconds
+  });
+  </script>
+
+
     </body>
 
     <br>

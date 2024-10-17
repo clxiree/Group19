@@ -8,6 +8,8 @@
   <meta name="description" content="">
   <meta name="keywords" content="">
 
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
@@ -107,7 +109,7 @@
         <div class="list-group" id="chat-list">
 
           <!-- Dynamic Chat Items with query parameters -->
-          <a href="chat-detail.html?chatId=1&name=John%20Doe"
+          <!-- <a href="chat-detail.html?chatId=1&name=John%20Doe"
             class="list-group-item list-group-item-action d-flex align-items-center">
             <img src="assets/img/trainers/zenny.jpg" alt="John Doe" class="rounded-circle me-3" width="50" height="50">
             <div class="w-100">
@@ -156,7 +158,10 @@
               </div>
               <p class="mb-1 text-truncate">Don't forget the quiz!</p>
             </div>
-          </a>
+          </a> -->
+          <div class="list-group" id="chat-list">
+            <!-- Chat items will be injected here -->
+          </div>
 
         </div>
       </div>
@@ -252,6 +257,50 @@
 
     <!-- Custom JS for Chats -->
     <script src="assets/js/chats.js"></script>
+
+    <script>
+      $(document).ready(function() {
+          $.ajax({
+              url: 'get_chats.php',
+              method: 'GET',
+              dataType: 'json',
+              success: function(chats) {
+                  if (chats.error) {
+                      alert(chats.error);
+                      window.location.href = 'login.html';
+                  } else {
+                      renderChats(chats);
+                  }
+              },
+              error: function() {
+                  alert('An error occurred while fetching chats.');
+              }
+          });
+      
+          function renderChats(chats) {
+              var chatList = $('#chat-list');
+              chats.forEach(function(chat) {
+                  var chatName = chat.is_group_chat ? chat.chat_name : chat.sender_username;
+                  var lastMessage = chat.last_message ? chat.last_message : 'No messages yet';
+                  var sentAt = chat.sent_at ? chat.sent_at : '';
+                  var chatItem = `
+                      <a href="chat-detail.html?chat_id=${chat.chat_id}"
+                          class="list-group-item list-group-item-action d-flex align-items-center">
+                          <img src="assets/img/default-avatar.png" alt="${chatName}" class="rounded-circle me-3" width="50" height="50">
+                          <div class="w-100">
+                              <div class="d-flex justify-content-between">
+                                  <h5 class="mb-1">${chatName}</h5>
+                                  <small class="text-muted">${sentAt}</small>
+                              </div>
+                              <p class="mb-1 text-truncate">${lastMessage}</p>
+                          </div>
+                      </a>
+                  `;
+                  chatList.append(chatItem);
+              });
+          }
+      });
+      </script>
 
 </body>
 
