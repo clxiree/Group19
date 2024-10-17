@@ -88,6 +88,7 @@ h6 {
   font-family: var(--heading-font);
 }
 
+
 header img{
   width: 350px;
   height: 80px;
@@ -1703,41 +1704,25 @@ section,
   opacity: 1
 }
 
-.details-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-  padding: 20px;
-}
-
-.detail-box {
-  background-color: white;
-  border: 1px solid #007BFF;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
 .section-title {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: #007BFF; /* Adjust the color to match your design */
   margin-bottom: 10px;
+
 }
 
-.detail-box p, .detail-box ul {
-  font-size: 16px;
-  line-height: 1.5;
+/* added the two classes below for the crown */
+.member {
+  display: flex;
+  flex-direction: column; /* Stack the crown and content vertically */
+  align-items: center; /* Center the crown horizontally */
 }
 
-.detail-box ul {
-  padding-left: 20px;
+.fas.fa-crown {
+  margin-bottom: 0px; /* Slightly pull the crown closer to the tutor image */
 }
 
-.detail-box ul li {
-  list-style: disc;
-  margin-bottom: 8px;
-}
 
 .img-fluid {
   max-width: 100%;
@@ -2028,12 +2013,14 @@ section,
   background-color: #000;
 }
 
-.preview-link {
+.preview-link, 
+.view-link{
   color: black;
   font-size: 12px;
   text-decoration: none;
 }
 
-.preview-link:hover {
+.preview-link:hover,
+.view-link:hover {
   color: blue; /* Change to your preferred hover color */
 }

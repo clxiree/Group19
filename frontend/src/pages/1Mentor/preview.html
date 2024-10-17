@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Preview Page - Web Application 2</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        .preview-container {
+            position: relative;
+            width: 80%;
+            margin: 50px auto;
+            background: white;
+            border: 1px solid #ddd;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            height: 600px;
+            overflow-y: scroll;
+        }
+        .preview-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .preview-header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+        .preview-content {
+            opacity: 0.5;
+            pointer-events: none; /* Make the content non-interactive */
+        }
+        .locked-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+        .locked-overlay h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+        .locked-overlay p {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        .locked-overlay a {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .locked-overlay a:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body class="courses-page">
+    <header id="header" class="header d-flex align-items-center sticky-top">
+        <div class="container-fluid container-xl position-relative d-flex align-items-center">
+    
+          <a href="index.html" class="logo d-flex align-items-center me-auto">
+            <img src="assets/img/smootutor-logo.jpg">
+          </a>
+    
+          <nav id="navmenu" class="navmenu">
+            <ul>
+              <li><a href="index.html">Home<br></a></li>
+              <li><a href="about.html">About</a></li>
+              <li><a href="bookings.html" class="active">Bookings</a></li>
+              <li><a href="trainers.html">Trainers</a></li>
+              <li><a href="chats.html">Chats</a></li>
+              <li><a href="proofread.html">Proofread</a></li>
+              <li class="dropdown">
+                <a href="notes.html" id="notesDropdown" aria-expanded="false">
+                  Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+                    <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+                    <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>                    
+                </ul>
+              </li>
+              
+      
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          </nav>
+    
+    
+          <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+    
+        </div>
+      </header>
+      <main class="main">
+
+        <!-- Page Title -->
+        <div class="page-title" data-aos="fade">
+          <div class="heading">
+            <div class="container">
+              <div class="row d-flex justify-content-center text-center">
+                <div class="col-lg-8">
+                  <h1>Preview</h1>
+                  <p class="mb-0">Full Content is locked until payment made.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <nav class="breadcrumbs">
+            <div class="container">
+              <ol>
+                <li><a href="index.html">Home</a></li>
+                <li class="current">Notes</li>
+              </ol>
+            </div>
+          </nav>
+        </div>
+
+<div class="preview-container">
+    <div class="preview-header">
+        <h1>Preview of Web Application 2 - IS216</h1>
+        <p>Scroll through the preview. Full content is locked until payment is made.</p>
+    </div>
+    <div class="preview-content">
+        <p><strong>Page 1:</strong> Introduction to Web Applications - Web applications are programs that run in a web browser and are accessed via the internet. They typically consist of HTML, CSS, and JavaScript, which work together to create dynamic and interactive websites...</p>
+        <p><strong>Page 2:</strong> Understanding HTML, CSS, and JavaScript - These are the foundational technologies that make up the frontend of web applications. HTML is the structure, CSS is the design, and JavaScript adds interactivity...</p>
+        <p><strong>Page 3:</strong> Building Responsive Web Pages - Responsive design is essential for modern web applications, ensuring they work across all devices, from desktops to mobile phones...</p>
+        <p><strong>Page 4:</strong> User Interface Design Best Practices - UI design principles help create a pleasant and easy-to-use experience for users. Consistency, simplicity, and feedback are important elements to consider...</p>
+        <p><strong>Page 5:</strong> Full-Stack Development Overview - Full-stack development involves working on both the frontend and backend of an application. Understanding databases, servers, and APIs is critical for creating a complete web application...</p>
+        <p>...</p>
+    </div>
+    <div class="locked-overlay">
+        <h2>This preview is locked</h2>
+        <p>To unlock the full document, please make a payment of $10.</p>
+        <a href="payment-page.html">Unlock Full Access</a>
+    </div>
+</div>
+</main>
+              
+<footer id="footer" class="footer position-relative light-background"></footer>
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-lg-4 col-md-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">Mentor</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>A108 Adam Street</p>
+            <p>New York, NY 535022</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+            <p><strong>Email:</strong> <span>info@example.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4">
+            <a href=""><i class="bi bi-twitter-x"></i></a>
+            <a href=""><i class="bi bi-facebook"></i></a>
+            <a href=""><i class="bi bi-instagram"></i></a>
+            <a href=""><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Useful Links</h4>
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About us</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Terms of service</a></li>
+            <li><a href="#">Privacy policy</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-2 col-md-3 footer-links">
+          <h4>Our Services</h4>
+          <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Web Development</a></li>
+            <li><a href="#">Product Management</a></li>
+            <li><a href="#">Marketing</a></li>
+            <li><a href="#">Graphic Design</a></li>
+          </ul>
+        </div>
+
+        <div class="col-lg-4 col-md-12 footer-newsletter">
+          <h4>Our Newsletter</h4>
+          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+          <form action="forms/newsletter.php" method="post" class="php-email-form">
+            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            <div class="loading">Loading</div>
+            <div class="error-message"></div>
+            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
+      <div class="credits">
+        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+      </div>
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <script>
+    // Function to show Browse Notes
+    function showBrowseNotes() {
+      document.getElementById('browse-notes-section').style.display = 'block';
+      document.getElementById('saved-notes-section').style.display = 'none';
+    }
+  
+    // Function to show Saved Notes
+    function showSavedNotes() {
+      document.getElementById('browse-notes-section').style.display = 'none';
+      document.getElementById('saved-notes-section').style.display = 'block';
+    }
+  
+    // Function to switch to Browse Notes and update URL without reloading
+    function switchToBrowseNotes(event) {
+      event.preventDefault();
+      showBrowseNotes();
+      history.pushState({}, '', '?section=browse');
+    }
+  
+    // Function to switch to Saved Notes and update URL without reloading
+    function switchToSavedNotes(event) {
+      event.preventDefault();
+      showSavedNotes();
+      history.pushState({}, '', '?section=saved');
+    }
+  
+    // Function to detect URL parameter and load the correct section
+    function loadCorrectSection() {
+      const params = new URLSearchParams(window.location.search);
+      const section = params.get('section');
+      if (section === 'saved') {
+        showSavedNotes();
+      } else {
+        showBrowseNotes(); // Default to Browse Notes if no parameter or "browse"
+      }
+    }
+  
+    // Call function on page load to show the correct section
+    window.onload = loadCorrectSection;
+  </script>
+  
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>             
+
+</body>
+</html>
