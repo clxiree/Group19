@@ -1295,6 +1295,7 @@ section,
   margin: 0 2px;
 }
 
+
 /*--------------------------------------------------------------
 # About Us Section
 --------------------------------------------------------------*/
@@ -1566,9 +1567,45 @@ section,
 /*--------------------------------------------------------------
 # Trainers Section
 --------------------------------------------------------------*/
+
+.mute-icon {
+  position: absolute;
+  bottom: 10px; /* Adjust bottom distance to sit right at the bottom of the video */
+  left: 50%; /* Center it horizontally */
+  transform: translateX(-50%); /* Fine-tune centering */
+  background-color: rgba(0, 0, 0, 0.5); /* Slight background to make the icon stand out */
+  border-radius: 50%; /* Makes the button circular */
+  padding: 4px; /* Slightly larger for better user interaction */
+  color: white;
+  font-size: 8px; /* Bigger icon for visibility */
+  cursor: pointer;
+  z-index: 10; /* Ensure it's above the video */
+  display: none; /* Initially hidden until the video is hovered */
+}
+
+
+.member-img {
+  position: relative;
+}
+
+.social {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end; /* Ensures the mute icon is positioned at the bottom */
+  height: 100%; /* Make sure the `.social` container covers the full video height */
+  margin-bottom: 10px;
+}
+
+
+
 .trainers .member .member-img {
   position: relative;
   overflow: hidden;
+  margin: 0 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
 }
 
 .trainers .member .member-img .social, 
@@ -1596,11 +1633,19 @@ section,
   border: none;
 }
 
-
 .trainers .member:hover .member-img .btn-book {
   visibility: visible;
   opacity: 1;
 }
+
+.media-content{
+  width: 300px;
+  height: auto;
+  margin-bottom: 10px;
+  margin: auto;
+  position: relative;
+}
+
 
 
 .btn-buy {
@@ -1614,6 +1659,25 @@ section,
   text-align: center;
   transition: background-color 0.3s ease;
 }
+
+/* Green "Book Now" button style */
+.btn-book-now {
+  background-color: #28a745; /* Green background */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 10px 60px;
+  font-size: 15px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-book-now:hover {
+  background-color: #1e6630; /* Darker green on hover */
+  color: white;
+}
+
 
 .btn-buy:hover{
 
@@ -1630,13 +1694,6 @@ section,
 }
 
 .trainers .member {
-  position: relative;
-}
-
-.trainers .member .member-img {
-  margin: 0 80px;
-  border-radius: 50%;
-  overflow: hidden;
   position: relative;
 }
 
@@ -1664,14 +1721,14 @@ section,
   opacity: 0;
 }
 
-.trainers .member .member-img .social a {
+.member-img .social a {
   transition: 0.3s;
   color: var(--contrast-color);
   font-size: 20px;
   margin: 0 8px;
 }
 
-.trainers .member .member-img .social a:hover {
+.member-img .social a:hover {
   color: var(--accent-color);
 }
 
@@ -1685,23 +1742,23 @@ section,
   font-size: 20px;
 }
 
-.trainers .member .member-info span {
-  font-style: italic;
-  display: block;
-  font-size: 17px;
-  color: color-mix(in srgb, var(--default-color), transparent 40%);
-  margin-bottom: 10px;
-}
 
 .trainers .member .member-info p {
   margin-bottom: 0;
   font-size: 14px;
 }
 
-.trainers .member:hover .member-img .social {
+.trainers .member .member-img:hover .social {
   padding-bottom: 0;
   visibility: visible;
-  opacity: 1
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+
+.trainers .member .member-img:hover {
+  transform: scale(1.25); 
+
 }
 
 .section-title {
@@ -1729,6 +1786,8 @@ section,
   height: auto;
   border-radius: 8px;
 }
+
+
 
 
 
