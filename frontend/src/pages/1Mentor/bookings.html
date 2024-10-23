@@ -27,6 +27,12 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+  <!-- Vue CDN -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+  <!-- Axios CDN -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
   <!-- =======================================================
   * Template Name: Mentor
   * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
@@ -101,47 +107,43 @@
     </div><!-- End Page Title -->
 
     <!-- Courses Section -->
-    <section id="app" class="courses section">
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="course-item">
-              <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
-              <div class="course-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">IS216</p>
-                  <p class="price">$80</p>
-                </div>
-
-                <h3><a href="course-details.html">Web Application 2</a></h3>
-                <p class="description">Status: <b>Pending</b></p>
-                <p class="description">Date of Lesson: 01/01/2001</p>
-                <p class="description">Mode: Physical</p>
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Zenny Potato</a>
+    <div id="app">
+      <section class="courses section">
+  
+          <div class="container">
+              <div class="row" v-for="(bookingRow, index) in chunkedBookings(bookings, 3)" :key="index">
+                  <div class="col-lg-4 col-md-6 d-flex align-items-stretch" v-for="booking in bookingRow" :key="booking.id" data-aos="zoom-in" data-aos-delay="100">
+                      <div class="course-item">
+                          <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
+                          <div class="course-content">
+                              <div class="d-flex justify-content-between align-items-center mb-3">
+                                  <p class="category">{{ booking.coursecode }}</p>
+                                  <p class="price">${{ booking.price }}</p>
+                              </div>
+  
+                              <h3><a href="course-details.html">{{ booking.coursename }}</a></h3>
+                              <p class="description">Status: <b>{{ booking.status }}</b></p>
+                              <p class="description">Date of Lesson: {{ booking.dateoflesson }}</p>
+                              <p class="description">Mode: {{ booking.mode }}</p>
+                              <div class="trainer d-flex justify-content-between align-items-center">
+                                  <div class="trainer-profile d-flex align-items-center">
+                                      <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
+                                      <a href="" class="trainer-link">Zenny Potato</a>
+                                  </div>
+                                  <div class="trainer-rank d-flex align-items-center">
+                                      <i class="bi bi-person user-icon"></i>&nbsp;99++
+                                      &nbsp;&nbsp;
+                                      <i class="bi bi-heart heart-icon"></i>&nbsp;99++
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                  <div class="trainer-rank d-flex align-items-center">
-                    <i class="bi bi-person user-icon"></i>&nbsp;99++
-                    &nbsp;&nbsp;
-                    <i class="bi bi-heart heart-icon"></i>&nbsp;99++
-                  </div>
-                </div>
               </div>
-            </div>
-          </div> <!-- End Course Item-->
-
-          
-
-        </div>
-
-      </div>
-
-    </section><!-- /Courses Section -->
+          </div>
+  
+      </section>
+  </div>
 
   </main>
 
@@ -233,8 +235,37 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
+  <script>
+    Vue.createApp({
+        data() {
+            return {
+                bookings: [] // array of booking objects
+            }
+        },
+        created() {
+            axios.get("./smooTutor_db/getBookings.php")  // Adjust the path to your actual getBookings.php file location
+                .then(response => {
+                    this.bookings = response.data;
+                })
+                .catch(error => {
+                    console.error("There was an error fetching the bookings: ", error.message);
+                });
+        },
+        methods: {
+            chunkedBookings(array, size) {
+                const chunked = [];
+                for (let i = 0; i < array.length; i += size) {
+                    chunked.push(array.slice(i, i + size));
+                }
+                return chunked;
+            }
+        }
+    }).mount('#app');
+</script>
+
   
 
 </body>
 
 </html>
+"./smooTutor_db/getBookings.php"
