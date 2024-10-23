@@ -1,9 +1,9 @@
 <?php
 // db_connect.php
 $servername = "localhost";
-$username = "your_db_username";
-$password = "your_db_password";
-$dbname = "chat_app";
+$username = "root";
+$password = "root";
+$dbname = "smooTutor_db";
 
 try {
     $conn = new PDO("mysql:host=$servername;dbname=$dbname;charset=utf8mb4", $username, $password);
