@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lesson Booking</title>
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <!-- Favicons -->
+    <link href="assets/img/favicon.png" rel="icon">
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+
+    <!-- Vendor CSS Files -->
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+    <!-- Main CSS File -->
+    <link href="assets/css/main.css" rel="stylesheet">
+    <style>
+        /* General Layout Styles */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            width: 100%;
+            background: #007bff;
+        }
+
+        /* Lesson Booking Container */
+        .lesson-container {
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .title {
+            text-align: center;
+            font-weight: 700;
+            color: #007bff;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        /* Booking Details Section */
+        .booking-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+        }
+
+        .lesson-options {
+            width: 45%;
+        }
+
+        .timeslots {
+            width: 45%;
+        }
+
+        /* Adjusting Font Size for Labels */
+        .lesson-options label {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Select Boxes Styling */
+        .lesson-options select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            transition: border 0.3s ease;
+        }
+
+        .lesson-options select:focus {
+            border-color: #007bff;
+        }
+
+        /* Timeslot Font Size and Margin */
+        .timeslots h3 {
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            color: #4b4b4b;
+        }
+
+        /* Calendar Styles */
+        .calendar {
+            margin-top: 15px;
+        }
+
+        .calendar-selectors {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            background-color: #f5f5f5;
+            padding: 10px 15px;
+        }
+
+        .calendar-selectors select {
+            padding: 8px;
+            font-size: 16px;
+            background: none;
+            border: none;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .calendar-days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            text-align: center;
+            color: #999;
+            font-weight: 600;
+            padding-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .calendar-days div {
+            padding: 10px 0;
+        }
+
+        .calendar-container {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+        }
+
+        .calendar-container div {
+            padding: 10px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .calendar-container div:hover {
+            background-color: #e7f1ff;
+            box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
+        }
+
+        .calendar-container .selected {
+            background-color: #ff4d4f;
+            color: white;
+            box-shadow: 0 3px 6px rgba(255, 77, 79, 0.4);
+            font-weight: 600;
+        }
+
+        /* Timeslots Styling */
+        .timeslot {
+            display: block;
+            margin: 10px 0;
+            padding: 12px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            font-size: 14px;
+        }
+
+        .timeslot:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+        }
+
+        /* Buttons Styling */
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .button {
+            width: 48%;
+            padding: 12px 0;
+            border-radius: 10px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .button-back {
+            background-color: #f3f3f3;
+            color: #666;
+        }
+
+        .button-apply {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* Main content should grow to fill the available space */
+        main {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        footer {
+            width: 100%;
+            background: #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <header id="header" class="header d-flex align-items-center sticky-top">
+      <div class="container-fluid container-xl position-relative d-flex align-items-center">
+        <a href="index.html" class="logo d-flex align-items-center me-auto">
+          <img src="assets/img/smootutor-logo.jpg" alt="Logo">
+        </a>
+  
+        <nav id="navmenu" class="navmenu">
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="bookings.html" class="active">Bookings</a></li>
+            <li><a href="trainers.html">Trainers</a></li>
+            <li><a href="chats.html">Chats</a></li>
+            <li><a href="proofread.html">Proofread</a></li>
+            <li class="dropdown">
+              <a href="notes.html" id="notesDropdown" aria-expanded="false">
+                Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+                <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+                <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+              </ul>
+            </li>
+          </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
+        <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+      </div>
+    </header>
+
+    <main>
+        <div class="lesson-container">
+            <h1 class="title">Lesson Booking</h1>
+
+            <!-- Include booking details -->
+            <div class="booking-details">
+                <div class="lesson-options">
+                    <label for="tutor">Tutor: Ms ABC</label><br>
+                    <label for="subject">Subject Chosen</label>
+                    <select id="subject">
+                        <option value="LOLI101">LOLI101</option>
+                        <option value="MATH201">MATH201</option>
+                        <option value="SCIS202">SCIS202</option>
+                    </select><br>
+                    
+                    <label for="mode">Mode of Lesson</label>
+                    <select id="mode">
+                        <option value="Physical">Physical</option>
+                        <option value="Online">Online</option>
+                    </select>
+                </div>
+
+                <div class="timeslots">
+                    <h3>Available Timeslots for <span id="selected-date">20 May 2024</span>:</h3>
+                    <div id="timeslots-container">
+                        <!-- Timeslots will be dynamically generated -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calendar Section -->
+            <div class="calendar">
+                <div class="calendar-selectors">
+                    <select id="calendar-month">
+                        <!-- Will be dynamically populated -->
+                    </select>
+                    <select id="calendar-year">
+                        <!-- Will be dynamically populated -->
+                    </select>
+                </div>
+
+                <div class="calendar-days">
+                    <div>M</div>
+                    <div>T</div>
+                    <div>W</div>
+                    <div>T</div>
+                    <div>F</div>
+                    <div>S</div>
+                    <div>S</div>
+                </div>
+
+                <div class="calendar-container" id="calendar-container">
+                    <!-- Calendar will be dynamically generated -->
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button class="button button-back">Back</button>
+                <button class="button button-apply">Confirm</button>
+            </div>
+        </div>
+    </main>
+
+    <footer id="footer" class="footer position-relative light-background">
+        <div class="container footer-top">
+          <div class="row gy-4">
+            <div class="col-lg-4 col-md-6 footer-about">
+              <a href="index.html" class="logo d-flex align-items-center">
+                <span class="sitename">Mentor</span>
+              </a>
+              <div class="footer-contact pt-3">
+                <p>A108 Adam Street</p>
+                <p>New York, NY 535022</p>
+                <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
+                <p><strong>Email:</strong> <span>info@example.com</span></p>
+              </div>
+              <div class="social-links d-flex mt-4">
+                <a href=""><i class="bi bi-twitter-x"></i></a>
+                <a href=""><i class="bi bi-facebook"></i></a>
+                <a href=""><i class="bi bi-instagram"></i></a>
+                <a href=""><i class="bi bi-linkedin"></i></a>
+              </div>
+            </div>
+    
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>Useful Links</h4>
+              <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Terms of service</a></li>
+                <li><a href="#">Privacy policy</a></li>
+              </ul>
+            </div>
+    
+            <div class="col-lg-2 col-md-3 footer-links">
+              <h4>Our Services</h4>
+              <ul>
+                <li><a href="#">Web Design</a></li>
+                <li><a href="#">Web Development</a></li>
+                <li><a href="#">Product Management</a></li>
+                <li><a href="#">Marketing</a></li>
+                <li><a href="#">Graphic Design</a></li>
+              </ul>
+            </div>
+    
+            <div class="col-lg-4 col-md-12 footer-newsletter">
+              <h4>Our Newsletter</h4>
+              <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
+              <form action="forms/newsletter.php" method="post" class="php-email-form">
+                <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+                <div class="loading">Loading</div>
+                <div class="error-message"></div>
+                <div class="sent-message">Your subscription request has been sent. Thank you!</div>
+              </form>
+            </div>
+          </div>
+        </div>
+    
+        <div class="container copyright text-center mt-4">
+          <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
+          <div class="credits">
+            Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+          </div>
+        </div>
+      </footer>
+
+    <script>
+        // Timeslot data for specific dates
+        const timeslots = {
+            "2024-05-20": ["10:00AM - 12:00PM", "2:00PM - 4:00PM"],
+            "2024-05-21": ["11:00AM - 1:00PM", "3:00PM - 5:00PM"],
+            "2024-05-22": ["09:00AM - 11:00AM", "1:00PM - 3:00PM", "4:00PM - 6:00PM"],
+            "2024-05-23": ["10:00AM - 12:00PM", "2:00PM - 4:00PM"],
+            "2024-05-24": ["09:00AM - 11:00AM", "1:00PM - 3:00PM"],
+        };
+
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+        function daysInMonth(month, year) {
+            return new Date(year, month + 1, 0).getDate(); // Get total days in a given month/year
+        }
+
+        function generateCalendar(month, year) {
+            const calendarContainer = document.getElementById('calendar-container');
+            calendarContainer.innerHTML = ''; // Clear previous calendar
+
+            const daysInSelectedMonth = daysInMonth(month, year);
+            const firstDayOfWeek = new Date(year, month, 1).getDay(); // Get the first day of the week (0=Sunday, 1=Monday, etc.)
+            const calendarDates = [];
+
+            // Push empty days before the first day of the month
+            for (let i = 0; i < (firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1); i++) {
+                calendarDates.push('');
+            }
+
+            // Push the actual dates of the month
+            for (let day = 1; day <= daysInSelectedMonth; day++) {
+                calendarDates.push(day);
+            }
+
+            // Create the calendar grid
+            calendarDates.forEach(date => {
+                const dateElement = document.createElement('div');
+                dateElement.textContent = date;
+                if (date !== '') {
+                    dateElement.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                    dateElement.classList.add('calendar-day');
+                    dateElement.addEventListener('click', function () {
+                        selectDate(dateElement.dataset.date);
+                    });
+                }
+                calendarContainer.appendChild(dateElement);
+            });
+        }
+
+        function selectDate(date) {
+            document.querySelectorAll('.calendar-day').forEach(day => day.classList.remove('selected'));
+            document.querySelector(`[data-date="${date}"]`).classList.add('selected');
+            showTimeslots(date);
+        }
+
+        function populateSelectors() {
+            const monthSelect = document.getElementById('calendar-month');
+            const yearSelect = document.getElementById('calendar-year');
+            const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth();
+
+            monthNames.forEach((month, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                option.textContent = month;
+                monthSelect.appendChild(option);
+            });
+
+            for (let year = currentYear - 5; year <= currentYear + 5; year++) {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            }
+
+            monthSelect.value = currentMonth;
+            yearSelect.value = currentYear;
+        }
+
+        function showTimeslots(date) {
+            const timeslotContainer = document.getElementById('timeslots-container');
+            const selectedTimeslots = timeslots[date] || [];
+            timeslotContainer.innerHTML = ''; // Clear previous slots
+
+            if (selectedTimeslots.length) {
+                selectedTimeslots.forEach(timeslot => {
+                    const slotElement = document.createElement('div');
+                    slotElement.textContent = timeslot;
+                    slotElement.classList.add('timeslot');
+                    timeslotContainer.appendChild(slotElement);
+                });
+            } else {
+                timeslotContainer.textContent = "No available timeslots";
+            }
+
+            // Update selected date in the heading
+            document.getElementById('selected-date').textContent = new Date(date).toDateString();
+        }
+
+        document.getElementById('calendar-month').addEventListener('change', function () {
+            const month = parseInt(this.value);
+            const year = parseInt(document.getElementById('calendar-year').value);
+            generateCalendar(month, year);
+        });
+
+        document.getElementById('calendar-year').addEventListener('change', function () {
+            const month = parseInt(document.getElementById('calendar-month').value);
+            const year = parseInt(this.value);
+            generateCalendar(month, year);
+        });
+
+        // Initialize the selectors and calendar
+        populateSelectors();
+
+        // Get the current date and set it as the default selection
+        const currentDate = new Date();
+        generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        selectDate(`${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`);
+    </script>
+</body>
+</html>

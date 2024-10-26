@@ -1,21 +1,15 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+require("dotenv").config();
+const admin = require("firebase-admin");
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: "AIzaSyDB3AKrgWNgPxQ8sbfLAifgjJCNrJC6DBI",
-  authDomain: "smootutor.firebaseapp.com",
-  projectId: "smootutor",
-  storageBucket: "smootutor.appspot.com",
-  messagingSenderId: "67066833337",
-  appId: "1:67066833337:web:b276b3233ea4d3c432ee68",
-  measurementId: "G-YT0HD5BB27"
-};
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	databaseURL: "https://smooTutor.firebaseio.com",
+	storageBucket: "gs://smooTutor.appspot.com",
+});
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+const db = admin.firestore();
+const storage = admin.storage();
+const bucket = admin.storage().bucket();
+
+module.exports = { admin, db, storage, bucket };

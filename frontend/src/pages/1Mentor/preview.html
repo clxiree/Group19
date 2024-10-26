@@ -27,65 +27,81 @@
     <link href="assets/css/main.css" rel="stylesheet">
     <style>
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-        }
-        .preview-container {
-            position: relative;
-            width: 80%;
-            margin: 50px auto;
-            background: white;
-            border: 1px solid #ddd;
-            padding: 20px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            height: 600px;
-            overflow-y: scroll;
-        }
-        .preview-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .preview-header h1 {
-            font-size: 24px;
-            margin: 0;
-        }
-        .preview-content {
-            opacity: 0.5;
-            pointer-events: none; /* Make the content non-interactive */
-        }
-        .locked-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            color: white;
-        }
-        .locked-overlay h2 {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-        .locked-overlay p {
-            font-size: 16px;
-            margin-bottom: 20px;
-        }
-        .locked-overlay a {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-        }
-        .locked-overlay a:hover {
-            background-color: #218838;
-        }
+    font-family: 'Open Sans', sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+}
+
+.preview-container {
+    position: relative;
+    width: 794px; /* A4 width in pixels */
+    margin: 50px auto;
+    background: white;
+    border: 1px solid #ddd;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 600px; /* Fixed height so that content overflows and scrolls */
+    overflow-y: scroll; /* Enable scrolling within the preview container */
+    scroll-behavior: smooth; /* Smooth scrolling effect */
+}
+
+.preview-content {
+    position: relative;
+    pointer-events: none; /* Disable interaction with the content */
+}
+
+.page {
+    position: relative; /* Each page is now relative to handle the overlay */
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    height: 1123px; /* A4 page height */
+    width: 100%; /* Full width of the container */
+    box-sizing: border-box; /* Include padding in the width calculation */
+}
+
+.page-content {
+    filter: blur(3px); /* Apply blur only to the page content */
+    opacity: 0.6; /* Grey out the page content */
+    pointer-events: none; /* Disable interaction with the content */
+}
+
+.locked-overlay {
+    position: absolute; /* Position it relative to the page */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.4); /* Darker overlay for locked effect */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    z-index: 10; /* Ensure it stays on top of the content */
+    pointer-events: auto; /* Allow interaction with the overlay */
+}
+
+.locked-overlay a {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    z-index: 11; /* Ensure the button remains clickable */
+}
+
+.locked-overlay a:hover {
+    background-color: #218838;
+}
+
+
+
+
+
+        
+
+
     </style>
 </head>
 <body class="courses-page">
@@ -146,29 +162,57 @@
             </div>
           </nav>
         </div>
-
-<div class="preview-container">
-    <div class="preview-header">
-        <h1>Preview of Web Application 2 - IS216</h1>
-        <p>Scroll through the preview. Full content is locked until payment is made.</p>
-    </div>
-    <div class="preview-content">
-        <p><strong>Page 1:</strong> Introduction to Web Applications - Web applications are programs that run in a web browser and are accessed via the internet. They typically consist of HTML, CSS, and JavaScript, which work together to create dynamic and interactive websites...</p>
-        <p><strong>Page 2:</strong> Understanding HTML, CSS, and JavaScript - These are the foundational technologies that make up the frontend of web applications. HTML is the structure, CSS is the design, and JavaScript adds interactivity...</p>
-        <p><strong>Page 3:</strong> Building Responsive Web Pages - Responsive design is essential for modern web applications, ensuring they work across all devices, from desktops to mobile phones...</p>
-        <p><strong>Page 4:</strong> User Interface Design Best Practices - UI design principles help create a pleasant and easy-to-use experience for users. Consistency, simplicity, and feedback are important elements to consider...</p>
-        <p><strong>Page 5:</strong> Full-Stack Development Overview - Full-stack development involves working on both the frontend and backend of an application. Understanding databases, servers, and APIs is critical for creating a complete web application...</p>
-        <p>...</p>
-    </div>
-    <div class="locked-overlay">
-        <h2>This preview is locked</h2>
-        <p>To unlock the full document, please make a payment of $10.</p>
-        <a href="payment-page.html">Unlock Full Access</a>
-    </div>
-</div>
+        <div class="preview-header">
+            <h1>Preview of Web Application 2 - IS216</h1>
+            <p>Scroll through the preview. Full content is locked until payment is made.</p>
+        </div>
+        <div class="preview-container">
+            <div class="preview-content">
+                <!-- Page 1 -->
+                <div class="page">
+                    <div class="locked-overlay">
+                        <h2>This preview is locked</h2>
+                        <p>To unlock the full document, please make a payment of $10.</p>
+                        <a href="payment-page.html">Unlock Full Access</a>
+                    </div>
+                    <div class="page-content">
+                        <h2>Page 1: Introduction to Web Applications</h2>
+                        <p>Web applications are programs that run in a web browser and are accessed via the internet...</p>
+                    </div>
+                </div>
+                <!-- Page 2 -->
+                <div class="page">
+                    <div class="locked-overlay">
+                        <h2>This preview is locked</h2>
+                        <p>To unlock the full document, please make a payment of $10.</p>
+                        <a href="payment-page.html">Unlock Full Access</a>
+                    </div>
+                    <div class="page-content">
+                        <h2>Page 2: Understanding HTML, CSS, and JavaScript</h2>
+                        <p>These are the foundational technologies that make up the frontend of web applications...</p>
+                    </div>
+                </div>
+                <!-- Page 3 -->
+                <div class="page">
+                    <div class="locked-overlay">
+                        <h2>This preview is locked</h2>
+                        <p>To unlock the full document, please make a payment of $10.</p>
+                        <a href="payment-page.html">Unlock Full Access</a>
+                    </div>
+                    <div class="page-content">
+                        <h2>Page 3: Building Responsive Web Pages</h2>
+                        <p>Responsive design is essential for modern web applications, ensuring they work across all devices...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        
 </main>
               
-<footer id="footer" class="footer position-relative light-background"></footer>
+<footer id="footer" class="footer position-relative light-background">
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
