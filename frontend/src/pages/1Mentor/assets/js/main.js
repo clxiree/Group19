@@ -224,3 +224,9 @@
       ModalmuteButton.style.display = 'none'; // Hide the mute icon when not hovered
     });
   });
+
+
+  document.addEventListener("DOMContentLoaded", () => {
+    fetchTeamCarousel();
+    fetchCourses();
+});
