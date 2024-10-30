@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Upload Notes - SMOOTutor</title>
+  <!-- Include necessary links and scripts -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+</head>
+
+<body class="course-details-page">
+
+  <!-- Header and Navigation (similar to notes.html header) -->
+
+  <main class="main">
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Upload Notes</h1>
+              <p class="mb-0">Please fill in the details and upload your notes.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Upload Form Section -->
+    <section class="get-a-quote section">
+      <div class="container">
+        <div class="row g-0" data-aos="fade-up" data-aos-delay="100">
+          <div class="col-lg-12" data-aos="fade-up" data-aos-delay="200">
+            <form id="uploadForm" class="php-email-form">
+              <h3>Upload Your Notes</h3>
+              <p>Provide the course details and attach your notes file.</p>
+              <div class="row gy-4">
+                <div class="col-md-6">
+                  <input type="text" id="courseId" class="form-control" placeholder="Course ID" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" id="courseName" class="form-control" placeholder="Course Name" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" id="courseProf" class="form-control" placeholder="Professor" required>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" id="owner" class="form-control" placeholder="Owner (Tutee or Tutor)" required>
+                </div>
+                <div class="col-md-12">
+                  <label for="file" class="form-label">Upload File:</label>
+                  <input type="file" id="file" class="form-control" required>
+                </div>
+                <div class="col-12 text-center">
+                  <button type="submit" class="btn btn-primary">Upload Note</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Firebase Configuration and JS Code -->
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+
+    // Upload Notes Functionality
+    document.getElementById("uploadForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const courseId = document.getElementById("courseId").value;
+      const courseName = document.getElementById("courseName").value;
+      const courseProf = document.getElementById("courseProf").value;
+      const owner = document.getElementById("owner").value;
+      const file = document.getElementById("file").files[0];
+
+      if (!file) {
+        alert("Please select a file.");
+        return;
+      }
+
+      const storageRef = storage.ref(`notes/${courseId}/${Date.now()}_${file.name}`);
+      storageRef.put(file).then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((downloadURL) => {
+          db.collection("BrowseNotes").add({
+            courseId: courseId,
+            courseName: courseName,
+            courseProf: courseProf,
+            owner: owner,
+            courseLink: downloadURL,
+          }).then(() => {
+            alert("Note uploaded successfully!");
+            document.getElementById("uploadForm").reset();
+            window.location.href = "notes.html"; // Redirect back to notes page after upload
+          }).catch((error) => {
+            console.error("Error adding note to Firestore:", error);
+            alert("Failed to upload note.");
+          });
+        });
+      }).catch((error) => {
+        console.error("Error uploading file:", error);
+        alert("Failed to upload file.");
+      });
+    });
+  </script>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
