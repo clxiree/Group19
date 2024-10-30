@@ -35,7 +35,7 @@
     /* Chat Container */
     .chat-container {
       display: flex;
-      height: calc(100vh - 70px);
+      height: calc(80vh - 70px);
     }
 
     /* Chat List */
@@ -413,14 +413,14 @@
       <div class="chat-window">
         <!-- Placeholder for picture when no chat is selected -->
         <div class="no-chat-selected" id="no-chat-selected">
-          <img src="assets/img/chat-placeholder.png" alt="Start a conversation">
+          <img src="assets/img/course-1.jpg" alt="Start a conversation">
           <p style="margin-top: 20px; color: #757575; font-size: 1.2em;">Select a chat to start messaging</p>
         </div>
 
         <!-- Chat Header -->
         <div class="chat-header" id="chat-header">
           <div class="chat-header-info">
-            <img src="assets/img/default-avatar.png" alt="Chat Avatar" id="chat-avatar">
+            <img src="assets/img/trainers/zenny.jpg" alt="Chat Avatar" id="chat-avatar">
             <div>
               <span id="chat-name">Select a chat</span><br>
               <span class="chat-status" id="chat-status">Online</span>
@@ -512,7 +512,7 @@
             const chatItem = document.createElement("div");
             chatItem.classList.add("chat-item", "d-flex", "align-items-center");
             chatItem.innerHTML = `
-              <img src="${chatData.chat_avatar || 'assets/img/default-avatar.png'}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
+              <img src="${chatData.chat_avatar || 'assets/img/trainers/zenny.jpg'}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
               <div class="chat-item-info">
                 <div class="chat-item-name">${chatData.chat_name || "Chat"}</div>
                 <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? chatData.last_message.content : 'Attachment') : ''}</div>
@@ -533,7 +533,7 @@
       chatItem.classList.add('active');
 
       document.getElementById("chat-name").textContent = chatData.chat_name || "Chat";
-      document.getElementById("chat-avatar").src = chatData.chat_avatar || "assets/img/default-avatar.png";
+      document.getElementById("chat-avatar").src = chatData.chat_avatar || "assets/img/trainers/zenny.jpg";
 
       // Show chat header and message input
       document.getElementById("no-chat-selected").style.display = "none";
