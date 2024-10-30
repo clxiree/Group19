@@ -33,6 +33,11 @@
   <!-- Axios CDN -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
+ <!-- Firebase JS SDK -->
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
   <!-- =======================================================
   * Template Name: Mentor
   * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
@@ -107,6 +112,7 @@
     </div><!-- End Page Title -->
 
     <!-- Courses Section -->
+    <div id="booking-list"></div>
     <div id="app">
       <section class="courses section">
   
@@ -235,38 +241,134 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
-  <script>
-    Vue.createApp({
-        data() {
-            return {
-                bookings: [] // array of booking objects
-            }
-        },
-        created() {
-            axios.get("./smooTutor_db/getBookings.php")  // Adjust the path to your actual getBookings.php file location
-                .then(response => {
-                    this.bookings = response.data;
-                    console.log(this.bookings)
-                })
-                .catch(error => {
-                    console.error("There was an error fetching the bookings: ", error.message);
-                });
-        },
-        methods: {
-            chunkedBookings(array, size) {
-                const chunked = [];
-                for (let i = 0; i < array.length; i += size) {
-                    chunked.push(array.slice(i, i + size));
-                }
-                return chunked;
-            }
-        }
-    }).mount('#app');
-</script>
+  <!-- <script>
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+    firebase.initializeApp(firebaseConfig);
 
-  
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const storage = firebase.storage();
+
+    let currentUser = null;
+    let selectedChatId = null;
+    let messagesListener = null;
+
+    // Authenticate and fetch chats
+    auth.signInAnonymously().then(() => {
+      console.log("User authenticated successfully.");
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          currentUser = user;
+          fetchBookings();
+        }
+      });
+    }).catch(error => {
+      console.error("Authentication error:", error);
+    });
+
+    // Fetch and display bookings list
+    function fetchBookings() {
+      db.collection("Bookings").get().then(snapshot => {
+        const bookingList = document.getElementById("booking-list");
+        bookingList.innerHTML = ""; // Clear existing bookings
+
+        snapshot.forEach(doc => {
+          const bookingData = doc.data();
+          const bookingItem = document.createElement("div");
+
+          // Format the display of booking data
+          bookingItem.textContent = `Booking ID: ${bookingData.bookingId}, Course: ${bookingData.courseName}, Fee: $${bookingData.fee}, Status: ${bookingData.status}`;
+          bookingItem.classList.add("booking-item");
+
+          // You can add event listeners here for any additional actions (e.g., loadBooking details)
+          // bookingItem.addEventListener("click", () => loadBooking(doc.id));
+          
+          bookingList.appendChild(bookingItem);
+          console.log(bookingList);
+        });
+      }).catch(error => {
+        console.error("Error fetching bookings:", error);
+      });
+    }
+
+    // Call the function to fetch bookings data
+    fetchBookings();
+  </script> -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Ensure Firebase is initialized correctly
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    
+    let currentUser = null;
+
+    // Authenticate anonymously and fetch bookings
+    auth.signInAnonymously().then(() => {
+        console.log("User authenticated successfully.");
+
+        // Fetch bookings once the user is authenticated
+        fetchBookings();
+    }).catch(error => {
+        console.error("Authentication error:", error);
+    });
+
+    // Fetch and display bookings
+    function fetchBookings() {
+        db.collection("Bookings").get().then(snapshot => {
+            const bookingList = document.getElementById("booking-list");
+            bookingList.innerHTML = ""; // Clear existing bookings
+
+            snapshot.forEach(doc => {
+                const bookingData = doc.data();
+                
+                // Create a container for each booking
+                const bookingItem = document.createElement("div");
+                bookingItem.classList.add("booking-item");
+                
+                // Add content for each booking
+                bookingItem.innerHTML = `
+                    <h3>Booking ID: ${bookingData.bookingId}</h3>
+                    <p>Course: ${bookingData.courseName}</p>
+                    <p>Fee: $${bookingData.fee}</p>
+                    <p>Status: ${bookingData.status}</p>
+                    <p>Mode: ${bookingData.mode}</p>
+                    <p>Date of Lesson: ${new Date(bookingData.dateOfLesson.seconds * 1000).toLocaleString()}</p>
+                `;
+
+                // Append the booking item to the list
+                bookingList.appendChild(bookingItem);
+            });
+        }).catch(error => {
+            console.error("Error fetching bookings:", error);
+        });
+    }
+});
+  </script>
 
 </body>
 
 </html>
-"./smooTutor_db/getBookings.php"
