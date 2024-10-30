@@ -1,19 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
+    <title>Login - SMOOTutor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - SMOOTuter</title>
-    <link rel="stylesheet" href="styles.css">
-    <script defer src="script.js"></script>
     <!-- Include Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <!-- Include particles.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
+
 <body>
+    <!-- Loading Screen -->
+    <div id="loading-screen" style="display: none;">
+        <div class="loader"></div>
+        <p>Checking your credentials...</p>
+    </div>
+
     <div class="background">
         <div id="particles-js"></div>
     </div>
@@ -24,7 +35,7 @@
             </div>
             <h2>Let the Tutoring Begin!</h2>
             <p class="subtitle">Log in to your account</p>
-            <form action="../login.php" method="POST" id="login-form">
+            <form id="login-form">
                 <div class="input-group">
                     <label for="login-email">Email Address</label>
                     <input type="email" id="login-email" placeholder="Enter your email" required>
@@ -41,16 +52,65 @@
                     </div>
                     <a href="forgot-password.html" class="forgot-password">Forgot Password?</a>
                 </div>
-                <button type="submit" class="btn" >Login</button>
+                <button type="submit" class="btn">Login</button>
                 <p class="or">OR</p>
                 <div class="social-login">
-                    <button type="button" class="btn google"><i class="fab fa-google"></i> Sign in with Google</button>
-                    <button type="button" class="btn facebook"><i class="fab fa-facebook-f"></i> Sign in with Facebook</button>
+                    <!-- Social login buttons -->
                 </div>
             </form>
-            <p class="signup-text">New to SMOOTuter? <a href="signup.html">Sign Up Now!</a></p>
+            <p class="signup-text">New to SMOOTutor? <a href="signup.html">Sign Up Now!</a></p>
             <a href="../index.html">BACK</a>
         </div>
     </div>
+
+    <!-- Firebase Initialization and Login Script -->
+    <script>
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+            authDomain: "smootutor-ed94a.firebaseapp.com",
+            databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "smootutor-ed94a",
+            storageBucket: "smootutor-ed94a.appspot.com",
+            messagingSenderId: "289686522861",
+            appId: "1:289686522861:web:5811385ced42106d78b5e4",
+            measurementId: "G-46QED8ZFKJ"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Login Functionality
+        document.getElementById('login-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            // Show the loading screen
+            document.getElementById('loading-screen').style.display = 'flex';
+
+            // Delay for 3 seconds to simulate checking
+            setTimeout(function () {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(userCredential => {
+                        // Hide the loading screen
+                        // document.getElementById('loading-screen').style.display = 'none';
+                        // Redirect to index.html upon successful login
+                        window.location.href = '../index.html';
+                    })
+                    .catch(error => {
+                        // Hide the loading screen
+                        document.getElementById('loading-screen').style.display = 'none';
+                        console.error('Login Error:', error.message);
+                        alert('WRONG USERNAME OR PASSWORD');
+                    });
+            }, 3000); // 3000 milliseconds = 3 seconds
+        });
+    </script>
+
+    <!-- Additional JS -->
+    <script src="script.js"></script>
 </body>
+
 </html>

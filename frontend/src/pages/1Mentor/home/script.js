@@ -55,7 +55,7 @@ document.getElementById('login-form')?.addEventListener('submit', function(e) {
 
     if (email && password) {
         // Simulate login logic
-        alert('Login successful!');
+        alert('Processing login...');
     } else {
         alert('Please fill out all fields.');
     }
