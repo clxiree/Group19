@@ -107,143 +107,75 @@
     </div><!-- End Page Title -->
 
     <section>
-        <div class="container my-5">
-            <div class="row g-3">
-                <!-- Purchase Summary -->
-                <div class="col-lg-6">
-                    <div class="card p-3">
-                        <h5 class="card-title">1. Purchase Summary</h5>
-                        <div class="card-body">
-                            <ul>
-                            <li class="mb-0">12.00PM - 2.00PM | COMPUTATIONAL THINKING | TUTOR ZENNY GOH</li>
-                            <li class="mb-0">2.00PM - 4.00PM | INTERACTION DESIGN PROTOTYPING | TUTOR CLOUDY</li>
-                            </ul>
-                    
-                        </div>
-                    </div>
+      <div class="container mt-5">
+        <!-- Main Section -->
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-8">
+                <!-- Section 1: Your Account -->
+                <div class="checkout-section">
+                    <h5 class="section-title">1. Your Account</h5>
+                    <p>christinchoo03@gmail.com</p>
+                    <a href="#">Edit</a>
                 </div>
 
-                <!-- Payment & Discounts -->
-                <div class="col-lg-6">
-                    <div class="card p-3">
-                        <h5 class="card-title">2. Payment & Discounts</h5>
-                        <div class="card-body">
-                            <!-- Saved Payment Methods -->
-                            <div class="mb-3">
-                                <label for="saved-payment-methods" class="form-label">Saved Payment Methods</label>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="payment-method" id="visa" checked>
-                                    <label class="form-check-label" for="visa">
-                                        Paynow
-                                    </label>
-                                </div>
-                            </div>
-                            <!-- More Payment Methods -->
-                            <div>
-                                <a href="#" class="text-primary">More Payment Methods</a>
-                            </div>
-                            <!-- Discount Code -->
-                            <div class="mt-3">
-                                <label for="discount-code" class="form-label">Discount Code</label>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" id="discount-code" placeholder="Discount Code">
-                                    <button class="btn btn-outline-secondary" type="button">Apply</button>
-                                </div>
-                            </div>
-                            <!-- Continue Button -->
-                            <div class="mt-4">
-                                <button class="btn btn-buy w-100">Continue</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-        
+                <!-- Section 2: Payment & Discounts -->
+                <div class="checkout-section">
+                    <h5 class="section-title">2. Payment & Discounts</h5>
+                    <p><strong>Saved Payment Methods</strong></p>
 
-                <!-- Review & Purchase Section -->
-                
-                <div class="col-lg-12">
-                    <div class="card p-3">
-                        <h5 class="card-title">3. Review & Purchase</h5>
-                        <div class="card-body"><div class="container my-5">
-                            <!-- Payment Summary -->
-                            <div class="row mb-3">
-                                <div class="col-6">
-                                    <h6>Total Payment</h6>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <h6 class="text-danger">$8.18</h6>
-                                </div>
-                            </div>
-                        
-                            <!-- Payment Time Limit -->
-                            <div class="row mb-4">
-                                <div class="col-6">
-                                    <h6>Payment Within</h6>
-                                </div>
-                                <div class="col-6 text-end">
-                                    <h6 class="countdown" id="demo"></h6>
-                                    <p class="text-muted">Due on <span id="countdown-date"></span></p>
-                                </div>
-                            </div>
-                        
-                            <!-- PayNow Section -->
-                            <div class="row mb-4">
-                                <div class="col-12">
-                                    <h6><img src="../1Mentor/assets/img/paynow_logo.jpg" alt="PayNow Logo" width="50"> PayNow</h6>
-                                </div>
-                                <div class="col-12 text-center">
-                                    <!-- QR Code Image -->
-                                    <img src="../1Mentor/assets/img/paynow_qrcode.jpg" alt="PayNow QR Code" class="qr-code" width="250">
-                                </div>
-                            </div>
-                        
-                            <!-- Instructions -->
-                            <div class="row mb-4">
-                                <div class="col-12 instructions">
-                                    <p><span class="step-number">1</span> Please scan the QR code and make payments using PayNow.</p>
-                                    <p><span class="step-number">2</span> Make sure the recipient is <span>SMOOTUTOR PRIVATE LIMITED</span>.</p>
-                                    <p><span class="step-number">3</span> If you have successfully made the payment but the page is not automatically redirected, please refresh after 30 mins. If the payment status is still not updated, please contact SMOOTUTOR Customer Service.</p>
-                                </div>
-                            </div>
-                        </div></div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="visaCard" checked>
+                        <label class="form-check-label" for="visaCard">
+                            <img src="https://via.placeholder.com/40x20?text=VISA" alt="Visa"> **** 6408
+                        </label>
                     </div>
-                </div>
-                </div>
 
-                
-        
+                    <button class="btn btn-link text-decoration-none mt-2">More Payment Methods</button>
+
+                    <!-- Discount Code Section -->
+                    <div class="input-group mt-3">
+                        <input type="text" class="form-control" placeholder="Discount Code">
+                        <button class="btn btn-secondary" type="button">Apply</button>
+                    </div>
+
+                    <!-- Continue Button -->
+                    <button class="btn btn-dark mt-3">Continue</button>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-4">
                 <!-- Subscription Summary -->
-                <div class="row mt-4">
-                <div class="col-lg-12">
-                    <div class="card p-3">
-                        <h5 class="card-title">Subscription Summary</h5>
-                        <div class="card-body">
-                            <p class="mb-0">E Maths</p>
-                            <p class="mb-0 text-muted">every 2 months</p>
-                            <hr>
-                            <div class="d-flex justify-content-between">
-                                <span>Subtotal</span>
-                                <span>SGD 3.00</span>
-                            </div>
-                            <div class="d-flex justify-content-between">
-                                <span>Tax</span>
-                                <span>SGD 0.00</span>
-                            </div>
-                            <hr>
-                            <div class="d-flex justify-content-between fw-bold">
-                                <span>Total</span>
-                                <span>SGD 3.00</span>
-                            </div>
-                            <hr>
-                            <div class="text-center">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2e/SecureSSL-logo.svg" alt="Secure SSL Checkout" width="100">
-                            </div>
-                        </div>
+                <div class="checkout-section">
+                    <h5 class="section-title">Subscription Summary</h5>
+                    <p><strong>E Maths</strong></p>
+                    <p>Every 6 months</p>
+                    <p>Payment by credit card or debit card</p>
+
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Discount Code">
+                        <button class="btn btn-secondary" type="button">Apply</button>
                     </div>
+
+                    <!-- Summary -->
+                    <p>Subtotal: <span class="float-end">SGD 7.50</span></p>
+                    <p>Tax: <span class="float-end">SGD 0.00</span></p>
+                    <hr>
+                    <p><strong>Total: <span class="float-end">SGD 7.50</span></strong></p>
+
+                    <!-- Secure SSL Checkout -->
+                    <div class="text-center secure-checkout">
+                        <img src="https://via.placeholder.com/40x40?text=SSL" alt="SSL Secure">
+                        <p class="mt-2">Secure SSL Checkout</p>
+                    </div>
+
+                    <!-- Countdown Timer -->
+                    <p><strong>Time Remaining: <span id="countdown"></span></strong></p>
                 </div>
             </div>
-            </div>
+        </div>
+    </div>
             
             
     </section>
@@ -337,37 +269,38 @@
 
 
   <script>
-    // Set the countdown duration to 2 hours (in milliseconds)
-    var countdownDuration = 2 * 60 * 60 * 1000;
-    
-    // Set the start time
-    var countDownDate = new Date().getTime() + countdownDuration;
-    
-    
-    // Update the count down every 1 second
-    var x = setInterval(function() {
-    
-      // Get the current time
-      var now = new Date().getTime();
-    
-      // Calculate the remaining time
-      var distance = countDownDate - now;
-    
-      // Time calculations for hours, minutes, and seconds
-      var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    
-      // Display the result in the element with id="demo"
-      document.getElementById("countdown-date").innerText = new Date();
-      document.getElementById("demo").innerHTML = hours + "h " + minutes + "m " + seconds + "s ";
-    
-      // If the countdown reaches zero, reset it to 2 hours again
-      if (distance < 0) {
-        countDownDate = new Date().getTime() + countdownDuration;
-      }
-    }, 1000);
-    </script>
+    // Function to start the 2-hour countdown
+    function startCountdown() {
+        const countdownElement = document.getElementById('countdown');
+
+        // Get the current time and add 2 hours
+        const now = new Date();
+        const deadline = new Date(now.getTime() + 2 * 60 * 60 * 1000); // Add 2 hours
+
+        // Update the countdown every second
+        const countdownInterval = setInterval(function () {
+            const currentTime = new Date();
+            const timeRemaining = deadline - currentTime;
+
+            // Calculate hours, minutes, and seconds
+            const hours = Math.floor(timeRemaining / (1000 * 60 * 60));
+            const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+            // Display the countdown timer
+            countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+
+            // When the countdown reaches zero, stop the interval and display a message
+            if (timeRemaining <= 0) {
+                clearInterval(countdownInterval);
+                countdownElement.innerHTML = "Time is up!";
+            }
+        }, 1000);
+    }
+
+    // Start the countdown when the page loads
+    window.onload = startCountdown;
+</script>
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
