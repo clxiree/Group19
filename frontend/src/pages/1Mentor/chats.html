@@ -3,52 +3,187 @@
 
 <head>
   <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Chats - Mentor Bootstrap Template</title>
-  <meta name="description" content="">
-  <meta name="keywords" content="">
-
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <title>SMOOTutor Chats</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap"
     rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- Custom CSS for Chats -->
-  <link href="assets/css/chats.css" rel="stylesheet">
 
   <!-- Font Awesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 
-  <!-- =======================================================
-  * Template Name: Mentor
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <!-- Custom CSS for the chat layout -->
+  <style>
+    body {
+      overflow: hidden;
+    }
+
+    .chat-container {
+      display: flex;
+      height: calc(100vh - 70px);
+      /* Adjust according to header height */
+    }
+
+    .chat-list {
+      width: 25%;
+      border-right: 1px solid #ddd;
+      overflow-y: auto;
+    }
+
+    .chat-window {
+      width: 75%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .message-list {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background-color: #f9f9f9;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      max-width: 60%;
+      word-wrap: break-word;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    .message.sent {
+      margin-left: auto;
+      background-color: #dcf8c6;
+      border-radius: 15px 15px 0 15px;
+      padding: 10px;
+      position: relative;
+    }
+
+    .message.received {
+      background-color: #fff;
+      border-radius: 15px 15px 15px 0;
+      padding: 10px;
+      position: relative;
+    }
+
+    .message .timestamp {
+      font-size: 12px;
+      color: #888;
+      text-align: right;
+      margin-top: 5px;
+    }
+
+    .message-input {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      background-color: #eee;
+    }
+
+    .message-input input {
+      flex: 1;
+      padding: 10px;
+      border-radius: 20px;
+      border: 1px solid #ccc;
+      outline: none;
+    }
+
+    .message-input button {
+      background: none;
+      border: none;
+      margin-left: 10px;
+      font-size: 24px;
+      cursor: pointer;
+    }
+
+    .chat-header {
+      padding: 15px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      align-items: center;
+    }
+
+    .chat-header img {
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      margin-right: 15px;
+    }
+
+    .chat-header .chat-name {
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background-color: #ccc;
+      border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background-color: #f1f1f1;
+    }
+
+    @media (max-width: 768px) {
+      .chat-container {
+        flex-direction: column;
+      }
+
+      .chat-list {
+        width: 100%;
+        height: 30%;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .chat-window {
+        width: 100%;
+        height: 70%;
+      }
+    }
+  </style>
 </head>
 
 <body class="chats-page">
 
-  <!-- ======= Header ======= -->
+  <!-- Header -->
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
@@ -60,9 +195,9 @@
         <ul>
           <li><a href="index.html">Home<br></a></li>
           <li><a href="about.html">About</a></li>
-          <li><a href="bookings.html" class="active">Bookings</a></li>
+          <li><a href="bookings.html">Bookings</a></li>
           <li><a href="trainers.html">Trainers</a></li>
-          <li><a href="chats.html">Chats</a></li>
+          <li><a href="chats.html" class="active">Chats</a></li>
           <li><a href="proofread.html">Proofread</a></li>
           <li class="dropdown">
             <a href="notes.html" id="notesDropdown" aria-expanded="false">
@@ -71,236 +206,195 @@
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
               <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-              
             </ul>
           </li>
-          
-  
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-
-
 
       <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
 
     </div>
-  </header><!-- End Header -->
+  </header>
 
+  <!-- Main Content -->
   <main class="main">
+    <div class="chat-container">
+      <!-- Chat List -->
+      <div class="chat-list" id="chat-list">
+        <!-- Chat items will be injected here -->
+      </div>
 
-    <!-- Page Title -->
-    <div class="page-title" data-aos="fade">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1>Chats</h1>
-              <p>Connect with your tutors and peers through our integrated chat system.</p>
-            </div>
-          </div>
+      <!-- Chat Window -->
+      <div class="chat-window">
+        <!-- Chat Header -->
+        <div class="chat-header" id="chat-header">
+          <!-- Dynamic content -->
+          <img src="assets/img/course-1.jpg" alt="Chat Avatar" id="chat-avatar">
+          <span class="chat-name" id="chat-name">Select a chat</span>
+        </div>
+
+        <!-- Message List -->
+        <div class="message-list" id="message-list">
+          <!-- Messages will be injected here -->
+          <p class="text-center text-muted">No chat selected</p>
+        </div>
+
+        <!-- Message Input -->
+        <div class="message-input" id="message-input">
+          <input type="text" id="message-text" placeholder="Type a message..." disabled>
+          <button id="attach-file-button"><i class="fas fa-paperclip"></i></button>
+          <button id="send-message-button"><i class="fas fa-paper-plane"></i></button>
+          <input type="file" id="attach-file-input" style="display: none;">
         </div>
       </div>
     </div>
+  </main>
 
-    <!-- Chats Section -->
-    <section id="chats" class="chats section">
-      <div class="container" data-aos="fade-up">
-        <h2>Your Chats</h2>
-        <div class="list-group" id="chat-list">
 
-          <!-- Dynamic Chat Items with query parameters -->
-          <!-- <a href="chat-detail.html?chatId=1&name=John%20Doe"
-            class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="assets/img/trainers/zenny.jpg" alt="John Doe" class="rounded-circle me-3" width="50" height="50">
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h5 class="mb-1">Tutor Zenny</h5>
-                <small class="text-muted">2 mins ago</small>
-              </div>
-              <p class="mb-1 text-truncate">See you tomorrow!</p>
-            </div>
-          </a>
+  <div class="chat-container">
+    <!-- Chat List -->
+    <div class="chat-list" id="chat-list">
+      <!-- Chat items will be added here dynamically -->
+    </div>
 
-          <a href="chat-detail.html?chatId=2&name=Mary%20Smith"
-            class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="assets/img/trainers/trainer-1.jpg" alt="Mary Smith" class="rounded-circle me-3" width="50"
-              height="50">
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h5 class="mb-1">Tutor Cloudy</h5>
-                <small class="text-muted">10 mins ago</small>
-              </div>
-              <p class="mb-1 text-truncate">Can we reschedule?</p>
-            </div>
-          </a>
-
-          <a href="chat-detail.html?chatId=3&name=Class%20Group"
-            class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="assets/img/trainers/trainer-2.jpg" alt="Class Group" class="rounded-circle me-3" width="50"
-              height="50">
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h5 class="mb-1">Tutor Chrispy</h5>
-                <small class="text-muted">1 hour ago</small>
-              </div>
-              <p class="mb-1 text-truncate">Project submission?</p>
-            </div>
-          </a>
-
-          <a href="chat-detail.html?chatId=4&name=Alice%20Tutor"
-            class="list-group-item list-group-item-action d-flex align-items-center">
-            <img src="assets/img/trainers/trainer-3.jpg" alt="Alice Tutor" class="rounded-circle me-3" width="50"
-              height="50">
-            <div class="w-100">
-              <div class="d-flex justify-content-between">
-                <h5 class="mb-1">Tutor YiChi</h5>
-                <small class="text-muted">3 hours ago</small>
-              </div>
-              <p class="mb-1 text-truncate">Don't forget the quiz!</p>
-            </div>
-          </a> -->
-          <div class="list-group" id="chat-list">
-            <!-- Chat items will be injected here -->
-          </div>
-
-        </div>
+    <!-- Chat Window -->
+    <div class="chat-window">
+      <div class="message-list" id="message-list">
+        <!-- Messages will appear here -->
+        <p class="text-center text-muted">No chat selected</p>
       </div>
-    </section>
-
-
-    <!-- ======= Footer ======= -->
-    <footer id="footer" class="footer position-relative light-background">
-
-      <div class="container footer-top">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">Mentor</span>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>A108 Adam Street</p>
-              <p>New York, NY 535022</p>
-              <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-              <p><strong>Email:</strong> <span>info@example.com</span></p>
-            </div>
-            <div class="social-links d-flex mt-4">
-              <a href=""><i class="bi bi-twitter"></i></a>
-              <a href=""><i class="bi bi-facebook"></i></a>
-              <a href=""><i class="bi bi-instagram"></i></a>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Terms of service</a></li>
-              <li><a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><a href="#">Web Design</a></li>
-              <li><a href="#">Web Development</a></li>
-              <li><a href="#">Product Management</a></li>
-              <li><a href="#">Marketing</a></li>
-              <li><a href="#">Graphic Design</a></li>
-            </ul>
-          </div>
-
-          <div class="col-lg-4 col-md-12 footer-newsletter">
-            <h4>Our Newsletter</h4>
-            <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
-            <form action="forms/newsletter.php" method="post" class="php-email-form">
-              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe">
-              </div>
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
-            </form>
-          </div>
-
-        </div>
+      <div class="message-input">
+        <input type="text" id="message-text" placeholder="Type a message..." />
+        <button id="attach-file-button"><i class="fas fa-paperclip"></i></button>
+        <button id="send-message-button"><i class="fas fa-paper-plane"></i></button>
+        <input type="file" id="attach-file-input" style="display: none;">
       </div>
+    </div>
+  </div>
 
-      <div class="container copyright text-center mt-4">
-        <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
-        <div class="credits">
-          Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-        </div>
-      </div>
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    </footer><!-- End Footer -->
+  <!-- Firebase Initialization and Chat Logic -->
+  <script>
+    // Initialize Firebase
+    var firebaseConfig = {
+      apiKey: "AIzaSyDB3AKrgWNgPxQ8sbfLAifgjJCNrJC6DBI",
+      authDomain: "smootutor.firebaseapp.com",
+      projectId: "smootutor",
+      storageBucket: "smootutor.appspot.com",
+      messagingSenderId: "67066833337",
+      appId: "1:67066833337:web:281d7841b7934e2532ee68",
+      measurementId: "G-M1T90080HR"
+    };
+    firebase.initializeApp(firebaseConfig);
 
-    <!-- Scroll Top -->
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    const storage = firebase.storage();
 
-    <!-- Preloader -->
-    <div id="preloader"></div>
+    let currentUser = null;
+    let selectedChatId = null;
 
-    <!-- Vendor JS Files -->
-    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="assets/vendor/php-email-form/validate.js"></script>
-    <script src="assets/vendor/aos/aos.js"></script>
-    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-    <!-- Main JS File -->
-    <script src="assets/js/main.js"></script>
-
-    <!-- Custom JS for Chats -->
-    <script src="assets/js/chats.js"></script>
-
-    <script>
-      $(document).ready(function() {
-          $.ajax({
-              url: 'get_chats.php',
-              method: 'GET',
-              dataType: 'json',
-              success: function(chats) {
-                  if (chats.error) {
-                      alert(chats.error);
-                      window.location.href = 'login.html';
-                  } else {
-                      renderChats(chats);
-                  }
-              },
-              error: function() {
-                  alert('An error occurred while fetching chats.');
-              }
-          });
-      
-          function renderChats(chats) {
-              var chatList = $('#chat-list');
-              chats.forEach(function(chat) {
-                  var chatName = chat.is_group_chat ? chat.chat_name : chat.sender_username;
-                  var lastMessage = chat.last_message ? chat.last_message : 'No messages yet';
-                  var sentAt = chat.sent_at ? chat.sent_at : '';
-                  var chatItem = `
-                      <a href="chat-detail.html?chat_id=${chat.chat_id}"
-                          class="list-group-item list-group-item-action d-flex align-items-center">
-                          <img src="assets/img/default-avatar.png" alt="${chatName}" class="rounded-circle me-3" width="50" height="50">
-                          <div class="w-100">
-                              <div class="d-flex justify-content-between">
-                                  <h5 class="mb-1">${chatName}</h5>
-                                  <small class="text-muted">${sentAt}</small>
-                              </div>
-                              <p class="mb-1 text-truncate">${lastMessage}</p>
-                          </div>
-                      </a>
-                  `;
-                  chatList.append(chatItem);
-              });
-          }
+    // Authenticate anonymously and fetch chats
+    auth.signInAnonymously().then(() => {
+      console.log("User authenticated successfully.");
+      auth.onAuthStateChanged(user => {
+        if (user) {
+          currentUser = user;
+          fetchChats();
+        }
       });
-      </script>
+    }).catch(error => {
+      console.error("Authentication error:", error);
+    });
+
+    // Fetch and display chat list
+    function fetchChats() {
+      db.collection("Chats").get().then(snapshot => {
+        const chatList = document.getElementById("chat-list");
+        chatList.innerHTML = ""; // Clear existing chats
+
+        snapshot.forEach(doc => {
+          const chatData = doc.data();
+          const chatItem = document.createElement("div");
+          chatItem.textContent = chatData.chat_name || "Unnamed Chat";
+          chatItem.classList.add("chat-item");
+          chatItem.addEventListener("click", () => loadChat(doc.id));
+          chatList.appendChild(chatItem);
+        });
+      }).catch(error => {
+        console.error("Error fetching chats:", error);
+      });
+    }
+
+    // Load messages for the selected chat
+    function loadChat(chatId) {
+      selectedChatId = chatId;
+      const messageList = document.getElementById("message-list");
+      messageList.innerHTML = ""; // Clear previous messages
+
+      db.collection("Chats").doc(chatId).collection("messages")
+        .orderBy("sent_at")
+        .onSnapshot(snapshot => {
+          messageList.innerHTML = ""; // Clear to prevent duplication
+          snapshot.forEach(doc => {
+            const messageData = doc.data();
+            const messageDiv = document.createElement("div");
+            messageDiv.classList.add("message");
+            messageDiv.classList.add(messageData.sender_id === currentUser.uid ? "sent" : "received");
+            messageDiv.textContent = messageData.content;
+            messageList.appendChild(messageDiv);
+          });
+          messageList.scrollTop = messageList.scrollHeight;
+        }, error => {
+          console.error("Error loading messages:", error);
+        });
+    }
+
+    // Send a text message
+    document.getElementById("send-message-button").addEventListener("click", () => {
+      const messageText = document.getElementById("message-text").value.trim();
+      if (messageText && selectedChatId) {
+        db.collection("Chats").doc(selectedChatId).collection("messages").add({
+          content: messageText,
+          sender_id: currentUser.uid,
+          sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+          type: "text",
+          read_by_receiver: false
+        }).then(() => {
+          document.getElementById("message-text").value = ""; // Clear input
+        }).catch(error => {
+          console.error("Error sending message:", error);
+        });
+      }
+    });
+
+    // Send a file
+    document.getElementById("attach-file-button").addEventListener("click", () => {
+      document.getElementById("attach-file-input").click();
+    });
+
+    document.getElementById("attach-file-input").addEventListener("change", event => {
+      const file = event.target.files[0];
+      if (file && selectedChatId) {
+        const fileRef = storage.ref().child("chat_files/" + file.name);
+        fileRef.put(file).then(() => {
+          return fileRef.getDownloadURL();
+        }).then(fileURL => {
+          db.collection("Chats").doc(selectedChatId).collection("messages").add({
+            content: fileURL,
+            sender_id: currentUser.uid,
+            sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+            type: "file",
+            read_by_receiver: false
+          });
+        }).catch(error => {
+          console.error("Error uploading file:", error);
+        });
+      }
+    });
+  </script>
 
 </body>
 
