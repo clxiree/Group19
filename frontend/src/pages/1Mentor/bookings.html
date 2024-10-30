@@ -45,6 +45,132 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Ensure Firebase is initialized correctly
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    
+    let currentUser = null;
+
+    // Authenticate anonymously and fetch bookings
+    auth.signInAnonymously().then(() => {
+        console.log("User authenticated successfully.");
+
+        // Fetch bookings once the user is authenticated
+        fetchBookings();
+    }).catch(error => {
+        console.error("Authentication error:", error);
+    });
+
+    // Fetch and display bookings
+    // function fetchBookings() {
+    //     db.collection("Bookings").get().then(snapshot => {
+    //         const bookingList = document.getElementById("booking-list");
+            
+
+    //         snapshot.forEach(doc => {
+    //             const bookingData = doc.data();
+                
+    //             // Create a container for each booking
+    //             const bookingItem = document.createElement("div");
+    //             bookingItem.classList.add("booking-item");
+
+    //             console.log(bookingData)
+
+    //             var str = `<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">`;
+                
+    //             str += `
+                
+    //             <div class="col">
+    //               <div class="card shadow-sm h-100">
+    //                 <img src="../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg" class="card-img-top" alt="Course Image">
+    //                 <div class="card-body">
+    //                   <h5 class="card-title">${bookingData.courseName}</h5>
+    //                   <p class="card-text"><b>Booking ID:</b> ${bookingData.bookingId}</p>
+    //                   <p class="card-text"><b>Status:</b> ${bookingData.status}</p>
+    //                   <p class="card-text"><b>Date of Lesson:</b> ${bookingData.dateOfLesson}</p>
+    //                   <p class="card-text"><b>Mode:</b> ${bookingData.mode}</p>
+    //                 </div>
+    //                 <div class="card-footer d-flex justify-content-between align-items-center">
+    //                   <span class="text-muted">$${bookingData.fee}</span>
+    //                   <a href="course-details.html" class="btn btn-primary">View Details</a>
+    //                 </div>
+    //               </div>
+    //             </div>
+              
+    //             `;
+    //             // Add content for each booking
+    //             bookingItem.innerHTML = str;
+
+    //             // Append the booking item to the list
+    //             bookingList.appendChild(bookingItem);
+    //         });
+    //     }).catch(error => {
+    //         console.error("Error fetching bookings:", error);
+    //     });
+    // }
+    // Fetch and display bookings
+function fetchBookings() {
+  db.collection("Bookings").get().then(snapshot => {
+    const bookingList = document.getElementById("booking-list");
+    bookingList.innerHTML = ''; // Clear previous content
+
+    var str = '<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">';
+
+    snapshot.forEach(doc => {
+      const bookingData = doc.data();
+
+
+      str += `
+      <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+                <div class="course-item">
+                  <img src="../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg" class="card-img-top" alt="Course Image">
+                  <div class="course-content">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <p class="category">${bookingData.courseCode}</p>
+                      <p class="price">$${bookingData.fee}</p>
+                    </div>
+                    <h3>${bookingData.courseName}</h3>
+                    <p class="description"><b>Status:</b> ${bookingData.status}</p>
+                    <p class="description"><b>Date of Booking:</b> ${bookingData.dateOfLesson}</p>
+                    <p class="description"><b>Mode:</b> ${bookingData.mode}</p>
+                    <div class="trainer d-flex justify-content-between align-items-center">
+                      <div class="trainer-profile d-flex align-items-center">
+                        <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
+                        <a href="" class="trainer-link">Zenny Potato</a>
+                      </div>
+                      <div class="trainer-rank d-flex align-items-center">
+                        <a href="preview.html" class="preview-link" style="font-size: 15px;">Preview <span class="lock-icon">🔒</span></a>
+                      </div>         
+                    </div>
+                  </div>
+                </div>
+              </div>`
+
+    });
+
+    str += '</div>';
+    bookingList.innerHTML = str;
+  }).catch(error => {
+    console.error("Error fetching bookings:", error);
+  });
+}
+});
+  </script>
 </head>
 
 <body class="courses-page">
@@ -112,44 +238,12 @@
     </div><!-- End Page Title -->
 
     <!-- Courses Section -->
-    <div id="booking-list"></div>
-    <div id="app">
+    
+    
       <section class="courses section">
-  
-          <div class="container">
-              <div class="row" v-for="(bookingRow, index) in chunkedBookings(bookings, 3)" :key="index">
-                  <div class="col-lg-4 col-md-6 d-flex align-items-stretch" v-for="booking in bookingRow" :key="booking.id" data-aos="zoom-in" data-aos-delay="100">
-                      <!-- <div class="course-item"> -->
-                          <!-- <img src="assets/img/{{}}" class="img-fluid" alt="..."> -->
-                          <div class="course-content">
-                              <div class="d-flex justify-content-between align-items-center mb-3">
-                                  <p class="category">{{ booking.coursecode }}</p>
-                                  <p class="price">${{ booking.price }}</p>
-                              </div>
-  
-                              <h3><a href="course-details.html">{{ booking.coursename }}</a></h3>
-                              <p class="description">Status: <b>{{ booking.status }}</b></p>
-                              <p class="description">Date of Lesson: {{ booking.dateoflesson }}</p>
-                              <p class="description">Mode: {{ booking.mode }}</p>
-                              <div class="trainer d-flex justify-content-between align-items-center">
-                                  <div class="trainer-profile d-flex align-items-center">
-                                      <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
-                                      <a href="" class="trainer-link">Zenny Potato</a>
-                                  </div>
-                                  <div class="trainer-rank d-flex align-items-center">
-                                      <i class="bi bi-person user-icon"></i>&nbsp;99++
-                                      &nbsp;&nbsp;
-                                      <i class="bi bi-heart heart-icon"></i>&nbsp;99++
-                                  </div>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-  
+        <div id="booking-list"></div>
       </section>
-  </div>
+  
 
   </main>
 
@@ -305,69 +399,7 @@
     fetchBookings();
   </script> -->
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Ensure Firebase is initialized correctly
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    var firebaseConfig = {
-      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-      authDomain: "smootutor-ed94a.firebaseapp.com",
-      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "smootutor-ed94a",
-      storageBucket: "smootutor-ed94a.appspot.com",
-      messagingSenderId: "289686522861",
-      appId: "1:289686522861:web:5811385ced42106d78b5e4",
-      measurementId: "G-46QED8ZFKJ"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    const db = firebase.firestore();
-    const auth = firebase.auth();
-    
-    let currentUser = null;
-
-    // Authenticate anonymously and fetch bookings
-    auth.signInAnonymously().then(() => {
-        console.log("User authenticated successfully.");
-
-        // Fetch bookings once the user is authenticated
-        fetchBookings();
-    }).catch(error => {
-        console.error("Authentication error:", error);
-    });
-
-    // Fetch and display bookings
-    function fetchBookings() {
-        db.collection("Bookings").get().then(snapshot => {
-            const bookingList = document.getElementById("booking-list");
-            bookingList.innerHTML = ""; // Clear existing bookings
-
-            snapshot.forEach(doc => {
-                const bookingData = doc.data();
-                
-                // Create a container for each booking
-                const bookingItem = document.createElement("div");
-                bookingItem.classList.add("booking-item");
-                
-                // Add content for each booking
-                bookingItem.innerHTML = `
-                    <h3>Booking ID: ${bookingData.bookingId}</h3>
-                    <p>Course: ${bookingData.courseName}</p>
-                    <p>Fee: $${bookingData.fee}</p>
-                    <p>Status: ${bookingData.status}</p>
-                    <p>Mode: ${bookingData.mode}</p>
-                    <p>Date of Lesson: ${new Date(bookingData.dateOfLesson.seconds * 1000).toLocaleString()}</p>
-                `;
-
-                // Append the booking item to the list
-                bookingList.appendChild(bookingItem);
-            });
-        }).catch(error => {
-            console.error("Error fetching bookings:", error);
-        });
-    }
-});
-  </script>
+  
 
 </body>
 
