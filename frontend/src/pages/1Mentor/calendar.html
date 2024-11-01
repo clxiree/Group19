@@ -6,6 +6,8 @@
     <title>Lesson Booking</title>
     <meta name="description" content="">
     <meta name="keywords" content="">
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
@@ -237,6 +239,15 @@
             width: 100%;
             background: #f8f9fa;
         }
+        .calendar-day.available {
+    cursor: pointer;
+    background-color: #e7f1ff;
+}
+
+.calendar-day.unavailable {
+    color: #ccc;
+}
+
     </style>
 </head>
 <body>
@@ -268,21 +279,25 @@
 
             <!-- Include booking details -->
             <div class="booking-details">
-                <div class="lesson-options">
-                    <label for="tutor">Tutor: Ms ABC</label><br>
-                    <label for="subject">Subject Chosen</label>
-                    <select id="subject">
-                        <option value="LOLI101">LOLI101</option>
-                        <option value="MATH201">MATH201</option>
-                        <option value="SCIS202">SCIS202</option>
-                    </select><br>
-                    
-                    <label for="mode">Mode of Lesson</label>
-                    <select id="mode">
-                        <option value="Physical">Physical</option>
-                        <option value="Online">Online</option>
-                    </select>
-                </div>
+              <div class="lesson-options">
+                  <!-- Add Tutor Dropdown -->
+                  <label for="tutor">Tutor:</label>
+                  <select id="tutor" onchange="fetchTutorAvailability()">
+                      <!-- Options will be populated dynamically -->
+                  </select><br>
+                  
+                  <label for="subject">Subject Chosen</label>
+                  <select id="subject">
+                      <!-- Subjects will be populated dynamically based on selected tutor -->
+                  </select><br>
+                  
+                  <label for="mode">Mode of Lesson</label>
+                  <select id="mode">
+                      <option value="Physical">Physical</option>
+                      <option value="Online">Online</option>
+                  </select>
+              </div>
+
 
                 <div class="timeslots">
                     <h3>Available Timeslots for <span id="selected-date">20 May 2024</span>:</h3>
@@ -388,125 +403,167 @@
           </div>
         </div>
       </footer>
-
-    <script>
-        // Timeslot data for specific dates
-        const timeslots = {
-            "2024-05-20": ["10:00AM - 12:00PM", "2:00PM - 4:00PM"],
-            "2024-05-21": ["11:00AM - 1:00PM", "3:00PM - 5:00PM"],
-            "2024-05-22": ["09:00AM - 11:00AM", "1:00PM - 3:00PM", "4:00PM - 6:00PM"],
-            "2024-05-23": ["10:00AM - 12:00PM", "2:00PM - 4:00PM"],
-            "2024-05-24": ["09:00AM - 11:00AM", "1:00PM - 3:00PM"],
+      <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+            authDomain: "smootutor-ed94a.firebaseapp.com",
+            projectId: "smootutor-ed94a",
+            storageBucket: "smootutor-ed94a.appspot.com",
+            messagingSenderId: "289686522861",
+            appId: "1:289686522861:web:5811385ced42106d78b5e4",
+            measurementId: "G-46QED8ZFKJ"
         };
 
-        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
 
-        function daysInMonth(month, year) {
-            return new Date(year, month + 1, 0).getDate(); // Get total days in a given month/year
+        // Define variables
+        let tutorTimeslots = {};
+        let subjectsTaught = [];
+
+        // Populate tutor dropdown with data from Firestore
+        async function populateTutors() {
+            const tutorSelect = document.getElementById("tutor");
+            tutorSelect.innerHTML = ""; // Clear existing options
+            const snapshot = await db.collection("Particulars").where("Tutor", "==", true).get();
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const option = document.createElement("option");
+                option.value = doc.id;
+                option.textContent = `Tutor ${data.UserID}`;
+                tutorSelect.appendChild(option);
+            });
+
+            // Automatically fetch availability for the first tutor
+            if (tutorSelect.options.length > 0) {
+                tutorSelect.selectedIndex = 0;
+                fetchTutorAvailability();
+            }
         }
 
-        function generateCalendar(month, year) {
-            const calendarContainer = document.getElementById('calendar-container');
-            calendarContainer.innerHTML = ''; // Clear previous calendar
+        // Fetch availability and subjects for the selected tutor
+        async function fetchTutorAvailability() {
+            const tutorId = document.getElementById("tutor").value;
+            const doc = await db.collection("Particulars").doc(tutorId).get();
 
-            const daysInSelectedMonth = daysInMonth(month, year);
-            const firstDayOfWeek = new Date(year, month, 1).getDay(); // Get the first day of the week (0=Sunday, 1=Monday, etc.)
-            const calendarDates = [];
+            if (doc.exists) {
+                const data = doc.data();
+                subjectsTaught = data.SubjectsTaught || [];
+                tutorTimeslots = {};
 
-            // Push empty days before the first day of the month
-            for (let i = 0; i < (firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1); i++) {
-                calendarDates.push('');
+                populateSubjects();
+                processTimeslots(data.availableTimeslots || []);
+                updateCalendar();
             }
+        }
 
-            // Push the actual dates of the month
-            for (let day = 1; day <= daysInSelectedMonth; day++) {
-                calendarDates.push(day);
-            }
+        // Populate subject dropdown based on selected tutor
+        function populateSubjects() {
+            const subjectSelect = document.getElementById("subject");
+            subjectSelect.innerHTML = ""; // Clear existing options
+            subjectsTaught.forEach(subject => {
+                const option = document.createElement("option");
+                option.value = subject;
+                option.textContent = subject;
+                subjectSelect.appendChild(option);
+            });
+        }
 
-            // Create the calendar grid
-            calendarDates.forEach(date => {
-                const dateElement = document.createElement('div');
-                dateElement.textContent = date;
-                if (date !== '') {
-                    dateElement.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-                    dateElement.classList.add('calendar-day');
-                    dateElement.addEventListener('click', function () {
-                        selectDate(dateElement.dataset.date);
-                    });
+        // Process timeslots and convert Firestore timestamps
+        function processTimeslots(timeslots) {
+            tutorTimeslots = {}; // Clear previous timeslots
+
+            timeslots.forEach(dateObj => {
+                const date = new Date(dateObj.seconds * 1000);
+                const formattedDate = date.toISOString().split("T")[0];
+                const time = date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+                if (!tutorTimeslots[formattedDate]) {
+                    tutorTimeslots[formattedDate] = [];
                 }
-                calendarContainer.appendChild(dateElement);
+                tutorTimeslots[formattedDate].push(time);
             });
         }
 
-        function selectDate(date) {
-            document.querySelectorAll('.calendar-day').forEach(day => day.classList.remove('selected'));
-            document.querySelector(`[data-date="${date}"]`).classList.add('selected');
-            showTimeslots(date);
-        }
+        // Generate calendar based on selected month and year
+        function updateCalendar() {
+            const month = parseInt(document.getElementById("calendar-month").value);
+            const year = parseInt(document.getElementById("calendar-year").value);
+            const calendarContainer = document.getElementById("calendar-container");
+            calendarContainer.innerHTML = ""; // Clear previous calendar
 
-        function populateSelectors() {
-            const monthSelect = document.getElementById('calendar-month');
-            const yearSelect = document.getElementById('calendar-year');
-            const currentYear = new Date().getFullYear();
-            const currentMonth = new Date().getMonth();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
 
-            monthNames.forEach((month, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = month;
-                monthSelect.appendChild(option);
-            });
-
-            for (let year = currentYear - 5; year <= currentYear + 5; year++) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
+            const offset = firstDay === 0 ? 6 : firstDay - 1;
+            for (let i = 0; i < offset; i++) {
+                calendarContainer.appendChild(document.createElement("div"));
             }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+                const dayDiv = document.createElement("div");
+                dayDiv.textContent = day;
+                dayDiv.className = "calendar-day";
+
+                if (tutorTimeslots[date]) {
+                    dayDiv.classList.add("available");
+                    dayDiv.onclick = () => selectDate(date);
+                } else {
+                    dayDiv.classList.add("unavailable");
+                }
+
+                calendarContainer.appendChild(dayDiv);
+            }
+        }
+
+        // Display timeslots for the selected date
+        function selectDate(date) {
+    const timeslotContainer = document.getElementById("timeslots-container");
+    document.getElementById("selected-date").textContent = new Date(date).toDateString();
+
+    // Clear previous timeslots
+    timeslotContainer.innerHTML = "";
+
+    // Fetch and display timeslots for the selected date
+    const timeslots = tutorTimeslots[date] || [];
+
+    if (timeslots.length) {
+        timeslots.forEach(time => {
+            const slotElem = document.createElement("div");
+            slotElem.textContent = time;
+            slotElem.classList.add("timeslot");
+            timeslotContainer.appendChild(slotElem);
+        });
+    } else {
+        timeslotContainer.textContent = "No available timeslots";
+    }
+}
+        // Populate month and year selectors with current values
+        function populateSelectors() {
+            const monthSelect = document.getElementById("calendar-month");
+            const yearSelect = document.getElementById("calendar-year");
+
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
+
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            monthSelect.innerHTML = monthNames.map((month, i) => `<option value="${i}">${month}</option>`).join("");
+            yearSelect.innerHTML = `<option>${currentYear - 1}</option><option selected>${currentYear}</option><option>${currentYear + 1}</option>`;
 
             monthSelect.value = currentMonth;
             yearSelect.value = currentYear;
         }
 
-        function showTimeslots(date) {
-            const timeslotContainer = document.getElementById('timeslots-container');
-            const selectedTimeslots = timeslots[date] || [];
-            timeslotContainer.innerHTML = ''; // Clear previous slots
-
-            if (selectedTimeslots.length) {
-                selectedTimeslots.forEach(timeslot => {
-                    const slotElement = document.createElement('div');
-                    slotElement.textContent = timeslot;
-                    slotElement.classList.add('timeslot');
-                    timeslotContainer.appendChild(slotElement);
-                });
-            } else {
-                timeslotContainer.textContent = "No available timeslots";
-            }
-
-            // Update selected date in the heading
-            document.getElementById('selected-date').textContent = new Date(date).toDateString();
-        }
-
-        document.getElementById('calendar-month').addEventListener('change', function () {
-            const month = parseInt(this.value);
-            const year = parseInt(document.getElementById('calendar-year').value);
-            generateCalendar(month, year);
+        // Initialize everything when DOM is loaded
+        document.addEventListener("DOMContentLoaded", () => {
+            populateTutors();
+            populateSelectors();
         });
 
-        document.getElementById('calendar-year').addEventListener('change', function () {
-            const month = parseInt(document.getElementById('calendar-month').value);
-            const year = parseInt(this.value);
-            generateCalendar(month, year);
-        });
-
-        // Initialize the selectors and calendar
-        populateSelectors();
-
-        // Get the current date and set it as the default selection
-        const currentDate = new Date();
-        generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
-        selectDate(`${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`);
     </script>
 </body>
 </html>

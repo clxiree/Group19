@@ -50,13 +50,72 @@
       padding-bottom: 40px;
       background-color: #f9f9f9;
     }
-   
+
+    /* Grid container for notes */
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 3 in a row if space allows */
+      gap: 20px;
+    }
+
+    .note-grid-container {
+      margin-top: 30px;
+    }
+
+    /* Styling for each note container */
     .note-container {
       border: 1px solid #ddd;
       padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 20px;
+      border-radius: 12px;
       background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 350px; /* Set a fixed height to standardize */
+    }
+
+    .note-container:hover {
+      transform: scale(1.02); /* Slight zoom effect on hover */
+    }
+
+    .course-content {
+      text-align: left;
+      flex: 1; /* Ensures consistent spacing */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Styling for course code label */
+    .course-code {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #337ab7;
+      color: #ffffff;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    /* Align Professor and Owner in the same row with reduced spacing */
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 5px; /* Reduced space between items */
+    }
+
+    .info-row p {
+      margin: 0; /* Remove default paragraph margin */
+    }
+
+    /* Ensures layout responsiveness */
+    @media (max-width: 768px) {
+      .note-grid {
+        grid-template-columns: 1fr; /* Single column on smaller screens */
+      }
     }
 
   </style>
@@ -115,14 +174,17 @@
         </div>
       </nav>
     </div><!-- End Page Title -->
-
     <!-- Browse Notes Section -->
     <section id="browse-notes-section" class="notes-section">
-      <div class="container">
+      <div class="container d-flex justify-content-between align-items-center">
         <h2>Browse Notes</h2>
-        <div class="row" id="browse-notes-container"></div>
+        <a href="uploadnotes.html" class="btn btn-primary" style="white-space: nowrap;">Upload Your Notes</a>
       </div>
+      <div class="container note-grid" id="browse-notes-container"></div>
     </section>
+
+
+    
 
   </main>
 
@@ -167,11 +229,9 @@
           snapshot.forEach((doc) => {
             const note = doc.data();
             const noteItem = `
-              <div class="container note-container">
+              <div class="note-container">
                 <div class="course-content">
-                  <div class="d-flex justify-content-between align-items-center mb-3">
-                    <p class="category">${note.courseId}</p>
-                  </div>
+                  <span class="course-code">${note.courseId}</span>
                   <h3>${note.courseName}</h3>
                   <p><strong>Professor:</strong> ${note.courseProf}</p>
                   <p><strong>Owner:</strong> ${note.owner}</p>
@@ -185,7 +245,6 @@
         });
       }
 
-      // Initial fetch of notes
       fetchNotes();
     });
 

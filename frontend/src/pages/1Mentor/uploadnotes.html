@@ -18,7 +18,27 @@
 
 <body class="course-details-page">
 
-  <!-- Header and Navigation (similar to notes.html header) -->
+  <!-- Header and Navigation (Copied from notes.html) -->
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/smootutor-logo.jpg" alt="SMOOTutor Logo">
+      </a>
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="bookings.html">Bookings</a></li>
+          <li><a href="trainers.html">Trainers</a></li>
+          <li><a href="chats.html">Chats</a></li>
+          <li><a href="proofread.html">Proofread</a></li>
+          <li><a href="notes.html">Notes</a></li>
+        </ul>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+    </div>
+  </header>
 
   <main class="main">
     <div class="page-title" data-aos="fade">
@@ -53,7 +73,7 @@
                   <input type="text" id="courseProf" class="form-control" placeholder="Professor" required>
                 </div>
                 <div class="col-md-6">
-                  <input type="text" id="owner" class="form-control" placeholder="Owner (Tutee or Tutor)" required>
+                  <input type="text" id="owner" class="form-control" placeholder="Your Name" required>
                 </div>
                 <div class="col-md-12">
                   <label for="file" class="form-label">Upload File:</label>
@@ -82,6 +102,7 @@
       appId: "1:289686522861:web:5811385ced42106d78b5e4",
       measurementId: "G-46QED8ZFKJ"
     };
+
 
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
