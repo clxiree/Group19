@@ -24,6 +24,13 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+  <script src="index.js" type="module"></script>
+
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
@@ -53,16 +60,7 @@
           <li><a href="trainers.html">Trainers</a></li>
           <li><a href="chats.html">Chats</a></li>
           <li><a href="proofread.html">Proofread</a></li>
-          <li class="dropdown">
-            <a href="notes.html" id="notesDropdown" aria-expanded="false">
-              Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-
-            </ul>
-          </li>
+          <li><a href="notes.html">Notes</a></li>
           
   
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -222,164 +220,15 @@
 
     <!-- Courses Section -->
     <section id="courses" class="courses section">
-
-      <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Courses</h2>
         <p><a href="courses.html">Suggested Tutors for My Courses</a></p>
-      </div><!-- End Section Title -->
-
-      <div class="container">
-
-        <div class="row">
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-            <div class="course-item">
-              <img src="assets/img/course-1.jpg" class="img-fluid" alt="...">
-              <div class="course-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">IS216</p>
-                  <p class="price"></p>
-                </div>
-
-                <h3><a href="course-details.html">Web Application 2</a></h3>
-                <p class="description"><b>Midterm: 8/10/2024</b></p>
-                <p class="description"><b>Finals: 29/11/2024</b></p>
-                <p class="description">This course is designed to equip students with knowledge and skills to develop well-styled and responsive web applications that provide rich user experiences. Combining with the skills learnt in IS113 course, which focuses on developing database-driven web applications with basic web designs, after this course, the students will be equipped with full stack web development skills, who can build both front-end and back-end software.  </p>
-               
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <!-- Trainer Image and Crown Wrapper -->
-                  <div class="trainer-profile" style="position: relative; display: flex; align-items: center;">
-                    <!-- Crown on top of the image -->
-                    <div style="position: relative; width: 50px; height: 50px;">
-                      <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="Zenny Potato" style="width: 50px; height: 50px; border-radius: 50%;">
-                      <img src="assets/img/crown.jpg" alt="Crown" style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px;">
-                    </div>
-                    <!-- Trainer Name (Perfectly in line) -->
-                    <a href="" class="trainer-link" style="margin-left: 10px;">Zenny Potato</a>
-                  </div>
-                  <!-- Star Ratings -->
-                  <p style="margin-left: 10px;">⭐⭐⭐⭐⭐</p>
-                </div>
-                
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-2-2.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Lana</a>
-                  </div>
-                  <p>⭐⭐⭐⭐☆</p>
-                </div>
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-3-2.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Brandon</a>
-                  </div>
-                  <p>⭐⭐⭐⭐☆</p>
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Course Item-->
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-md-0" data-aos="zoom-in" data-aos-delay="200">
-            <div class="course-item">
-              <img src="assets/img/course-2.jpg" class="img-fluid" alt="...">
-              <div class="course-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">IS210</p>
-                  <p class="price"></p>
-                </div>
-
-                <h3><a href="course-details.html">Business Processes and Solutioning</a></h3>
-                <p class="description"><b>Midterm: 6/10/2024</b></p>
-                <p class="description"><b>Finals: 25/11/2024</b></p>
-                <p class="description">A course designed to provide students with an understanding of how businesses operate and how to design effective solutions for process improvement. It covers key concepts such as process analysis, optimization, and automation, helping students learn to identify inefficiencies in workflows and propose technology-driven solutions. Through case studies and hands-on projects, students develop skills in mapping business processes and aligning solutions with organizational goals.</p>
-       
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <!-- Trainer Image and Crown Wrapper -->
-                  <div class="trainer-profile" style="position: relative; display: flex; align-items: center;">
-                    <!-- Crown on top of the image -->
-                    <div style="position: relative; width: 50px; height: 50px;">
-                      <img src="assets/img/trainers/trainer-2-2.jpg" class="img-fluid" alt="Zenny Potato" style="width: 50px; height: 50px; border-radius: 50%;">
-                      <img src="assets/img/crown.jpg" alt="Crown" style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px;">
-                    </div>
-                    <!-- Trainer Name (Perfectly in line) -->
-                    <a href="" class="trainer-link" style="margin-left: 10px;">Lana</a>
-                  </div>
-                  <!-- Star Ratings -->
-                  <p style="margin-left: 10px;">⭐⭐⭐⭐⭐</p>
-                </div>
-                
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/zenny.JPG" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Zenny</a>
-                  </div>
-                  <p>⭐⭐⭐⭐☆</p>
-                </div>
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-3-2.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Brandon</a>
-                  </div>
-                  <p>⭐⭐⭐⭐☆</p>
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Course Item-->
-
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4 mt-lg-0" data-aos="zoom-in" data-aos-delay="300">
-            <div class="course-item">
-              <img src="assets/img/course-3.jpg" class="img-fluid" alt="...">
-              <div class="course-content">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <p class="category">COR-1702</p>
-                  <p class="price"></p>
-                </div>
-
-                <h3><a href="course-details.html">Computational Thinking</a></h3>
-                <p class="description"><b>Midterm: 9/10/2024</b></p>
-                <p class="description"><b>Finals: 30/11/2024</b></p>
-                <p class="description">A course focused on teaching students the problem-solving process that involves breaking down complex problems into manageable parts, identifying patterns, and developing step-by-step solutions. It introduces key concepts such as algorithmic thinking, abstraction, decomposition, and pattern recognition. Students learn how to apply these skills to a variety of problems in different disciplines, using logic and structured approaches to create efficient solutions.</p>
-            
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <!-- Trainer Image and Crown Wrapper -->
-                  <div class="trainer-profile" style="position: relative; display: flex; align-items: center;">
-                    <!-- Crown on top of the image -->
-                    <div style="position: relative; width: 50px; height: 50px;">
-                      <img src="assets/img/trainers/trainer-3-2.jpg" class="img-fluid" alt="Zenny Potato" style="width: 50px; height: 50px; border-radius: 50%;">
-                      <img src="assets/img/crown.jpg" alt="Crown" style="position: absolute; top: -20px; left: 50%; transform: translateX(-50%); width: 30px; height: 30px;">
-                    </div>
-                    <!-- Trainer Name (Perfectly in line) -->
-                    <a href="" class="trainer-link" style="margin-left: 10px;">Brandon</a>
-                  </div>
-                  <!-- Star Ratings -->
-                  <p style="margin-left: 10px;">⭐⭐⭐⭐⭐</p>
-                </div>
-                
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/trainer-3.jpg" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">William Anderson</a>
-                  </div>
-                  <p>⭐⭐⭐⭐☆</p>
-                </div>
-                <div class="trainer d-flex justify-content-between align-items-center">
-                  <div class="trainer-profile d-flex align-items-center">
-                    <img src="assets/img/trainers/zenny.JPG" class="img-fluid" alt="">
-                    <a href="" class="trainer-link">Zenny</a>
-                  </div>
-                  <p>⭐⭐⭐⭐☆</p>
-                </div>
-                </div>
-              </div>
-            </div>
-          </div> <!-- End Course Item-->
-
-        </div>
-
       </div>
-
-    </section><!-- /Courses Section -->
+      <div class="container" id="courses-container">
+        <!-- Courses will be dynamically populated here -->
+      </div>
+    </section>
+    
 
     <!-- Trainers Index Section -->
     <section id="trainers-index" class="section trainers-index">
@@ -394,118 +243,10 @@
 
           <div id="teamCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <!-- First Slide (Active) -->
-                <div class="carousel-item active">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 d-flex">
-                            <div class="member">
-                                <img src="assets/img/trainers/zenny.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>Zenny</h4>
-                                    <p>Review: Super good, super patient</p>
-                                    <p>⭐⭐⭐⭐⭐</p>
-                                    
-                                    <div class="social">
-                                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                        <a href="#"><i class="bi bi-facebook"></i></a>
-                                        <a href="#"><i class="bi bi-instagram"></i></a>
-                                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                   
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 d-flex">
-                            <div class="member">
-                                <img src="assets/img/trainers/trainer-2.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>Sarah Jhinson</h4>
-                                    <p>Review: Somewhat patient</p>
-                                    <p>⭐⭐⭐⭐⭐</p>
-                                    <div class="social">
-                                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                        <a href="#"><i class="bi bi-facebook"></i></a>
-                                        <a href="#"><i class="bi bi-instagram"></i></a>
-                                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 d-flex">
-                            <div class="member">
-                                <img src="assets/img/trainers/trainer-3.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>William Anderson</h4>
-                                    <p>Review: Best tutor in the world, always there for you</p>
-                                    <p>⭐⭐⭐⭐⭐</p>
-                                    <div class="social">
-                                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                        <a href="#"><i class="bi bi-facebook"></i></a>
-                                        <a href="#"><i class="bi bi-instagram"></i></a>
-                                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-        
-                <!-- Second Slide -->
-                <div class="carousel-item">
-                    <div class="row">
-                        <div class="col-lg-4 col-md-6 d-flex">
-                            <div class="member">
-                                <img src="assets/img/trainers/trainer-1-2.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>John Doe</h4>
-                                    <p>Review: Highly knowledgeable</p>
-                                    <p>⭐⭐⭐⭐⭐</p>
-                                    <div class="social">
-                                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                        <a href="#"><i class="bi bi-facebook"></i></a>
-                                        <a href="#"><i class="bi bi-instagram"></i></a>
-                                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 d-flex">
-                            <div class="member">
-                                <img src="assets/img/trainers/trainer-2-2.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>Jane Smith</h4>
-                                    <p>Review: Great communication</p>
-                                    <p>⭐⭐⭐⭐⭐</p>
-                                    <div class="social">
-                                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                        <a href="#"><i class="bi bi-facebook"></i></a>
-                                        <a href="#"><i class="bi bi-instagram"></i></a>
-                                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-4 col-md-6 d-flex">
-                            <div class="member">
-                                <img src="assets/img/trainers/trainer-3-2.jpg" class="img-fluid" alt="">
-                                <div class="member-content">
-                                    <h4>Michael Brown</h4>
-                                    <p>Review: Excellent mentor</p>
-                                    <p>⭐⭐⭐⭐⭐</p>
-                                    <div class="social">
-                                        <a href="#"><i class="bi bi-twitter-x"></i></a>
-                                        <a href="#"><i class="bi bi-facebook"></i></a>
-                                        <a href="#"><i class="bi bi-instagram"></i></a>
-                                        <a href="#"><i class="bi bi-linkedin"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!-- Carousel items will be dynamically populated here by JavaScript -->
             </div>
         
-            <!-- Controls -->
+            <!-- Controls for navigating the carousel -->
             <button class="carousel-control-prev" type="button" data-bs-target="#teamCarousel" data-bs-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
