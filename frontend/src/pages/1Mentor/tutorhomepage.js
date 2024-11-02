@@ -15,108 +15,139 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 
+let allBookings = []; // Store all bookings data globally for filtering
+
 // Fetch and display bookings
+// Fetch and store bookings data
+// Fetch and store bookings data
 function fetchBookings() {
     const bookingsContainer = document.getElementById("bookings-container");
-    bookingsContainer.innerHTML = ""; // Clear any existing bookings
+    bookingsContainer.innerHTML = ""; // Clear existing bookings
 
     db.collection("Bookings").get().then((snapshot) => {
+        allBookings = []; // Reset allBookings array
+
         snapshot.forEach((doc) => {
             const bookingData = doc.data();
-
-            // Create the main container for each booking
-            const bookingItem = document.createElement("div");
-            bookingItem.classList.add("course-content");
-
-            // Create the top info div
-            const topInfo = document.createElement("div");
-            topInfo.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-3");
-
-            const courseCode = document.createElement("p");
-            courseCode.classList.add("category");
-            courseCode.textContent = bookingData.courseCode || 'Unknown Code';
-
-            const price = document.createElement("p");
-            price.classList.add("price");
-            price.textContent = `$${bookingData.price || 'N/A'}`;
-
-            // Append courseCode and price to topInfo
-            topInfo.appendChild(courseCode);
-            topInfo.appendChild(price);
-
-            // Create the course name as a link
-            const courseName = document.createElement("h3");
-            const courseLink = document.createElement("a");
-            courseLink.href = "course-details.html";
-            courseLink.textContent = bookingData.courseName || 'Course Name';
-            courseName.appendChild(courseLink);
-
-            // Create description fields
-            const status = document.createElement("p");
-            status.classList.add("description");
-            status.innerHTML = `Status: <b>${bookingData.status || 'N/A'}</b>`;
-
-            const dateOfLesson = document.createElement("p");
-            dateOfLesson.classList.add("description");
-            dateOfLesson.textContent = `Date of Lesson: ${bookingData.dateOfLesson}`;
-
-            const mode = document.createElement("p");
-            mode.classList.add("description");
-            mode.textContent = `Mode: ${bookingData.mode || 'N/A'}`;
-
-            // Trainer profile and rank section
-            const trainerContainer = document.createElement("div");
-            trainerContainer.classList.add("trainer", "d-flex", "justify-content-between", "align-items-center");
-
-            const trainerProfile = document.createElement("div");
-            trainerProfile.classList.add("trainer-profile", "d-flex", "align-items-center");
-
-            const trainerImage = document.createElement("img");
-            trainerImage.src = "assets/img/trainers/trainer-1-2.jpg";
-            trainerImage.classList.add("img-fluid");
-            trainerImage.alt = "";
-
-            const trainerLink = document.createElement("a");
-            trainerLink.href = "";
-            trainerLink.classList.add("trainer-link");
-            trainerLink.textContent = "Zenny Potato";
-
-            // Append image and link to trainer profile
-            trainerProfile.appendChild(trainerImage);
-            trainerProfile.appendChild(trainerLink);
-
-            const trainerRank = document.createElement("div");
-            trainerRank.classList.add("trainer-rank", "d-flex", "align-items-center");
-
-            const personIcon = document.createElement("i");
-            personIcon.classList.add("bi", "bi-person", "user-icon");
-            trainerRank.appendChild(personIcon);
-            trainerRank.append(" 99++  ");
-
-            const heartIcon = document.createElement("i");
-            heartIcon.classList.add("bi", "bi-heart", "heart-icon");
-            trainerRank.appendChild(heartIcon);
-            trainerRank.append(" 99++");
-
-            // Append trainer profile and rank to trainer container
-            trainerContainer.appendChild(trainerProfile);
-            trainerContainer.appendChild(trainerRank);
-
-            // Append all elements to bookingItem
-            bookingItem.appendChild(topInfo);
-            bookingItem.appendChild(courseName);
-            bookingItem.appendChild(status);
-            bookingItem.appendChild(dateOfLesson);
-            bookingItem.appendChild(mode);
-            bookingItem.appendChild(trainerContainer);
-
-            // Append booking item to the main container
-            bookingsContainer.appendChild(bookingItem);
+            bookingData.id = doc.id; // Add document ID for unique identification
+            allBookings.push(bookingData);
         });
+
+        renderBookings(allBookings); // Initially render all bookings
     }).catch((error) => {
         console.error("Error fetching bookings:", error);
     });
 }
 
-// Fetch bookings on page load
-document.addEventListener("DOMContentLoaded", fetchBookings);
+// Render bookings based on provided data
+function renderBookings(bookings) {
+    const bookingsContainer = document.getElementById("bookings-container");
+    bookingsContainer.innerHTML = ""; // Clear container
+
+    bookings.forEach((bookingData) => {
+        // Create the main container for each booking
+        const bookingItem = document.createElement("div");
+        bookingItem.classList.add("col-lg-4", "col-md-6", "d-flex", "align-items-stretch");
+
+        const courseItem = document.createElement("div");
+        courseItem.classList.add("course-item");
+
+        const img = document.createElement("img");
+        img.src = `assets/img/bookings/${bookingData.courseCode}.jpg`; // Assuming course images are named by courseCode
+        img.classList.add("card-img-top");
+        img.alt = "Course Image";
+
+        const courseContent = document.createElement("div");
+        courseContent.classList.add("course-content");
+
+        // Top section with category and price
+        const topInfo = document.createElement("div");
+        topInfo.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-3");
+
+        const category = document.createElement("p");
+        category.classList.add("category");
+        category.textContent = bookingData.courseCode || "Unknown Code";
+
+        const price = document.createElement("p");
+        price.classList.add("price");
+        price.textContent = `$${bookingData.fee || "N/A"}`;
+
+        topInfo.appendChild(category);
+        topInfo.appendChild(price);
+
+        // Course name and details
+        const courseName = document.createElement("h3");
+        courseName.textContent = bookingData.courseName || "Course Name";
+
+        const status = document.createElement("p");
+        status.classList.add("description");
+        status.innerHTML = `<b>Status:</b> ${bookingData.status || "N/A"}`;
+
+        const dateOfLesson = document.createElement("p");
+        dateOfLesson.classList.add("description");
+        dateOfLesson.innerHTML = `<b>Date of Lesson:</b> ${bookingData.dateOfLesson}`;
+
+        const mode = document.createElement("p");
+        mode.classList.add("description");
+        mode.innerHTML = `<b>Mode:</b> ${bookingData.mode || "N/A"}`;
+
+        // Trainer section
+        const trainerDiv = document.createElement("div");
+        trainerDiv.classList.add("trainer", "d-flex", "justify-content-between", "align-items-center");
+
+        const trainerProfile = document.createElement("div");
+        trainerProfile.classList.add("trainer-profile", "d-flex", "align-items-center");
+
+        const trainerImg = document.createElement("img");
+        trainerImg.src = `assets/img/team/${bookingData.tutorImg || "default.jpg"}`; // Replace 'default.jpg' with a default image path
+        trainerImg.classList.add("img-fluid");
+        trainerImg.alt = "";
+
+        const trainerLink = document.createElement("a");
+        trainerLink.href = "#"; // Add the appropriate link if available
+        trainerLink.classList.add("trainer-link");
+        trainerLink.textContent = bookingData.tutorName || "Unknown Tutor";
+
+        // Append trainer profile info
+        trainerProfile.appendChild(trainerImg);
+        trainerProfile.appendChild(trainerLink);
+        trainerDiv.appendChild(trainerProfile);
+
+        // Append components to the course content
+        courseContent.appendChild(topInfo);
+        courseContent.appendChild(courseName);
+        courseContent.appendChild(status);
+        courseContent.appendChild(dateOfLesson);
+        courseContent.appendChild(mode);
+        courseContent.appendChild(trainerDiv);
+
+        // Append image and content to the course item
+        courseItem.appendChild(img);
+        courseItem.appendChild(courseContent);
+
+        // Append the course item to the booking item
+        bookingItem.appendChild(courseItem);
+        bookingsContainer.appendChild(bookingItem);
+    });
+}
+
+// Filter bookings based on selected status
+function applyFilter(status) {
+    if (status === "") {
+        renderBookings(allBookings); // Show all bookings if "All" is selected
+    } else {
+        const filteredBookings = allBookings.filter((booking) => booking.status === status);
+        renderBookings(filteredBookings);
+    }
+}
+
+// Event listener for the dropdown filter
+document.addEventListener("DOMContentLoaded", () => {
+    fetchBookings(); // Fetch and display all bookings on load
+
+    const statusFilter = document.getElementById("statusFilter");
+    statusFilter.addEventListener("change", (event) => {
+        const status = event.target.value;
+        applyFilter(status); // Apply the selected filter
+    });
+});
