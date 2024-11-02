@@ -29,8 +29,8 @@
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
 
-  <script src="index.js" type="module"></script>
-
+  
+  
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
@@ -95,7 +95,7 @@
         <div class="row gy-4">
 
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-            <img src="assets/img/trainers/supreme.png" class="img-fluid" alt="">
+            
           </div>
 
           <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
@@ -174,9 +174,7 @@
               <p>
                 It is much harder for students to find tutoring at a university level. This can bring them many challenges they find difficult to overcome alone. With SMOOTutor, we can help to alleviate their study difficulties.
               </p>
-              <div class="text-center">
-                <a href="about.html" class="more-btn"><span>Learn More</span> <i class="bi bi-chevron-right"></i></a>
-              </div>
+
             </div>
           </div><!-- End Why Box -->
 
@@ -224,7 +222,7 @@
         <h2>Courses</h2>
         <p><a href="courses.html">Suggested Tutors for My Courses</a></p>
       </div>
-      <div class="container" id="courses-container">
+      <div class="row" id="courses-container">
         <!-- Courses will be dynamically populated here -->
       </div>
     </section>
@@ -241,9 +239,9 @@
         </div><!-- End Section Title -->
         <div class="row">
 
-          <div id="teamCarousel" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-inner">
-                <!-- Carousel items will be dynamically populated here by JavaScript -->
+          <div class="container">
+            <div id="teamCardsContainer" class="row">
+              <!-- Tutor cards will be dynamically populated here by JavaScript -->
             </div>
         
             <!-- Controls for navigating the carousel -->
@@ -327,7 +325,7 @@
                     <div class="testimonial-item">
                       <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
                       <h3>Sara Wilsson</h3>
-                      <h4>Student of William Anderson</h4>
+                      <h4>Student of Chrispy Choo</h4>
                       <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                       </div>
@@ -345,7 +343,7 @@
                     <div class="testimonial-item">
                       <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
                       <h3>Jena Karlis</h3>
-                      <h4>Student of Lana</h4>
+                      <h4>Student of Cloudy Ng</h4>
                       <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                       </div>
@@ -363,7 +361,7 @@
                     <div class="testimonial-item">
                       <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
                       <h3>Matt</h3>
-                      <h4>Student of Brandon</h4>
+                      <h4>Student of Yichy Nose</h4>
                       <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                       </div>
@@ -381,7 +379,7 @@
                     <div class="testimonial-item">
                       <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
                       <h3>John Larson</h3>
-                      <h4>Student of Zenny Potato</h4>
+                      <h4>Student of Zenny</h4>
                       <div class="stars">
                         <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                       </div>
@@ -490,8 +488,9 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
+   
   <script src="assets/js/main.js"></script>
-
+  <script src="index.js" type="module"></script>
 </body>
 
 </html>

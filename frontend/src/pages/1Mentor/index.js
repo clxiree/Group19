@@ -14,6 +14,8 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 
+const storage = firebase.storage();
+
 // Fetch and display courses from Firebase Firestore
 function fetchCourses() {
     const coursesContainer = document.getElementById("courses-container");
@@ -155,75 +157,89 @@ function fetchCourses() {
     });
 }
 
-function fetchTeamCarousel() {
-    const carouselInner = document.querySelector("#teamCarousel .carousel-inner");
-    carouselInner.innerHTML = ""; // Clear existing items
+function fetchTeamCards() {
+    const teamCardsContainer = document.querySelector("#teamCardsContainer");
+    teamCardsContainer.innerHTML = ""; // Clear existing items
 
-    db.collection("Particulars").get().then((snapshot) => {
-        snapshot.forEach((doc, index) => {
+    // Query the "Particulars" collection where Tutor is true
+    db.collection("Particulars").where("Tutor", "==", true).get().then((snapshot) => {
+        snapshot.forEach((doc) => {
             const data = doc.data();
-            const carouselItem = document.createElement("div");
-            carouselItem.classList.add("carousel-item");
-            if (index === 0) {
-                carouselItem.classList.add("active"); // Make the first item active
-            }
+            console.log("Team Member Data:", data); // Log each data item to check content
 
-            // Create the inner structure of each carousel item
+            // Create a column for each tutor card
             const colDiv = document.createElement("div");
-            colDiv.classList.add("col-lg-4", "col-md-6", "d-flex");
+            colDiv.classList.add("col-lg-4", "col-md-6", "d-flex", "align-items-stretch");
 
-            const memberDiv = document.createElement("div");
-            memberDiv.classList.add("member");
+            // Create the card container
+            const cardDiv = document.createElement("div");
+            cardDiv.classList.add("card", "member", "mb-4");
 
             const img = document.createElement("img");
-            img.src = data.Image || "default.jpg"; // Use a default image if Image is missing
-            img.classList.add("img-fluid");
+            img.classList.add("card-img-top", "img-fluid");
             img.alt = data.Name || "No Name";
+            img.style.height = "300px"; // Fixed height for image
+            img.style.width = "300px";
+            img.style.objectFit = "scale-down"; // Scale image to cover area
 
-            const memberContent = document.createElement("div");
-            memberContent.classList.add("member-content");
+            // Set a default image while the Firebase Storage URL is loading
+            img.src = "assets/img/team/zenny.jpg";
 
-            const name = document.createElement("h4");
+            // Retrieve image from Firebase Storage if provided
+            if (data.Image) {
+                const imageRef = storage.ref(`images/team/${data.Image}`);
+                imageRef.getDownloadURL().then((url) => {
+                    img.src = url; // Set the retrieved URL as the src of the img element
+                }).catch((error) => {
+                    console.error("Error fetching image:", error);
+                    img.src = "assets/img/team/zenny.jpg"; // Fallback image
+                });
+            }
+
+            // Card body content
+            const cardBody = document.createElement("div");
+            cardBody.classList.add("card-body");
+            cardBody.style.display = "flex";
+            cardBody.style.flexDirection = "column";
+            cardBody.style.justifyContent = "space-between"; // Space elements evenly within card body
+            cardBody.style.flexGrow = "1"; // Allow card body to expand within card
+
+            const name = document.createElement("h5");
+            name.classList.add("card-title");
             name.textContent = data.Name || "No Name";
 
             const about = document.createElement("p");
+            about.classList.add("card-text");
             about.textContent = data.About || "No about information";
 
             const rating = document.createElement("p");
-            rating.textContent = "⭐⭐⭐⭐⭐"; // Static rating, you can modify as needed
+            rating.classList.add("card-text");
+            rating.textContent = "⭐⭐⭐⭐⭐"; // Static rating, modify if dynamic data available
 
-            // Social icons
-            const socialDiv = document.createElement("div");
-            socialDiv.classList.add("social");
-
-            ["twitter-x", "facebook", "instagram", "linkedin"].forEach((platform) => {
-                const anchor = document.createElement("a");
-                anchor.href = "#";
-                const icon = document.createElement("i");
-                icon.classList.add("bi", `bi-${platform}`);
-                anchor.appendChild(icon);
-                socialDiv.appendChild(anchor);
-            });
+          
+            
 
             // Append all elements in the right order
-            memberContent.appendChild(name);
-            memberContent.appendChild(about);
-            memberContent.appendChild(rating);
-            memberContent.appendChild(socialDiv);
+            cardBody.appendChild(name);
+            cardBody.appendChild(about);
+            cardBody.appendChild(rating);
+           
 
-            memberDiv.appendChild(img);
-            memberDiv.appendChild(memberContent);
-
-            colDiv.appendChild(memberDiv);
-            carouselItem.appendChild(colDiv);
-            carouselInner.appendChild(carouselItem);
+            cardDiv.appendChild(img);
+            cardDiv.appendChild(cardBody);
+            colDiv.appendChild(cardDiv);
+            teamCardsContainer.appendChild(colDiv);
         });
     }).catch((error) => {
         console.error("Error fetching team members:", error);
     });
 }
 
+
+
+
 document.addEventListener("DOMContentLoaded", () => {
-    fetchTeamCarousel();
+    
+    fetchTeamCards();
     fetchCourses();
 });
