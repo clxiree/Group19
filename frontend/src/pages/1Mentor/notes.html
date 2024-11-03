@@ -219,6 +219,7 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
       const storage = firebase.storage();
+      
 
       // Fetch and Display Notes
       function fetchNotes() {
@@ -229,15 +230,15 @@
           snapshot.forEach((doc) => {
             const note = doc.data();
             const noteItem = `
-              <div class="note-container">
-                <div class="course-content">
-                  <span class="course-code">${note.courseId}</span>
-                  <h3>${note.courseName}</h3>
-                  <p><strong>Professor:</strong> ${note.courseProf}</p>
-                  <p><strong>Owner:</strong> ${note.owner}</p>
-                  ${note.courseLink ? `<a href="${note.courseLink}" target="_blank">View/Download Note</a>` : ""}
-                </div>
-              </div>`;
+        <div class="note-container">
+          <div class="course-content">
+            <span class="course-code">${note.courseId}</span>
+            <h3>${note.courseName}</h3>
+            <p><strong>Professor:</strong> ${note.courseProf}</p>
+            <p><strong>Owner:</strong> ${note.owner}</p>
+             <a href="previewread.html?notesId=${doc.id}" target="_blank">View/Download Note</a>
+          </div>
+        </div>`;
             browseContainer.insertAdjacentHTML("beforeend", noteItem);
           });
         }).catch((error) => {

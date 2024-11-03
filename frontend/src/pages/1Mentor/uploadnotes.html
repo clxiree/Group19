@@ -75,6 +75,13 @@
                 <div class="col-md-6">
                   <input type="text" id="owner" class="form-control" placeholder="Your Name" required>
                 </div>
+                <div class="col-md-6">
+                  <label for="price" class="form-label">Price:</label>
+                  <div class="input-group">
+                    <span class="input-group-text">$</span>
+                    <input type="number" id="price" class="form-control" placeholder="Enter price" min="0" step="0.01" required>
+                  </div>
+                </div>
                 <div class="col-md-12">
                   <label for="file" class="form-label">Upload File:</label>
                   <input type="file" id="file" class="form-control" required>
@@ -116,6 +123,7 @@
       const courseName = document.getElementById("courseName").value;
       const courseProf = document.getElementById("courseProf").value;
       const owner = document.getElementById("owner").value;
+      const price = document.getElementById("price").value;
       const file = document.getElementById("file").files[0];
 
       if (!file) {
@@ -131,6 +139,7 @@
             courseName: courseName,
             courseProf: courseProf,
             owner: owner,
+            price: parseFloat(price), 
             courseLink: downloadURL,
           }).then(() => {
             alert("Note uploaded successfully!");

@@ -154,50 +154,81 @@
             </div>
           </nav>
         </div>
-        <div class="preview-header">
-            <h1>Preview of Web Application 2 - IS216</h1>
-            <p>Scroll through the preview. Full content is locked until payment is made.</p>
-        </div>
-        <div class="preview-container">
-            <div class="preview-content">
-                <!-- Page 1 -->
-                <div class="page">
-                    <div class="locked-overlay">
-                        <h2>This preview is locked</h2>
-                        <p>To unlock the full document, please make a payment of $10.</p>
-                        <a href="payment-page.html">Unlock Full Access</a>
-                    </div>
-                    <div class="page-content">
-                        <h2>Page 1: Introduction to Web Applications</h2>
-                        <p>Web applications are programs that run in a web browser and are accessed via the internet...</p>
-                    </div>
-                </div>
-                <!-- Page 2 -->
-                <div class="page">
-                    <div class="locked-overlay">
-                        <h2>This preview is locked</h2>
-                        <p>To unlock the full document, please make a payment of $10.</p>
-                        <a href="payment-page.html">Unlock Full Access</a>
-                    </div>
-                    <div class="page-content">
-                        <h2>Page 2: Understanding HTML, CSS, and JavaScript</h2>
-                        <p>These are the foundational technologies that make up the frontend of web applications...</p>
-                    </div>
-                </div>
-                <!-- Page 3 -->
-                <div class="page">
-                    <div class="locked-overlay">
-                        <h2>This preview is locked</h2>
-                        <p>To unlock the full document, please make a payment of $10.</p>
-                        <a href="payment-page.html">Unlock Full Access</a>
-                    </div>
-                    <div class="page-content">
-                        <h2>Page 3: Building Responsive Web Pages</h2>
-                        <p>Responsive design is essential for modern web applications, ensuring they work across all devices...</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <div class="preview-header text-center">
+          <h1 id="course-name-header">Preview of </h1>
+          <p>Scroll through the preview. Full content is locked until payment is made.</p>
+      </div>
+      </div>
+      <div class="preview-container" id="preview-container">
+        <!-- Content will be loaded here based on Firestore data -->
+      </div>
+
+      <script>
+        // Firebase configuration and initialization
+        const firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+            const db = firebase.firestore();
+
+            // Extract notesId from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const notesId = urlParams.get('notesId'); 
+
+            // Function to load preview content based on notesId
+            function loadPreviewContent() {
+                if (notesId) {
+                    db.collection("BrowseNotes").doc(notesId).get()
+                        .then((doc) => {
+                            if (doc.exists) {
+                                const note = doc.data();
+
+                                // Update the title and header with the course name
+                                const courseNameHeader = document.getElementById('course-name-header');
+                                courseNameHeader.textContent = `Preview of ${note.courseName || "Untitled Course"}`;
+                                document.title = `Preview of ${note.courseName || "Untitled Course"}`;
+
+                                // Populate preview content in preview-container
+                                const previewContainer = document.getElementById('preview-container');
+                                let pagesHTML = '';
+                                for (let i = 0; i < 3; i++) { // Example with 3 pages
+                                    pagesHTML += `
+                                        <div class="page">
+                                            <div class="locked-overlay">
+                                                <h2>This preview is locked</h2>
+                                                <p>To unlock the full document, please make a payment of $10.</p>
+                                                <a href="payment-page.html">Unlock Full Access</a>
+                                            </div>
+                                            <div class="page-content">
+                                                <h2>Page ${i + 1}: ${note[`sectionTitle${i + 1}`] || "Section Title"}</h2>
+                                                <p>${note[`sectionContent${i + 1}`] || "Sample content for this section..."}</p>
+                                            </div>
+                                        </div>`;
+                                }
+                                previewContainer.innerHTML = pagesHTML;
+                            } else {
+                                console.error("No note found with the given ID");
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("Error fetching note:", error);
+                        });
+                } else {
+                    console.error("No notesId found in URL");
+                }
+            }
+
+            // Load content on page load
+            loadPreviewContent();
+        
+    </script>
+    
         
         
         

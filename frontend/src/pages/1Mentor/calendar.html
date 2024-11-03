@@ -443,20 +443,25 @@
         async function populateTutors() {
     const tutorSelect = document.getElementById("tutor");
     tutorSelect.innerHTML = ""; // Clear existing options
-    const snapshot = await db.collection("Particulars").where("Tutor", "==", true).get();
 
-    snapshot.forEach(doc => {
-        const data = doc.data();
-        const option = document.createElement("option");
-        option.value = doc.id;
-        option.textContent = `Tutor ${data.UserID}`;
-        tutorSelect.appendChild(option);
-    });
+    try {
+        const snapshot = await db.collection("Particulars").where("Tutor", "==", true).get();
 
-    // Automatically fetch availability for the first tutor
-    if (tutorSelect.options.length > 0) {
-        tutorSelect.selectedIndex = 0;
-        fetchTutorAvailability();
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const option = document.createElement("option");
+            option.value = doc.id;
+            option.textContent = `Tutor ${data.UserID}`;
+            tutorSelect.appendChild(option);
+        });
+
+        // Automatically fetch availability for the first tutor if available
+        if (tutorSelect.options.length > 0) {
+            tutorSelect.selectedIndex = 0;
+            fetchTutorAvailability();
+        }
+    } catch (error) {
+        console.error("Error fetching tutors:", error);
     }
 }
 
@@ -506,36 +511,44 @@ function processTimeslots(timeslots) {
 
 // Generate calendar based on selected month and year
 function updateCalendar() {
-    const month = parseInt(document.getElementById("calendar-month").value);
-    const year = parseInt(document.getElementById("calendar-year").value);
-    const calendarContainer = document.getElementById("calendar-container");
-    calendarContainer.innerHTML = ""; // Clear previous calendar
+            const month = parseInt(document.getElementById("calendar-month").value);
+            const year = parseInt(document.getElementById("calendar-year").value);
+            const calendarContainer = document.getElementById("calendar-container");
+            const timeslotContainer = document.getElementById("timeslots-container");
+            const confirmBtn = document.getElementById("confirm-btn");
 
-    const daysInMonth = new Date(year, month + 1, 0).getDate();
-    const firstDay = new Date(year, month, 1).getDay();
+            // Clear previous calendar and timeslots
+            calendarContainer.innerHTML = ""; 
+            timeslotContainer.innerHTML = "No available timeslots";
+            selectedTimeslot = null;
+            selectedTimeslotElement = null;
+            confirmBtn.classList.remove("enabled");
+            confirmBtn.disabled = true;
 
-    const offset = firstDay === 0 ? 6 : firstDay - 1;
-    for (let i = 0; i < offset; i++) {
-        calendarContainer.appendChild(document.createElement("div"));
-    }
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDay = new Date(year, month, 1).getDay();
 
-    for (let day = 1; day <= daysInMonth; day++) {
-        const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-        const dayDiv = document.createElement("div");
-        dayDiv.textContent = day;
-        dayDiv.className = "calendar-day";
+            const offset = firstDay === 0 ? 6 : firstDay - 1;
+            for (let i = 0; i < offset; i++) {
+                calendarContainer.appendChild(document.createElement("div"));
+            }
 
-        if (tutorTimeslots[date]) {
-            dayDiv.classList.add("available");
-            dayDiv.onclick = () => selectDate(date);
-        } else {
-            dayDiv.classList.add("unavailable");
+            for (let day = 1; day <= daysInMonth; day++) {
+                const date = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+                const dayDiv = document.createElement("div");
+                dayDiv.textContent = day;
+                dayDiv.className = "calendar-day";
+
+                if (tutorTimeslots[date]) {
+                    dayDiv.classList.add("available");
+                    dayDiv.onclick = () => selectDate(date);
+                } else {
+                    dayDiv.classList.add("unavailable");
+                }
+
+                calendarContainer.appendChild(dayDiv);
+            }
         }
-
-        calendarContainer.appendChild(dayDiv);
-    }
-}
-
 // Display timeslots for the selected date
 function selectDate(date) {
             const timeslotContainer = document.getElementById("timeslots-container");
@@ -606,23 +619,33 @@ function goBack() {
 
 // Populate month and year selectors with current values
 function populateSelectors() {
-    const monthSelect = document.getElementById("calendar-month");
-    const yearSelect = document.getElementById("calendar-year");
+            const monthSelect = document.getElementById("calendar-month");
+            const yearSelect = document.getElementById("calendar-year");
 
-    const currentMonth = new Date().getMonth();
-    const currentYear = new Date().getFullYear();
+            const currentMonth = new Date().getMonth();
+            const currentYear = new Date().getFullYear();
 
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    monthSelect.innerHTML = monthNames.map((month, i) => `<option value="${i}">${month}</option>`).join("");
-    yearSelect.innerHTML = `<option>${currentYear - 1}</option><option selected>${currentYear}</option><option>${currentYear + 1}</option>`;
+            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+            monthSelect.innerHTML = monthNames.map((month, i) => `<option value="${i}">${month}</option>`).join("");
+            yearSelect.innerHTML = `<option>${currentYear - 1}</option><option selected>${currentYear}</option><option>${currentYear + 1}</option>`;
 
-    monthSelect.value = currentMonth;
-    yearSelect.value = currentYear;
-}
+            monthSelect.value = currentMonth;
+            yearSelect.value = currentYear;
 
+            monthSelect.addEventListener("change", updateCalendar);
+            yearSelect.addEventListener("change", updateCalendar);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            populateTutors();
+            populateSelectors();
+        });
 // Initialize everything when DOM is loaded
 document.addEventListener("DOMContentLoaded", () => {
-    populateTutors();
+  if (!window.tutorsLoaded) { // Use a flag to track if tutors have been loaded
+        populateTutors();
+        window.tutorsLoaded = true; // Set the flag to true after loading tutors
+    }
     populateSelectors();
 });
 
