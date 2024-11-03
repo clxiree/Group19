@@ -280,7 +280,7 @@
         <div class="row gy-4">
 
           <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-            <img src="assets/img/trainers/supreme.png" class="img-fluid" alt="">
+            
           </div>
 
 
@@ -293,13 +293,22 @@
 
     <!-- Courses Section -->
     <section id="courses" class="courses section">
-
-      <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
-        <p>Upcoming Bookings</p>
-        <div id="bookings-container"></div>
-      </div><!-- End Section Title -->
-    </section><!-- /Courses Section -->
+          <p>Upcoming Bookings</p>
+          <!-- Filter Buttons -->
+          <div class="filter-container">
+            <select id="statusFilter">
+                <option value="">All</option>
+                <option value="Pending">Pending</option>
+                <option value="Confirmed">Confirmed</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+            </select>
+        </div>
+
+          <div id="bookings-container" class="row"></div> <!-- Add row class for proper Bootstrap layout -->
+      </div>
+  </section>
 
     <!-- Trainers Index Section -->
     <section id="trainers-index" class="section trainers-index">
@@ -307,7 +316,7 @@
       <div class="container">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <p>Set Lesson Availability</p>
+          <p><a href="calendar.html">Set Lesson Availability</a></p>
           <main>
             <div class="lesson-container">
                 <h1 class="title">Lesson Booking</h1>
