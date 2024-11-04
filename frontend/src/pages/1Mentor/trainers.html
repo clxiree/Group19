@@ -17,7 +17,7 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -29,27 +29,31 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <!-- =======================================================
-  * Template Name: Mentor
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
+  <!-- Vue CDN (Production Build) -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- Axios CDN -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
 </head>
 
 <body class="trainers-page">
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <img src="assets/img/smootutor-logo.jpg">
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Home<br></a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="bookings.html" class="active">Bookings</a></li>
           <li><a href="trainers.html">Trainers</a></li>
@@ -64,20 +68,14 @@
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
             </ul>
           </li>
-          
-  
+        </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-
-
       <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
-
     </div>
   </header>
 
   <main class="main">
-
-    <!-- Page Title -->
     <div class="page-title" data-aos="fade">
       <div class="heading">
         <div class="container">
@@ -97,304 +95,248 @@
           </ol>
         </div>
       </nav>
-    </div><!-- End Page Title -->
-
-<!-- Trainers Section --> 
-
-<section id="trainers" class="section trainers">
-  <div class="container">
-    <div class="row gy-5 mb-2">
-      <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="100">
-        <div class="member-img">
-          <!-- Tutor Image -->
-          <img src="assets/img/team/team-1.jpg" class="img-fluid" alt="Tutor Image">
-          <div class="social">
-            <video id="tutorVideo1" autoplay muted loop src="assets/img/tutor.mp4"></video>
-            <!-- Mute Button -->
-            <div id="muteButton1" class="mute-icon" style="display: none;">
-              <i class="fas fa-volume-mute"></i>
-            </div>
-          </div>
-        </div>
-        <div class="member-info text-center">
-          <h4>Walter White <i class="fas fa-crown" style="color: gold; font-size: 20px;"></i></h4>
-          <span style="font-size: 14px;">WAD2</span>
-          <p class="text-muted pb-2" style="font-size: 14px;"><a href="../tutee tutor review page/tuteetutorreviewpage.html">See 30 reviews</a></p>
-          <button class="btn-buy mb-3" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#tutorModal">View More</button>
-          <button class="btn-buy mb-3" style="font-size: 14px;">Message</button>
-          <br> 
-          <a href="#" class="btn-book-now"><i class="bi bi-calendar2-check-fill"></i> Book Now</a>
-        </div>
-      </div>
-      
-      <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="200">
-        <div class="member-img">
-          <img src="assets/img/team/team-2.jpg" class="img-fluid" alt="">
-          <div class="social">
-            <video id="tutorVideo2" autoplay muted loop src="assets/img/tutor.mp4"></video>
-            <!-- Mute Button -->
-            <div id="muteButton2" class="mute-icon" style="display: none;">
-              <i class="fas fa-volume-mute"></i>
-            </div>
-          </div>
-        </div>
-        <div class="member-info text-center">
-          <h4>Sarah Johnson <i class="fas fa-crown" style="color: gold; font-size: 20px;"></i></h4>
-          <span style="font-size: 14px;">IS110</span>
-          <p class="text-muted pb-2" style="font-size: 14px;"><a href="../tutee tutor review page/tuteetutorreviewpage.html">See 50 reviews</a></p>
-          <button class="btn-buy mb-3" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#tutorModal">View More</button>
-          <button class="btn-buy mb-3" style="font-size: 14px;">Message</button>
-          <br>
-          <a href="#" class="btn-book-now"><i class="bi bi-calendar2-check-fill"></i> Book Now</a>
-        </div>
-      </div>
-      
-      <!-- Repeat the same structure for other tutors -->
-      
-      <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
-        <div class="member-img">
-          <img src="assets/img/team/team-3.jpg" class="img-fluid" alt="">
-          <div class="social">
-            <video id="tutorVideo3" autoplay muted loop src="assets/img/tutor.mp4"></video>
-            <!-- Mute Button -->
-            <div id="muteButton3" class="mute-icon" style="display: none;">
-              <i class="fas fa-volume-mute"></i>
-            </div>
-          </div>
-        </div>
-        <div class="member-info text-center">
-          <h4>William Anderson <i class="fas fa-crown" style="color: gold; font-size: 20px;"></i></h4>
-          <span style="font-size: 14px;">COR-STAT1202</span>
-          <p class="text-muted pb-2" style="font-size: 14px;"><a href="../tutee tutor review page/tuteetutorreviewpage.html">See 50 reviews</a></p>
-          <button class="btn-buy mb-3" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#tutorModal">View More</button>
-          <button class="btn-buy mb-3" style="font-size: 14px;">Message</button>
-          <br> 
-          <a href="#" class="btn-book-now"><i class="bi bi-calendar2-check-fill"></i> Book Now</a>
-        </div>
-      </div>
-      
-      <!-- Add the same structure for all other tutors, modifying the id of each tutor's video and mute button (e.g., tutorVideo4, muteButton4) -->
-      <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
-        <div class="member-img">
-          <img src="assets/img/team/team-4.jpg" class="img-fluid" alt="">
-          <div class="social">
-            <video id="tutorVideo4" autoplay muted loop src="assets/img/tutor.mp4"></video>
-            <!-- Mute Button -->
-            <div id="muteButton4" class="mute-icon" style="display: none;">
-              <i class="fas fa-volume-mute"></i>
-            </div>
-          </div>
-        </div>
-        <div class="member-info text-center">
-          <h4>Lily Babe</h4>
-          <span style="font-size: 14px;">IS211</span>
-          <p class="text-muted pb-2" style="font-size: 14px;"><a href="../tutee tutor review page/tuteetutorreviewpage.html">See 28 reviews</a></p>
-          <button class="btn-buy mb-3" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#tutorModal">View More</button>
-          <button class="btn-buy mb-3" style="font-size: 14px;">Message</button>
-
-          <br> 
-          <!-- Book Now Button - Moved Below and Made Green -->
-          <a href="#" class="btn-book-now">
-            <i class="bi bi-calendar2-check-fill"></i> Book Now
-          </a>
-        </div>
-      </div><!-- End Team Member 4 -->
-
-      <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
-        <div class="member-img">
-          <img src="assets/img/team/team-5.jpg" class="img-fluid" alt="">
-          <div class="social">
-            <video id="tutorVideo5" autoplay muted loop src="assets/img/tutor.mp4"></video>
-            <!-- Mute Button -->
-            <div id="muteButton5" class="mute-icon" style="display: none;">
-              <i class="fas fa-volume-mute"></i>
-            </div>
-          </div>
-        </div>
-        <div class="member-info text-center">
-          <h4>John Lim</h4>
-          <span style="font-size: 14px;">ACCT678</span>
-          <p class="text-muted pb-2" style="font-size: 14px;"><a href="../tutee tutor review page/tuteetutorreviewpage.html">See 50 reviews</a></p>
-          <button class="btn-buy mb-3" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#tutorModal">View More</button>
-          <button class="btn-buy mb-3" style="font-size: 14px;">Message</button>
-
-          <br> 
-          <!-- Book Now Button - Moved Below and Made Green -->
-          <a href="#" class="btn-book-now">
-            <i class="bi bi-calendar2-check-fill"></i> Book Now
-          </a>
-        </div>
-      </div><!-- End Team Member 5 -->
-
-      <div class="col-lg-4 col-md-6 member" data-aos="fade-up" data-aos-delay="300">
-        <div class="member-img">
-          <img src="assets/img/team/team-6.jpg" class="img-fluid" alt="">
-          <div class="social">
-            <video id="tutorVideo6" autoplay muted loop src="assets/img/tutor.mp4"></video>
-            <!-- Mute Button -->
-            <div id="muteButton6" class="mute-icon" style="display: none;">
-              <i class="fas fa-volume-mute"></i>
-            </div>
-          </div>
-        </div>
-        <div class="member-info text-center">
-          <h4>Luke Goh</h4>
-          <span style="font-size: 14px;">ECON856</span>
-          <p class="text-muted pb-2" style="font-size: 14px;"><a href="../tutee tutor review page/tuteetutorreviewpage.html">See 50 reviews</a></p>
-          <button class="btn-buy mb-3" style="font-size: 14px;" data-bs-toggle="modal" data-bs-target="#tutorModal">View More</button>
-          <button class="btn-buy mb-3" style="font-size: 14px;" >Message</button>
-
-          <br> 
-          <!-- Book Now Button - Moved Below and Made Green -->
-          <a href="#" class="btn-book-now">
-            <i class="bi bi-calendar2-check-fill"></i> Book Now
-          </a>
-        </div>
-      </div> <!--End Team Member 6-> 
-
- 
-
     </div>
-  </div>
-</section><!-- /Trainers Section -->
 
-
- <!-- Modal hardcoded for first one--> 
-<div class="modal fade" id="tutorModal" tabindex="-1" aria-labelledby="tutorModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-xl"> <!-- for extra-large modal -->
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="tutorModalLabel">Walter White Details</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body text-center">
-          <!-- Image that will be replaced by video on hover -->
-          <img src="assets/img/team/team-1.jpg" id="tutorModalImage1" class="media-content" alt="Tutor">
-
-          <div class="social">
-            <video id="tutorModalVideo1" class="media-content" autoplay muted loop src="assets/img/tutor.mp4" style="display: none"></video>
-            <!-- Mute Button -->
-            <div id="muteModalButton1" class="mute-icon" style="display: none;">
-              <i class="fas fa-volume-mute"></i>
-            </div>
-          </div>
-
-          <h5 class="pt-2 pb-4"><strong>Walter White</strong></h5>
-                
-          <!-- Grid container for details -->
-          <div class="details-list">                  
-            <div>
-              <h5 class="section-title pb-2">One-Liner</h5>
-              <p>As many of my students have said, "you're my favourite teacher!" Find out why! :)</p>
-            </div>
-                  
-            <hr>
-
-            <div>
-              <h5 class="section-title pb-2">About Myself</h5>
-              <p>Hello! I am Amanda, a full-time tutor who has graduated from NUS. I have been tutoring for four years and have seen more than a dozen students through important milestones such as PSLE and O/N levels.</p>
-            </div>
-
-            <hr>
-
-            <div>
-              <p class="section-title pb-2">Average Rating:</p>
-              <p class="stars text-center">⭐⭐⭐⭐☆ 4.0/5</p>
-            </div>
-
-            <hr>
-
-            <div>
-              <h5 class="section-title pb-2">Teaching subjects</h5>
-              <p class="text-center">WAD2</p>
-            </div>
-
-            <hr>
-                
-            <div>
-              <h5 class="section-title pb-2">Qualifications</h5>
-              <p>WAD A+</p>
-            </div>
-
-            <hr>
-                
-            <div>
-              <h5 class="section-title pb-2">Rate</h5>
-                <p>$40/h</p>
-            </div>
-
-            <hr>
-                
-            <div>
-              <h5 class="section-title pb-2">My Lessons</h5>
-              <ul>
-                <li>Taught and helped with English, Chinese, Math, and Science in a tuition centre across primary and secondary levels.</li>
-                <li>Catered my methods to students' learning needs, improving students' answering efficiency.</li>
-                <li>Students who were failing/getting borderline passes subsequently improved and managed to pass/score a higher grade.</li>
-                <li>Patient in explaining concepts.</li>
-                <li>Customized lesson plans and worksheets for every student according to their individual needs.</li>
-              </ul>
-            </div>
-
-            <hr>
-                
-            <div>
-              <h5 class="section-title pb-2">Portfolio</h5>
-              <img src="path_to_image.jpg" alt="Portfolio Screenshot" class="img-fluid">
-            </div>
-
-            <hr>
-                
-            <div>
-              <h5 class="section-title pb-2">Joined date</h5>
-              <p>7 July 2024</p>
-            </div>
-                
-          </div>
-    </div>
-                
-    <div class="modal-footer justify-content-center">
-        <button type="button" class="btn btn-buy" style="width: 30%; font-size: 14px ; padding: 10px; color: white;">Book</button>
-        <button type="button" class="btn btn-secondary" style="width: 30%; padding: 10px; font-size: 14px;" data-bs-dismiss="modal">Close</button>
-     </div>
-        </div>
-    </div>
-  </div>
-</div>
-
-
-
+    <section id="trainers" class="section trainers">
+      <div class="container">
+        <div class="row gy-5 mb-2" id="trainer-container"></div>
+      </div>
+    </section>
 
     <div class="container copyright text-center mt-4">
       <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
       <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
         Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
       </div>
     </div>
 
-  </footer>
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <div id="preloader"></div>
 
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
 
-  <!-- Preloader -->
-  <div id="preloader"></div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var firebaseConfig = {
+          apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+          authDomain: "smootutor-ed94a.firebaseapp.com",
+          databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "smootutor-ed94a",
+          storageBucket: "smootutor-ed94a.appspot.com",
+          messagingSenderId: "289686522861",
+          appId: "1:289686522861:web:5811385ced42106d78b5e4",
+          measurementId: "G-46QED8ZFKJ"
+        };
+        firebase.initializeApp(firebaseConfig);
 
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+        const db = firebase.firestore();
+        const auth = firebase.auth();
 
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
+        auth.signInAnonymously().then(() => {
+          console.log("User authenticated successfully.");
+          fetchAllTutors();
+        }).catch(error => {
+          console.error("Authentication error:", error);
+        });
 
+        function fetchAllTutors() {
+      const trainersSection = document.getElementById("trainer-container");
+      trainersSection.innerHTML = '';
+      const storage = firebase.storage();
+      const storageRef = storage.ref('images/team');
+      const videoStorageRef = storage.ref('videos');
+
+      // Get default image URL once to use for all fallbacks
+      let defaultImageUrl = '';
+      storageRef.child('default.jpg').getDownloadURL()
+        .then(url => {
+          defaultImageUrl = url;
+        })
+        .catch(error => {
+          console.error("Error loading default image:", error);
+        });
+
+      // Fetch all tutor data from Firestore
+      db.collection("Particulars").get().then(snapshot => {
+        if (snapshot.empty) {
+          console.log("No tutors found in the 'Particulars' collection.");
+          return;
+        }
+
+        snapshot.forEach(doc => {
+          const userData = doc.data();
+
+          // Log each user ID and check if it's a tutor
+          console.log(`Processing UserID ${userData.UserID} - Tutor status: ${userData.Tutor}`);
+          if (userData.Tutor !== true) {
+            console.log(`Skipping UserID ${userData.UserID} as they are not marked as a tutor.`);
+            return;
+          }
+
+          const imageName = userData.Image || 'default.jpg';
+          const imageRef = storageRef.child(imageName);
+
+          const memberDiv = document.createElement("div");
+          memberDiv.className = "col-lg-4 col-md-6 member";
+          memberDiv.setAttribute("data-aos", "fade-up");
+          memberDiv.setAttribute("data-aos-delay", "100");
+
+          const imgDiv = document.createElement("div");
+          imgDiv.className = "member-img";
+          const tutorImg = document.createElement("img");
+
+          // Initially set to the default image
+          tutorImg.src = defaultImageUrl || "assets/img/team/default.jpg";
+          tutorImg.className = "img-fluid";
+          tutorImg.alt = userData.Name || "Unknown Tutor";
+
+          // Get the actual image URL from Firebase Storage
+          imageRef.getDownloadURL()
+            .then(url => {
+              tutorImg.src = url;
+            })
+            .catch(error => {
+              console.log(`Using default image for ${userData.Name}: ${error.code}`);
+            });
+
+          imgDiv.appendChild(tutorImg);
+
+          const socialDiv = document.createElement("div");
+          socialDiv.className = "social";
+          const video = document.createElement("video");
+          video.id = `tutorVideo${userData.UserID}`;
+          video.autoplay = true;
+          video.muted = true;  // Ensure video is muted to enable autoplay
+          video.loop = true;
+
+          // Generate video filename from userData
+          const videoName = userData.Video || 'default.mp4';
+
+          // Fetch the video from Firebase Storage
+          videoStorageRef.child(videoName).getDownloadURL()
+            .then(url => {
+              console.log(`Loaded video URL for ${userData.Name}: ${url}`);
+              video.src = url;  // Set the video source to the fetched URL
+            })
+            .catch(error => {
+              console.error(`Error loading video for ${userData.Name}:`, error);
+              // Fallback to default video if needed
+              videoStorageRef.child('default.mp4').getDownloadURL()
+                .then(defaultUrl => {
+                  console.log("Using default video fallback:", defaultUrl);
+                  video.src = defaultUrl;
+                })
+                .catch(defaultError => {
+                  console.error("Error loading default video:", defaultError);
+                  video.src = "assets/videos/default.mov"; // Local fallback
+                });
+            });
+
+          socialDiv.appendChild(video);
+
+          const muteButton = document.createElement("div");
+          muteButton.id = `muteButton${userData.UserID}`;
+          muteButton.className = "mute-icon";
+          muteButton.style.display = "none";
+          const muteIcon = document.createElement("i");
+          muteIcon.className = "fas fa-volume-mute";
+          muteButton.appendChild(muteIcon);
+          socialDiv.appendChild(muteButton);
+
+          imgDiv.appendChild(socialDiv);
+          memberDiv.appendChild(imgDiv);
+
+          const infoDiv = document.createElement("div");
+          infoDiv.className = "member-info text-center";
+          const nameHeader = document.createElement("h4");
+          nameHeader.textContent = userData.Name || "Unknown Tutor";
+          infoDiv.appendChild(nameHeader);
+
+          const subjectSpan = document.createElement("span");
+          subjectSpan.textContent = userData.SubjectsTaught ? userData.SubjectsTaught.join(", ") : "N/A";
+          infoDiv.appendChild(subjectSpan);
+
+          const reviewsPara = document.createElement("p");
+          const reviewsLink = document.createElement("a");
+          reviewsLink.href = "#";
+          reviewsLink.textContent = userData.Reviews ? `See ${userData.Reviews} reviews` : "No reviews available";
+          reviewsPara.appendChild(reviewsLink);
+          reviewsPara.className = "text-muted pb-2";
+          infoDiv.appendChild(reviewsPara);
+
+          const buttonContainer = document.createElement("div");
+          buttonContainer.style.display = "flex";
+          buttonContainer.style.justifyContent = "center";
+          buttonContainer.style.gap = "10px";
+
+          const viewMoreButton = document.createElement("button");
+          viewMoreButton.className = "btn-buy";
+          viewMoreButton.textContent = "View More";
+          viewMoreButton.style = "font-size: 14px;";
+          buttonContainer.appendChild(viewMoreButton);
+
+          const messageButton = document.createElement("button");
+          messageButton.className = "btn-buy";
+          messageButton.textContent = "Message";
+          messageButton.style = "font-size: 14px;";
+          buttonContainer.appendChild(messageButton);
+
+          const bookNowLink = document.createElement("a");
+          bookNowLink.className = "btn-book-now";
+          bookNowLink.textContent = "Book Now";
+          bookNowLink.style = "font-size: 14px; display: block; margin-top: 5px;";
+          bookNowLink.href = `calendar.html?UserId=${userData.UserID} `;
+          const icon = document.createElement("i");
+          icon.className = "bi bi-calendar2-check-fill";
+          icon.style.marginRight = "5px";
+          bookNowLink.prepend(icon);
+
+          infoDiv.appendChild(buttonContainer);
+          infoDiv.appendChild(bookNowLink);
+
+          memberDiv.appendChild(infoDiv);
+          trainersSection.appendChild(memberDiv);
+
+          // Video event listeners for autoplay and mute handling
+          video.addEventListener('mouseenter', () => {
+            console.log(`Hovering over video for ${userData.Name}`);
+            video.currentTime = 0;
+            video.muted = true;
+            muteButton.style.display = 'block';
+            video.play().catch(err => console.error("Error playing video on hover:", err));
+          });
+
+          video.addEventListener('mouseleave', () => {
+            console.log(`Mouse left video for ${userData.Name}`);
+            video.pause();
+            muteButton.style.display = 'none';
+          });
+
+          video.addEventListener('click', () => {
+            video.muted = !video.muted;
+            muteButton.style.display = video.muted ? 'block' : 'none';
+            console.log(`Video for ${userData.Name} is now ${video.muted ? "muted" : "unmuted"}`);
+          });
+        });
+      }).catch(error => {
+        console.error("Error fetching tutor data:", error);
+      });
+}
+
+
+
+
+
+      });
+    </script>
 </body>
 
 </html>

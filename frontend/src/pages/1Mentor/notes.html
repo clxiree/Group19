@@ -31,7 +31,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -54,7 +56,8 @@
     /* Grid container for notes */
     .note-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* 3 in a row if space allows */
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      /* 3 in a row if space allows */
       gap: 20px;
     }
 
@@ -73,16 +76,19 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 350px; /* Set a fixed height to standardize */
+      min-height: 350px;
+      /* Set a fixed height to standardize */
     }
 
     .note-container:hover {
-      transform: scale(1.02); /* Slight zoom effect on hover */
+      transform: scale(1.02);
+      /* Slight zoom effect on hover */
     }
 
     .course-content {
       text-align: left;
-      flex: 1; /* Ensures consistent spacing */
+      flex: 1;
+      /* Ensures consistent spacing */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
@@ -104,26 +110,28 @@
     .info-row {
       display: flex;
       align-items: center;
-      gap: 5px; /* Reduced space between items */
+      gap: 5px;
+      /* Reduced space between items */
     }
 
     .info-row p {
-      margin: 0; /* Remove default paragraph margin */
+      margin: 0;
+      /* Remove default paragraph margin */
     }
 
     /* Ensures layout responsiveness */
     @media (max-width: 768px) {
       .note-grid {
-        grid-template-columns: 1fr; /* Single column on smaller screens */
+        grid-template-columns: 1fr;
+        /* Single column on smaller screens */
       }
     }
-
   </style>
 </head>
 
 <body class="course-details-page">
 
-    <header id="header" class="header d-flex align-items-center sticky-top">
+  <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
       <a href="index.html" class="logo d-flex align-items-center me-auto">
@@ -139,10 +147,10 @@
           <li><a href="chats.html">Chats</a></li>
           <li><a href="proofread.html">Proofread</a></li>
           <li><a href="notes.html">Notes</a></li>
-          
-          
-  
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+
+
+
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
 
@@ -184,7 +192,7 @@
     </section>
 
 
-    
+
 
   </main>
 
@@ -196,7 +204,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -206,19 +215,20 @@
     document.addEventListener("DOMContentLoaded", function () {
       // Firebase configuration
       const firebaseConfig = {
-      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-      authDomain: "smootutor-ed94a.firebaseapp.com",
-      projectId: "smootutor-ed94a",
-      storageBucket: "smootutor-ed94a.appspot.com",
-      messagingSenderId: "289686522861",
-      appId: "1:289686522861:web:5811385ced42106d78b5e4",
-      measurementId: "G-46QED8ZFKJ"
-    };
+        apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+        authDomain: "smootutor-ed94a.firebaseapp.com",
+        projectId: "smootutor-ed94a",
+        storageBucket: "smootutor-ed94a.appspot.com",
+        messagingSenderId: "289686522861",
+        appId: "1:289686522861:web:5811385ced42106d78b5e4",
+        measurementId: "G-46QED8ZFKJ"
+      };
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
       const storage = firebase.storage();
+
 
       // Fetch and Display Notes
       function fetchNotes() {
@@ -229,15 +239,15 @@
           snapshot.forEach((doc) => {
             const note = doc.data();
             const noteItem = `
-              <div class="note-container">
-                <div class="course-content">
-                  <span class="course-code">${note.courseId}</span>
-                  <h3>${note.courseName}</h3>
-                  <p><strong>Professor:</strong> ${note.courseProf}</p>
-                  <p><strong>Owner:</strong> ${note.owner}</p>
-                  ${note.courseLink ? `<a href="${note.courseLink}" target="_blank">View/Download Note</a>` : ""}
-                </div>
-              </div>`;
+        <div class="note-container">
+          <div class="course-content">
+            <span class="course-code">${note.courseId}</span>
+            <h3>${note.courseName}</h3>
+            <p><strong>Professor:</strong> ${note.courseProf}</p>
+            <p><strong>Owner:</strong> ${note.owner}</p>
+            <a href="previewread.html?notesId=${doc.id}" target="_blank">View/Download Note</a>
+          </div>
+        </div>`;
             browseContainer.insertAdjacentHTML("beforeend", noteItem);
           });
         }).catch((error) => {
