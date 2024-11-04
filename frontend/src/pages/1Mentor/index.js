@@ -35,17 +35,27 @@ function fetchCourses() {
             const courseInner = document.createElement("div");
             courseInner.classList.add("course-item");
 
-            // Course image
+            // Course image element
             const courseImage = document.createElement("img");
-            courseImage.src = "assets/img/course-1.jpg"; // You may replace with actual image URL if available in Firebase
             courseImage.classList.add("img-fluid");
             courseImage.alt = courseData.Name || "Course Image";
+            courseImage.src = "assets/img/course-1.jpg"; // Default/fallback image
+
+            // Fetch the actual image from Firebase Storage if available
+            if (courseData.img) {
+                const imageRef = storage.ref(`images/courses/${courseData.img}`);
+                imageRef.getDownloadURL().then((url) => {
+                    courseImage.src = url; // Set the retrieved URL as the src of the img element
+                }).catch((error) => {
+                    console.error("Error fetching image:", error);
+                });
+            }
 
             // Course content container
             const courseContent = document.createElement("div");
             courseContent.classList.add("course-content");
 
-            // Top info with course code and price
+            // Top info with course code
             const topInfo = document.createElement("div");
             topInfo.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-3");
 
@@ -53,13 +63,7 @@ function fetchCourses() {
             courseCode.classList.add("category");
             courseCode.textContent = courseData.Code || "Unknown Code";
 
-            const price = document.createElement("p");
-            price.classList.add("price");
-            price.textContent = `$${courseData.Price || 'N/A'}`;
-
-            // Append course code and price to top info
             topInfo.appendChild(courseCode);
-            topInfo.appendChild(price);
 
             // Course name
             const courseName = document.createElement("h3");
@@ -96,45 +100,51 @@ function fetchCourses() {
             trainerImageWrapper.style.height = "50px";
 
             const trainerImage = document.createElement("img");
-            trainerImage.src = "assets/img/trainers/trainer-1-2.jpg"; // Replace with actual trainer image if available
             trainerImage.classList.add("img-fluid");
             trainerImage.style.width = "50px";
             trainerImage.style.height = "50px";
             trainerImage.style.borderRadius = "50%";
 
-            // Crown icon
-            const crownIcon = document.createElement("img");
-            crownIcon.src = "assets/img/crown.jpg"; // Replace with crown image path
-            crownIcon.style.position = "absolute";
-            crownIcon.style.top = "-20px";
-            crownIcon.style.left = "50%";
-            crownIcon.style.transform = "translateX(-50%)";
-            crownIcon.style.width = "30px";
-            crownIcon.style.height = "30px";
+            // Fetch tutor image from Firebase Storage if available, otherwise use default image
+            if (courseData.tutorImg) {
+                const tutorImageRef = storage.ref(`images/team/${courseData.tutorImg}`);
+                tutorImageRef.getDownloadURL().then((url) => {
+                    trainerImage.src = url; // Set the retrieved URL as the src of the img element
+                }).catch((error) => {
+                    console.error("Error fetching tutor image:", error);
+                });
+            } else {
+                // Set Firebase default image for `default.jpg`
+                const defaultImageRef = storage.ref("images/team/default.jpg");
+                defaultImageRef.getDownloadURL().then((url) => {
+                    trainerImage.src = url;
+                }).catch((error) => {
+                    console.error("Error fetching default image:", error);
+                });
+            }
 
+            // Append elements to trainer profile and container
             trainerImageWrapper.appendChild(trainerImage);
-            trainerImageWrapper.appendChild(crownIcon);
+            trainerProfile.appendChild(trainerImageWrapper);
 
             const trainerLink = document.createElement("a");
             trainerLink.href = "";
             trainerLink.classList.add("trainer-link");
             trainerLink.style.marginLeft = "10px";
-            trainerLink.textContent = "Zenny Potato";
+            trainerLink.textContent = courseData.tutorName || "Unknown Tutor";
 
-            // Append trainer image and link to profile
-            trainerProfile.appendChild(trainerImageWrapper);
             trainerProfile.appendChild(trainerLink);
 
-            // Star ratings
+            // Star ratings based on tutorRating
             const rating = document.createElement("p");
             rating.style.marginLeft = "10px";
-            rating.textContent = "⭐⭐⭐⭐⭐";
+            const starRating = "⭐".repeat(courseData.tutorRating || 5);
+            rating.textContent = starRating;
 
-            // Append trainer profile and rating
             trainerContainer.appendChild(trainerProfile);
             trainerContainer.appendChild(rating);
 
-            // Append elements to courseContent
+            // Append content to courseContent
             courseContent.appendChild(topInfo);
             courseContent.appendChild(courseName);
             courseContent.appendChild(midterm);
@@ -142,14 +152,14 @@ function fetchCourses() {
             courseContent.appendChild(description);
             courseContent.appendChild(trainerContainer);
 
-            // Append image and content to courseInner
+            // Append courseContent and courseImage to courseInner
             courseInner.appendChild(courseImage);
             courseInner.appendChild(courseContent);
 
             // Append courseInner to courseItem
             courseItem.appendChild(courseInner);
 
-            // Append courseItem to the main container
+            // Append courseItem to coursesContainer
             coursesContainer.appendChild(courseItem);
         });
     }).catch((error) => {
@@ -157,9 +167,22 @@ function fetchCourses() {
     });
 }
 
+
+
 function fetchTeamCards() {
     const teamCardsContainer = document.querySelector("#teamCardsContainer");
     teamCardsContainer.innerHTML = ""; // Clear existing items
+
+    // Set up a default image URL from Firebase Storage
+    const defaultImageRef = storage.ref('images/team/default.jpg');
+    let defaultImageURL = ""; // Variable to store the default image URL
+    
+    // Retrieve the URL for the default image from Firebase Storage
+    defaultImageRef.getDownloadURL().then((url) => {
+        defaultImageURL = url; // Set the URL to the default image
+    }).catch((error) => {
+        console.error("Error fetching default image:", error);
+    });
 
     // Query the "Particulars" collection where Tutor is true
     db.collection("Particulars").where("Tutor", "==", true).get().then((snapshot) => {
@@ -180,10 +203,10 @@ function fetchTeamCards() {
             img.alt = data.Name || "No Name";
             img.style.height = "300px"; // Fixed height for image
             img.style.width = "300px";
-            img.style.objectFit = "scale-down"; // Scale image to cover area
+            img.style.objectFit = "scale-down"; // Scale image to fit area
 
-            // Set a default image while the Firebase Storage URL is loading
-            img.src = "assets/img/team/zenny.jpg";
+            // Set the default image from Firebase Storage while the actual image is loading
+            img.src = defaultImageURL || "assets/img/team/default.jpg"; // Local fallback if defaultImageURL isn't available
 
             // Retrieve image from Firebase Storage if provided
             if (data.Image) {
@@ -192,7 +215,7 @@ function fetchTeamCards() {
                     img.src = url; // Set the retrieved URL as the src of the img element
                 }).catch((error) => {
                     console.error("Error fetching image:", error);
-                    img.src = "assets/img/team/zenny.jpg"; // Fallback image
+                    img.src = defaultImageURL; // Use Firebase Storage default image as fallback
                 });
             }
 
@@ -212,18 +235,16 @@ function fetchTeamCards() {
             about.classList.add("card-text");
             about.textContent = data.About || "No about information";
 
+            // Dynamic star rating based on Rating field
             const rating = document.createElement("p");
             rating.classList.add("card-text");
-            rating.textContent = "⭐⭐⭐⭐⭐"; // Static rating, modify if dynamic data available
-
-          
-            
+            const starRating = "⭐".repeat(data.Rating || 0); // Repeat stars based on Rating, default to 0 stars if no rating
+            rating.textContent = starRating;
 
             // Append all elements in the right order
             cardBody.appendChild(name);
             cardBody.appendChild(about);
             cardBody.appendChild(rating);
-           
 
             cardDiv.appendChild(img);
             cardDiv.appendChild(cardBody);
@@ -234,6 +255,8 @@ function fetchTeamCards() {
         console.error("Error fetching team members:", error);
     });
 }
+
+
 
 
 
