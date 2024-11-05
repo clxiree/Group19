@@ -59,17 +59,18 @@
       z-index: 9999;
       transition: background-color 0.3s;
     }
-  
+
     .boxes {
       overflow: hidden;
       background: #2e3a90;
     }
-  
+
     .boxes-inner {
       display: flex;
-      gap: 110px; /* Increased gap for better spacing */
+      gap: 110px;
+      /* Increased gap for better spacing */
     }
-  
+
     .box {
       font-size: 20px;
       line-height: 50px;
@@ -77,19 +78,21 @@
       text-transform: uppercase;
       transition: color 0.3s, transform 0.3s;
       white-space: nowrap;
-      cursor: pointer; /* Change cursor to pointer on hover */
+      cursor: pointer;
+      /* Change cursor to pointer on hover */
     }
-  
+
     .box:hover {
       color: #ffcc00;
       transform: scale(1.15);
     }
-  
+
     .wrapper:hover {
-      background-color: #2e3a90; /* Change background color on hover */
+      background-color: #2e3a90;
+      /* Change background color on hover */
     }
   </style>
-  
+
 
 
 </head>
@@ -137,12 +140,12 @@
 
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <main class="main">
 
-        <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+
+
+      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
 
     </div>
-
   </header>
 
   <!-- Hero Section -->
@@ -665,9 +668,9 @@
         'TOP_FNC502:CloudyChong',
         'TOP_ACCT101:LingLingLongLong'
       ];
-  
+
       const marqueeContent = document.querySelector('.boxes-inner');
-  
+
       // Generate the boxes
       topTutors.forEach((tutor, index) => {
         const box = document.createElement('div');
@@ -675,16 +678,16 @@
         box.textContent = tutor;
         marqueeContent.appendChild(box);
       });
-  
+
       // Duplicate the content for seamless scrolling
       marqueeContent.innerHTML += marqueeContent.innerHTML;
-  
+
       let contentWidth = marqueeContent.offsetWidth / 2; // Adjusted after duplication
       const marqueeWrapper = document.querySelector('.boxes');
-  
+
       // Set initial direction
       let direction = -1; // -1 for left to right, 1 for right to left
-  
+
       // Set up the GSAP animation
       let marqueeTween = gsap.to(".boxes-inner", {
         x: direction * contentWidth,
@@ -695,7 +698,7 @@
           x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
         }
       });
-  
+
       // Pause movement and enhance interactivity on hover over boxes
       const boxes = document.querySelectorAll('.box');
       boxes.forEach(box => {
@@ -710,19 +713,19 @@
           this.style.transform = 'scale(1)'; // Reset scale
         });
       });
-  
+
       // Change background color on marquee hover
       marqueeWrapper.addEventListener('mouseenter', function () {
         marqueeWrapper.style.backgroundColor = '#333';
       });
-  
+
       marqueeWrapper.addEventListener('mouseleave', function () {
-        marqueeWrapper.style.backgroundColor = '#1a14cad1';
-  
+        marqueeWrapper.style.backgroundColor = '#2e3a90';
+
         // Reverse direction when mouse leaves the marquee wrapper
         direction *= -1; // Reverse direction
         marqueeTween.kill(); // Kill the existing animation
-  
+
         // Restart animation with new direction
         marqueeTween = gsap.to(".boxes-inner", {
           x: direction * contentWidth,
@@ -734,7 +737,7 @@
           }
         });
       });
-  
+
       // Adjust marquee on window resize
       window.addEventListener('resize', function () {
         contentWidth = marqueeContent.offsetWidth / 2;
@@ -751,8 +754,6 @@
       });
     });
   </script>
-  
-
 
   <!-- Marquee Wrapper at the bottom -->
   <div class="wrapper" id="marquee-wrapper">
