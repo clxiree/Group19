@@ -256,11 +256,6 @@ function fetchTeamCards() {
     });
 }
 
-
-
-
-
-
 document.addEventListener("DOMContentLoaded", () => {
     
     fetchTeamCards();
