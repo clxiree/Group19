@@ -32,6 +32,10 @@
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ModifiersPlugin.min.js"></script>
+
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
@@ -50,33 +54,42 @@
       bottom: 0;
       width: 100%;
       overflow: hidden;
-      background: #000;
+      background: #5f67a2;
       padding: 10px 0;
       z-index: 9999;
+      transition: background-color 0.3s;
     }
-
-    /* Boxes Container */
+  
     .boxes {
-      display: flex;
-      gap: 50px;
-      /* Space between each name */
+      overflow: hidden;
     }
-
-    /* Each Box */
+  
+    .boxes-inner {
+      display: flex;
+      gap: 150px; /* Increased gap for better spacing */
+    }
+  
     .box {
       font-size: 20px;
       line-height: 50px;
       color: #fff;
       text-transform: uppercase;
-      transition: color 0.3s;
+      transition: color 0.3s, transform 0.3s;
       white-space: nowrap;
+      cursor: pointer; /* Change cursor to pointer on hover */
     }
-
-    /* Hover Effect */
+  
     .box:hover {
       color: #ffcc00;
+      transform: scale(1.1);
+    }
+  
+    .wrapper:hover {
+      background-color: #2e3a90; /* Change background color on hover */
     }
   </style>
+  
+
 
 </head>
 
@@ -279,8 +292,6 @@
 
   </section><!-- /Why Us Section -->
 
-
-
   <!-- Courses Section -->
   <section id="courses" class="courses section">
     <div class="container section-title" data-aos="fade-up">
@@ -291,7 +302,6 @@
       <!-- Courses will be dynamically populated here -->
     </div>
   </section>
-
 
   <!-- Trainers Index Section -->
   <section id="trainers-index" class="section trainers-index">
@@ -561,7 +571,6 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
-
   <script src="assets/js/main.js"></script>
   <script src="index.js" type="module"></script>
 
@@ -647,39 +656,109 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-  const topTutors = [
-    'TOP_IS111:Samuel Chua   TOP_CS440:Emily Tan   TOP_BIZ293:Michael Lee   TOP_COR1702:Jessica Wong'
-  ];
-
-  const marqueeContent = document.getElementById('marquee-content');
-
-  // Generate the boxes
-  topTutors.forEach(tutor => {
-    const box = document.createElement('div');
-    box.classList.add('box');
-    box.textContent = tutor;
-    marqueeContent.appendChild(box);
-  });
-
-  // Duplicate the list to create a continuous scrolling effect
-  marqueeContent.innerHTML += marqueeContent.innerHTML;
-
-  // Set up the GSAP animation
-  gsap.fromTo(".boxes", {
-    xPercent: 0
-  }, {
-    xPercent: -100,
-    duration: 10,
-    ease: "linear",
-    repeat: -1
-  });
-});
+      const topTutors = [
+        'TOP_IS111:ChrispyChoo',
+        'TOP_CS440:ZennyPotato',
+        'TOP_MGMT293:YichiFinger',
+        'TOP_COR1702:HandsumPlast',
+        'TOP_FNCE502:CloudyChong',
+        'TOP_ACCT101:LingLingLongLong'
+      ];
+  
+      const marqueeContent = document.querySelector('.boxes-inner');
+  
+      // Generate the boxes
+      topTutors.forEach((tutor, index) => {
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.textContent = tutor;
+        marqueeContent.appendChild(box);
+      });
+  
+      // Duplicate the content for seamless scrolling
+      marqueeContent.innerHTML += marqueeContent.innerHTML;
+  
+      let contentWidth = marqueeContent.offsetWidth / 2; // Adjusted after duplication
+      const marqueeWrapper = document.querySelector('.boxes');
+  
+      // Set initial direction
+      let direction = -1; // -1 for left to right, 1 for right to left
+  
+      // Set up the GSAP animation
+      let marqueeTween = gsap.to(".boxes-inner", {
+        x: direction * contentWidth,
+        duration: 30,
+        ease: "linear",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+        }
+      });
+  
+      // Pause movement and enhance interactivity on hover over boxes
+      const boxes = document.querySelectorAll('.box');
+      boxes.forEach(box => {
+        box.addEventListener('mouseenter', function () {
+          marqueeTween.pause();
+          this.style.color = '#ffcc00'; // Change color on hover
+          this.style.transform = 'scale(1.1)'; // Scale up on hover
+        });
+        box.addEventListener('mouseleave', function () {
+          marqueeTween.play();
+          this.style.color = '#fff'; // Reset color
+          this.style.transform = 'scale(1)'; // Reset scale
+        });
+      });
+  
+      // Change background color on marquee hover
+      marqueeWrapper.addEventListener('mouseenter', function () {
+        marqueeWrapper.style.backgroundColor = '#333';
+      });
+  
+      marqueeWrapper.addEventListener('mouseleave', function () {
+        marqueeWrapper.style.backgroundColor = '#1a14cad1';
+  
+        // Reverse direction when mouse leaves the marquee wrapper
+        direction *= -1; // Reverse direction
+        marqueeTween.kill(); // Kill the existing animation
+  
+        // Restart animation with new direction
+        marqueeTween = gsap.to(".boxes-inner", {
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
+        });
+      });
+  
+      // Adjust marquee on window resize
+      window.addEventListener('resize', function () {
+        contentWidth = marqueeContent.offsetWidth / 2;
+        marqueeTween.kill();
+        marqueeTween = gsap.to(".boxes-inner", {
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
+        });
+      });
+    });
   </script>
+  
+
 
   <!-- Marquee Wrapper at the bottom -->
   <div class="wrapper" id="marquee-wrapper">
     <div class="boxes" id="marquee-content">
-      <!-- Boxes will be generated by JavaScript -->
+      <div class="boxes-inner">
+        <!-- Boxes will be generated by JavaScript -->
+      </div>
     </div>
   </div>
 
