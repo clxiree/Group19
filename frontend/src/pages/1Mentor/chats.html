@@ -3,30 +3,47 @@
 
 <head>
   <meta charset="UTF-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>SMOOTutor Chats</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport">
 
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts and Icons -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+  rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ModifiersPlugin.min.js"></script>
 
   <!-- Custom CSS -->
   <style>
     /* Improved CSS to make the page more modern and appealing */
 
     body.chats-page {
-      font-family: 'Open Sans', sans-serif;
       background-color: #f8f9fa;
       margin: 0;
       color: #212529;
@@ -358,6 +375,49 @@
         font-size: 0.85em;
       }
     }
+
+    .wrapper {
+      position: fixed;
+      bottom: 0;
+      width: 100%;
+      overflow: hidden;
+      background: #2e3a90;
+      /* padding: 10px 0; */
+      z-index: 9999;
+      transition: background-color 0.3s;
+    }
+
+    .boxes {
+      overflow: hidden;
+      background: #2e3a90;
+    }
+
+    .boxes-inner {
+      display: flex;
+      gap: 110px;
+      /* Increased gap for better spacing */
+    }
+
+    .box {
+      font-size: 20px;
+      line-height: 50px;
+      color: #fff;
+      text-transform: uppercase;
+      transition: color 0.3s, transform 0.3s;
+      white-space: nowrap;
+      cursor: pointer;
+      /* Change cursor to pointer on hover */
+    }
+
+    .box:hover {
+      color: #ffcc00;
+      transform: scale(1.15);
+    }
+
+    .wrapper:hover {
+      background-color: #2e3a90;
+      /* Change background color on hover */
+    }
   </style>
 </head>
 
@@ -393,20 +453,18 @@
               Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
               <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-
             </ul>
-          <li><a href="contact.html">Contact</a></li>
           </li>
+          <li><a href="contact.html">Contact</a></li>
 
 
 
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+      <a class="btn-getstarted" href="home/login.html">LOGIN</a>
 
     </div>
   </header>
@@ -835,6 +893,113 @@
     </div>
 
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const topTutors = [
+        'TOP_IS111:ChrispyChoo',
+        'TOP_CS440:ZennyPotato',
+        'TOP_MGMT293:YichiFinger',
+        'TOP_COR1702:HandsumPlast',
+        'TOP_FNC502:CloudyChong',
+        'TOP_ACCT101:LingLingLongLong'
+      ];
+
+      const marqueeContent = document.querySelector('.boxes-inner');
+
+      // Generate the boxes
+      topTutors.forEach((tutor, index) => {
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.textContent = tutor;
+        marqueeContent.appendChild(box);
+      });
+
+      // Duplicate the content for seamless scrolling
+      marqueeContent.innerHTML += marqueeContent.innerHTML;
+
+      let contentWidth = marqueeContent.offsetWidth / 2; // Adjusted after duplication
+      const marqueeWrapper = document.querySelector('.boxes');
+
+      // Set initial direction
+      let direction = -1; // -1 for left to right, 1 for right to left
+
+      // Set up the GSAP animation
+      let marqueeTween = gsap.to(".boxes-inner", {
+        x: direction * contentWidth,
+        duration: 30,
+        ease: "linear",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+        }
+      });
+
+      // Pause movement and enhance interactivity on hover over boxes
+      const boxes = document.querySelectorAll('.box');
+      boxes.forEach(box => {
+        box.addEventListener('mouseenter', function () {
+          marqueeTween.pause();
+          this.style.color = '#ffcc00'; // Change color on hover
+          this.style.transform = 'scale(1.1)'; // Scale up on hover
+        });
+        box.addEventListener('mouseleave', function () {
+          marqueeTween.play();
+          this.style.color = '#fff'; // Reset color
+          this.style.transform = 'scale(1)'; // Reset scale
+        });
+      });
+
+      // Change background color on marquee hover
+      marqueeWrapper.addEventListener('mouseenter', function () {
+        marqueeWrapper.style.backgroundColor = '#333';
+      });
+
+      marqueeWrapper.addEventListener('mouseleave', function () {
+        marqueeWrapper.style.backgroundColor = '#2e3a90';
+
+        // Reverse direction when mouse leaves the marquee wrapper
+        direction *= -1; // Reverse direction
+        marqueeTween.kill(); // Kill the existing animation
+
+        // Restart animation with new direction
+        marqueeTween = gsap.to(".boxes-inner", {
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
+        });
+      });
+
+      // Adjust marquee on window resize
+      window.addEventListener('resize', function () {
+        contentWidth = marqueeContent.offsetWidth / 2;
+        marqueeTween.kill();
+        marqueeTween = gsap.to(".boxes-inner", {
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
+        });
+      });
+    });
+  </script>
+
+  <!-- Marquee Wrapper at the bottom -->
+  <div class="wrapper" id="marquee-wrapper">
+    <div class="boxes" id="marquee-content">
+      <div class="boxes-inner">
+        <!-- Boxes will be generated by JavaScript -->
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>
