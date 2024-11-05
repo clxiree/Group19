@@ -1,204 +1,238 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <title>Preview Page - Web Application 2</title>
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Preview Page - Web Application 2</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
 
-    <!-- Favicons -->
-    <link href="assets/img/favicon.png" rel="icon">
-    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    rel="stylesheet">
 
-    <!-- Vendor CSS Files -->
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/aos/aos.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-    <!-- Main CSS File -->
-    <link href="assets/css/main.css" rel="stylesheet">
-    <style>
-        body {
-    font-family: 'Open Sans', sans-serif;
-    background-color: #f9f9f9;
-    margin: 0;
-    padding: 0;
-}
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f9f9f9;
+      margin: 0;
+      padding: 0;
+    }
 
-.preview-container {
-    position: relative;
-    width: 794px; /* A4 width in pixels */
-    margin: 50px auto;
-    background: white;
-    border: 1px solid #ddd;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    height: 600px; /* Fixed height so that content overflows and scrolls */
-    overflow-y: scroll; /* Enable scrolling within the preview container */
-    scroll-behavior: smooth; /* Smooth scrolling effect */
-}
+    .preview-container {
+      position: relative;
+      width: 794px;
+      /* A4 width in pixels */
+      margin: 50px auto;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      height: 600px;
+      /* Fixed height so that content overflows and scrolls */
+      overflow-y: scroll;
+      /* Enable scrolling within the preview container */
+      scroll-behavior: smooth;
+      /* Smooth scrolling effect */
+    }
 
-.preview-content {
-    position: relative;
-    pointer-events: none; /* Disable interaction with the content */
-}
+    .preview-content {
+      position: relative;
+      pointer-events: none;
+      /* Disable interaction with the content */
+    }
 
-.page {
-    position: relative; /* Each page is now relative to handle the overlay */
-    padding: 20px;
-    border-bottom: 1px solid #ddd;
-    height: 1123px; /* A4 page height */
-    width: 100%; /* Full width of the container */
-    box-sizing: border-box; /* Include padding in the width calculation */
-}
+    .page {
+      position: relative;
+      /* Each page is now relative to handle the overlay */
+      padding: 20px;
+      border-bottom: 1px solid #ddd;
+      height: 1123px;
+      /* A4 page height */
+      width: 100%;
+      /* Full width of the container */
+      box-sizing: border-box;
+      /* Include padding in the width calculation */
+    }
 
-.page-content {
-    filter: blur(3px); /* Apply blur only to the page content */
-    opacity: 0.6; /* Grey out the page content */
-    pointer-events: none; /* Disable interaction with the content */
-}
+    .page-content {
+      filter: blur(3px);
+      /* Apply blur only to the page content */
+      opacity: 0.6;
+      /* Grey out the page content */
+      pointer-events: none;
+      /* Disable interaction with the content */
+    }
 
-.locked-overlay {
-    position: absolute; /* Position it relative to the page */
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.4); /* Darker overlay for locked effect */
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    z-index: 10; /* Ensure it stays on top of the content */
-    pointer-events: auto; /* Allow interaction with the overlay */
-}
+    .locked-overlay {
+      position: absolute;
+      /* Position it relative to the page */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Darker overlay for locked effect */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      z-index: 10;
+      /* Ensure it stays on top of the content */
+      pointer-events: auto;
+      /* Allow interaction with the overlay */
+    }
 
-.locked-overlay a {
-    background-color: #28a745;
-    color: white;
-    padding: 10px 20px;
-    text-decoration: none;
-    border-radius: 5px;
-    z-index: 11; /* Ensure the button remains clickable */
-}
+    .locked-overlay a {
+      background-color: #28a745;
+      color: white;
+      padding: 10px 20px;
+      text-decoration: none;
+      border-radius: 5px;
+      z-index: 11;
+      /* Ensure the button remains clickable */
+    }
 
-.locked-overlay a:hover {
-    background-color: #218838;
-}
-
-
-
-
-
-        
-
-
-    </style>
+    .locked-overlay a:hover {
+      background-color: #218838;
+    }
+  </style>
 </head>
-<body class="courses-page">
-    <header id="header" class="header d-flex align-items-center sticky-top">
-        <div class="container-fluid container-xl position-relative d-flex align-items-center">
-    
-          <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <img src="assets/img/smootutor-logo.jpg">
-          </a>
-    
-          <nav id="navmenu" class="navmenu">
-            <ul>
-              <li><a href="index.html">Home<br></a></li>
-              <li><a href="about.html">About</a></li>
-              <li><a href="bookings.html" class="active">Bookings</a></li>
-              <li><a href="trainers.html">Trainers</a></li>
-              <li><a href="chats.html">Chats</a></li>
-              <li><a href="proofread.html">Proofread</a></li>
-              <li><a href="notes.html">Notes</a></li>
-              
-      
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-          </nav>
-    
-    
-          <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
-    
-        </div>
-      </header>
-      <main class="main">
 
-        <!-- Page Title -->
-        <div class="page-title" data-aos="fade">
-          <div class="heading">
-            <div class="container">
-              <div class="row d-flex justify-content-center text-center">
-                <div class="col-lg-8">
-                  <h1>Preview</h1>
-                  <p class="mb-0">Full Content is locked until payment made.</p>
-                </div>
-              </div>
+<body class="courses-page">
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/smootutor-logo.jpg">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home<br></a></li>
+          <li><a href="bookings.html">Bookings</a></li>
+
+          <li class="dropdown">
+            <a href="trainers.html" id="notesDropdown" aria-expanded="false">
+              Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
+              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+
+            </ul>
+          </li>
+          <li><a href="chats.html">Chats</a></li>
+          <li class="dropdown">
+            <a href="notes.html" id="notesDropdown" aria-expanded="false">
+              Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+            </ul>
+          <li><a href="contact.html">Contact</a></li>
+          </li>
+
+
+
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+
+
+      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+
+    </div>
+  </header>
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Preview</h1>
+              <p class="mb-0">Full Content is locked until payment made.</p>
             </div>
           </div>
-          <nav class="breadcrumbs">
-            <div class="container">
-              <ol>
-                <li><a href="index.html">Home</a></li>
-                <li class="current">Notes</li>
-              </ol>
-            </div>
-          </nav>
         </div>
-        <div class="preview-header text-center">
-          <h1 id="course-name-header">Preview of </h1>
-          <p>Scroll through the preview. Full content is locked until payment is made.</p>
       </div>
-      </div>
-      <div class="preview-container" id="preview-container">
-        <!-- Content will be loaded here based on Firestore data -->
-      </div>
+      <nav class="breadcrumbs">
+        <div class="container">
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li class="current">Notes</li>
+          </ol>
+        </div>
+      </nav>
+    </div>
+    <div class="preview-header text-center">
+      <h1 id="course-name-header">Preview of </h1>
+      <p>Scroll through the preview. Full content is locked until payment is made.</p>
+    </div>
+    </div>
+    <div class="preview-container" id="preview-container">
+      <!-- Content will be loaded here based on Firestore data -->
+    </div>
 
-      <script>
-        // Firebase configuration and initialization
-        const firebaseConfig = {
-      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-      authDomain: "smootutor-ed94a.firebaseapp.com",
-      projectId: "smootutor-ed94a",
-      storageBucket: "smootutor-ed94a.appspot.com",
-      messagingSenderId: "289686522861",
-      appId: "1:289686522861:web:5811385ced42106d78b5e4",
-      measurementId: "G-46QED8ZFKJ"
-    };
-    firebase.initializeApp(firebaseConfig);
-            const db = firebase.firestore();
+    <script>
+      // Firebase configuration and initialization
+      const firebaseConfig = {
+        apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+        authDomain: "smootutor-ed94a.firebaseapp.com",
+        projectId: "smootutor-ed94a",
+        storageBucket: "smootutor-ed94a.appspot.com",
+        messagingSenderId: "289686522861",
+        appId: "1:289686522861:web:5811385ced42106d78b5e4",
+        measurementId: "G-46QED8ZFKJ"
+      };
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
 
-            // Extract notesId from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const notesId = urlParams.get('notesId'); 
+      // Extract notesId from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const notesId = urlParams.get('notesId');
 
-            // Function to load preview content based on notesId
-            function loadPreviewContent() {
-                if (notesId) {
-                    db.collection("BrowseNotes").doc(notesId).get()
-                        .then((doc) => {
-                            if (doc.exists) {
-                                const note = doc.data();
+      // Function to load preview content based on notesId
+      function loadPreviewContent() {
+        if (notesId) {
+          db.collection("BrowseNotes").doc(notesId).get()
+            .then((doc) => {
+              if (doc.exists) {
+                const note = doc.data();
 
-                                // Update the title and header with the course name
-                                const courseNameHeader = document.getElementById('course-name-header');
-                                courseNameHeader.textContent = `Preview of ${note.courseName || "Untitled Course"}`;
-                                document.title = `Preview of ${note.courseName || "Untitled Course"}`;
+                // Update the title and header with the course name
+                const courseNameHeader = document.getElementById('course-name-header');
+                courseNameHeader.textContent = `Preview of ${note.courseName || "Untitled Course"}`;
+                document.title = `Preview of ${note.courseName || "Untitled Course"}`;
 
-                                // Populate preview content in preview-container
-                                const previewContainer = document.getElementById('preview-container');
-                                let pagesHTML = '';
-                                for (let i = 0; i < 3; i++) { // Example with 3 pages
-                                    pagesHTML += `
+                // Populate preview content in preview-container
+                const previewContainer = document.getElementById('preview-container');
+                let pagesHTML = '';
+                for (let i = 0; i < 3; i++) { // Example with 3 pages
+                  pagesHTML += `
                                         <div class="page">
                                             <div class="locked-overlay">
                                                 <h2>This preview is locked</h2>
@@ -210,32 +244,32 @@
                                                 <p>${note[`sectionContent${i + 1}`] || "Sample content for this section..."}</p>
                                             </div>
                                         </div>`;
-                                }
-                                previewContainer.innerHTML = pagesHTML;
-                            } else {
-                                console.error("No note found with the given ID");
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("Error fetching note:", error);
-                        });
-                } else {
-                    console.error("No notesId found in URL");
                 }
-            }
+                previewContainer.innerHTML = pagesHTML;
+              } else {
+                console.error("No note found with the given ID");
+              }
+            })
+            .catch((error) => {
+              console.error("Error fetching note:", error);
+            });
+        } else {
+          console.error("No notesId found in URL");
+        }
+      }
 
-            // Load content on page load
-            loadPreviewContent();
-        
+      // Load content on page load
+      loadPreviewContent();
+
     </script>
-    
-        
-        
-        
-        
-</main>
-              
-<footer id="footer" class="footer position-relative light-background">
+
+
+
+
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
     <div class="container footer-top">
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
@@ -301,7 +335,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -312,27 +347,27 @@
       document.getElementById('browse-notes-section').style.display = 'block';
       document.getElementById('saved-notes-section').style.display = 'none';
     }
-  
+
     // Function to show Saved Notes
     function showSavedNotes() {
       document.getElementById('browse-notes-section').style.display = 'none';
       document.getElementById('saved-notes-section').style.display = 'block';
     }
-  
+
     // Function to switch to Browse Notes and update URL without reloading
     function switchToBrowseNotes(event) {
       event.preventDefault();
       showBrowseNotes();
       history.pushState({}, '', '?section=browse');
     }
-  
+
     // Function to switch to Saved Notes and update URL without reloading
     function switchToSavedNotes(event) {
       event.preventDefault();
       showSavedNotes();
       history.pushState({}, '', '?section=saved');
     }
-  
+
     // Function to detect URL parameter and load the correct section
     function loadCorrectSection() {
       const params = new URLSearchParams(window.location.search);
@@ -343,11 +378,11 @@
         showBrowseNotes(); // Default to Browse Notes if no parameter or "browse"
       }
     }
-  
+
     // Call function on page load to show the correct section
     window.onload = loadCorrectSection;
   </script>
-  
+
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -358,7 +393,8 @@
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
 
   <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>             
+  <script src="assets/js/main.js"></script>
 
 </body>
+
 </html>
