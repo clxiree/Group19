@@ -59,7 +59,7 @@
 .tinder--status i {
   font-size: 100px;
   opacity: 0;
-  transform: scale(0.3);
+  transform: scale(1);
   transition: all 0.2s ease-in-out;
   position: absolute;
   width: 100px;
@@ -95,11 +95,10 @@
   width: 100%;
 }
 
-/* Adjusted tinder--card to allow dynamic height */
 .tinder--card {
   position: absolute;
-  width: 90%; /* Controls the card width; adjust if needed */
-  max-width: 600px;
+  width: 95%; /* Adjusted width to make the card broader */
+  max-width: 700px; /* Optional maximum width for larger screens */
   padding: 20px;
   background-color: white;
   border-radius: 10px;
@@ -107,29 +106,100 @@
   transition: transform 0.3s ease, opacity 0.3s ease;
   cursor: grab;
   border: 1px solid black;
+  min-height: 700px;
+  height: auto;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Align content at the bottom */
+}
+/* Remove background and padding for the overlay */
+.card-overlay {
+  background-color: transparent; /* Make the overlay transparent */
+  padding: 0;
+}
 
-  /* Allow the card to expand with content */
-  min-height: 400px; /* Minimum height to maintain a consistent look */
-  height: auto; /* Allows the card to expand */
-  max-height: 90vh; /* Prevents the card from becoming too tall */
-  overflow-y: auto; /* Adds scroll if content exceeds max height */
+/* Style for profile details positioned at the bottom left */
+.profile-details {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  text-align: left;
+  color: white;
+}
+
+/* Style for name and joined date */
+.profile-details h2 {
+  font-size: 30px;
+  margin: 0;
+  color: white;
+  text-shadow: 2px 2px black;
+}
+
+.profile-details p {
+  font-size: 14px;
+  margin-top: 4px;
+  text-shadow: 2px 2px black;
+}
+
+/* Badge container positioned on the right side */
+.badge-container {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+/* Rate badge on its own row */
+.rate-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+.rate-badge {
+  background-color: #FFD700; /* Yellow color */
+  color: black;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+/* Subjects in a separate row and aligned horizontally */
+.subjects-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap; /* Allows wrapping if there are many subjects */
+}
+
+.subject-badge {
+  background-color: #5a9bd4; /* Blue color */
+  color: white;
+  border-radius: 12px;
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.tinder--card h3 {
+  margin-top: 8px;
+  font-size: 24px;
+}
+
+.tinder--card p {
+  margin-top: 4px;
+  font-size: 16px;
 }
 
 .tinder--card img {
   max-width: 100%;
   border-radius: 10px;
-  pointer-events: none;
-}
-
-.tinder--card h3 {
-  margin-top: 16px;
-  font-size: 24px;
-  pointer-events: none;
-}
-
-.tinder--card p {
-  margin-top: 12px;
-  font-size: 16px;
   pointer-events: none;
 }
 
@@ -162,16 +232,18 @@
 /* Default style for the heart icon */
 .fa-heart {
   color: #FFACE4;
-  font-size: 24px;
   transition: transform 0.2s ease, color 0.2s ease;
+ 
 }
 
-/* Enlarged red heart when active */
+
 
 
 .fa-remove {
   color: #CDD6DD;
 }
+
+
     
   </style>
   <!-- Firebase JS SDK -->
@@ -388,7 +460,7 @@
         <!-- Dislike Button Column -->
         <div class="col-lg-1 text-center">
           <div class="tinder--buttons">
-            <button id="nope">
+            <button id="nope" onclick="swipeCard(false)">
               <i class="fa fa-remove"></i>
             </button>
           </div>
@@ -406,7 +478,7 @@
         <!-- Like Button Column -->
         <div class="col-lg-1 text-center">
           <div class="tinder--buttons">
-            <button id="love">
+            <button id="love"  onclick="swipeCard(true)">
               <i class="fa fa-heart"></i>
             </button>
           </div>
