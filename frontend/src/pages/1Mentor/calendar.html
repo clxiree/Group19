@@ -319,9 +319,12 @@
     </header>
 
     <main>
+        <!-- Bookings Heading Section -->
+    
+        <!-- Lesson Booking Section -->
         <div class="lesson-container">
             <h1 class="title">Lesson Booking</h1>
-
+    
             <!-- Include booking details -->
             <div class="booking-details">
                 <div class="lesson-options">
@@ -330,20 +333,19 @@
                     <select id="tutor" onchange="fetchTutorAvailability()">
                         <!-- Options will be populated dynamically -->
                     </select><br>
-
+    
                     <label for="subject">Subject Chosen</label>
                     <select id="subject">
                         <!-- Subjects will be populated dynamically based on selected tutor -->
                     </select><br>
-
+    
                     <label for="mode">Mode of Lesson</label>
                     <select id="mode">
                         <option value="Physical">Physical</option>
                         <option value="Online">Online</option>
                     </select>
                 </div>
-
-
+    
                 <div class="timeslots">
                     <h3>Available Timeslots for <span id="selected-date">20 May 2024</span>:</h3>
                     <div id="timeslots-container">
@@ -351,7 +353,7 @@
                     </div>
                 </div>
             </div>
-
+    
             <!-- Calendar Section -->
             <div class="calendar">
                 <div class="calendar-selectors">
@@ -362,7 +364,7 @@
                         <!-- Will be dynamically populated -->
                     </select>
                 </div>
-
+    
                 <div class="calendar-days">
                     <div>M</div>
                     <div>T</div>
@@ -372,19 +374,19 @@
                     <div>S</div>
                     <div>S</div>
                 </div>
-
+    
                 <div class="calendar-container" id="calendar-container">
                     <!-- Calendar will be dynamically generated -->
                 </div>
             </div>
-
+    
             <div class="button-container">
                 <button class="button button-back" onclick="goBack()">Back</button>
-                <button class="button button-apply" id="confirm-btn" onclick="confirmBooking()"
-                    disabled>Confirm</button>
+                <button class="button button-apply" id="confirm-btn" onclick="confirmBooking()" disabled>Confirm</button>
             </div>
         </div>
     </main>
+    
 
     <footer id="footer" class="footer position-relative light-background">
         <div class="container footer-top">
@@ -473,6 +475,7 @@
         let selectedTimeslot = null;
 
         // Populate tutor dropdown with data from Firestore
+// Populate tutor dropdown with data from Firestore
         async function populateTutors() {
             const tutorSelect = document.getElementById("tutor");
             tutorSelect.innerHTML = ""; // Clear existing options
@@ -484,7 +487,7 @@
                     const data = doc.data();
                     const option = document.createElement("option");
                     option.value = doc.id;
-                    option.textContent = `Tutor ${data.UserID}`;
+                    option.textContent = data.Name || "Unknown Tutor"; // Use the Name field from Firestore
                     tutorSelect.appendChild(option);
                 });
 
@@ -497,6 +500,7 @@
                 console.error("Error fetching tutors:", error);
             }
         }
+
 
         // Fetch availability and subjects for the selected tutor
         async function fetchTutorAvailability() {
@@ -669,10 +673,7 @@
             yearSelect.addEventListener("change", updateCalendar);
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-            populateTutors();
-            populateSelectors();
-        });
+        
         // Initialize everything when DOM is loaded
         document.addEventListener("DOMContentLoaded", () => {
             if (!window.tutorsLoaded) { // Use a flag to track if tutors have been loaded
