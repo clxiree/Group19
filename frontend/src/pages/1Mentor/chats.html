@@ -480,7 +480,9 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Chats</h1>
-              <p class="mb-0">Chat with our helpful tutors to learn and growth stronger</p>
+              <p class="mb-0">Chat with our helpful tutors to learn and growth stronger. Our tutors are 
+                always ready to help you with your studies. Feel free to ask any questions you have.
+              </p>
             </div>
           </div>
         </div>
@@ -646,6 +648,12 @@
       document.getElementById("message-text").disabled = false;
       document.getElementById("message-text").focus({ preventScroll: true });
       document.querySelector('.chat-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const chatContainer = document.querySelector('.chat-container');
+      const yOffset = -120; // Adjust this value to set how much offset you want from the top
+      const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+
+      window.scrollTo({ top: yPosition, behavior: 'smooth' });
+
     }
 
     // Load messages for the selected chat
