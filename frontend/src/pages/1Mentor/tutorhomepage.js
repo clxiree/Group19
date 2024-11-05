@@ -98,19 +98,9 @@ function renderBookings(bookings) {
         const trainerProfile = document.createElement("div");
         trainerProfile.classList.add("trainer-profile", "d-flex", "align-items-center");
 
-        const trainerImg = document.createElement("img");
-        trainerImg.src = `assets/img/team/${bookingData.tutorImg || "default.jpg"}`; // Replace 'default.jpg' with a default image path
-        trainerImg.classList.add("img-fluid");
-        trainerImg.alt = "";
-
-        const trainerLink = document.createElement("a");
-        trainerLink.href = "#"; // Add the appropriate link if available
-        trainerLink.classList.add("trainer-link");
-        trainerLink.textContent = bookingData.tutorName || "Unknown Tutor";
 
         // Append trainer profile info
-        trainerProfile.appendChild(trainerImg);
-        trainerProfile.appendChild(trainerLink);
+       
         trainerDiv.appendChild(trainerProfile);
 
         // Append components to the course content

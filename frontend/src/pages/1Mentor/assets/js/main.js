@@ -224,3 +224,35 @@
       ModalmuteButton.style.display = 'none'; // Hide the mute icon when not hovered
     });
   });
+
+
+  initMarquee(190, 27)
+
+  function initMarquee(boxWidth, time) {
+      const boxElement = $('.box');
+      const boxLength = boxElement.length;
+      const wrapperWidth = boxWidth * boxLength;
+      const windowWidth = $(window).width();
+  
+      boxElement.parent().css('left', '-' + boxWidth + 'px');
+      boxElement.css('width', boxWidth + 'px');
+  
+      gsap.set(".box", {
+          x: (i) => i * boxWidth
+      });
+  
+      gsap.to(".box", {
+          duration: time,
+          ease: "none",
+          x: "-=" + wrapperWidth,
+          modifiers: {
+              x: gsap.utils.unitize(
+                  function (x) {
+                      return parseFloat(x + windowWidth + boxWidth) % wrapperWidth
+                  }
+              )
+          },
+          repeat: -1
+      });
+  
+  }
