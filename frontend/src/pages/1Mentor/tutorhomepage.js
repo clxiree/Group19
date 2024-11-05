@@ -1,143 +1,187 @@
-// Initialize Firebase app and Firestore
-const firebaseConfig = {
-    apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-    authDomain: "smootutor-ed94a.firebaseapp.com",
-    databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "smootutor-ed94a",
-    storageBucket: "smootutor-ed94a.appspot.com",
-    messagingSenderId: "289686522861",
-    appId: "1:289686522861:web:5811385ced42106d78b5e4"
-};
-
-// Check if Firebase is already initialized to avoid errors
-if (!firebase.apps.length) {
+document.addEventListener("DOMContentLoaded", function () {
+    // Ensure Firebase is initialized correctly
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
     firebase.initializeApp(firebaseConfig);
-}
-const db = firebase.firestore();
 
-let allBookings = []; // Store all bookings data globally for filtering
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    
+    let currentUser = null;
 
-// Fetch and display bookings
-// Fetch and store bookings data
-// Fetch and store bookings data
-function fetchBookings() {
-    const bookingsContainer = document.getElementById("bookings-container");
-    bookingsContainer.innerHTML = ""; // Clear existing bookings
+    // Authenticate anonymously and fetch bookings
+    auth.signInAnonymously().then(() => {
+        console.log("User authenticated successfully.");
 
-    db.collection("Bookings").get().then((snapshot) => {
-        allBookings = []; // Reset allBookings array
-
-        snapshot.forEach((doc) => {
-            const bookingData = doc.data();
-            bookingData.id = doc.id; // Add document ID for unique identification
-            allBookings.push(bookingData);
-        });
-
-        renderBookings(allBookings); // Initially render all bookings
-    }).catch((error) => {
-        console.error("Error fetching bookings:", error);
+        // Fetch bookings once the user is authenticated
+        fetchBookings();
+    }).catch(error => {
+        console.error("Authentication error:", error);
     });
-}
-
-// Render bookings based on provided data
-function renderBookings(bookings) {
-    const bookingsContainer = document.getElementById("bookings-container");
-    bookingsContainer.innerHTML = ""; // Clear container
-
-    bookings.forEach((bookingData) => {
-        // Create the main container for each booking
-        const bookingItem = document.createElement("div");
-        bookingItem.classList.add("col-lg-4", "col-md-6", "d-flex", "align-items-stretch");
-
-        const courseItem = document.createElement("div");
-        courseItem.classList.add("course-item");
-
-        const img = document.createElement("img");
-        img.src = `assets/img/bookings/${bookingData.courseCode}.jpg`; // Assuming course images are named by courseCode
-        img.classList.add("card-img-top");
-        img.alt = "Course Image";
-
-        const courseContent = document.createElement("div");
-        courseContent.classList.add("course-content");
-
-        // Top section with category and price
-        const topInfo = document.createElement("div");
-        topInfo.classList.add("d-flex", "justify-content-between", "align-items-center", "mb-3");
-
-        const category = document.createElement("p");
-        category.classList.add("category");
-        category.textContent = bookingData.courseCode || "Unknown Code";
-
-        const price = document.createElement("p");
-        price.classList.add("price");
-        price.textContent = `$${bookingData.fee || "N/A"}`;
-
-        topInfo.appendChild(category);
-        topInfo.appendChild(price);
-
-        // Course name and details
-        const courseName = document.createElement("h3");
-        courseName.textContent = bookingData.courseName || "Course Name";
-
-        const status = document.createElement("p");
-        status.classList.add("description");
-        status.innerHTML = `<b>Status:</b> ${bookingData.status || "N/A"}`;
-
-        const dateOfLesson = document.createElement("p");
-        dateOfLesson.classList.add("description");
-        dateOfLesson.innerHTML = `<b>Date of Lesson:</b> ${bookingData.dateOfLesson}`;
-
-        const mode = document.createElement("p");
-        mode.classList.add("description");
-        mode.innerHTML = `<b>Mode:</b> ${bookingData.mode || "N/A"}`;
-
-        // Trainer section
-        const trainerDiv = document.createElement("div");
-        trainerDiv.classList.add("trainer", "d-flex", "justify-content-between", "align-items-center");
-
-        const trainerProfile = document.createElement("div");
-        trainerProfile.classList.add("trainer-profile", "d-flex", "align-items-center");
 
 
-        // Append trainer profile info
-       
+// Add event listener for the filter select
+document.getElementById('statusFilter').addEventListener('change', function(e) {
+    const selectedStatus = e.target.value;
+    displayFilteredBookings(selectedStatus);
+});
+
+
+function displayFilteredBookings(status) {
+    const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
+    const bookingList = document.getElementById("booking-list");
+    bookingList.innerHTML = '';
+
+    const row = document.createElement('div');
+    row.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-md-3', 'g-4');
+
+    filteredBookings.forEach(bookingData => {
+        const col = document.createElement('div');
+        col.classList.add('col-lg-4', 'col-md-6', 'd-flex', 'align-items-stretch');
+        col.setAttribute('data-aos', 'zoom-in');
+        col.setAttribute('data-aos-delay', '100');
+
+        const courseItem = document.createElement('div');
+        courseItem.classList.add('course-item');
+
+        // Add grey background for cancelled bookings
+        if (bookingData.status === 'Cancelled') {
+            courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)'; // Light grey background
+            courseItem.style.position = 'relative';
+            
+            // Add a semi-transparent overlay
+            const overlay = document.createElement('div');
+            overlay.style.position = 'absolute';
+            overlay.style.top = '0';
+            overlay.style.left = '0';
+            overlay.style.right = '0';
+            overlay.style.bottom = '0';
+            overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)'; // Very light grey overlay
+            overlay.style.pointerEvents = 'none'; // Allows clicking through the overlay
+            courseItem.appendChild(overlay);
+        }
+
+        // Rest of your existing code remains the same
+        const img = document.createElement('img');
+        img.src = `../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg`;
+        img.classList.add('card-img-top');
+        img.alt = 'Course Image';
+
+        const courseContent = document.createElement('div');
+        courseContent.classList.add('course-content');
+
+        const categoryPriceDiv = document.createElement('div');
+        categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
+
+        const category = document.createElement('p');
+        category.classList.add('category');
+        category.textContent = bookingData.courseCode;
+
+        const price = document.createElement('p');
+        price.classList.add('price');
+        price.textContent = `$${bookingData.fee}`;
+
+        categoryPriceDiv.appendChild(category);
+        categoryPriceDiv.appendChild(price);
+
+        const titleContainer = document.createElement('h3');
+        const titleLink = document.createElement('a');
+        titleLink.href = `course-details.html?bookingId=${bookingData.bookingId}`;
+        titleLink.textContent = bookingData.courseName;
+        titleContainer.appendChild(titleLink);
+
+        const status = document.createElement('p');
+        status.classList.add('description');
+        status.innerHTML = `<b>Status:</b> ${bookingData.status}`;
+
+        const dateOfLesson = document.createElement('p');
+        dateOfLesson.classList.add('description');
+        dateOfLesson.innerHTML = `<b>Date of Booking:</b> ${bookingData.dateOfLesson}`;
+
+        const mode = document.createElement('p');
+        mode.classList.add('description');
+        mode.innerHTML = `<b>Mode:</b> ${bookingData.mode}`;
+
+        const trainerDiv = document.createElement('div');
+        trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
+
+        const trainerProfile = document.createElement('div');
+        trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
+
+        const trainerImg = document.createElement('img');
+        trainerImg.src = `../1Mentor/assets/img/team/${bookingData.tutorImg}`;
+        trainerImg.classList.add('img-fluid');
+        trainerImg.alt = '';
+
+        const trainerLink = document.createElement('a');
+        trainerLink.href = 'trainers.html';
+        trainerLink.classList.add('trainer-link');
+        trainerLink.textContent = bookingData.tutorName;
+
+        const tutorStars = document.createElement('div');
+        tutorStars.textContent = bookingData.tutorStars;
+        tutorStars.style.marginLeft = '10px';
+
+        trainerProfile.appendChild(trainerImg);
+        trainerProfile.appendChild(trainerLink);
+        trainerProfile.appendChild(tutorStars);
+
         trainerDiv.appendChild(trainerProfile);
 
-        // Append components to the course content
-        courseContent.appendChild(topInfo);
-        courseContent.appendChild(courseName);
+        const trainerRank = document.createElement('div');
+        trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
+
+        const personIcon = document.createElement('i');
+        personIcon.classList.add('bi', 'bi-person', 'user-icon');
+        trainerRank.appendChild(personIcon);
+        trainerRank.innerHTML += `&nbsp;${bookingData.tutorReview}`;
+
+        trainerDiv.appendChild(trainerRank);
+
+        courseContent.appendChild(categoryPriceDiv);
+        courseContent.appendChild(titleContainer);
         courseContent.appendChild(status);
         courseContent.appendChild(dateOfLesson);
         courseContent.appendChild(mode);
         courseContent.appendChild(trainerDiv);
 
-        // Append image and content to the course item
         courseItem.appendChild(img);
         courseItem.appendChild(courseContent);
 
-        // Append the course item to the booking item
-        bookingItem.appendChild(courseItem);
-        bookingsContainer.appendChild(bookingItem);
+        col.appendChild(courseItem);
+        row.appendChild(col);
     });
+
+    bookingList.appendChild(row);
 }
 
-// Filter bookings based on selected status
-function applyFilter(status) {
-    if (status === "") {
-        renderBookings(allBookings); // Show all bookings if "All" is selected
-    } else {
-        const filteredBookings = allBookings.filter((booking) => booking.status === status);
-        renderBookings(filteredBookings);
-    }
-}
+// Modify your fetchBookings function to use the filter display
+function fetchBookings() {
+    db.collection("Bookings").get().then(snapshot => {
+        allBookings = []; // Reset global variable for new data
 
-// Event listener for the dropdown filter
-document.addEventListener("DOMContentLoaded", () => {
-    fetchBookings(); // Fetch and display all bookings on load
+        snapshot.forEach(doc => {
+            const bookingData = doc.data();
+            allBookings.push(bookingData);
+        });
+        
 
-    const statusFilter = document.getElementById("statusFilter");
-    statusFilter.addEventListener("change", (event) => {
-        const status = event.target.value;
-        applyFilter(status); // Apply the selected filter
+        // Display all bookings initially
+        displayFilteredBookings('');
+        
+    }).catch(error => {
+        console.error("Error fetching bookings:", error);
     });
-});
+}
+    })
+
+

@@ -56,12 +56,6 @@
       margin-bottom: 30px;
     }
 
-    /* Booking Details Section */
-    .booking-details {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 30px;
-    }
 
     .lesson-options {
       width: 45%;
@@ -221,6 +215,7 @@
     }
   </style>
 
+
   <!-- =======================================================
   * Template Name: Mentor
   * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
@@ -314,24 +309,21 @@
 
     </section><!-- /About Section -->
 
-    <!-- Courses Section -->
-    <section id="courses" class="courses section">
-      <div class="container section-title" data-aos="fade-up">
-        <p>Upcoming Bookings</p>
-        <!-- Filter Buttons -->
-        <div class="filter-container">
-          <select id="statusFilter">
+    <!-- upcoming bookings -->
+    <section class="courses section">
+      <div class="filter-container">
+        <!-- <label for="statusFilter">Filter by Status:</label> -->
+        <select id="statusFilter">
             <option value="">All</option>
             <option value="Pending">Pending</option>
             <option value="Confirmed">Confirmed</option>
-            <option value="Completed">Completed</option>
             <option value="Cancelled">Cancelled</option>
-          </select>
-        </div>
-
-        <div id="bookings-container" class="row"></div> <!-- Add row class for proper Bootstrap layout -->
-      </div>
+        </select>
+    </div>
+      <div id="booking-list"></div>
     </section>
+
+    
 
     <!-- Trainers Index Section -->
     <section id="trainers-index" class="section trainers-index">
