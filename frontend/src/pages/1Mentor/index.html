@@ -44,9 +44,7 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 
-
   <style>
-    /* Marquee Wrapper */
     .wrapper {
       position: fixed;
       bottom: 0;
@@ -55,33 +53,28 @@
       background: #000;
       padding: 10px 0;
       z-index: 9999;
-      /* Ensure it's above other elements */
     }
 
     /* Boxes Container */
     .boxes {
       display: flex;
-      flex-wrap: nowrap;
+      gap: 50px;
+      /* Space between each name */
     }
 
     /* Each Box */
     .box {
-      flex: 0 0 auto;
-      margin-right: 200px;
-      /* Increased spacing between words */
       font-size: 20px;
       line-height: 50px;
       color: #fff;
       text-transform: uppercase;
-      /* white-space: nowrap; */
       transition: color 0.3s;
-      /* Smooth color transition on hover */
+      white-space: nowrap;
     }
 
     /* Hover Effect */
     .box:hover {
       color: #ffcc00;
-      /* Change color on hover */
     }
   </style>
 
@@ -572,7 +565,7 @@
   <script src="assets/js/main.js"></script>
   <script src="index.js" type="module"></script>
 
-  <script>
+  <!-- <script>
     $(document).ready(function () {
       const topTutors = [
         'Samuel Chua',
@@ -613,8 +606,8 @@
         }
 
         marqueeTween = gsap.to('#marquee-content', {
-          duration: 30,
-          x: -direction * totalWidth / 2,
+          duration: 10,
+          x: -direction * (totalWidth - viewportWidth) / 2,
           ease: 'none',
           repeat: -1,
           modifiers: {
@@ -650,6 +643,37 @@
     const link = $('<a>').attr('href', `tutor-profile.html?name=${encodeURIComponent(tutor)}`).text(`TOP ${index + 1} TUTOR: ${tutor}`);
     box.append(link);
     marqueeContent.append(box);
+  </script> -->
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+  const topTutors = [
+    'TOP_IS111:Samuel Chua   TOP_CS440:Emily Tan   TOP_BIZ293:Michael Lee   TOP_COR1702:Jessica Wong'
+  ];
+
+  const marqueeContent = document.getElementById('marquee-content');
+
+  // Generate the boxes
+  topTutors.forEach(tutor => {
+    const box = document.createElement('div');
+    box.classList.add('box');
+    box.textContent = tutor;
+    marqueeContent.appendChild(box);
+  });
+
+  // Duplicate the list to create a continuous scrolling effect
+  marqueeContent.innerHTML += marqueeContent.innerHTML;
+
+  // Set up the GSAP animation
+  gsap.fromTo(".boxes", {
+    xPercent: 0
+  }, {
+    xPercent: -100,
+    duration: 10,
+    ease: "linear",
+    repeat: -1
+  });
+});
   </script>
 
   <!-- Marquee Wrapper at the bottom -->
