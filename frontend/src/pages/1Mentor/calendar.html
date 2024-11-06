@@ -641,15 +641,22 @@
         }
 
         // Confirm booking and redirect to payment page if a timeslot is selected
+        // Confirm booking and redirect to payment page with selected parameters
         function confirmBooking() {
+            const tutor = document.getElementById("tutor").value;
+            const subject = document.getElementById("subject").value;
+            const mode = document.getElementById("mode").value;
+
             if (selectedTimeslot) {
-                // Redirect to payment.html with selected date and time as URL parameters
                 const { date, time } = selectedTimeslot;
-                window.location.href = `payment.html?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`;
+                // Construct the URL with all selected details
+                const url = `payment.html?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&tutor=${encodeURIComponent(tutor)}&subject=${encodeURIComponent(subject)}&mode=${encodeURIComponent(mode)}`;
+                window.location.href = url; // Redirect to payment page
             } else {
                 alert("Please select a timeslot before confirming.");
             }
         }
+
         function goBack() {
             window.location.href = "bookings.html";
         }

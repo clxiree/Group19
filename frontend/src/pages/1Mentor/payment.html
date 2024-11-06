@@ -27,6 +27,18 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
+    <!-- Vue CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Axios CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  
+   <!-- Firebase JS SDK -->
+   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
   <!-- =======================================================
   * Template Name: Mentor
   * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
@@ -34,7 +46,7 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-  <script src="https://js.stripe.com/v3/"></script>
+  <script src="payment.js" defer></script>
 
 </head>
 
@@ -128,6 +140,10 @@
                   <!-- Section 2: Payment & Discounts -->
                   <div class="checkout-section p-4 mb-4 rounded" style="background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                       <h5 class="section-title mb-3" style="font-weight: 600; color: #333;">2. Payment & Discounts</h5>
+                      
+                      <!-- QR Code Placeholder -->
+                      <div id="qr-code-container" style="text-align: center; margin-bottom: 10px;"></div>
+
                       <p style="font-weight: bold; color: #555;">Saved Payment Methods</p>
                       <div class="form-check mb-3">
                           <input class="form-check-input" type="radio" name="paymentMethod" id="visaCard" checked>
@@ -152,19 +168,19 @@
               <div class="col-md-4">
                   <!-- Subscription Summary -->
                   <div class="checkout-section p-4 rounded" style="background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                      <h5 class="section-title mb-3" style="font-weight: 600; color: #333;">Subscription Summary</h5>
-                      <p><strong style="color: #555;">E Maths</strong></p>
-                      <p style="color: #777;">Every 6 months</p>
-                      <p style="color: #777;">Payment by credit card or debit card</p>
-  
-                      <hr>
-  
-                      <!-- Summary Details -->
-                      <p>Subtotal: <span class="float-end" style="color: #333;">SGD 7.50</span></p>
-                      <p>Tax: <span class="float-end" style="color: #333;">SGD 0.00</span></p>
-                      <hr>
-                      <p><strong>Total: <span class="float-end" style="font-size: 1.25rem; color: #333;">SGD 7.50</span></strong></p>
-  
+                    <h5 class="section-title mb-3" style="font-weight: 600; color: #333;">Payment Summary</h5>
+                    <p id="selected-tutor" style="color: #555;"></p>
+                    <p id="selected-subject" style="color: #777;"></p>
+                    <p id="selected-mode" style="color: #777;"></p>
+                    <p id="booking-date" style="color: #777;"></p>
+                    <p style="color: #777;">Payment by QR code</p>
+                    <hr>
+                    <p>Subtotal: <span class="float-end" style="color: #333;">SGD 7.50</span></p>
+                    <p>Tax: <span class="float-end" style="color: #333;">SGD 0.00</span></p>
+                    <hr>
+                    <p><strong>Total: <span class="float-end" style="font-size: 1.25rem; color: #333;">SGD 7.50</span></strong></p>
+                </div>
+                
                       <!-- Secure SSL Checkout -->
                       <div class="text-center secure-checkout mt-4">
                           <img src="https://via.placeholder.com/40x40?text=SSL" alt="SSL Secure" style="width: 50px; margin-top: 10px;">
@@ -181,9 +197,7 @@
     <section id="payment-section" class="container mt-5">
       <h2>Complete Your Payment</h2>
       <form id="payment-form">
-          <div id="card-element"><!-- Stripe Elements will mount here --></div>
-          <button id="submit-button" class="btn btn-primary mt-4" type="submit">Pay</button>
-          <div id="payment-message" class="mt-3"></div>
+          <button id="stripe-submit-button" class="btn btn-primary mt-4" type="submit">Pay</button>
       </form>
   </section>
   
@@ -278,6 +292,23 @@
 
 
   <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+    authDomain: "smootutor-ed94a.firebaseapp.com",
+    databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "smootutor-ed94a",
+    storageBucket: "smootutor-ed94a.appspot.com",
+    messagingSenderId: "289686522861",
+    appId: "1:289686522861:web:5811385ced42106d78b5e4"
+    };
+
+    // Check if Firebase is already initialized to avoid errors
+    if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    const storage = firebase.storage();
     // Function to start the 2-hour countdown
     function startCountdown() {
         const countdownElement = document.getElementById('countdown');
@@ -307,47 +338,69 @@
         }, 1000);
     }
 
+    // Function to retrieve URL parameters
+  function getUrlParameter(name) {
+      const urlParams = new URLSearchParams(window.location.search);
+      return urlParams.get(name);
+  }
+
+  async function displayBookingDetails() {
+    const date = getUrlParameter("date");
+    const time = getUrlParameter("time");
+    const tutorId = getUrlParameter("tutor"); // This will be the UserID
+    const subject = getUrlParameter("subject");
+    const mode = getUrlParameter("mode");
+
+    // Fetch the tutor's name from Firebase Firestore based on the UserID (tutorId)
+    try {
+        const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
+        const tutorName = tutorDoc.exists ? tutorDoc.data().Name : "Unknown Tutor";
+
+        // Insert data into the relevant HTML elements
+        document.getElementById("booking-date").textContent = `Scheduled for: ${date} at ${time}`;
+        document.getElementById("selected-tutor").textContent = `Tutor: ${tutorName}`;
+        document.getElementById("selected-subject").textContent = `Subject: ${subject}`;
+        document.getElementById("selected-mode").textContent = `Mode: ${mode}`;
+    } catch (error) {
+        console.error("Error fetching tutor's name:", error);
+    }
+}
+
     // Start the countdown when the page loads
     window.onload = startCountdown;
 
-    // Replace with your own public Stripe API key
-    const stripe = Stripe("pk_test_51QH4YuGKhpG51U1yE8cFOsu4jgNiKggULZwyA74ZN2lmEEbgk81b0LDiar5Is0CIMtqVoI57UY0Qn6ZyvgkSQiTl000k05NuRc");
+      // Firebase configuration setup (if not already included)
+    const storageRef = firebase.storage().ref();
 
-    // Initialize Stripe Elements
-    const elements = stripe.elements();
-    const cardElement = elements.create("card");
-    cardElement.mount("#card-element");
+  // Function to display QR code
+    function displayQRCode() {
+        const qrCodeContainer = document.getElementById("qr-code-container"); // Placeholder div for QR code
 
-    const form = document.getElementById("payment-form");
-    const messageContainer = document.getElementById("payment-message");
+        // Reference to the image in Firebase Storage
+        const qrCodeRef = storageRef.child("payment/myqrcode.jpg");
 
-    async function createPaymentIntent() {
-        const response = await fetch("http://127.0.0.1:5504/create-payment-intent", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ amount: 750 }) // Specify the amount in smallest currency unit
+        // Get the download URL
+        qrCodeRef.getDownloadURL().then((url) => {
+            // Create an img element and set its src to the URL
+            const qrImage = document.createElement("img");
+            qrImage.src = url;
+            qrImage.alt = "QR Code for Payment";
+            qrImage.style.width = "300px"; // Adjust size as needed
+            qrImage.style.height = "300px";
+            
+            // Append the image to the container
+            qrCodeContainer.appendChild(qrImage);
+        }).catch((error) => {
+            console.error("Error fetching QR code:", error);
         });
-        const { clientSecret } = await response.json();
-        return clientSecret;
     }
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+    // Call the function to display the QR code when the page loads
+    document.addEventListener("DOMContentLoaded", () => {
+      displayBookingDetails();
+      displayQRCode();
+});
 
-        const clientSecret = await createPaymentIntent();
-
-        const { paymentIntent, error } = await stripe.confirmCardPayment(clientSecret, {
-            payment_method: {
-                card: cardElement
-            }
-        });
-
-        if (error) {
-            messageContainer.textContent = `Payment failed: ${error.message}`;
-        } else if (paymentIntent.status === "succeeded") {
-            messageContainer.textContent = "Payment successful!";
-        }
-    });
 </script>
 
   <!-- Main JS File -->
