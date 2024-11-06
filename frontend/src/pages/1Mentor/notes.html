@@ -285,21 +285,26 @@
     container.innerHTML = ""; // Clear the container before adding new items
 
     notes.forEach(note => {
-      const previewLink = `<a href="preview.html?notesId=${note.id}" target="_blank"><i class="fas fa-lock"></i> Preview Notes</a>`;
-      const noteItem = `
-        <div class="note-container">
-          <div class="course-content">
-            <span class="course-code">${note.courseId}</span>
-            <h3>${note.courseName}</h3>
-            <p><strong>Professor:</strong> ${note.courseProf}</p>
-            <p><strong>Owner:</strong> ${note.owner}</p>
-            <p><strong>Price:</strong> \$${note.price}</p>
-            ${previewLink}
-          </div>
-        </div>`;
-      container.insertAdjacentHTML("beforeend", noteItem);
+        // Check if the note is saved to display the appropriate link
+        const previewLink = note.isSaved
+            ? `<a href="${note.courseLink}" target="_blank"><i class="fas fa-unlock"></i> View Notes</a>`
+            : `<a href="preview.html?notesId=${note.id}" target="_blank"><i class="fas fa-lock"></i> Preview Notes</a>`;
+
+        const noteItem = `
+            <div class="note-container">
+                <div class="course-content">
+                    <span class="course-code">${note.courseId}</span>
+                    <h3>${note.courseName}</h3>
+                    <p><strong>Professor:</strong> ${note.courseProf}</p>
+                    <p><strong>Owner:</strong> ${note.owner}</p>
+                    <p><strong>Price:</strong> \$${note.price}</p>
+                    ${previewLink}
+                </div>
+            </div>`;
+        container.insertAdjacentHTML("beforeend", noteItem);
     });
-  }
+}
+
 
   function fetchNotes() {
     db.collection("BrowseNotes").get().then((snapshot) => {
