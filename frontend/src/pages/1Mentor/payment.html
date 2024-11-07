@@ -134,7 +134,7 @@
                   <!-- Section 1: Your Account -->
                   <div class="checkout-section p-4 mb-4 rounded" style="background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                       <h5 class="section-title mb-3" style="font-weight: 600; color: #333;">1. Your Account</h5>
-                      <p style="font-size: 1rem; color: #555;">christinchoo03@gmail.com <a href="#" style="color: #007bff; text-decoration: none; font-weight: 500;">Edit</a></p>
+                      <p style="font-size: 1rem; color: #555;"> <a href="#" style="color: #007bff; text-decoration: none; font-weight: 500;">Edit</a></p>
                   </div>
   
                   <!-- Section 2: Payment & Discounts -->
@@ -144,14 +144,14 @@
                       <!-- QR Code Placeholder -->
                       <div id="qr-code-container" style="text-align: center; margin-bottom: 10px;"></div>
 
-                      <p style="font-weight: bold; color: #555;">Saved Payment Methods</p>
+                      <!-- <p style="font-weight: bold; color: #555;">Saved Payment Methods</p>
                       <div class="form-check mb-3">
                           <input class="form-check-input" type="radio" name="paymentMethod" id="visaCard" checked>
                           <label class="form-check-label" for="visaCard">
                               <img src="https://via.placeholder.com/40x20?text=VISA" alt="Visa" class="me-2"> **** 6408
                           </label>
                       </div>
-                      <button class="btn btn-link text-decoration-none mt-2" style="color: #007bff;">More Payment Methods</button>
+                      <button class="btn btn-link text-decoration-none mt-2" style="color: #007bff;">More Payment Methods</button> -->
   
                       <!-- Discount Code Section -->
                       <div class="input-group mt-3">
@@ -160,7 +160,7 @@
                       </div>
   
                       <!-- Continue Button -->
-                      <button class="btn btn-dark mt-3 w-100" style="background-color: #333; font-weight: 600; padding: 10px;">Continue</button>
+                      <button id="continue-btn" class="btn btn-dark mt-3 w-100" style="background-color: #333; font-weight: 600; padding: 10px;">Continue</button>
                   </div>
               </div>
   
@@ -178,7 +178,8 @@
                     <p>Subtotal: <span class="float-end" style="color: #333;">SGD 7.50</span></p>
                     <p>Tax: <span class="float-end" style="color: #333;">SGD 0.00</span></p>
                     <hr>
-                    <p><strong>Total: <span class="float-end" style="font-size: 1.25rem; color: #333;">SGD 7.50</span></strong></p>
+                    <p><strong>Total: <span class="float-end total-amount" style="font-size: 1.25rem; color: #333;">SGD 0.00</span></strong></p>
+
                 </div>
                 
                       <!-- Secure SSL Checkout -->
@@ -350,6 +351,7 @@
     const tutorId = getUrlParameter("tutor"); // This will be the UserID
     const subject = getUrlParameter("subject");
     const mode = getUrlParameter("mode");
+    const rate = parseFloat(getUrlParameter("rate")) || 0;
 
     // Fetch the tutor's name from Firebase Firestore based on the UserID (tutorId)
     try {
@@ -361,6 +363,10 @@
         document.getElementById("selected-tutor").textContent = `Tutor: ${tutorName}`;
         document.getElementById("selected-subject").textContent = `Subject: ${subject}`;
         document.getElementById("selected-mode").textContent = `Mode: ${mode}`;
+
+        // Display rate and calculate subtotal and total
+        document.querySelector(".float-end").textContent = `SGD ${rate.toFixed(2)}`;
+        document.querySelector(".total-amount").textContent = `SGD ${rate.toFixed(2)}`;
     } catch (error) {
         console.error("Error fetching tutor's name:", error);
     }
@@ -394,6 +400,43 @@
             console.error("Error fetching QR code:", error);
         });
     }
+
+    // Function to apply discount
+    async function applyDiscount() {
+    const discountInput = document.querySelector(".input-group input");
+    const discountCode = discountInput.value.trim();
+    const subtotalElement = document.querySelector(".float-end");
+    const totalElement = document.querySelector(".total-amount");
+
+    try {
+        // Retrieve discount code from Firebase
+        const discountDoc = await db.collection("discount").doc("discountcode1").get();
+        
+        // Adjust this line to match your Firebase field name
+        const validDiscountCode = discountDoc.exists ? discountDoc.data().discountcode1 : null;
+
+        if (discountCode === validDiscountCode) {
+            const subtotalText = subtotalElement.textContent.replace("SGD ", "");
+            const subtotal = parseFloat(subtotalText);
+            const discountAmount = subtotal * 0.10;
+            const discountedTotal = subtotal - discountAmount;
+
+            // Update the total with the discounted amount
+            subtotalElement.textContent = `SGD ${subtotal.toFixed(2)}`;
+            totalElement.textContent = `SGD ${discountedTotal.toFixed(2)}`;
+            alert("Discount applied successfully!");
+        } else {
+            alert("Invalid discount code.");
+        }
+    } catch (error) {
+        console.error("Error applying discount:", error);
+    }
+}
+
+// Attach event listener to the "Apply" button
+document.querySelector(".btn-secondary").addEventListener("click", applyDiscount);
+
+
 
     // Call the function to display the QR code when the page loads
     document.addEventListener("DOMContentLoaded", () => {

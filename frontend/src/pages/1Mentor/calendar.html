@@ -344,6 +344,8 @@
                         <option value="Physical">Physical</option>
                         <option value="Online">Online</option>
                     </select>
+                    <label for="fee">Fee</label>
+                    <p></p>
                 </div>
     
                 <div class="timeslots">
@@ -511,10 +513,14 @@
                 const data = doc.data();
                 subjectsTaught = data.SubjectsTaught || [];
                 tutorTimeslots = {};
+                const rate = data.Rate || 0; // Fetch the rate or default to 0
 
                 populateSubjects();
                 processTimeslots(data.availableTimeslots || []);
                 updateCalendar();
+
+                // Display the rate in the Fee section
+                document.querySelector(".lesson-options p").textContent = `SGD ${rate.toFixed(2)}`;
             }
         }
 
@@ -646,11 +652,12 @@
             const tutor = document.getElementById("tutor").value;
             const subject = document.getElementById("subject").value;
             const mode = document.getElementById("mode").value;
+            const rate = document.querySelector(".lesson-options p").textContent.replace("SGD ", ""); // Extract rate
 
             if (selectedTimeslot) {
                 const { date, time } = selectedTimeslot;
                 // Construct the URL with all selected details
-                const url = `payment.html?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&tutor=${encodeURIComponent(tutor)}&subject=${encodeURIComponent(subject)}&mode=${encodeURIComponent(mode)}`;
+                const url = `payment.html?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&tutor=${encodeURIComponent(tutor)}&subject=${encodeURIComponent(subject)}&mode=${encodeURIComponent(mode)}&rate=${encodeURIComponent(rate)}`;
                 window.location.href = url; // Redirect to payment page
             } else {
                 alert("Please select a timeslot before confirming.");
