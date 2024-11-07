@@ -93,20 +93,33 @@
                 const password = document.getElementById('login-password').value;
 
                 auth.signInWithEmailAndPassword(email, password)
-                    .then(userCredential => {
-                        // Hide the loading screen
-                        // document.getElementById('loading-screen').style.display = 'none';
-                        // Redirect to index.html upon successful login
+                .then(userCredential => {
+                    const userEmail = userCredential.user.email;
+                    // Hide the loading screen
+                    // document.getElementById('loading-screen').style.display = 'none';
+
+                    // Extract the role from the email
+                    const roleMatch = userEmail.match(/scis\.(.*?)\.edu\.sg/);
+                    const role = roleMatch ? roleMatch[1] : null;
+
+                    // Redirect based on extracted role
+                    if (role === "tutor") {
+                        window.location.href = '../tutorhomepage.html';
+                    } else if (role === "tutee") {
                         window.location.href = '../tuteehomepage.html';
-                    })
-                    .catch(error => {
-                        // Hide the loading screen
-                        document.getElementById('loading-screen').style.display = 'none';
-                        console.error('Login Error:', error.message);
-                        alert('WRONG USERNAME OR PASSWORD');
+                    } else {
+                        console.warn("User email does not contain expected roles.");
+                        // Optionally handle cases where the role is not recognized
+                    }
+                })
+                .catch(error => {
+                    // Hide the loading screen
+                    document.getElementById('loading-screen').style.display = 'none';
+                    console.error('Login Error:', error.message);
+                    alert('WRONG USERNAME OR PASSWORD');
+                });
+                        }, 3000); // 3000 milliseconds = 3 seconds
                     });
-            }, 3000); // 3000 milliseconds = 3 seconds
-        });
     </script>
 
     <!-- Additional JS -->
