@@ -68,46 +68,46 @@
     let currentUser = null;
 
     // Authenticate anonymously and fetch bookings
-    // auth.signInAnonymously().then(() => {
-    //     console.log("User authenticated successfully.");
+    
 
-    //     // Fetch bookings once the user is authenticated
-    //     fetchBookings();
-    // }).catch(error => {
-    //     console.error("Authentication error:", error);
-    // });
+    // Declare userId in the outer scope
+let userId = null;
 
-    firebase.auth().onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged((user) => {
     if (user) {
         console.log("User is logged in with email:", user.email);
-        getUserIdByEmail(user.email);
-        fetchBookings();
-       
+        document.getElementById("my-email").innerText = user.email;
+
+        // Reference to the Firestore database
+        const db = firebase.firestore();
+
+        // Query Firestore for the document in 'Particulars' collection where email matches the logged-in user's email
+        db.collection("Particulars")
+            .where("email", "==", user.email)
+            .get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        // Assign userId from Firestore document
+                        userId = doc.data().UserID;
+                        console.log("UserID:", userId);
+
+                        // Now you can call other functions that depend on userId
+                        fetchBookings(userId); // Example of using userId in another function
+                    });
+                } else {
+                    console.log("No matching user found with this email.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error retrieving user ID:", error);
+            });
     } else {
         console.log("No user is logged in.");
         // Redirect to login page if needed
         window.location.href = 'login.html';
     }
 });
-
-const getUserIdByEmail = async (email) => {
-  const db = firebase.firestore();
-  const particularsRef = db.collection('Particulars');
-  const query = particularsRef.where('email', '==', email);
-
-  try {
-    const querySnapshot = await query.get();
-    if (!querySnapshot.empty) {
-      querySnapshot.forEach((doc) => {
-        console.log(`UserId: ${doc.data().UserId}`);
-      });
-    } else {
-      console.log("No user found with this email.");
-    }
-  } catch (error) {
-    console.error("Error retrieving UserId:", error);
-  }
-};
 
 // Add event listener for the filter select
 document.getElementById('statusFilter').addEventListener('change', function(e) {
@@ -269,24 +269,49 @@ function displayFilteredBookings(status) {
     bookingList.appendChild(row);
 }
 
-let allBookings = []; // Declare globally
+// let allBookings = []; // Declare globally
+// function fetchBookings() {
+//     db.collection("Bookings").get().then(snapshot => {
+//         allBookings = []; // Reset global variable for new data
 
-function fetchBookings() {
-    db.collection("Bookings").get().then(snapshot => {
-        allBookings = []; // Reset global variable for new data
+//         snapshot.forEach(doc => {
+//             const booking = doc.data(); // Rename to booking for clarity within the loop
+//             allBookings.push(booking);
+//             console.log(booking); // Log each booking for debugging if needed
+//         });
 
-        snapshot.forEach(doc => {
-            const booking = doc.data(); // Rename to booking for clarity within the loop
-            allBookings.push(booking);
-            console.log(booking); // Log each booking for debugging if needed
-        });
-
-        // Display all bookings initially
-        displayFilteredBookings('');
+//         // Display all bookings initially
+//         displayFilteredBookings('');
         
-    }).catch(error => {
-        console.error("Error fetching bookings:", error);
-    });
+//     }).catch(error => {
+//         console.error("Error fetching bookings:", error);
+//     });
+// }})
+
+function fetchBookings(userId) {
+    if (!userId) {
+        console.log("UserID is not available yet.");
+        return;
+    }
+
+    db.collection("Bookings")
+        .where("tuteeId", "==", userId) // Filter bookings based on UserID
+        .get()
+        .then(snapshot => {
+            allBookings = []; // Reset global variable for new data
+
+            snapshot.forEach(doc => {
+                const booking = doc.data();
+                allBookings.push(booking);
+                console.log(booking); // Log each booking for debugging if needed
+            });
+
+            // Display all bookings initially
+            displayFilteredBookings('');
+        })
+        .catch(error => {
+            console.error("Error fetching bookings:", error);
+        });
 }})
 
 
@@ -411,7 +436,7 @@ function fetchBookings() {
 
 
 
-      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+      <a class="btn-getstarted"><div id="my-email"></div></a>
 
     </div>
   </header>
