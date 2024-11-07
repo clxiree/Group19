@@ -63,7 +63,7 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Home<br></a></li>
+          <li><a href="tuteehomepage.html">Home<br></a></li>
           <li><a href="bookings.html">Bookings</a></li>
           
           <li class="dropdown">
@@ -212,13 +212,13 @@
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">Mentor</span>
+            <span class="sitename">SMOOTutor</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
+            <p>SMU</p>
+            <p>81 Victoria St, Singapore 188065</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
           </div>
           <div class="social-links d-flex mt-4">
             <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -232,7 +232,7 @@
           <h4>Useful Links</h4>
           <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
+            <li><a href="about.html">About us</a></li>
             <li><a href="#">Services</a></li>
             <li><a href="#">Terms of service</a></li>
             <li><a href="#">Privacy policy</a></li>
@@ -242,11 +242,9 @@
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="#">Find a Tutor</a></li>
+            <li><a href="#">Find Quality Notes</a></li>
+      
           </ul>
         </div>
 
@@ -264,14 +262,15 @@
       </div>
     </div>
 
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    <div class="container-fluid bg-light py-3">
+      <div class="row">
+        <div class="col-12 text-center">
+          <p>© <strong class="sitename">SMOOTUTOR</strong> <span>All Rights Reserved</span></p>
+          <div class="credits">
+            <!-- Keep all links intact for free version -->
+            Designed by SMOO students.
+          </div>
+        </div>
       </div>
     </div>
 
@@ -440,9 +439,101 @@ document.querySelector(".btn-secondary").addEventListener("click", applyDiscount
 
     // Call the function to display the QR code when the page loads
     document.addEventListener("DOMContentLoaded", () => {
+      // Call existing functions to display booking details and QR code
       displayBookingDetails();
       displayQRCode();
-});
+
+      // Add event listener for the "Continue" button
+      const continueBtn = document.getElementById("continue-btn");
+      continueBtn.addEventListener("click", async () => {
+          // // Try to get subject from HTML element, fallback to URL parameter
+          // let subject = "";
+          // const subjectElement = document.getElementById("selected-subject");
+          // if (subjectElement) {
+          //     subject = subjectElement.textContent.split(": ")[1];
+          // } else {
+          //     subject = getUrlParameter("subject") || "Unknown Subject"; // Fallback value if not found
+          // }
+
+          // // Check that subject is defined
+          // if (!subject) {
+          //     console.error("Subject is not defined.");
+          //     return;
+          // }
+
+          // Retrieve booking details from the URL or page content
+          const subject = getUrlParameter("subject"); // Course code passed as subject in URL
+          const tutorId = getUrlParameter("tutor"); // This should match the tutor's UserID
+          const courseCode = document.getElementById("selected-subject").textContent.split(": ")[1];
+          const mode = document.getElementById("selected-mode").textContent.split(": ")[1];
+          const date = getUrlParameter("date");
+          const time = getUrlParameter("time");
+          const totalText = document.querySelector(".total-amount").textContent;
+          const total = parseFloat(totalText.replace("SGD ", "").trim());
+
+          // Retrieve and parse totalAmount from the displayed HTML element
+          let totalAmount = 0;
+          const totalAmountElement = document.querySelector(".total-amount");
+          if (totalAmountElement) {
+              totalAmount = parseFloat(totalAmountElement.textContent.replace("SGD ", "").trim());
+          } else {
+              console.error("Total amount element not found.");
+              return;
+          }
+
+          try {
+              // Retrieve course details from the Courses collection using the course code (subject)
+              const courseQuery = await db.collection("Courses").where("Code", "==", subject).get();
+              let courseData;
+              if (!courseQuery.empty) {
+                  courseData = courseQuery.docs[0].data();
+              } else {
+                  throw new Error("Course not found in database.");
+              }
+              
+              // Fetch additional data from the Particulars collection
+              const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
+              if (!tutorDoc.exists) {
+                  throw new Error("Tutor details not found.");
+              }
+              const tutorData = tutorDoc.data();
+
+              // Populate the data for the Bookings collection
+            const bookingData = {
+                bookingId: Math.floor(Math.random() * 100000), // Example booking ID, you may want a different logic
+                tutorId: tutorData.UserID,
+                tutorName: tutorData.Name,
+                tutorImg: tutorData.Image,
+                tutorReview: tutorData.Reviews || 0,
+                tutorStars: tutorData.tutorStars || "⭐️⭐️⭐️",
+                courseCode: courseData.Code,
+                courseName: courseData.Name,
+                dateOfLesson: date,
+                time: time,
+                mode: mode,
+                fee: tutorData.Rate || total,
+                totalAmount: totalAmount,
+                status: "Pending", // Start as "Pending"
+                tuteeId: 4 // Replace with the actual Tutee ID
+            };
+
+              // Add the booking to Firebase Bookings collection
+            await db.collection("Bookings").add(bookingData);
+            alert("Payment information saved successfully!");
+              // Redirect to another page if needed, e.g., confirmation page
+              //window.location.href = "confirmation.html";
+          } catch (error) {
+              console.error("Error saving payment information:", error);
+              alert("Failed to save payment information. Please try again.");
+          }
+      });
+
+      // Function to retrieve URL parameters
+      function getUrlParameter(name) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(name);
+      }
+  });
 
 </script>
 
