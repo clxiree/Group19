@@ -82,11 +82,7 @@
   padding: 6px 12px; /* Reduce padding for a smaller button */
   font-size: 0.9rem; /* Optionally reduce font size */
 }
-.page-title {
-  padding-top: 5px; /* Reduce top padding */
-  padding-bottom: 5px; /* Reduce bottom padding */
-  margin-bottom: 5px; /* Reduce space below the title */
-}
+
 
 /* Optional: adjust the font size if you want a more compact title */
 .page-title h1 {
@@ -95,19 +91,43 @@
 }
 
 .page-title p {
-  margin-bottom: 0; /* Remove extra margin */
+  margin-bottom: 60px; /* Remove extra margin */
 }
 
 /* Breadcrumbs section height adjustment */
-.breadcrumbs {
-  padding-top: 5px; /* Minimal padding for a compact look */
-  padding-bottom: 5px;
-  margin-bottom: 10px;
+.page-title .heading h2 {
+    font-weight: bold;
+    font-size: 1.8rem;  /* Adjust font size for a smaller look */
+    margin-bottom: 10px; /* Optional: add some spacing below */
+  
+}
+
+/* Style for the subtitle */
+.page-title .heading p.mb-0 {
+    font-size: 1rem;  /* Smaller than the heading */
+    color: #ffffff; /* Optional: set a lighter color for distinction */
+    margin-top: 5px; /* Optional: add a little space above */
+}
+.page-title .heading {
+    padding-top: 30px; /* Reduce padding from the top */
+    padding-bottom: 30px; /* Reduce padding from the bottom */
+}
+
+/* Optional: adjust the breadcrumbs section padding */
+.page-title .breadcrumbs {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Adjust the breadcrumbs section */
+nav.breadcrumbs {
+    padding: 15px 0;  /* reduce padding to make it shorter */
+    font-size: 0.9rem;  /* optional: reduce font size slightly */
 }
 
 /* Trainers section compact layout */
 .section.trainers {
-  padding-top: 15px; /* Slightly reduce top padding */
+  padding-top: 50px; /* Slightly reduce top padding */
   padding-bottom: 15px; /* Slightly reduce bottom padding */
 }
 .heading {
@@ -168,25 +188,19 @@
         <div class="container">
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
-              <h1>Our Tutors</h1>
+              <h2>Our Tutors</h2>
               <p class="mb-0">Find the SMOO tutor that you like BEST</p>
             </div>
           </div>
         </div>
       </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current">Tutors</li>
-          </ol>
-        </div>
-      </nav>
+      
     </div>
 
     <section id="trainers" class="section trainers">
       <div class="container">
         <div class="row gy-5 mb-2" id="trainer-container"></div>
+        
       </div>
     </section>
 
@@ -294,6 +308,7 @@
         if (user) {
             console.log("User is logged in with email:", user.email);
             document.getElementById("my-email").innerText = user.email;
+            fetchAllTutors()
             // You can use user.email to retrieve user-specific data
         } else {
             console.log("No user is logged in.");
@@ -302,14 +317,8 @@
         }
     });
 
-        auth.signInAnonymously().then(() => {
-          console.log("User authenticated successfully.");
-          fetchAllTutors();
-        }).catch(error => {
-          console.error("Authentication error:", error);
-        });
-      
-
+       
+    
         function fetchAllTutors() {
           const trainersSection = document.getElementById("trainer-container");
           trainersSection.innerHTML = '';
@@ -495,6 +504,8 @@
           });
         }
       });
+     
+      
     </script>
 
 
