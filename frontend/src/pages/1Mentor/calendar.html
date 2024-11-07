@@ -344,6 +344,8 @@
                         <option value="Physical">Physical</option>
                         <option value="Online">Online</option>
                     </select>
+                    <label for="fee">Fee</label>
+                    <p></p>
                 </div>
     
                 <div class="timeslots">
@@ -476,31 +478,47 @@
 
         // Populate tutor dropdown with data from Firestore
 // Populate tutor dropdown with data from Firestore
+          function getUrlParameter(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Function to populate tutors dynamically and set the selected option based on UserId
         async function populateTutors() {
             const tutorSelect = document.getElementById("tutor");
             tutorSelect.innerHTML = ""; // Clear existing options
 
             try {
+                const urlTutorId = getUrlParameter('UserId'); // Get UserId from URL
                 const snapshot = await db.collection("Particulars").where("Tutor", "==", true).get();
 
                 snapshot.forEach(doc => {
                     const data = doc.data();
                     const option = document.createElement("option");
                     option.value = doc.id;
-                    option.textContent = data.Name || "Unknown Tutor"; // Use the Name field from Firestore
+                    option.textContent = `${data.Name} ($${data.Rate || 0}/h)`;
+                    
+                    // Set the option as selected if it matches the UserId from the URL
+                    if (urlTutorId && doc.id === urlTutorId) {
+                        option.selected = true;
+                    }
+
                     tutorSelect.appendChild(option);
                 });
 
-                // Automatically fetch availability for the first tutor if available
-                if (tutorSelect.options.length > 0) {
+                // If a tutor was preselected from the URL, fetch their availability
+                if (urlTutorId) {
+                    fetchTutorAvailability();
+                } else if (tutorSelect.options.length > 0) {
+                    // Default to the first option and fetch its availability if no UserId in URL
                     tutorSelect.selectedIndex = 0;
                     fetchTutorAvailability();
                 }
+
             } catch (error) {
                 console.error("Error fetching tutors:", error);
             }
         }
-
 
         // Fetch availability and subjects for the selected tutor
         async function fetchTutorAvailability() {
@@ -511,14 +529,18 @@
                 const data = doc.data();
                 subjectsTaught = data.SubjectsTaught || [];
                 tutorTimeslots = {};
+                const rate = data.Rate || 0; // Fetch the rate or default to 0
 
                 populateSubjects();
                 processTimeslots(data.availableTimeslots || []);
                 updateCalendar();
+
+                // Display the rate in the Fee section
+                document.querySelector(".lesson-options p").textContent = `SGD ${rate.toFixed(2)}`;
             }
         }
 
-        // Populate subject dropdown based on selected tutor
+        // Function to populate subjects dynamically based on selected tutor
         function populateSubjects() {
             const subjectSelect = document.getElementById("subject");
             subjectSelect.innerHTML = ""; // Clear existing options
@@ -641,15 +663,23 @@
         }
 
         // Confirm booking and redirect to payment page if a timeslot is selected
+        // Confirm booking and redirect to payment page with selected parameters
         function confirmBooking() {
+            const tutor = document.getElementById("tutor").value;
+            const subject = document.getElementById("subject").value;
+            const mode = document.getElementById("mode").value;
+            const rate = document.querySelector(".lesson-options p").textContent.replace("SGD ", ""); // Extract rate
+
             if (selectedTimeslot) {
-                // Redirect to payment.html with selected date and time as URL parameters
                 const { date, time } = selectedTimeslot;
-                window.location.href = `payment.html?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}`;
+                // Construct the URL with all selected details
+                const url = `payment.html?date=${encodeURIComponent(date)}&time=${encodeURIComponent(time)}&tutor=${encodeURIComponent(tutor)}&subject=${encodeURIComponent(subject)}&mode=${encodeURIComponent(mode)}&rate=${encodeURIComponent(rate)}`;
+                window.location.href = url; // Redirect to payment page
             } else {
                 alert("Please select a timeslot before confirming.");
             }
         }
+
         function goBack() {
             window.location.href = "bookings.html";
         }
