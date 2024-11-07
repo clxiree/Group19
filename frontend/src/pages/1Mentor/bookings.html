@@ -77,55 +77,6 @@
         console.error("Authentication error:", error);
     });
 
-// function fetchBookings() {
-//   db.collection("Bookings").get().then(snapshot => {
-//     const bookingList = document.getElementById("booking-list");
-//     bookingList.innerHTML = ''; // Clear previous content
-
-//     var str = '<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">';
-
-//     snapshot.forEach(doc => {
-//       const bookingData = doc.data();
-//       console.log(bookingData.tutorStars);
-
-//       str += `
-//             <div class="col-lg-4 col-md-6 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
-//         <div class="course-item">
-//           <img src="../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg" class="card-img-top" alt="Course Image">
-//           <div class="course-content">
-//             <div class="d-flex justify-content-between align-items-center mb-3">
-//               <p class="category">${bookingData.courseCode}</p>
-//               <p class="price">$${bookingData.fee}</p>
-//             </div>
-//             <h3>${bookingData.courseName}</h3>
-//             <p class="description"><b>Status:</b> ${bookingData.status}</p>
-//             <p class="description"><b>Date of Booking:</b> ${bookingData.dateOfLesson}</p>
-//             <p class="description"><b>Mode:</b> ${bookingData.mode}</p>
-//             <div class="trainer d-flex justify-content-between align-items-center">
-//               <div class="trainer-profile d-flex align-items-center">
-//                 <img src="../1Mentor/assets/img/team/${bookingData.tutorImg}" class="img-fluid" alt="">
-//                 <a href="" class="trainer-link">${bookingData.tutorName}</a>
-//                 <div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp${bookingData.tutorStars}</div>
-                 
-//               </div>
-//               <div class="trainer-rank d-flex align-items-center">
-//                     <i class="bi bi-person user-icon"></i>&nbsp;${bookingData.tutorReview}
-//                     &nbsp;&nbsp;
-                    
-//                   </div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>
-//               `
-
-//     });
-
-//     str += '</div>';
-//     bookingList.innerHTML = str;
-//   }).catch(error => {
-//     console.error("Error fetching bookings:", error);
-//   });}
 
 // Add event listener for the filter select
 document.getElementById('statusFilter').addEventListener('change', function(e) {
@@ -133,140 +84,6 @@ document.getElementById('statusFilter').addEventListener('change', function(e) {
     displayFilteredBookings(selectedStatus);
 });
 
-// function displayFilteredBookings(status) {
-    
-//     // Filter bookings based on status
-//     const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
-    
-//     // Get the booking list container
-//     const bookingList = document.getElementById("booking-list");
-//     bookingList.innerHTML = ''; // Clear previous content
-
-//     // Create row container
-//     const row = document.createElement('div');
-//     row.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-md-3', 'g-4');
-
-//     // Loop through filtered bookings
-//     filteredBookings.forEach(bookingData => {
-//         // Create card container (col)
-//         const col = document.createElement('div');
-//         col.classList.add('col-lg-4', 'col-md-6', 'd-flex', 'align-items-stretch');
-//         col.setAttribute('data-aos', 'zoom-in');
-//         col.setAttribute('data-aos-delay', '100');
-
-//         // Create course-item div
-//         const courseItem = document.createElement('div');
-//         courseItem.classList.add('course-item');
-
-//         // Create and set the image element
-//         const img = document.createElement('img');
-//         img.src = `../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg`;
-//         img.classList.add('card-img-top');
-//         img.alt = 'Course Image';
-
-//         // Create course-content div
-//         const courseContent = document.createElement('div');
-//         courseContent.classList.add('course-content');
-
-//         // Create div for category and price
-//         const categoryPriceDiv = document.createElement('div');
-//         categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
-
-//         console.log(bookingData);
-
-//         const category = document.createElement('p');
-//         category.classList.add('category');
-//         category.textContent = bookingData.courseCode;
-
-//         const price = document.createElement('p');
-//         price.classList.add('price');
-//         price.textContent = `$${bookingData.fee}`;
-
-//         categoryPriceDiv.appendChild(category);
-//         categoryPriceDiv.appendChild(price);
-
-//         // Create the title and details
-        
-
-//         const titleContainer = document.createElement('h3');
-//         const titleLink = document.createElement('a');
-//         titleLink.href = `course-details.html?bookingId=${bookingData.bookingId}`;
-//         console.log(bookingData.bookingId);
-//         titleLink.textContent = bookingData.courseName;
-//         titleContainer.appendChild(titleLink);
-
-//         const status = document.createElement('p');
-//         status.classList.add('description');
-//         status.innerHTML = `<b>Status:</b> ${bookingData.status}`;
-
-//         const dateOfLesson = document.createElement('p');
-//         dateOfLesson.classList.add('description');
-//         dateOfLesson.innerHTML = `<b>Date of Booking:</b> ${bookingData.dateOfLesson}`;
-
-//         const mode = document.createElement('p');
-//         mode.classList.add('description');
-//         mode.innerHTML = `<b>Mode:</b> ${bookingData.mode}`;
-
-//         // Trainer section
-//         const trainerDiv = document.createElement('div');
-//         trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
-
-//         const trainerProfile = document.createElement('div');
-//         trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
-
-//         const trainerImg = document.createElement('img');
-//         trainerImg.src = `../1Mentor/assets/img/team/${bookingData.tutorImg}`;
-//         trainerImg.classList.add('img-fluid');
-//         trainerImg.alt = '';
-
-//         const trainerLink = document.createElement('a');
-//         trainerLink.href = 'trainers.html';
-//         trainerLink.classList.add('trainer-link');
-//         trainerLink.textContent = bookingData.tutorName;
-
-//         const tutorStars = document.createElement('div');
-//         tutorStars.textContent = bookingData.tutorStars;
-//         tutorStars.style.marginLeft = '10px';
-
-//         trainerProfile.appendChild(trainerImg);
-//         trainerProfile.appendChild(trainerLink);
-//         trainerProfile.appendChild(tutorStars);
-
-//         trainerDiv.appendChild(trainerProfile);
-
-//         // Create trainer rank section
-//         const trainerRank = document.createElement('div');
-//         trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
-
-//         const personIcon = document.createElement('i');
-//         personIcon.classList.add('bi', 'bi-person', 'user-icon');
-//         trainerRank.appendChild(personIcon);
-//         trainerRank.innerHTML += `&nbsp;${bookingData.tutorReview}`;
-
-//         trainerDiv.appendChild(trainerRank);
-
-//         // Append all sections to the course content
-//         courseContent.appendChild(categoryPriceDiv);
-//         courseContent.appendChild(titleContainer);
-//         courseContent.appendChild(status);
-//         courseContent.appendChild(dateOfLesson);
-//         courseContent.appendChild(mode);
-//         courseContent.appendChild(trainerDiv);
-
-//         // Append course content and image to the course item
-//         courseItem.appendChild(img);
-//         courseItem.appendChild(courseContent);
-
-//         // Append the course item to the column
-//         col.appendChild(courseItem);
-
-//         // Append the column to the row
-//         row.appendChild(col);
-//     });
-
-//     // Append the row to the booking list
-//     bookingList.appendChild(row);
-// }
 
 function displayFilteredBookings(status) {
     const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
@@ -405,6 +222,7 @@ function fetchBookings() {
             const bookingData = doc.data();
             allBookings.push(bookingData);
         });
+        console.log(bookingData);
 
         // Display all bookings initially
         displayFilteredBookings('');
@@ -675,70 +493,6 @@ function fetchBookings() {
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
-
-  <!-- <script>
-    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-    const firebaseConfig = {
-      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-      authDomain: "smootutor-ed94a.firebaseapp.com",
-      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "smootutor-ed94a",
-      storageBucket: "smootutor-ed94a.appspot.com",
-      messagingSenderId: "289686522861",
-      appId: "1:289686522861:web:5811385ced42106d78b5e4",
-      measurementId: "G-46QED8ZFKJ"
-    };
-    firebase.initializeApp(firebaseConfig);
-
-    const db = firebase.firestore();
-    const auth = firebase.auth();
-    const storage = firebase.storage();
-
-    let currentUser = null;
-    let selectedChatId = null;
-    let messagesListener = null;
-
-    // Authenticate and fetch chats
-    auth.signInAnonymously().then(() => {
-      console.log("User authenticated successfully.");
-      auth.onAuthStateChanged(user => {
-        if (user) {
-          currentUser = user;
-          fetchBookings();
-        }
-      });
-    }).catch(error => {
-      console.error("Authentication error:", error);
-    });
-
-    // Fetch and display bookings list
-    function fetchBookings() {
-      db.collection("Bookings").get().then(snapshot => {
-        const bookingList = document.getElementById("booking-list");
-        bookingList.innerHTML = ""; // Clear existing bookings
-
-        snapshot.forEach(doc => {
-          const bookingData = doc.data();
-          const bookingItem = document.createElement("div");
-
-          // Format the display of booking data
-          bookingItem.textContent = `Booking ID: ${bookingData.bookingId}, Course: ${bookingData.courseName}, Fee: $${bookingData.fee}, Status: ${bookingData.status}`;
-          bookingItem.classList.add("booking-item");
-
-          // You can add event listeners here for any additional actions (e.g., loadBooking details)
-          // bookingItem.addEventListener("click", () => loadBooking(doc.id));
-          
-          bookingList.appendChild(bookingItem);
-          console.log(bookingList);
-        });
-      }).catch(error => {
-        console.error("Error fetching bookings:", error);
-      });
-    }
-
-    // Call the function to fetch bookings data
-    fetchBookings();
-  </script> -->
 
   
 

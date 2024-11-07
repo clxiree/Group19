@@ -154,8 +154,9 @@
         db.collection('Bookings').doc(docId).update({
             status: 'Cancelled'
         })
+        
         .then(() => {
-            
+            console.log("Attempting to cancel booking with Document ID:", docId);
             alert('Booking cancelled successfully.');
             console.log("Booking status updated to 'Cancelled' in Firestore.");
             fetchBookingDetails(); // Refresh the booking details after cancellation

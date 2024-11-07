@@ -83,6 +83,10 @@
                   </div>
                 </div>
                 <div class="col-md-12">
+                  <label for="previewImage" class="form-label">Upload Preview Image:</label>
+                  <input type="file" id="previewImage" class="form-control" accept=".jpeg, .jpg, .png" required>
+                </div>
+                <div class="col-md-12">
                   <label for="file" class="form-label">Upload File:</label>
                   <input type="file" id="file" class="form-control" required>
                 </div>
@@ -118,43 +122,65 @@
 
     // Upload Notes Functionality
     document.getElementById("uploadForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const courseId = document.getElementById("courseId").value;
-      const courseName = document.getElementById("courseName").value;
-      const courseProf = document.getElementById("courseProf").value;
-      const owner = document.getElementById("owner").value;
-      const price = document.getElementById("price").value;
-      const file = document.getElementById("file").files[0];
+  e.preventDefault();
+  
+  const courseId = document.getElementById("courseId").value;
+  const courseName = document.getElementById("courseName").value;
+  const courseProf = document.getElementById("courseProf").value;
+  const owner = document.getElementById("owner").value;
+  const price = document.getElementById("price").value;
+  const file = document.getElementById("file").files[0];
+  const previewImageFile = document.getElementById("previewImage").files[0];
 
-      if (!file) {
-        alert("Please select a file.");
-        return;
-      }
+  if (!file || !previewImageFile) {
+    alert("Please select both a file and a preview image.");
+    return;
+  }
 
-      const storageRef = storage.ref(`notes/${courseId}/${Date.now()}_${file.name}`);
-      storageRef.put(file).then((snapshot) => {
-        snapshot.ref.getDownloadURL().then((downloadURL) => {
+  // Validate preview image file type
+  const allowedTypes = ["image/jpeg", "image/png"];
+  if (!allowedTypes.includes(previewImageFile.type)) {
+    alert("Only .jpeg and .png images are allowed for the preview image.");
+    return;
+  }
+
+  // Proceed with upload if file type is valid
+  const notesRef = storage.ref(`notes/${courseId}/${Date.now()}_${file.name}`);
+  notesRef.put(file).then((notesSnapshot) => {
+    notesSnapshot.ref.getDownloadURL().then((notesURL) => {
+
+      const previewRef = storage.ref(`previewImages/${courseId}/${Date.now()}_${previewImageFile.name}`);
+      previewRef.put(previewImageFile).then((previewSnapshot) => {
+        previewSnapshot.ref.getDownloadURL().then((previewURL) => {
+          
           db.collection("BrowseNotes").add({
             courseId: courseId,
             courseName: courseName,
             courseProf: courseProf,
             owner: owner,
-            price: parseFloat(price), 
-            courseLink: downloadURL,
+            price: parseFloat(price),
+            courseLink: notesURL,
+            previewImage: previewURL
           }).then(() => {
-            alert("Note uploaded successfully!");
+            alert("Note and preview image uploaded successfully!");
             document.getElementById("uploadForm").reset();
-            window.location.href = "notes.html"; // Redirect back to notes page after upload
+            window.location.href = "notes.html";
           }).catch((error) => {
             console.error("Error adding note to Firestore:", error);
             alert("Failed to upload note.");
           });
         });
       }).catch((error) => {
-        console.error("Error uploading file:", error);
-        alert("Failed to upload file.");
+        console.error("Error uploading preview image:", error);
+        alert("Failed to upload preview image.");
       });
+
     });
+  }).catch((error) => {
+    console.error("Error uploading file:", error);
+    alert("Failed to upload file.");
+  });
+});
   </script>
 
   <!-- Vendor JS Files -->

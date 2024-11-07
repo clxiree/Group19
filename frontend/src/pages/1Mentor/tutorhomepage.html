@@ -55,13 +55,67 @@
       font-size: 2rem;
       margin-bottom: 30px;
     }
-
-    /* Booking Details Section */
-    .booking-details {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 30px;
+    .timeslot-selection, .calendar {
+      margin-top: 20px;
     }
+
+    .calendar-days, .calendar-container {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-weight: 600;
+      color: #999;
+      font-size: 14px;
+    }
+
+    .calendar-container div {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .calendar-container div.selected {
+      background-color: #ff4d4f;
+      color: white;
+    }
+
+    /* Styling for the Buttons */
+    .button-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .button-save {
+      background-color: #28a745;
+      color: white;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .button-save:hover {
+      background-color: #218838;
+    }
+
+    /* Time Slot List */
+    #timeslots-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 10px;
+    }
+
+    #timeslots-list li {
+      background-color: #007bff;
+      color: white;
+      padding: 8px;
+      border-radius: 5px;
+      margin-top: 5px;
+    }
+
 
     .lesson-options {
       width: 45%;
@@ -221,6 +275,7 @@
     }
   </style>
 
+
   <!-- =======================================================
   * Template Name: Mentor
   * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
@@ -314,216 +369,212 @@
 
     </section><!-- /About Section -->
 
-    <!-- Courses Section -->
-    <section id="courses" class="courses section">
-      <div class="container section-title" data-aos="fade-up">
-        <p>Upcoming Bookings</p>
-        <!-- Filter Buttons -->
-        <div class="filter-container">
-          <select id="statusFilter">
+    <!-- upcoming bookings -->
+    <section class="courses section">
+      <div class="filter-container">
+        <!-- <label for="statusFilter">Filter by Status:</label> -->
+        <select id="statusFilter">
             <option value="">All</option>
             <option value="Pending">Pending</option>
             <option value="Confirmed">Confirmed</option>
-            <option value="Completed">Completed</option>
             <option value="Cancelled">Cancelled</option>
-          </select>
-        </div>
-
-        <div id="bookings-container" class="row"></div> <!-- Add row class for proper Bootstrap layout -->
-      </div>
+        </select>
+    </div>
+      <div id="booking-list"></div>
     </section>
+
+    
 
     <!-- Trainers Index Section -->
     <section id="trainers-index" class="section trainers-index">
 
-      <div class="container">
-        <!-- Section Title -->
-        <div class="container section-title" data-aos="fade-up">
-          <p><a href="calendar.html">Set Lesson Availability</a></p>
-          <main>
-            <div class="lesson-container">
-              <h1 class="title">Lesson Booking</h1>
-
-              <!-- Include booking details -->
-              <div class="booking-details">
-                <div class="lesson-options">
-                  <label for="tutor">Tutor: Ms ABC</label><br>
-                  <label for="subject">Subject Chosen</label>
-                  <select id="subject">
-                    <option value="LOLI101">LOLI101</option>
-                    <option value="MATH201">MATH201</option>
-                    <option value="SCIS202">SCIS202</option>
-                  </select><br>
-
-                  <label for="mode">Mode of Lesson</label>
-                  <select id="mode">
-                    <option value="Physical">Physical</option>
-                    <option value="Online">Online</option>
-                  </select>
-                </div>
-
-                <div class="timeslots">
-                  <h3>Available Timeslots for <span id="selected-date">20 May 2024</span>:</h3>
-                  <div id="timeslots-container">
-                    <!-- Timeslots will be dynamically generated -->
-                  </div>
-                </div>
-              </div>
-
-              <!-- Calendar Section -->
-              <div class="calendar">
-                <div class="calendar-selectors">
-                  <select id="calendar-month">
-                    <!-- Will be dynamically populated -->
-                  </select>
-                  <select id="calendar-year">
-                    <!-- Will be dynamically populated -->
-                  </select>
-                </div>
-
-                <div class="calendar-days">
-                  <div>M</div>
-                  <div>T</div>
-                  <div>W</div>
-                  <div>T</div>
-                  <div>F</div>
-                  <div>S</div>
-                  <div>S</div>
-                </div>
-
-                <div class="calendar-container" id="calendar-container">
-                  <!-- Calendar will be dynamically generated -->
-                </div>
-              </div>
-
-              <div class="button-container">
-                <button class="button button-back">Back</button>
-                <button class="button button-apply">Confirm</button>
-              </div>
-            </div>
+      <div class="lesson-container">
+        <h1 class="title">Set Your Available Timeslots</h1>
+        <div class="calendar">
+          <div class="calendar-selectors">
+            <select id="calendar-month"></select>
+            <select id="calendar-year"></select>
+          </div>
+          <div class="calendar-days">
+            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+          </div>
+          <div class="calendar-container" id="calendar-container"></div>
+        </div>
+        <div class="timeslot-selection">
+          <h3>Available Timeslots for <span id="selected-date">Select a Date</span>:</h3>
+          <div>
+            <label for="timeslot-time">Select Time Slot (1-Hour Intervals):</label>
+            <input type="time" id="timeslot-time" step="3600">
+            <button onclick="addTimeslot()">Add Timeslot</button>
+          </div>
+          <ul id="timeslots-list"></ul>
+        </div>
+        <div class="button-container">
+          <button class="button-save" onclick="saveAvailability()">Save Availability</button>
+        </div>
+      </div>
           </main>
 
 
 
           <script>
-            // Timeslot data for specific dates
-            const timeslots = {
-              "2024-05-20": ["10:00AM - 12:00PM", "2:00PM - 4:00PM"],
-              "2024-05-21": ["11:00AM - 1:00PM", "3:00PM - 5:00PM"],
-              "2024-05-22": ["09:00AM - 11:00AM", "1:00PM - 3:00PM", "4:00PM - 6:00PM"],
-              "2024-05-23": ["10:00AM - 12:00PM", "2:00PM - 4:00PM"],
-              "2024-05-24": ["09:00AM - 11:00AM", "1:00PM - 3:00PM"],
-            };
+            // Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+              authDomain: "smootutor-ed94a.firebaseapp.com",
+              projectId: "smootutor-ed94a",
+              storageBucket: "smootutor-ed94a.appspot.com",
+              messagingSenderId: "289686522861",
+              appId: "1:289686522861:web:5811385ced42106d78b5e4",
+              measurementId: "G-46QED8ZFKJ"
+              };
+              firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
 
-            const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    let selectedDate = null;
+    const timeslots = {};  // Stores timeslots for each date
 
-            function daysInMonth(month, year) {
-              return new Date(year, month + 1, 0).getDate(); // Get total days in a given month/year
-            }
+    // Populate calendar selectors
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    function populateSelectors() {
+      const monthSelect = document.getElementById('calendar-month');
+      const yearSelect = document.getElementById('calendar-year');
+      const currentYear = new Date().getFullYear();
+      const currentMonth = new Date().getMonth();
 
-            function generateCalendar(month, year) {
-              const calendarContainer = document.getElementById('calendar-container');
-              calendarContainer.innerHTML = ''; // Clear previous calendar
+      monthNames.forEach((month, index) => {
+        const option = document.createElement('option');
+        option.value = index;
+        option.textContent = month;
+        monthSelect.appendChild(option);
+      });
+      for (let year = currentYear - 5; year <= currentYear + 5; year++) {
+        const option = document.createElement('option');
+        option.value = year;
+        option.textContent = year;
+        yearSelect.appendChild(option);
+      }
+      monthSelect.value = currentMonth;
+      yearSelect.value = currentYear;
+    }
 
-              const daysInSelectedMonth = daysInMonth(month, year);
-              const firstDayOfWeek = new Date(year, month, 1).getDay(); // Get the first day of the week (0=Sunday, 1=Monday, etc.)
-              const calendarDates = [];
+    function daysInMonth(month, year) {
+      return new Date(year, month + 1, 0).getDate();
+    }
 
-              // Push empty days before the first day of the month
-              for (let i = 0; i < (firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1); i++) {
-                calendarDates.push('');
-              }
+    function generateCalendar(month, year) {
+      const calendarContainer = document.getElementById('calendar-container');
+      calendarContainer.innerHTML = '';
+      const daysInSelectedMonth = daysInMonth(month, year);
+      const firstDayOfWeek = new Date(year, month, 1).getDay();
+      const calendarDates = [];
 
-              // Push the actual dates of the month
-              for (let day = 1; day <= daysInSelectedMonth; day++) {
-                calendarDates.push(day);
-              }
+      for (let i = 0; i < (firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1); i++) {
+        calendarDates.push('');
+      }
+      for (let day = 1; day <= daysInSelectedMonth; day++) {
+        calendarDates.push(day);
+      }
 
-              // Create the calendar grid
-              calendarDates.forEach(date => {
-                const dateElement = document.createElement('div');
-                dateElement.textContent = date;
-                if (date !== '') {
-                  dateElement.dataset.date = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-                  dateElement.classList.add('calendar-day');
-                  dateElement.addEventListener('click', function () {
-                    selectDate(dateElement.dataset.date);
-                  });
-                }
-                calendarContainer.appendChild(dateElement);
-              });
-            }
+      calendarDates.forEach(date => {
+        const dateElement = document.createElement('div');
+        dateElement.textContent = date;
+        if (date !== '') {
+          const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+          dateElement.dataset.date = formattedDate;
+          dateElement.classList.add('calendar-day');
+          dateElement.onclick = () => selectDate(formattedDate);
+        }
+        calendarContainer.appendChild(dateElement);
+      });
+    }
 
-            function selectDate(date) {
-              document.querySelectorAll('.calendar-day').forEach(day => day.classList.remove('selected'));
-              document.querySelector(`[data-date="${date}"]`).classList.add('selected');
-              showTimeslots(date);
-            }
+    function selectDate(date) {
+      selectedDate = date;
+      document.getElementById('selected-date').textContent = new Date(date).toDateString();
+      document.getElementById('timeslots-list').innerHTML = '';
+      if (timeslots[date]) {
+        timeslots[date].forEach(displayTimeslot);
+      }
+    }
+// Initialize timeslots as an object to store arrays of times for each date
 
-            function populateSelectors() {
-              const monthSelect = document.getElementById('calendar-month');
-              const yearSelect = document.getElementById('calendar-year');
-              const currentYear = new Date().getFullYear();
-              const currentMonth = new Date().getMonth();
 
-              monthNames.forEach((month, index) => {
-                const option = document.createElement('option');
-                option.value = index;
-                option.textContent = month;
-                monthSelect.appendChild(option);
-              });
+function addTimeslot() {
+    const timeslotTime = document.getElementById('timeslot-time').value;
+    if (selectedDate && timeslotTime) {
+        const [hours, minutes] = timeslotTime.split(':').map(Number);
+        
+        // Create a Date object for the selected date and time
+        const timestamp = new Date(selectedDate);
+        timestamp.setHours(hours);
+        timestamp.setMinutes(minutes);
+        timestamp.setSeconds(0);
 
-              for (let year = currentYear - 5; year <= currentYear + 5; year++) {
-                const option = document.createElement('option');
-                option.value = year;
-                option.textContent = year;
-                yearSelect.appendChild(option);
-              }
+        // Initialize the array for the selected date if it doesn't exist
+        if (!timeslots[selectedDate]) timeslots[selectedDate] = [];
+        
+        // Add the timestamp to the array for the selected date
+        timeslots[selectedDate].push(timestamp);
 
-              monthSelect.value = currentMonth;
-              yearSelect.value = currentYear;
-            }
+        displayTimeslot(timestamp.toTimeString().slice(0, 5));  // Display the timeslot on the UI
+        document.getElementById('timeslot-time').value = '';  // Clear the input
+    }
+}
 
-            function showTimeslots(date) {
-              const timeslotContainer = document.getElementById('timeslots-container');
-              const selectedTimeslots = timeslots[date] || [];
-              timeslotContainer.innerHTML = ''; // Clear previous slots
+function displayTimeslot(timeslot) {
+    const timeslotItem = document.createElement('li');
+    timeslotItem.textContent = timeslot;
+    document.getElementById('timeslots-list').appendChild(timeslotItem);
+}
 
-              if (selectedTimeslots.length) {
-                selectedTimeslots.forEach(timeslot => {
-                  const slotElement = document.createElement('div');
-                  slotElement.textContent = timeslot;
-                  slotElement.classList.add('timeslot');
-                  timeslotContainer.appendChild(slotElement);
-                });
-              } else {
-                timeslotContainer.textContent = "No available timeslots";
-              }
+async function saveAvailability() {
+    if (Object.keys(timeslots).length === 0) {
+        alert("Please select timeslots to save.");
+        return;
+    }
 
-              // Update selected date in the heading
-              document.getElementById('selected-date').textContent = new Date(date).toDateString();
-            }
-
-            document.getElementById('calendar-month').addEventListener('change', function () {
-              const month = parseInt(this.value);
-              const year = parseInt(document.getElementById('calendar-year').value);
-              generateCalendar(month, year);
+    const UserID = "2";  // Replace with the actual user/tutor ID
+    try {
+        // Convert the `timeslots` object format to save in Firestore as an array of timestamps
+        const formattedTimeslots = [];
+        for (const date in timeslots) {
+            timeslots[date].forEach(time => {
+                formattedTimeslots.push(firebase.firestore.Timestamp.fromDate(time));  // Convert to Firestore Timestamp
             });
+        }
 
-            document.getElementById('calendar-year').addEventListener('change', function () {
-              const month = parseInt(document.getElementById('calendar-month').value);
-              const year = parseInt(this.value);
-              generateCalendar(month, year);
-            });
+        console.log("Saving timeslots:", formattedTimeslots);
 
-            // Initialize the selectors and calendar
-            populateSelectors();
+        await db.collection("Particulars").doc(UserID).set(
+            { availableTimeslots: formattedTimeslots }, 
+            { merge: true }
+        );
+        alert("Availability saved successfully!");
+    } catch (error) {
+        console.error("Error saving availability:", error.message);
+        alert("Error saving availability.");
+    }
+}
 
-            // Get the current date and set it as the default selection
-            const currentDate = new Date();
-            generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
-            selectDate(`${currentDate.getFullYear()}-${String(currentDate.getMonth() + 1).padStart(2, '0')}-${String(currentDate.getDate()).padStart(2, '0')}`);
-          </script>
+    
+    document.getElementById('calendar-month').addEventListener('change', () => {
+      const month = parseInt(document.getElementById('calendar-month').value);
+      const year = parseInt(document.getElementById('calendar-year').value);
+      generateCalendar(month, year);
+    });
+
+    document.getElementById('calendar-year').addEventListener('change', () => {
+      const month = parseInt(document.getElementById('calendar-month').value);
+      const year = parseInt(document.getElementById('calendar-year').value);
+      generateCalendar(month, year);
+    });
+
+    // Initialize the calendar
+    populateSelectors();
+    const currentDate = new Date();
+    generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
+        </script>
         </div><!-- End Section Title -->
         <div class="row">
 
