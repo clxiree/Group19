@@ -44,7 +44,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
 
-=======
+
     <!-- Vue CDN -->
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
@@ -54,6 +54,67 @@
 
 
 </head>
+<style>
+  .logo img {
+  max-width: 150px; /* Set this to the desired width */
+  height: auto; /* Keeps the aspect ratio */
+}
+
+.header {
+  padding: 13px 0; /* Reduces the vertical padding inside the header */
+}
+
+/* Adjust the logo size to reduce overall navbar height */
+.header .logo img {
+  max-height: 40px; /* Set a max height for the logo */
+  height: auto;
+  width: auto;
+}
+
+/* Reduce the vertical padding of nav links */
+.header .navmenu ul li a {
+  padding: 8px 15px; /* Adjust as needed */
+  font-size: 0.9rem; /* Optionally, reduce font size */
+}
+
+/* Align the "Login" button with reduced height */
+.header .btn-getstarted {
+  padding: 6px 12px; /* Reduce padding for a smaller button */
+  font-size: 0.9rem; /* Optionally reduce font size */
+}
+.page-title {
+  padding-top: 5px; /* Reduce top padding */
+  padding-bottom: 5px; /* Reduce bottom padding */
+  margin-bottom: 5px; /* Reduce space below the title */
+}
+
+/* Optional: adjust the font size if you want a more compact title */
+.page-title h1 {
+  font-size: 2rem; /* Adjust the title font size as needed */
+  margin-bottom: 5px; /* Reduce space under the title */
+}
+
+.page-title p {
+  margin-bottom: 0; /* Remove extra margin */
+}
+
+/* Breadcrumbs section height adjustment */
+.breadcrumbs {
+  padding-top: 5px; /* Minimal padding for a compact look */
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+/* Trainers section compact layout */
+.section.trainers {
+  padding-top: 15px; /* Slightly reduce top padding */
+  padding-bottom: 15px; /* Slightly reduce bottom padding */
+}
+.heading {
+  padding-top: 5px; /* Reduce top padding */
+  padding-bottom: 5px; 
+}
+</style>
 
 <body class="trainers-page">
 
@@ -65,7 +126,7 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="tuteehomepage.html">Home<br></a></li>
+          <li><a href="index.html">Home<br></a></li>
           <li><a href="bookings.html">Bookings</a></li>
 
           <li class="dropdown">
@@ -97,7 +158,7 @@
 
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+      <a class="btn-getstarted"><div id="my-email"></div></a>
     </div>
   </header>
 
@@ -229,6 +290,17 @@
 
         const db = firebase.firestore();
         const auth = firebase.auth();
+        firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in with email:", user.email);
+            document.getElementById("my-email").innerText = user.email;
+            // You can use user.email to retrieve user-specific data
+        } else {
+            console.log("No user is logged in.");
+            // Redirect to login page if needed
+            window.location.href = 'login.html';
+        }
+    });
 
         auth.signInAnonymously().then(() => {
           console.log("User authenticated successfully.");
