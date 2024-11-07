@@ -96,7 +96,7 @@
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
-      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+      <a class="btn-getstarted"><div id="my-email"></div></a>
 
     </div>
   </header>
@@ -132,9 +132,12 @@
               <!-- Left Column -->
               <div class="col-md-8">
                   <!-- Section 1: Your Account -->
-                  <div class="checkout-section p-4 mb-4 rounded" style="background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
-                      <h5 class="section-title mb-3" style="font-weight: 600; color: #333;">1. Your Account</h5>
-                      <p style="font-size: 1rem; color: #555;"> <a href="#" style="color: #007bff; text-decoration: none; font-weight: 500;">Edit</a></p>
+                  <div class="checkout-section p-4 mb-1 rounded" style="background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                    <h5 class="section-title" style="font-weight: 600; color: #333;">1. Your Account</h5>
+                    
+                      <div id="user-email" style="font-weight: 500; color: #007bff;"></div>
+                      <!-- <a href="#" style="color: #007bff; text-decoration: none; font-weight: 500; margin-left: 10px;">Edit</a> -->
+                    </p>
                   </div>
   
                   <!-- Section 2: Payment & Discounts -->
@@ -195,12 +198,12 @@
           </div>
       </div>
     </section>
-    <section id="payment-section" class="container mt-5">
+    <!-- <section id="payment-section" class="container mt-5">
       <h2>Complete Your Payment</h2>
       <form id="payment-form">
           <button id="stripe-submit-button" class="btn btn-primary mt-4" type="submit">Pay</button>
       </form>
-  </section>
+  </section> -->
   
   
 
@@ -307,6 +310,19 @@
         firebase.initializeApp(firebaseConfig);
     }
     const db = firebase.firestore();
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in with email:", user.email);
+            document.getElementById("my-email").innerText = user.email;
+            document.getElementById("user-email").innerText = user.email;
+            // You can use user.email to retrieve user-specific data
+        } else {
+            console.log("No user is logged in.");
+            // Redirect to login page if needed
+            window.location.href = 'login.html';
+        }
+    });
 
     const storage = firebase.storage();
     // Function to start the 2-hour countdown
