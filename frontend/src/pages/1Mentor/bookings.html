@@ -68,15 +68,46 @@
     let currentUser = null;
 
     // Authenticate anonymously and fetch bookings
-    auth.signInAnonymously().then(() => {
-        console.log("User authenticated successfully.");
+    // auth.signInAnonymously().then(() => {
+    //     console.log("User authenticated successfully.");
 
-        // Fetch bookings once the user is authenticated
+    //     // Fetch bookings once the user is authenticated
+    //     fetchBookings();
+    // }).catch(error => {
+    //     console.error("Authentication error:", error);
+    // });
+
+    firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        getUserIdByEmail(user.email);
         fetchBookings();
-    }).catch(error => {
-        console.error("Authentication error:", error);
-    });
+       
+    } else {
+        console.log("No user is logged in.");
+        // Redirect to login page if needed
+        window.location.href = 'login.html';
+    }
+});
 
+const getUserIdByEmail = async (email) => {
+  const db = firebase.firestore();
+  const particularsRef = db.collection('Particulars');
+  const query = particularsRef.where('email', '==', email);
+
+  try {
+    const querySnapshot = await query.get();
+    if (!querySnapshot.empty) {
+      querySnapshot.forEach((doc) => {
+        console.log(`UserId: ${doc.data().UserId}`);
+      });
+    } else {
+      console.log("No user found with this email.");
+    }
+  } catch (error) {
+    console.error("Error retrieving UserId:", error);
+  }
+};
 
 // Add event listener for the filter select
 document.getElementById('statusFilter').addEventListener('change', function(e) {
@@ -102,28 +133,39 @@ function displayFilteredBookings(status) {
         const courseItem = document.createElement('div');
         courseItem.classList.add('course-item');
 
-        // Add grey background for cancelled bookings
         if (bookingData.status === 'Cancelled') {
-            courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)'; // Light grey background
+            courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)';
             courseItem.style.position = 'relative';
             
-            // Add a semi-transparent overlay
             const overlay = document.createElement('div');
             overlay.style.position = 'absolute';
             overlay.style.top = '0';
             overlay.style.left = '0';
             overlay.style.right = '0';
             overlay.style.bottom = '0';
-            overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)'; // Very light grey overlay
-            overlay.style.pointerEvents = 'none'; // Allows clicking through the overlay
+            overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)';
+            overlay.style.pointerEvents = 'none';
             courseItem.appendChild(overlay);
         }
 
-        // Rest of your existing code remains the same
+        // const img = document.createElement('img');
+        // img.src = `../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg`;
+        // img.classList.add('card-img-top');
+        // img.alt = 'Course Image';
+
         const img = document.createElement('img');
-        img.src = `../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg`;
         img.classList.add('card-img-top');
         img.alt = 'Course Image';
+
+        // Fetch image URL from Firebase Storage
+        firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
+            .then(url => {
+                img.src = url;  // Set the src to the retrieved URL
+            })
+            .catch(error => {
+                console.error("Error fetching image:", error);
+                img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
+            });
 
         const courseContent = document.createElement('div');
         courseContent.classList.add('course-content');
@@ -166,10 +208,24 @@ function displayFilteredBookings(status) {
         const trainerProfile = document.createElement('div');
         trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
 
+        // const trainerImg = document.createElement('img');
+        // trainerImg.src = `../1Mentor/assets/img/team/${bookingData.tutorImg}`;
+        // trainerImg.classList.add('img-fluid');
+        // trainerImg.alt = '';
+
         const trainerImg = document.createElement('img');
-        trainerImg.src = `../1Mentor/assets/img/team/${bookingData.tutorImg}`;
         trainerImg.classList.add('img-fluid');
         trainerImg.alt = '';
+
+        // Fetch trainer image URL from Firebase Storage
+        firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
+            .then(url => {
+                trainerImg.src = url;  // Set src to the retrieved URL
+            })
+            .catch(error => {
+                console.error("Error fetching trainer image:", error);
+                trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
+            });
 
         const trainerLink = document.createElement('a');
         trainerLink.href = 'trainers.html';
@@ -213,16 +269,17 @@ function displayFilteredBookings(status) {
     bookingList.appendChild(row);
 }
 
-// Modify your fetchBookings function to use the filter display
+let allBookings = []; // Declare globally
+
 function fetchBookings() {
     db.collection("Bookings").get().then(snapshot => {
         allBookings = []; // Reset global variable for new data
 
         snapshot.forEach(doc => {
-            const bookingData = doc.data();
-            allBookings.push(bookingData);
+            const booking = doc.data(); // Rename to booking for clarity within the loop
+            allBookings.push(booking);
+            console.log(booking); // Log each booking for debugging if needed
         });
-        console.log(bookingData);
 
         // Display all bookings initially
         displayFilteredBookings('');
@@ -230,8 +287,7 @@ function fetchBookings() {
     }).catch(error => {
         console.error("Error fetching bookings:", error);
     });
-}
-    })
+}})
 
 
 
@@ -410,13 +466,13 @@ function fetchBookings() {
       <div class="row gy-4">
         <div class="col-lg-4 col-md-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">Mentor</span>
+            <span class="sitename">SMOOTutor</span>
           </a>
           <div class="footer-contact pt-3">
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
+            <p>SMU</p>
+            <p>81 Victoria St, Singapore 188065</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
           </div>
           <div class="social-links d-flex mt-4">
             <a href=""><i class="bi bi-twitter-x"></i></a>
@@ -430,7 +486,7 @@ function fetchBookings() {
           <h4>Useful Links</h4>
           <ul>
             <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
+            <li><a href="about.html">About us</a></li>
             <li><a href="#">Services</a></li>
             <li><a href="#">Terms of service</a></li>
             <li><a href="#">Privacy policy</a></li>
@@ -440,11 +496,9 @@ function fetchBookings() {
         <div class="col-lg-2 col-md-3 footer-links">
           <h4>Our Services</h4>
           <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
+            <li><a href="#">Find a Tutor</a></li>
+            <li><a href="#">Find Quality Notes</a></li>
+      
           </ul>
         </div>
 
@@ -462,14 +516,15 @@ function fetchBookings() {
       </div>
     </div>
 
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+    <div class="container-fluid bg-light py-3">
+      <div class="row">
+        <div class="col-12 text-center">
+          <p>© <strong class="sitename">SMOOTUTOR</strong> <span>All Rights Reserved</span></p>
+          <div class="credits">
+            <!-- Keep all links intact for free version -->
+            Designed by SMOO students.
+          </div>
+        </div>
       </div>
     </div>
 

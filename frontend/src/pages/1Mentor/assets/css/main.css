@@ -1341,6 +1341,52 @@ section,
   margin-bottom: 0;
 }
 
+
+.aligned-list li {
+  display: flex;
+  align-items: center; /* Aligns icon and text vertically */
+  gap: 8px; /* Adds space between icon and text */
+  font-size: 14px; /* Adjust font size if needed */
+
+}
+
+.aligned-list i {
+  font-size: 18px; /* Ensures the icon size is consistent */
+  color: #000; /* Adjust color if needed */
+}
+
+/* Add this CSS in your main CSS file or within a <style> tag in the head of your HTML */
+.content p.fw-bold {
+  margin-top: 30px; /* Adds space above each bold label */
+  margin-bottom: 5px; /* Reduces space below each bold label */
+}
+
+.aligned-list,
+#about,
+#tutorRate,
+#tutorRating,
+#qualifications {
+  margin-bottom: 20px; /* Reduces space between each section */
+}
+
+
+.subject-bubble {
+  background-color: #f0c8fe;
+  color: #0f368a;
+  padding: 8px 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  text-align: center;
+}
+
+#subjectsContainer {
+  margin-top: 20px;
+}
+
 /*--------------------------------------------------------------
 # Testimonials Section
 --------------------------------------------------------------*/
