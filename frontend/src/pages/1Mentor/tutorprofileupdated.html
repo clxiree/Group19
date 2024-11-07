@@ -117,14 +117,26 @@
               </p>
               <p id="aboutText">About section placeholder</p>
 
-              <p class="fst-italic fw-bold mt-4" style="font-size: 18px;">
+              <p class="fst-italic fw-bold " style="font-size: 18px;">
                 Below are my lesson descriptions:
               </p>
-              <ul id="lessonDescContainer" class="list-unstyled aligned-list" style="margin-bottom: 10px;">
+              <ul id="lessonDescContainer" class="list-unstyled aligned-list mb-1">
                 <!-- Lesson descriptions will be populated here dynamically -->
               </ul>
 
-              <div class="row">
+              <p class="fst-italic fw-bold mt-1" style="font-size: 18px;">
+                Subjects Taught:
+              </p>
+              <ul id="subjectsContainer"></ul>
+
+
+
+              <p class="fst-italic fw-bold mt-1" style="font-size: 18px;">
+                Qualifications:
+              </p>
+              <ul id="qualificationsContainer"></ul>
+
+              <div class="row ">
                 <div class="col-lg-4">
                   <p class="fw-bold" style="font-size: 18px;">
                     Rate:
@@ -144,17 +156,6 @@
                 </div>
               </div>
 
-              <p class="fst-italic fw-bold mt-1" style="font-size: 18px;">
-                Subjects Taught:
-              </p>
-              <ul id="subjectsContainer"></ul>
-
-
-
-              <p class="fst-italic fw-bold mt-1" style="font-size: 18px;">
-                Qualifications:
-              </p>
-              <ul id="qualificationsContainer"></ul>
 
             </div>
           </div>
@@ -221,6 +222,47 @@
 
         document.getElementById("tutorRate").textContent = `$${data.Rate || 0}/h`;
         
+
+        const lessonDescriptions = document.getElementById("lessonDescContainer");
+
+    // Clear existing content by removing all child elements
+    while (lessonDescriptions.firstChild) {
+      lessonDescriptions.removeChild(lessonDescriptions.firstChild);
+    }
+
+    // Check if LessonDesc data exists and is an array
+    if (data.LessonDesc && Array.isArray(data.LessonDesc)) {
+      data.LessonDesc.forEach(desc => {
+        const li = document.createElement("li");
+        li.className = "mb-2";
+
+        // Create icon element
+        const icon = document.createElement("i");
+        icon.className = "bi bi-check-circle";
+        icon.style.fontSize = "18px";
+
+        // Create text span element
+        const span = document.createElement("span");
+        span.style.fontSize = "14px";
+        span.textContent = desc;
+
+        // Append icon and text to the list item
+        li.appendChild(icon);
+        li.appendChild(document.createTextNode(" ")); // Add space between icon and text
+        li.appendChild(span);
+
+        // Append the list item to lessonDescriptions
+        lessonDescriptions.appendChild(li);
+      });
+    } else {
+      // Display message if no lesson descriptions are available
+      const li = document.createElement("li");
+      li.textContent = "No lesson descriptions available.";
+      lessonDescriptions.appendChild(li);
+    }
+
+
+
         // Populate Qualifications
         const qualificationsContainer = document.getElementById("qualificationsContainer");
         qualificationsContainer.innerHTML = ''; // Clear existing content
