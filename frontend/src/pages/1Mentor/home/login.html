@@ -88,30 +88,24 @@
             document.getElementById('loading-screen').style.display = 'flex';
 
             // Delay for 3 seconds to simulate checking
-            auth.signInWithEmailAndPassword(email, password)
-    .then(userCredential => {
-        // Hide the loading screen
-        document.getElementById('loading-screen').style.display = 'none';
+            setTimeout(function () {
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
 
-        // Get the user's email and convert to lowercase for case-insensitive matching
-        const userEmail = userCredential.user.email.toLowerCase();
-
-        // Redirect based on email content
-        if (userEmail.includes('tutee')) {
-            window.location.href = '../tuteehomepage.html';
-        } else if (userEmail.includes('tutor')) {
-            window.location.href = '../tutorhomepage.html';
-        } else {
-            console.error('Invalid user role in email.');
-            alert('Invalid user role in email.');
-        }
-    })
-    .catch(error => {
-        // Hide the loading screen
-        document.getElementById('loading-screen').style.display = 'none';
-        console.error('Login Error:', error.message);
-        alert('WRONG USERNAME OR PASSWORD');
-    });
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(userCredential => {
+                        // Hide the loading screen
+                        // document.getElementById('loading-screen').style.display = 'none';
+                        // Redirect to index.html upon successful login
+                        window.location.href = '../tuteehomepage.html';
+                    })
+                    .catch(error => {
+                        // Hide the loading screen
+                        document.getElementById('loading-screen').style.display = 'none';
+                        console.error('Login Error:', error.message);
+                        alert('WRONG USERNAME OR PASSWORD');
+                    });
+            }, 3000); // 3000 milliseconds = 3 seconds
         });
     </script>
 
