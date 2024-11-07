@@ -8,6 +8,18 @@ const firebaseConfig = {
     appId: "1:289686522861:web:5811385ced42106d78b5e4"
 };
 
+
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        // You can use `user.email` to retrieve user-specific data
+    } else {
+        console.log("No user is logged in.");
+        // Redirect to login page if needed
+        window.location.href = 'login.html';
+    }
+});
+
 // Check if Firebase is already initialized to avoid errors
 if (!firebase.apps.length) {
     firebase.initializeApp(firebaseConfig);
@@ -15,8 +27,6 @@ if (!firebase.apps.length) {
 const db = firebase.firestore();
 
 const storage = firebase.storage();
-
-
 
 // Fetch and display courses from Firebase Firestore
 function fetchCourses() {

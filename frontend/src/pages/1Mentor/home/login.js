@@ -115,3 +115,17 @@ particlesJS('particles-js',
         "retina_detect": true
     }
 );
+auth.signInWithEmailAndPassword(email, password)
+    .then(userCredential => {
+        // Store email in sessionStorage
+        sessionStorage.setItem('userEmail', email);
+        
+        // Redirect to index.html upon successful login
+        window.location.href = "../tuteehomepage.html";
+    })
+    .catch(error => {
+        // Hide the loading screen
+        document.getElementById('loading-screen').style.display = 'none';
+        console.error('Login Error:', error.message);
+        alert('WRONG USERNAME OR PASSWORD');
+    });
