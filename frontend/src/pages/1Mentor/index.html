@@ -67,7 +67,7 @@
 
     .boxes-inner {
       display: flex;
-      gap: 40px;
+      gap: 110px;
       /* Increased gap for better spacing */
     }
 
@@ -112,7 +112,7 @@
         </ul>
 
 
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
 
@@ -277,7 +277,7 @@
       <p><a href="courses.html">Popular Courses</a></p>
     </div>
     <div class="row" id="courses-container">
-      <!-- Courses will be dynamically populated here -->
+     
     </div>
   </section>
 
@@ -552,15 +552,95 @@
   <script src="assets/js/main.js"></script>
   <script src="index.js" type="module"></script>
 
+  <!-- <script>
+    $(document).ready(function () {
+      const topTutors = [
+        'Samuel Chua',
+        'Emily Tan',
+        'Michael Lee',
+        'Jessica Wong',
+        'David Lim',
+        'Sarah Ng',
+        'Alex Chen',
+        'Rachel Goh',
+        'Daniel Ong',
+        'Michelle Koh'
+        // Add more tutors if needed
+      ];
+
+      const marqueeContent = $('#marquee-content');
+
+      // Generate the boxes
+      topTutors.forEach((tutor, index) => {
+        const box = $('<div>').addClass('box').text(`TOP ${index + 1} TUTOR: ${tutor}`);
+        marqueeContent.append(box);
+      });
+
+      // Duplicate the content for seamless looping
+      marqueeContent.append(marqueeContent.html());
+
+      // Initialize the marquee animation
+      let direction = 1; // 1 for left to right, -1 for right to left
+      let marqueeTween;
+
+      function initMarquee() {
+        const totalWidth = $('#marquee-content').width();
+        const viewportWidth = $(window).width();
+
+        // Kill existing tween if any
+        if (marqueeTween) {
+          marqueeTween.kill();
+        }
+
+        marqueeTween = gsap.to('#marquee-content', {
+          duration: 10,
+          x: -direction * (totalWidth - viewportWidth) / 2,
+          ease: 'none',
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(function (x) {
+              return parseFloat(x) % (totalWidth / 2);
+            })
+          }
+        });
+      }
+
+      // Start the marquee
+      initMarquee();
+
+      // Pause movement on hover over boxes
+      $('.box').on('mouseenter', function () {
+        marqueeTween.pause();
+      }).on('mouseleave', function () {
+        marqueeTween.play();
+      });
+
+      // Reverse direction when mouse leaves the marquee wrapper
+      $('#marquee-wrapper').on('mouseleave', function () {
+        direction *= -1; // Reverse direction
+        initMarquee();
+      });
+
+      // Adjust marquee on window resize
+      $(window).on('resize', function () {
+        initMarquee();
+      });
+    });
+    const box = $('<div>').addClass('box');
+    const link = $('<a>').attr('href', `tutor-profile.html?name=${encodeURIComponent(tutor)}`).text(`TOP ${index + 1} TUTOR: ${tutor}`);
+    box.append(link);
+    marqueeContent.append(box);
+  </script> -->
+
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const topTutors = [
-        'SIGNUP NOW',
-        'PROMO CODE: SMOOTUTOR',
-        'SIGNUP NOW',
-        '90% OF STUDENTS IMPROVE',
-        'SIGNUP NOW',
-        'GET 50% OFF YOUR FIRST LESSON',
+        'TOP_IS111: ChrispyChoo',
+        'TOP_CS440: ZennyPotato',
+        'TOP_MGMT293: YichiFinger',
+        'TOP_COR1702: HandsumPlast',
+        'TOP_FNC502: CloudyChong',
+        'TOP_ACCT101: LingLingLongLong'
       ];
 
       const marqueeContent = document.querySelector('.boxes-inner');
