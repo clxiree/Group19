@@ -433,21 +433,16 @@ nav.breadcrumbs {
               infoDiv.appendChild(nameHeader);
 
               const subjectSpan = document.createElement("span");
+              subjectSpan.className = "mb-2";  // Adds bottom margin to create spacing
               subjectSpan.textContent = userData.SubjectsTaught ? userData.SubjectsTaught.join(", ") : "N/A";
               infoDiv.appendChild(subjectSpan);
-
-              const reviewsPara = document.createElement("p");
-              const reviewsLink = document.createElement("a");
-              reviewsLink.href = "#";
-              reviewsLink.textContent = userData.Reviews ? `See ${userData.Reviews} reviews` : "No reviews available";
-              reviewsPara.appendChild(reviewsLink);
-              reviewsPara.className = "text-muted pb-2";
-              infoDiv.appendChild(reviewsPara);
 
               const buttonContainer = document.createElement("div");
               buttonContainer.style.display = "flex";
               buttonContainer.style.justifyContent = "center";
               buttonContainer.style.gap = "10px";
+              buttonContainer.style.marginTop = "15px";  // Adds top margin to create spacing between subjects and buttons
+
 
               const viewMoreLink = document.createElement("a");
               viewMoreLink.className = "btn-buy";
