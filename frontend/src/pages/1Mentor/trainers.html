@@ -31,7 +31,7 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-<<<<<<< Updated upstream
+
   <!-- Vue CDN (Production Build) -->
   <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
 
@@ -51,14 +51,8 @@
     <!-- Axios CDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-  <!-- =======================================================
-  * Template Name: Mentor
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
->>>>>>> Stashed changes
+
+
 </head>
 
 <body class="trainers-page">
@@ -114,9 +108,7 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Our Tutors</h1>
-              <p class="mb-0">Odio et unde deleniti. Deserunt numquam exercitationem. Officiis quo odio sint voluptas
-                consequatur ut a odio voluptatem. Sit dolorum debitis veritatis natus dolores. Quasi ratione sint. Sit
-                quaerat ipsum dolorem.</p>
+              <p class="mb-0">Find the SMOO tutor that you like BEST</p>
             </div>
           </div>
         </div>
@@ -377,11 +369,12 @@
               buttonContainer.style.justifyContent = "center";
               buttonContainer.style.gap = "10px";
 
-              const viewMoreButton = document.createElement("button");
-              viewMoreButton.className = "btn-buy";
-              viewMoreButton.textContent = "View More";
-              viewMoreButton.style = "font-size: 14px;";
-              buttonContainer.appendChild(viewMoreButton);
+              const viewMoreLink = document.createElement("a");
+              viewMoreLink.className = "btn-buy";
+              viewMoreLink.textContent = "View More";
+              viewMoreLink.style = "font-size: 14px; text-decoration: none;";
+              viewMoreLink.href = `tutorprofile.html?userid=${userData.UserID}`;
+              buttonContainer.appendChild(viewMoreLink);
 
               const messageButton = document.createElement("button");
               messageButton.className = "btn-buy";
