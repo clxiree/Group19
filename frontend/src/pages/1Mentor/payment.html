@@ -439,9 +439,101 @@ document.querySelector(".btn-secondary").addEventListener("click", applyDiscount
 
     // Call the function to display the QR code when the page loads
     document.addEventListener("DOMContentLoaded", () => {
+      // Call existing functions to display booking details and QR code
       displayBookingDetails();
       displayQRCode();
-});
+
+      // Add event listener for the "Continue" button
+      const continueBtn = document.getElementById("continue-btn");
+      continueBtn.addEventListener("click", async () => {
+          // // Try to get subject from HTML element, fallback to URL parameter
+          // let subject = "";
+          // const subjectElement = document.getElementById("selected-subject");
+          // if (subjectElement) {
+          //     subject = subjectElement.textContent.split(": ")[1];
+          // } else {
+          //     subject = getUrlParameter("subject") || "Unknown Subject"; // Fallback value if not found
+          // }
+
+          // // Check that subject is defined
+          // if (!subject) {
+          //     console.error("Subject is not defined.");
+          //     return;
+          // }
+
+          // Retrieve booking details from the URL or page content
+          const subject = getUrlParameter("subject"); // Course code passed as subject in URL
+          const tutorId = getUrlParameter("tutor"); // This should match the tutor's UserID
+          const courseCode = document.getElementById("selected-subject").textContent.split(": ")[1];
+          const mode = document.getElementById("selected-mode").textContent.split(": ")[1];
+          const date = getUrlParameter("date");
+          const time = getUrlParameter("time");
+          const totalText = document.querySelector(".total-amount").textContent;
+          const total = parseFloat(totalText.replace("SGD ", "").trim());
+
+          // Retrieve and parse totalAmount from the displayed HTML element
+          let totalAmount = 0;
+          const totalAmountElement = document.querySelector(".total-amount");
+          if (totalAmountElement) {
+              totalAmount = parseFloat(totalAmountElement.textContent.replace("SGD ", "").trim());
+          } else {
+              console.error("Total amount element not found.");
+              return;
+          }
+
+          try {
+              // Retrieve course details from the Courses collection using the course code (subject)
+              const courseQuery = await db.collection("Courses").where("Code", "==", subject).get();
+              let courseData;
+              if (!courseQuery.empty) {
+                  courseData = courseQuery.docs[0].data();
+              } else {
+                  throw new Error("Course not found in database.");
+              }
+              
+              // Fetch additional data from the Particulars collection
+              const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
+              if (!tutorDoc.exists) {
+                  throw new Error("Tutor details not found.");
+              }
+              const tutorData = tutorDoc.data();
+
+              // Populate the data for the Bookings collection
+            const bookingData = {
+                bookingId: Math.floor(Math.random() * 100000), // Example booking ID, you may want a different logic
+                tutorId: tutorData.UserID,
+                tutorName: tutorData.Name,
+                tutorImg: tutorData.Image,
+                tutorReview: tutorData.Reviews || 0,
+                tutorStars: tutorData.tutorStars || "⭐️⭐️⭐️",
+                courseCode: courseData.Code,
+                courseName: courseData.Name,
+                dateOfLesson: date,
+                time: time,
+                mode: mode,
+                fee: tutorData.Rate || total,
+                totalAmount: totalAmount,
+                status: "Pending", // Start as "Pending"
+                tuteeId: 4 // Replace with the actual Tutee ID
+            };
+
+              // Add the booking to Firebase Bookings collection
+            await db.collection("Bookings").add(bookingData);
+            alert("Payment information saved successfully!");
+              // Redirect to another page if needed, e.g., confirmation page
+              //window.location.href = "confirmation.html";
+          } catch (error) {
+              console.error("Error saving payment information:", error);
+              alert("Failed to save payment information. Please try again.");
+          }
+      });
+
+      // Function to retrieve URL parameters
+      function getUrlParameter(name) {
+          const urlParams = new URLSearchParams(window.location.search);
+          return urlParams.get(name);
+      }
+  });
 
 </script>
 
