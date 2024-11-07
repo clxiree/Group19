@@ -1383,6 +1383,19 @@ section,
   text-align: center;
 }
 
+.qual-bubble {
+  background-color: #fff2b9;
+  color: #0f368a;
+  padding: 8px 20px;
+  margin-right: 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  text-align: center;
+}
+
 #subjectsContainer {
   margin-top: 20px;
 }

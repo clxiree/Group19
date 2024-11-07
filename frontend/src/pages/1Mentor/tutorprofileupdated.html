@@ -40,19 +40,11 @@
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
 
 
- 
-
-  <!-- =======================================================
-  * Template Name: Mentor
-  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
-  * Updated: Aug 07 2024 with Bootstrap v5.3.3
-  * Author: BootstrapMade.com
-  * License: https://bootstrapmade.com/license/
-  ======================================================== -->
 </head>
 
 <body class="about-page">
-
+  <!-- Content Here -->
+  
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
@@ -101,333 +93,76 @@
   </header>
 
   <main class="main">
+    <div class="page-title p-2">
+      <div class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-lg-8">
+        <h1 id="userNameHeading"></h1>
+        <p class="mb-4 fst-italic mt-1" id="userOneLiner"></p>
+        </div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Page Title -->
-    <div class="page-title" data-aos="fade">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1 id="userNameHeading">Zenny Potato</h1>
-              <p class="mb-4 fst-italic mt-1" id="userOneLiner">I am not a Potato</p>
+    <section id="about-us" class="section about-us">
+      <div class="container">
+        <div class="row gy-4 d-flex">
+          <div class="col-lg-6 col-md-12 text-center">
+            <img id="userImage" src="assets/img/team/default.jpg" class="img-fluid mb-4" alt="User Image">
+          </div>
+          <div class="col-lg-6 col-md-12 ps-lg-5">
+            <div id="aboutContentContainer" class="content">
+              <p class="fst-italic fw-bold" style="font-size: 18px;">
+                About:
+              </p>
+              <p id="aboutText">About section placeholder</p>
 
-              <!-- Subject Bubbles Below the One-liner -->
-              <div id="subjectsContainer" class="d-flex flex-wrap justify-content-center gap-2 mt-3">
-              <!-- Sample Bubbles -->
-              <span class="subject-bubble">Math</span>
-              <span class="subject-bubble">Physics</span>
-              <span class="subject-bubble">Chemistry</span>
-              <!-- Additional bubbles can be added here dynamically -->
+              <p class="fst-italic fw-bold " style="font-size: 18px;">
+                Below are my lesson descriptions:
+              </p>
+              <ul id="lessonDescContainer" class="list-unstyled aligned-list mb-1">
+                <!-- Lesson descriptions will be populated here dynamically -->
+              </ul>
+
+              <p class="fst-italic fw-bold mt-1" style="font-size: 18px;">
+                Subjects Taught:
+              </p>
+              <ul id="subjectsContainer"></ul>
+
+
+
+              <p class="fst-italic fw-bold mt-1" style="font-size: 18px;">
+                Qualifications:
+              </p>
+              <ul id="qualificationsContainer"></ul>
+
+              <div class="row ">
+                <div class="col-lg-4">
+                  <p class="fw-bold" style="font-size: 18px;">
+                    Rate:
+                  </p>
+                  <p id="tutorRate" style="font-size: 14px; margin-bottom: 10px;">
+                    $0/h
+                  </p>
+                </div>
+
+                <div class="col-lg-4">
+                  <p class="fst-italic fw-bold" style="font-size: 18px;">
+                    Ratings:
+                  </p>
+                  <p id="tutorRating" style="font-size: 20px;">
+                    <!-- Star icons will be dynamically populated here -->
+                  </p>
+                </div>
               </div>
-              
+
+
             </div>
           </div>
         </div>
       </div>
-      <nav class="breadcrumbs">
-        <div class="container">
-          <ol>
-            <li><a href="index.html">Home</a></li>
-            <li class="current" id="userNameHeading">Zenny Potato<br></li>
-          </ol>
-        </div>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section id="about-us" class="section about-us">
-      <div class="container">
-        <!-- Row to align content horizontally -->
-        <div class="row gy-4 d-flex align-items-center">
-          
-          <!-- Image Container on the Left -->
-          <div class="col-lg-6 col-md-12 text-center" data-aos="fade-up" data-aos-delay="100">
-            <img src="assets/img/team/zenny.jpg" class="img-fluid mb-4" alt="Zenny Potato">
-          </div>
-          
-          <!-- Text Container on the Right with Padding -->
-          <div class="col-lg-6 col-md-12 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
-            <div class="content">
-              <p class="fst-italic fw-bold" style="font-size: 18px;">
-                About:
-              </p>
-              <p style="font-size: 14px; margin-bottom: 30px;" id="about">
-                This is my about.
-              </p>
-    
-              <p class="fst-italic fw-bold mt-4" style="font-size: 18px;">
-                Below are my lesson descriptions:
-              </p>
-              <ul class="list-unstyled aligned-list" style="margin-bottom: 10px;">
-                <li class="mb-2">
-                  <i class="bi bi-check-circle" style="font-size: 18px"></i>
-                  <span style="font-size: 14px">Hi</span>
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check-circle" style="font-size: 18px"></i>
-                  <span style="font-size: 14px">Bye.</span>
-                </li>
-                <li class="mb-2">
-                  <i class="bi bi-check-circle" style="font-size: 18px"></i>
-                  <span style="font-size: 14px">Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span>
-                </li>
-              </ul>
-    
-              <p class="fst-italic fw-bold" style="font-size: 18px;">
-                Ratings:
-              </p>
-              <p style="font-size: 20px; margin-bottom: 10px;">
-                ⭐⭐⭐⭐☆
-              </p>
-
-              <p class="fst-italic fw-bold" style="font-size: 18px;">
-                Rate:
-              </p>
-              <p style="font-size: 14px; margin-bottom: 10px;">
-                $40/h
-              </p>
-
-              <p class="fst-italic fw-bold" style="font-size: 18px;">
-                Qualifications:
-              </p>
-              <p>
-                <!-- Subject Bubbles Below the One-liner -->
-                <div id="subjectsContainer">
-                <!-- Sample Bubbles -->
-                <span class="subject-bubble">Math</span>
-                <span class="subject-bubble">Physics</span>
-                <span class="subject-bubble">Chemistry</span>
-                <!-- Additional bubbles can be added here dynamically -->
-                </div>
-              </p>
-          </div>
-    
-        </div>
-        
-        </div>
-      </div>
     </section>
-    
-    
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="testimonials section">
-
-      <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up">
-        <h2>Testimonials</h2>
-        <p>What are they saying</p>
-      </div><!-- End Section Title -->
-
-      <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-        <div class="swiper init-swiper">
-          <script type="application/json" class="swiper-config">
-            {
-              "loop": true,
-              "speed": 600,
-              "autoplay": {
-                "delay": 5000
-              },
-              "slidesPerView": "auto",
-              "pagination": {
-                "el": ".swiper-pagination",
-                "type": "bullets",
-                "clickable": true
-              },
-              "breakpoints": {
-                "320": {
-                  "slidesPerView": 1,
-                  "spaceBetween": 40
-                },
-                "1200": {
-                  "slidesPerView": 2,
-                  "spaceBetween": 20
-                }
-              }
-            }
-          </script>
-          <div class="swiper-wrapper">
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                  <h3>Saul Goodman</h3>
-                  <h4>Ceo &amp; Founder</h4>
-                  <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                  </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                  <h3>Sara Wilsson</h3>
-                  <h4>Designer</h4>
-                  <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                  </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                  <h3>Jena Karlis</h3>
-                  <h4>Store Owner</h4>
-                  <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                  </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                  <h3>Matt Brandon</h3>
-                  <h4>Freelancer</h4>
-                  <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                  </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                  <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                  <h3>John Larson</h3>
-                  <h4>Entrepreneur</h4>
-                  <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                  </div>
-                  <p>
-                    <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
-                    <i class="bi bi-quote quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-          </div>
-          <div class="swiper-pagination"></div>
-        </div>
-
-      </div>
-
-    </section><!-- /Testimonials Section -->
-
   </main>
-
-  <footer id="footer" class="footer position-relative light-background">
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">Mentor</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+1 5589 55488 55</span></p>
-            <p><strong>Email:</strong> <span>info@example.com</span></p>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Web Design</a></li>
-            <li><a href="#">Web Development</a></li>
-            <li><a href="#">Product Management</a></li>
-            <li><a href="#">Marketing</a></li>
-            <li><a href="#">Graphic Design</a></li>
-          </ul>
-        </div>
-
-        <div class="col-lg-4 col-md-12 footer-newsletter">
-          <h4>Our Newsletter</h4>
-          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
-          <form action="forms/newsletter.php" method="post" class="php-email-form">
-            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
-          </form>
-        </div>
-
-      </div>
-    </div>
-
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Mentor</strong> <span>All Rights Reserved</span></p>
-
-    </div>
-
-  </footer>
-
-  <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
-
-  <!-- Preloader -->
-  <div id="preloader"></div>
-
-  <!-- Vendor JS Files -->
-  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="assets/vendor/php-email-form/validate.js"></script>
-  <script src="assets/vendor/aos/aos.js"></script>
-  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
-
-  <!-- Main JS File -->
-  <script src="assets/js/main.js"></script>
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -441,9 +176,10 @@
           appId: "1:289686522861:web:5811385ced42106d78b5e4",
           measurementId: "G-46QED8ZFKJ"
         };
-        firebase.initializeApp(firebaseConfig);
-        
+
+      firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
+      const storage = firebase.storage();
 
       function getUserIdFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
@@ -451,13 +187,13 @@
       }
 
       function fetchUserData(userId) {
-        // Construct document ID with the format "UserID: X"
-        const documentId = `UserID: ${userId}`;
 
+        const documentId = `UserID: ${userId}`;
         db.collection("Particulars").doc(documentId).get()
           .then((doc) => {
             if (doc.exists) {
-              populateUserData(doc.data());
+              const userData = doc.data();
+              populateUserData(userData);
             } else {
               console.log("No user data found for UserID:", userId);
             }
@@ -468,69 +204,105 @@
       }
 
       function populateUserData(data) {
-        document.getElementById("userNameHeading").textContent = data.Name || "Unknown Tutor";
-        document.getElementById("userOneLiner").textContent = data.Oneliner || "No one-liner available.";
-        document.getElementById("about").textContent = data.About || "No about information available.";
-        document.getElementById("tutorRate").textContent = `$${data.Rate || 0}/h`;
+        // Populate Name
+        const userNameHeading = document.getElementById("userNameHeading");
+        userNameHeading.textContent = data.Name || "Unknown Tutor";
+
+        // Populate One-liner
+        const userOneLiner = document.getElementById("userOneLiner");
+        userOneLiner.textContent = data.Oneliner || "No one-liner available.";
+
         const rating = data.Rating || 0;  // Use default 0 if rating is undefined
         populateStarRating(rating);
 
-        // Update the page title dynamically
-        document.title = `${data.Name}'s Profile` || "Tutor Profile";
+        // Populate About
+        const aboutText = document.getElementById("aboutText");
+        aboutText.textContent = data.About || "No about information available.";
 
+
+        document.getElementById("tutorRate").textContent = `$${data.Rate || 0}/h`;
+        
+
+        const lessonDescriptions = document.getElementById("lessonDescContainer");
+
+    // Clear existing content by removing all child elements
+    while (lessonDescriptions.firstChild) {
+      lessonDescriptions.removeChild(lessonDescriptions.firstChild);
+    }
+
+    // Check if LessonDesc data exists and is an array
+    if (data.LessonDesc && Array.isArray(data.LessonDesc)) {
+      data.LessonDesc.forEach(desc => {
+        const li = document.createElement("li");
+        li.className = "mb-2";
+
+        // Create icon element
+        const icon = document.createElement("i");
+        icon.className = "bi bi-check-circle";
+        icon.style.fontSize = "18px";
+
+        // Create text span element
+        const span = document.createElement("span");
+        span.style.fontSize = "14px";
+        span.textContent = desc;
+
+        // Append icon and text to the list item
+        li.appendChild(icon);
+        li.appendChild(document.createTextNode(" ")); // Add space between icon and text
+        li.appendChild(span);
+
+        // Append the list item to lessonDescriptions
+        lessonDescriptions.appendChild(li);
+      });
+    } else {
+      // Display message if no lesson descriptions are available
+      const li = document.createElement("li");
+      li.textContent = "No lesson descriptions available.";
+      lessonDescriptions.appendChild(li);
+    }
+
+
+
+        // Populate Qualifications
+        const qualificationsContainer = document.getElementById("qualificationsContainer");
+        qualificationsContainer.innerHTML = ''; // Clear existing content
+        if (data.Qualifications && Array.isArray(data.Qualifications)) {
+          data.Qualifications.forEach(qualification => {
+            const bubble = document.createElement("span");
+            bubble.className = "qual-bubble";
+            bubble.textContent = qualification;
+            qualificationsContainer.appendChild(bubble);
+          });
+        } else {
+          const noQualifications = document.createElement("span");
+          noQualifications.textContent = "No qualifications available.";
+          qualificationsContainer.appendChild(noQualifications);
+        }
 
         // Populate Subjects
         const subjectsContainer = document.getElementById("subjectsContainer");
-        subjectsContainer.innerHTML = "";
-        if (data.Subjects) {
-          data.Subjects.forEach(subject => {
-            const span = document.createElement("span");
-            span.className = "subject-bubble";
-            span.textContent = subject;
-            subjectsContainer.appendChild(span);
+        subjectsContainer.innerHTML = '';  // Clear any existing content
+
+        if (data.SubjectsTaught && Array.isArray(data.SubjectsTaught)) {
+          data.SubjectsTaught.forEach(subject => {
+            const subjectBubble = document.createElement("span");
+            subjectBubble.className = "subject-bubble"; // Apply bubble styling
+            subjectBubble.textContent = subject;  // Set the subject name
+            subjectsContainer.appendChild(subjectBubble);  // Append bubble to container
           });
         } else {
+          // If there are no subjects available, show a placeholder
           subjectsContainer.textContent = "Subjects not available.";
         }
 
-        // Populate Lesson Descriptions
-        const lessonDescriptions = document.getElementById("lessonDescriptions");
-        lessonDescriptions.innerHTML = "";
-        if (data.LessonDesc) {
-          data.LessonDesc.forEach(desc => {
-            const li = document.createElement("li");
-            li.className = "mb-2";
-            li.innerHTML = `<i class="bi bi-check-circle" style="font-size: 18px"></i> <span style="font-size: 14px">${desc}</span>`;
-            lessonDescriptions.appendChild(li);
-          });
-        } else {
-          lessonDescriptions.textContent = "No lesson descriptions available.";
-        }
-
-        // Populate Qualifications
-        const qualificationsContainer = document.getElementById("qualifications");
-        qualificationsContainer.textContent = data.Qualifications ? data.Qualifications.join(", ") : "No qualifications available.";
-
-        // Load Image
+        // Load User Image
         const userImage = document.getElementById("userImage");
-        const storage = firebase.storage();
-        const imageName = data.Image || "default.jpg";
-        console.log(imageName)
+        const imageName = data.Image || "default-user.png"; // Default image
         storage.ref(`images/team/${imageName}`).getDownloadURL()
-          .then(url => {
-            userImage.src = url;
-          })
-          .catch(() => {
-            userImage.src = "assets/img/team/default.jpg"; // Fallback image
-          });
+          .then(url => userImage.src = url)
+          .catch(() => userImage.src = "assets/img/team/default.jpg"); // Fall back to default image
       }
 
-      const userId = getUserIdFromURL();
-      if (userId) {
-        fetchUserData(userId);
-      } else {
-        console.log("UserID not found in the URL.");
-      }
 
       function populateStarRating(rating) {
       const ratingElement = document.getElementById("tutorRating");
@@ -554,9 +326,13 @@
       }
 }
 
+      const userId = getUserIdFromURL();
+      if (userId) {
+        fetchUserData(userId);
+      } else {
+        console.log("UserID not found in the URL.");
+      }
     });
   </script>
-    
 </body>
-
-</html> 
+</html>
