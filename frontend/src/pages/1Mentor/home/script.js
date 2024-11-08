@@ -1,5 +1,8 @@
 // script.js
 
+// Firebase Auth reference
+const auth = firebase.auth();
+
 // Show/Hide Password
 document.querySelectorAll('.toggle-password').forEach(function (toggle) {
     toggle.addEventListener('click', function () {
@@ -15,93 +18,85 @@ document.querySelectorAll('.toggle-password').forEach(function (toggle) {
 });
 
 // Password Strength Meter
-const passwordInputs = document.querySelectorAll('input[type="password"]');
-passwordInputs.forEach(function (input) {
-    input.addEventListener('input', function () {
-        const strengthBar = input.parentElement.querySelector('#password-strength div');
-        if (strengthBar) {
-            const strength = calculatePasswordStrength(input.value);
-            const strengthPercent = strength * 25;
-            strengthBar.style.width = strengthPercent + '%';
-            if (strength <= 1) {
-                strengthBar.style.backgroundColor = 'red';
-            } else if (strength === 2) {
-                strengthBar.style.backgroundColor = 'orange';
-            } else if (strength === 3) {
-                strengthBar.style.backgroundColor = 'yellow';
-            } else if (strength >= 4) {
-                strengthBar.style.backgroundColor = 'green';
-            }
-        }
-    });
-});
+// (Include this section if needed)
 
-function calculatePasswordStrength(password) {
-    let strength = 0;
-    if (password.length > 5) strength++;
-    if (password.match(/[A-Za-z]/) && password.match(/[0-9]/)) strength++;
-    if (password.match(/[!@#$%^&*(),.?":{}|<>]/)) strength++;
-    if (password.length > 8) strength++;
-    return strength;
+// Function to show the toast with a message and type
+function showToast(message, type) {
+    const toast = document.getElementById("customToast");
+    const toastMessage = document.getElementById("customToastMessage");
+
+    // Set the message and apply success/error style
+    toastMessage.textContent = message;
+    toast.classList.add("show", type);
+
+    // Hide the toast after 5 seconds
+    setTimeout(() => {
+        toast.classList.remove("show", type);
+    }, 5000);
+}
+
+// Close button function for the toast
+function closeToast() {
+    const toast = document.getElementById("customToast");
+    toast.classList.remove("show");
 }
 
 // Form Submission for Login
-document.getElementById('login-form')?.addEventListener('submit', function(e) {
+document.getElementById('login-form')?.addEventListener('submit', function (e) {
     e.preventDefault();
-    // Form validation can be added here
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    const rememberMe = document.getElementById('remember-me').checked;
 
-    if (email && password) {
-        // Simulate login logic
-        alert('Processing login...');
-    } else {
-        alert('Please fill out all fields.');
-    }
-});
+    // Show the loading screen
+    document.getElementById('loading-screen').style.display = 'flex';
 
-// Form Submission for Sign Up
-document.getElementById('signup-form')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    // Collect form data
-    const email = document.getElementById('signup-email').value;
-    const studentId = document.getElementById('student-id').value;
-    const contactNumber = document.getElementById('contact-number').value;
-    const gender = document.getElementById('gender').value;
-    const age = document.getElementById('age').value;
-    const primaryDegree = document.getElementById('primary-degree').value;
-    const secondDegree = document.getElementById('second-degree').value;
-    const secondMajor = document.getElementById('second-major').value;
-    const password = document.getElementById('signup-password').value;
-    const confirmPassword = document.getElementById('confirm-password').value;
-    const isTutor = document.getElementById('signup-tutor').checked;
-    const isTutee = document.getElementById('signup-tutee').checked;
+    // Delay for 3 seconds to simulate checking
+    setTimeout(function () {
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const rememberMe = document.getElementById('remember-me').checked;
 
-    // Basic validation
-    if (password !== confirmPassword) {
-        alert('Passwords do not match.');
-        return;
-    }
-    if (!isTutor && !isTutee) {
-        alert('Please select at least one role (Tutor or Tutee).');
-        return;
-    }
+        if (email && password) {
+            // Sign in with Firebase Auth
+            auth.signInWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    const userEmail = userCredential.user.email;
+                    // Store email in sessionStorage
+                    sessionStorage.setItem('userEmail', email);
+                    // Hide the loading screen
+                    document.getElementById('loading-screen').style.display = 'none';
 
-    // Simulate sign-up logic
-    alert('Sign-up successful!');
-});
+                    // Extract the role from the email
+                    const roleMatch = userEmail.match(/scis\.(.*?)\.edu\.sg/);
+                    const role = roleMatch ? roleMatch[1] : null;
 
-// Form Submission for Forgot Password
-document.getElementById('forgot-password-form')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    const email = document.getElementById('forgot-email').value;
-    if (email) {
-        // Simulate password reset logic
-        alert('Password reset link has been sent to your email.');
-    } else {
-        alert('Please enter your email address.');
-    }
+                    // Show success toast
+                    showToast('Login successful!', 'success');
+
+                    // Redirect based on extracted role
+                    if (role === "tutor") {
+                        window.location.href = '../tutorhomepage.html';
+                    } else if (role === "tutee") {
+                        window.location.href = '../tuteehomepage.html';
+                    } else {
+                        console.warn("User email does not contain expected roles.");
+                        // Optionally handle cases where the role is not recognized
+                    }
+                })
+                .catch(error => {
+                    // Hide the loading screen
+                    document.getElementById('loading-screen').style.display = 'none';
+                    console.error('Login Error:', error.message);
+                    // Use toast instead of alert
+                    showToast('WRONG USERNAME OR PASSWORD', 'error');
+                    // alert('WRONG USERNAME OR PASSWORD'); // Commented out the old alert
+                });
+        } else {
+            // Hide the loading screen
+            document.getElementById('loading-screen').style.display = 'none';
+            // Show error toast
+            showToast('Please fill out all fields.', 'error');
+            // alert('Please fill out all fields.'); // Commented out the old alert
+        }
+    }, 3000); // 3000 milliseconds = 3 seconds
 });
 
 // Initialize Particles.js
