@@ -159,7 +159,7 @@
                       <!-- Discount Code Section -->
                       <div class="input-group mt-3">
                           <input type="text" class="form-control" placeholder="Discount Code" style="border-top-left-radius: 0.25rem; border-bottom-left-radius: 0.25rem;">
-                          <button class="btn btn-secondary" type="button" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">Apply</button>
+                          <button class="btn btn-secondary" id="apply-btn" type="button" style="border-top-right-radius: 0.25rem; border-bottom-right-radius: 0.25rem;">Apply</button>
                       </div>
   
                       <!-- Continue Button -->
@@ -178,7 +178,7 @@
                     <p id="booking-date" style="color: #777;"></p>
                     <p style="color: #777;">Payment by QR code</p>
                     <hr>
-                    <p>Subtotal: <span class="float-end" style="color: #333;">SGD 7.50</span></p>
+                    <p>Subtotal: <span class="float-end" style="color: #333;">SGD 0.00</span></p>
                     <p>Tax: <span class="float-end" style="color: #333;">SGD 0.00</span></p>
                     <hr>
                     <p><strong>Total: <span class="float-end total-amount" style="font-size: 1.25rem; color: #333;">SGD 0.00</span></strong></p>
@@ -284,6 +284,11 @@
 
   <!-- Preloader -->
   <div id="preloader"></div>
+    <!-- Custom Toast Notification -->
+  <div id="customToast" class="custom-toast">
+    <span id="customToastMessage"></span>
+    <button onclick="closeToast()" class="close-toast-btn">&times;</button>
+  </div>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -326,6 +331,28 @@
 
     const storage = firebase.storage();
     // Function to start the 2-hour countdown
+
+          // Function to show the toast with a message and type
+          function showToast(message, type) {
+        const toast = document.getElementById("customToast");
+        const toastMessage = document.getElementById("customToastMessage");
+
+        // Set the message and apply success/error style
+        toastMessage.textContent = message;
+        toast.classList.add("show", type);
+
+        // Hide the toast after 3 seconds
+        setTimeout(() => {
+          toast.classList.remove("show", type);
+        }, 5000);
+      }
+
+      // Close button function for the toast
+      window.closeToast = function () {
+        const toast = document.getElementById("customToast");
+        toast.classList.remove("show");
+      };
+      
     function startCountdown() {
         const countdownElement = document.getElementById('countdown');
 
@@ -439,17 +466,18 @@
             // Update the total with the discounted amount
             subtotalElement.textContent = `SGD ${subtotal.toFixed(2)}`;
             totalElement.textContent = `SGD ${discountedTotal.toFixed(2)}`;
-            alert("Discount applied successfully!");
+            showToast("Discount applied successfully!", "success");
         } else {
-            alert("Invalid discount code.");
+            showToast("Invalid discount code.", "error");
         }
     } catch (error) {
         console.error("Error applying discount:", error);
+        showToast("An error occurred while applying the discount.", "error");
     }
 }
 
-// Attach event listener to the "Apply" button
-document.querySelector(".btn-secondary").addEventListener("click", applyDiscount);
+    // Attach event listener to the "Apply" button
+    document.getElementById("apply-btn").addEventListener("click", applyDiscount);
 
 
 
@@ -462,21 +490,6 @@ document.querySelector(".btn-secondary").addEventListener("click", applyDiscount
       // Add event listener for the "Continue" button
       const continueBtn = document.getElementById("continue-btn");
       continueBtn.addEventListener("click", async () => {
-          // // Try to get subject from HTML element, fallback to URL parameter
-          // let subject = "";
-          // const subjectElement = document.getElementById("selected-subject");
-          // if (subjectElement) {
-          //     subject = subjectElement.textContent.split(": ")[1];
-          // } else {
-          //     subject = getUrlParameter("subject") || "Unknown Subject"; // Fallback value if not found
-          // }
-
-          // // Check that subject is defined
-          // if (!subject) {
-          //     console.error("Subject is not defined.");
-          //     return;
-          // }
-
           // Retrieve booking details from the URL or page content
           const subject = getUrlParameter("subject"); // Course code passed as subject in URL
           const tutorId = getUrlParameter("tutor"); // This should match the tutor's UserID
@@ -535,12 +548,12 @@ document.querySelector(".btn-secondary").addEventListener("click", applyDiscount
 
               // Add the booking to Firebase Bookings collection
             await db.collection("Bookings").add(bookingData);
-            alert("Payment information saved successfully!");
-              // Redirect to another page if needed, e.g., confirmation page
-              //window.location.href = "confirmation.html";
+            // Show success toast
+            showToast("Payment information saved successfully!", "success");
           } catch (error) {
               console.error("Error saving payment information:", error);
-              alert("Failed to save payment information. Please try again.");
+              // Show error toast
+              showToast("Failed to save payment information. Please try again.", "error");
           }
       });
 
