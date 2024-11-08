@@ -2209,3 +2209,45 @@ section,
 .view-link:hover {
   color: blue; /* Change to your preferred hover color */
 }
+
+
+.custom-toast {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333;
+  color: #fff;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none; /* Initially hidden */
+  z-index: 1000;
+  max-width: 300px;
+  text-align: center;
+}
+
+.custom-toast.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.custom-toast.success {
+  background-color: #28a745; /* Green for success */
+}
+
+.custom-toast.error {
+  background-color: #dc3545; /* Red for error */
+}
+
+.close-toast-btn {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+
