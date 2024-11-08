@@ -265,10 +265,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fetch and set the logo image from Firebase Storage
     const logoImage = document.getElementById("logo-image");
+    const welcomeVideo = document.getElementById("welcome-video");
 
     if (logoImage) {
         // Reference the image in Firebase Storage
-        const logoImageRef = storage.ref("images/smootutor-logo.jpg");
+        const logoImageRef = storage.ref("images/smootutor-logo.png");
 
         // Get the download URL for the image and set it as the logo image src
         logoImageRef.getDownloadURL().then((url) => {
@@ -276,7 +277,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }).catch((error) => {
             console.error("Error fetching logo image:", error);
         });
-    } else {
-        console.error("Logo image element not found");
+    }
+
+    // Fetch and set the welcome video
+    if (welcomeVideo) {
+        const videoRef = storage.ref("videos/welcome-page.mp4");
+        videoRef.getDownloadURL().then((url) => {
+            welcomeVideo.src = url;
+        }).catch((error) => {
+            console.error("Error fetching welcome video:", error);
+        });
     }
 });
