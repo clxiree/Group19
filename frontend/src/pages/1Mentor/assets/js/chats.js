@@ -91,7 +91,7 @@ function initializeChatApp() {
 
 // Fetch User Profile
 function fetchUserProfile() {
-    const userRef = db.collection("Users").doc(currentUser.uid);
+    const userRef = db.collection("Particulars").doc(currentUser.uid);
     userRef.get().then(doc => {
         if (doc.exists) {
             const userData = doc.data();
@@ -591,7 +591,7 @@ function setupTypingListener() {
 function setupOnlineStatusListener() {
     const recipientId = getRecipientId();
     if (recipientId) {
-        db.collection("Users").doc(recipientId).onSnapshot(doc => {
+        db.collection("Particulars").doc(recipientId).onSnapshot(doc => {
             if (doc.exists) {
                 const status = doc.data().online;
                 if (status) {
@@ -630,7 +630,7 @@ function getRecipientId() {
 // Display Online Status
 function displayOnlineStatus(recipientId) {
     if (!recipientId) return;
-    db.collection("Users").doc(recipientId).onSnapshot(doc => {
+    db.collection("Particulars").doc(recipientId).onSnapshot(doc => {
         if (doc.exists) {
             const status = doc.data().online;
             if (status) {
@@ -648,7 +648,7 @@ function displayOnlineStatus(recipientId) {
 
 // Reset Unread Count
 function resetUnreadCount(chatId) {
-    db.collection("Users").doc(currentUser.uid).collection("chats").doc(chatId).update({
+    db.collection("Particulars").doc(currentUser.uid).collection("chats").doc(chatId).update({
         unreadCount: 0
     }).catch(error => {
         console.error("Error resetting unread count:", error);
@@ -664,7 +664,7 @@ document.getElementById("search-button").addEventListener("click", () => {
 });
 
 function searchUserByEmail(email) {
-    db.collection("Users").where("email", "==", email).get()
+    db.collection("Particulars").where("email", "==", email).get()
         .then(snapshot => {
             if (!snapshot.empty) {
                 const userData = snapshot.docs[0].data();
@@ -724,10 +724,10 @@ function createOneOnOneChat(userId, userData) {
 
     chatRef.set(chatData).then(() => {
         // Update chats for both users
-        db.collection("Users").doc(currentUser.uid).update({
+        db.collection("Particulars").doc(currentUser.uid).update({
             chats: firebase.firestore.FieldValue.arrayUnion(chatId)
         });
-        db.collection("Users").doc(userId).update({
+        db.collection("Particulars").doc(userId).update({
             chats: firebase.firestore.FieldValue.arrayUnion(chatId)
         });
         alert("Chat created successfully.");
@@ -747,7 +747,7 @@ function setupEventListeners() {
                 db.collection("Chats").doc(selectedChatId).delete()
                     .then(() => {
                         // Remove chat from user's chat list
-                        db.collection("Users").doc(currentUser.uid).update({
+                        db.collection("Particulars").doc(currentUser.uid).update({
                             chats: firebase.firestore.FieldValue.arrayRemove(selectedChatId)
                         });
                         alert("Chat deleted successfully.");
@@ -782,7 +782,7 @@ function setupEventListeners() {
             timeFormat: timeFormat,
         };
 
-        db.collection("Users").doc(currentUser.uid).update({
+        db.collection("Particulars").doc(currentUser.uid).update({
             settings: settings
         }).then(() => {
             console.log("Settings updated successfully.");
@@ -810,7 +810,7 @@ function getUserSettings() {
         timeFormat: '12',
     };
 
-    db.collection("Users").doc(currentUser.uid).get()
+    db.collection("Particulars").doc(currentUser.uid).get()
         .then(doc => {
             if (doc.exists && doc.data().settings) {
                 settings = doc.data().settings;
@@ -825,7 +825,7 @@ function getUserSettings() {
 
 // Update User Online Status
 function updateOnlineStatus(status) {
-    db.collection("Users").doc(currentUser.uid).update({
+    db.collection("Particulars").doc(currentUser.uid).update({
         online: status,
         lastActive: firebase.firestore.FieldValue.serverTimestamp()
     }).catch(error => {
@@ -833,7 +833,7 @@ function updateOnlineStatus(status) {
     });
 
     window.addEventListener("beforeunload", () => {
-        db.collection("Users").doc(currentUser.uid).update({
+        db.collection("Particulars").doc(currentUser.uid).update({
             online: false,
             lastActive: firebase.firestore.FieldValue.serverTimestamp()
         });
@@ -938,7 +938,7 @@ function setupTypingListener() {
 function setupOnlineStatusListener() {
     const recipientId = getRecipientId();
     if (recipientId) {
-        db.collection("Users").doc(recipientId).onSnapshot(doc => {
+        db.collection("Particulars").doc(recipientId).onSnapshot(doc => {
             if (doc.exists) {
                 const status = doc.data().online;
                 if (status) {
@@ -958,7 +958,7 @@ function setupOnlineStatusListener() {
 // Display Online Status
 function displayOnlineStatus(recipientId) {
     if (!recipientId) return;
-    db.collection("Users").doc(recipientId).onSnapshot(doc => {
+    db.collection("Particulars").doc(recipientId).onSnapshot(doc => {
         if (doc.exists) {
             const status = doc.data().online;
             if (status) {
@@ -976,7 +976,7 @@ function displayOnlineStatus(recipientId) {
 
 // Reset Unread Count
 function resetUnreadCount(chatId) {
-    db.collection("Users").doc(currentUser.uid).collection("chats").doc(chatId).update({
+    db.collection("Particulars").doc(currentUser.uid).collection("chats").doc(chatId).update({
         unreadCount: 0
     }).catch(error => {
         console.error("Error resetting unread count:", error);
@@ -985,7 +985,7 @@ function resetUnreadCount(chatId) {
 
 // Search Users by Email
 function searchUserByEmail(email) {
-    db.collection("Users").where("email", "==", email).get()
+    db.collection("Particulars").where("email", "==", email).get()
         .then(snapshot => {
             if (!snapshot.empty) {
                 const userData = snapshot.docs[0].data();
@@ -1067,10 +1067,10 @@ function createOneOnOneChat(userId, userData) {
             })
             .then(() => {
                 // Update chats for both users
-                db.collection("Users").doc(currentUser.uid).update({
+                db.collection("Particulars").doc(currentUser.uid).update({
                     chats: firebase.firestore.FieldValue.arrayUnion(chatId)
                 });
-                db.collection("Users").doc(userId).update({
+                db.collection("Particulars").doc(userId).update({
                     chats: firebase.firestore.FieldValue.arrayUnion(chatId)
                 });
                 alert("Chat created successfully.");
@@ -1092,10 +1092,10 @@ function createOneOnOneChat(userId, userData) {
 
         chatRef.set(chatData).then(() => {
             // Update chats for both users
-            db.collection("Users").doc(currentUser.uid).update({
+            db.collection("Particulars").doc(currentUser.uid).update({
                 chats: firebase.firestore.FieldValue.arrayUnion(chatId)
             });
-            db.collection("Users").doc(userId).update({
+            db.collection("Particulars").doc(userId).update({
                 chats: firebase.firestore.FieldValue.arrayUnion(chatId)
             });
             alert("Chat created successfully.");
@@ -1126,7 +1126,7 @@ function setupEventListeners() {
             timeFormat: timeFormat,
         };
 
-        db.collection("Users").doc(currentUser.uid).update({
+        db.collection("Particulars").doc(currentUser.uid).update({
             settings: settings
         }).then(() => {
             console.log("Settings updated successfully.");
@@ -1166,7 +1166,7 @@ function getUserSettings() {
         timeFormat: '12',
     };
 
-    db.collection("Users").doc(currentUser.uid).get()
+    db.collection("Particulars").doc(currentUser.uid).get()
         .then(doc => {
             if (doc.exists && doc.data().settings) {
                 settings = doc.data().settings;
@@ -1181,7 +1181,7 @@ function getUserSettings() {
 
 // Update User Online Status
 function updateOnlineStatus(status) {
-    db.collection("Users").doc(currentUser.uid).update({
+    db.collection("Particulars").doc(currentUser.uid).update({
         online: status,
         lastActive: firebase.firestore.FieldValue.serverTimestamp()
     }).catch(error => {
@@ -1189,7 +1189,7 @@ function updateOnlineStatus(status) {
     });
 
     window.addEventListener("beforeunload", () => {
-        db.collection("Users").doc(currentUser.uid).update({
+        db.collection("Particulars").doc(currentUser.uid).update({
             online: false,
             lastActive: firebase.firestore.FieldValue.serverTimestamp()
         });
