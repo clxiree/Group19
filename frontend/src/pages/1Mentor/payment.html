@@ -332,8 +332,8 @@
     const storage = firebase.storage();
     // Function to start the 2-hour countdown
 
-          // Function to show the toast with a message and type
-          function showToast(message, type) {
+        // Function to show the toast with a message and type
+        function showToast(message, type) {
         const toast = document.getElementById("customToast");
         const toastMessage = document.getElementById("customToastMessage");
 
@@ -352,7 +352,7 @@
         const toast = document.getElementById("customToast");
         toast.classList.remove("show");
       };
-      
+
     function startCountdown() {
         const countdownElement = document.getElementById('countdown');
 
@@ -450,25 +450,30 @@
     const subtotalElement = document.querySelector(".float-end");
     const totalElement = document.querySelector(".total-amount");
 
+    console.log("Entered Discount Code:", discountCode); // Log entered code
+
     try {
         // Retrieve discount code from Firebase
-        const discountDoc = await db.collection("discount").doc("discountcode1").get();
+        const discountDoc = await db.collection("discount").doc("discount1").get();
         
-        // Adjust this line to match your Firebase field name
-        const validDiscountCode = discountDoc.exists ? discountDoc.data().discountcode1 : null;
+        if (discountDoc.exists) {
+            const validDiscountCode = discountDoc.data().discountcode1;
+            console.log("Valid Discount Code from Firebase:", validDiscountCode); // Log the valid code
 
-        if (discountCode === validDiscountCode) {
-            const subtotalText = subtotalElement.textContent.replace("SGD ", "");
-            const subtotal = parseFloat(subtotalText);
-            const discountAmount = subtotal * 0.10;
-            const discountedTotal = subtotal - discountAmount;
+            if (discountCode === validDiscountCode) {
+                const subtotal = parseFloat(subtotalElement.textContent.replace("SGD ", ""));
+                const discountAmount = subtotal * 0.10;
+                const discountedTotal = subtotal - discountAmount;
 
-            // Update the total with the discounted amount
-            subtotalElement.textContent = `SGD ${subtotal.toFixed(2)}`;
-            totalElement.textContent = `SGD ${discountedTotal.toFixed(2)}`;
-            showToast("Discount applied successfully!", "success");
+                subtotalElement.textContent = `SGD ${subtotal.toFixed(2)}`;
+                totalElement.textContent = `SGD ${discountedTotal.toFixed(2)}`;
+                showToast("Discount applied successfully!", "success");
+            } else {
+                showToast("Invalid discount code.", "error");
+            }
         } else {
-            showToast("Invalid discount code.", "error");
+            console.error("Discount document not found in Firebase.");
+            showToast("Discount document missing.", "error");
         }
     } catch (error) {
         console.error("Error applying discount:", error);
@@ -476,8 +481,7 @@
     }
 }
 
-    // Attach event listener to the "Apply" button
-    document.getElementById("apply-btn").addEventListener("click", applyDiscount);
+document.getElementById("apply-btn").addEventListener("click", applyDiscount);
 
 
 
