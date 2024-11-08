@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (logoImage) {
         // Reference the image in Firebase Storage
-        const logoImageRef = storage.ref("images/smootutor-logo.jpg");
+        const logoImageRef = storage.ref("images/smootutor-logo.png");
 
         // Get the download URL for the image and set it as the logo image src
         logoImageRef.getDownloadURL().then((url) => {
