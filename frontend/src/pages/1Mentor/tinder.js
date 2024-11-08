@@ -175,8 +175,11 @@ function fetchParticulars() {
 
           // Member Since in <p>
           const joinedDateElement = document.createElement("p");
-          joinedDateElement.textContent = `Member Since ${data.JoinedDate}`;
+          joinedDateElement.textContent = `Member Since`;
+          const joinedDateNoElement = document.createElement("p");
+          joinedDateNoElement.textContent = data.JoinedDate;
           profileDetails.appendChild(joinedDateElement);
+          profileDetails.appendChild(joinedDateNoElement);
 
           // Badge container on the right side
           const badgeContainer = document.createElement("div");

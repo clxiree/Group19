@@ -40,9 +40,10 @@
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
 
   <style>
+
     .tinder {
   /* width: 100vw; */
-  height: 100vh;
+  height: auto;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -89,13 +90,13 @@
 }
 
 .tinder--cards {
-  /* position: relative; */
   width: 100%;
-  height: 100vh; 
   display: flex;
   justify-content: center;
-  align-items: center;  
-  
+  align-items: flex-start; /* Aligns the cards closer to the top */
+  margin-top: 10px; /* Adjust this as needed for more spacing */
+  min-height: 70vh; /* Limits height so it doesn’t occupy the full viewport */
+  padding-bottom: 20px;
 }
 
 .card-content {
@@ -133,8 +134,7 @@
 /* Style for profile details positioned at the bottom left */
 .profile-details {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
+  /* left: 20px; */
   text-align: left;
   color: white;
 }
@@ -149,7 +149,7 @@
 
 .profile-details p {
   font-size: 14px;
-  margin-top: 4px;
+  /* margin-top: 4px; */
   text-shadow: 2px 2px black;
 }
 
@@ -254,40 +254,49 @@
 }
 /* Make sure the tinder buttons are responsive */
 @media (max-width: 768px) {
-  .tinder--buttons button {
-    line-height: 40px;
-    width: 40px;
+  /* Remove any height constraint and padding from .tinder */
+  .tinder {
+    height: auto;
+    margin: 0;
+    padding: 20px;
   }
 
-  .tinder--buttons i {
-    font-size: 24px; /* Adjust font size for mobile */
-  }
-
-  /* Adjust button spacing */
   .tinder--buttons {
-    margin-top: 10px;
+    display: none;
   }
+
+  /* Adjust .tinder--cards to remove extra spacing */
+  .tinder--cards {
+    
+    margin-bottom: 500px;
+    padding: 0;
+    min-height: auto; /* Remove min-height to avoid extra space */
+    height: auto; /* Set height to auto to reduce space */
+  }
+  .tinder--card{
+    margin-top: 20px;
+    
+  }
+
+  /* Ensure container has no padding */
+  .container {
+    padding: 0 !important;
+    margin: 0 auto; /* Optional: center the container */
+  }
+
+  .profile-details{
+    /* padding: 3px; */
+  }
+
+  /* Adjust footer padding and margin if necessary */
+  footer {
+    margin-top: 0;
+    padding-top: 0;
+  }
+ 
 }
 
-/* Make the card width and height more responsive */
-@media (max-width: 768px) {
-  .tinder--card {
-    width: 90%;
-    max-width: 90%; /* Take up more width on mobile screens */
-    min-height: 300px; /* Adjust height for mobile screens */
-    max-height: 60vh; /* Fit within the viewport height on smaller screens */
-  }
 
-  /* Adjust profile details and badge sizes */
-  .profile-details h2 {
-    font-size: 24px;
-  }
-
-  .rate-badge, .subject-badge {
-    padding: 6px 12px;
-    font-size: 14px;
-  }
-}
 
     
   </style>
@@ -297,91 +306,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
   <script src="tinder.js"></script>
-  <!-- <script>
-    document.addEventListener("DOMContentLoaded", function () {
-  // Ensure Firebase is initialized correctly
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-    authDomain: "smootutor-ed94a.firebaseapp.com",
-    databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "smootutor-ed94a",
-    storageBucket: "smootutor-ed94a.appspot.com",
-    messagingSenderId: "289686522861",
-    appId: "1:289686522861:web:5811385ced42106d78b5e4",
-    measurementId: "G-46QED8ZFKJ"
-  };
-  firebase.initializeApp(firebaseConfig);
 
-  const db = firebase.firestore();
-  const auth = firebase.auth();
-  
-  let currentUser = null;
-
-  // Authenticate anonymously and fetch particulars
-  auth.signInAnonymously().then(() => {
-      console.log("User authenticated successfully.");
-
-      // Fetch particulars where Tutor is true
-      fetchParticulars();
-  }).catch(error => {
-      console.error("Authentication error:", error);
-  });
- 
-
-  function fetchParticulars() {
-    const db = firebase.firestore();
-    const cardsContainer = document.getElementById("my-cards"); // Use the ID for specificity
-  
-    // Clear existing cards if any
-    cardsContainer.innerHTML = "";
-  
-    db.collection("Particulars")
-      .where("Tutor", "==", true) // Assuming you have a "Tutor" field to filter on
-      .get()
-      .then((querySnapshot) => {
-        const totalCards = querySnapshot.size; // Get the total number of cards
-  
-        querySnapshot.forEach((doc, index) => {
-          const data = doc.data();
-  
-          // Create the card element
-          const card = document.createElement("div");
-          card.classList.add("tinder--card");
-  
-          // Set the z-index dynamically
-          card.style.zIndex = totalCards - index; // Higher z-index for cards to appear on top
-  
-          // Create and append the image element
-          const image = document.createElement("img");
-          image.src = `../1Mentor/assets/img/team/${data.Image}`;
-          image.classList.add("img-fluid");
-          card.appendChild(image);
-  
-          // Create and append the name element
-          const nameElement = document.createElement("h3");
-          nameElement.textContent = data.Name;
-          card.appendChild(nameElement);
-  
-          // Create and append the oneliner element
-          const onelinerElement = document.createElement("p");
-          onelinerElement.textContent = data.Oneliner;
-          card.appendChild(onelinerElement);
-  
-          // Append the card to the container
-          cardsContainer.appendChild(card);
-        });
-      })
-      .catch((error) => {
-        console.error("Error getting particulars:", error);
-      });
-}
-
-  
-  fetchParticulars();
-  
-});
-  </script> -->
 
   <script>
     document.addEventListener("DOMContentLoaded", function () {
