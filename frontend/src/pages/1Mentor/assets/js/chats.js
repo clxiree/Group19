@@ -1,4 +1,4 @@
-// scripts/script.js
+// scripts/chats.js
 
 // Initialize Firebase
 const firebaseConfig = {
@@ -22,7 +22,6 @@ let currentUser = null;
 let selectedChatId = null;
 let messagesListener = null;
 let typingListener = null;
-let onlineStatusListener = null;
 let scheduledMessages = [];
 
 // DOM Elements
@@ -74,7 +73,7 @@ auth.onAuthStateChanged(user => {
         initializeChatApp();
     } else {
         // Redirect to login page if not authenticated
-        window.location.href = 'login.html';
+        window.location.href = 'home/login.html';
     }
 });
 
@@ -86,6 +85,7 @@ function initializeChatApp() {
     setupTypingListener();
     setupOnlineStatusListener();
     loadScheduledMessages();
+    updateOnlineStatus(true);
 }
 
 // Fetch User Profile
@@ -94,12 +94,7 @@ function fetchUserProfile() {
     userRef.get().then(doc => {
         if (doc.exists) {
             const userData = doc.data();
-            if (userData.displayName) {
-                // You can display the user's name somewhere if needed
-            }
-            if (userData.profilePicture) {
-                // Update profile picture if needed
-            }
+            // You can display the user's name and profile picture if needed
         }
     }).catch(error => {
         console.error("Error fetching user profile:", error);
@@ -129,11 +124,13 @@ function renderChatItem(chatId, chatData) {
     chatItem.dataset.chatId = chatId;
 
     const avatarSrc = chatData.chatAvatar || "assets/img/default-avatar.png";
+    const lastMessage = chatData.lastMessage ? (chatData.lastMessage.type === 'text' ? chatData.lastMessage.content : '📎 Attachment') : '';
+
     chatItem.innerHTML = `
       <img src="${avatarSrc}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
       <div class="chat-item-info">
         <div class="chat-item-name">${chatData.chatName || "Chat"}</div>
-        <div class="chat-item-last-message">${chatData.lastMessage ? (chatData.lastMessage.type === 'text' ? chatData.lastMessage.content : '📎 Attachment') : ''}</div>
+        <div class="chat-item-last-message">${lastMessage}</div>
       </div>
       ${chatData.unreadCount > 0 ? `<span class="unread-count">${chatData.unreadCount}</span>` : ''}
     `;
@@ -144,7 +141,7 @@ function renderChatItem(chatId, chatData) {
 
 // Select Chat
 function selectChat(chatId, chatData) {
-    if (selectedChatId === chatId) return; // If the same chat is selected, do nothing
+    if (selectedChatId === chatId) return; // Already selected
 
     selectedChatId = chatId;
     noChatSelected.style.display = "none";
@@ -173,9 +170,6 @@ function selectChat(chatId, chatData) {
 
     // Reset unread count
     resetUnreadCount(chatId);
-
-    // Listen for new messages
-    listenForNewMessages(chatId);
 }
 
 // Fetch Messages
@@ -236,7 +230,7 @@ function parseMessageText(text) {
         .replace(/\*(.*?)\*/g, '<em>$1</em>') // Italic
         .replace(/__(.*?)__/g, '<u>$1</u>'); // Underline
 
-    // Replace :emoji_name: with emoji characters using Emoji Button library
+    // Replace :emoji_name: with emoji characters using Emoji Picker library
     parsedText = parsedText.replace(/:([a-zA-Z0-9_+-]+):/g, (match, p1) => {
         const emoji = getEmojiByName(p1);
         return emoji ? emoji : match;
@@ -315,9 +309,10 @@ function updateLastMessage(chatId, messageData) {
             content: messageData.content,
             sentAt: messageData.sentAt,
             type: messageData.type,
+            senderId: messageData.senderId,
         }
     }).then(() => {
-        // Optionally, you can handle additional logic here
+        // Optionally, handle additional logic here
     }).catch(error => {
         console.error("Error updating last message:", error);
     });
@@ -479,55 +474,104 @@ function loadScheduledMessages() {
     });
 }
 
-// Listen for New Messages to Show Notifications
-function listenForNewMessages(chatId) {
-    db.collection("Chats").doc(chatId).collection("messages")
-        .orderBy("sentAt", "desc")
-        .limit(1)
+// Listen for Typing Indicators
+function setupTypingListener() {
+    messageInput.addEventListener("input", () => {
+        if (selectedChatId) {
+            const typingRef = db.collection("Chats").doc(selectedChatId).collection("typing").doc(currentUser.uid);
+            typingRef.set({
+                isTyping: true,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+
+            // Remove typing status after 2 seconds of inactivity
+            setTimeout(() => {
+                typingRef.delete();
+            }, 2000);
+        }
+    });
+
+    // Listen for typing indicators from other users
+    db.collection("Chats").doc(selectedChatId).collection("typing")
         .onSnapshot(snapshot => {
-            if (!snapshot.empty) {
-                const messageData = snapshot.docs[0].data();
-                if (messageData.senderId !== currentUser.uid) {
-                    showToast(`New message from ${messageData.senderId === currentUser.uid ? "You" : "Someone"}`);
+            let isTyping = false;
+            snapshot.forEach(doc => {
+                if (doc.id !== currentUser.uid) {
+                    isTyping = true;
                 }
+            });
+
+            if (isTyping) {
+                typingIndicator.style.display = "flex";
+                typingText.textContent = "Someone is typing...";
+            } else {
+                typingIndicator.style.display = "none";
             }
-        }, error => {
-            console.error("Error listening for new messages:", error);
         });
 }
 
-// Show Toast Notification
-function showToast(message) {
-    // Simple toast implementation
-    const toast = document.createElement("div");
-    toast.classList.add("toast-notification");
-    toast.innerText = message;
-    document.body.appendChild(toast);
+// Listen for Online Status
+function setupOnlineStatusListener() {
+    const recipientId = getRecipientId();
+    if (recipientId) {
+        db.collection("Users").doc(recipientId).onSnapshot(doc => {
+            if (doc.exists) {
+                const status = doc.data().online;
+                if (status) {
+                    chatStatusElement.textContent = "Online";
+                    chatStatusElement.style.color = "green";
+                } else {
+                    chatStatusElement.textContent = "Offline";
+                    chatStatusElement.style.color = "gray";
+                }
+            }
+        }, error => {
+            console.error("Error fetching online status:", error);
+        });
+    }
+}
 
-    // Toast styles
-    toast.style.position = "fixed";
-    toast.style.top = "20px";
-    toast.style.right = "20px";
-    toast.style.backgroundColor = "#007bff";
-    toast.style.color = "#fff";
-    toast.style.padding = "10px 20px";
-    toast.style.borderRadius = "5px";
-    toast.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
-    toast.style.opacity = "1";
-    toast.style.transition = "opacity 0.5s ease";
+// Get Recipient ID (Assuming two members per chat)
+function getRecipientId() {
+    if (selectedChatId) {
+        const chatRef = db.collection("Chats").doc(selectedChatId);
+        chatRef.get().then(doc => {
+            if (doc.exists) {
+                const chatData = doc.data();
+                const recipient = chatData.members.find(member => member !== currentUser.uid);
+                return recipient;
+            }
+            return null;
+        }).catch(error => {
+            console.error("Error getting recipient ID:", error);
+            return null;
+        });
+    }
+    return null;
+}
 
-    setTimeout(() => {
-        toast.style.opacity = "0";
-        setTimeout(() => {
-            toast.remove();
-        }, 500);
-    }, 3000);
+// Display Online Status
+function displayOnlineStatus(recipientId) {
+    if (!recipientId) return;
+    db.collection("Users").doc(recipientId).onSnapshot(doc => {
+        if (doc.exists) {
+            const status = doc.data().online;
+            if (status) {
+                chatStatusElement.textContent = "Online";
+                chatStatusElement.style.color = "green";
+            } else {
+                chatStatusElement.textContent = "Offline";
+                chatStatusElement.style.color = "gray";
+            }
+        }
+    }, error => {
+        console.error("Error fetching online status:", error);
+    });
 }
 
 // Reset Unread Count
 function resetUnreadCount(chatId) {
-    const chatRef = db.collection("Chats").doc(chatId);
-    chatRef.update({
+    db.collection("Users").doc(currentUser.uid).collection("chats").doc(chatId).update({
         unreadCount: 0
     }).catch(error => {
         console.error("Error resetting unread count:", error);
@@ -615,18 +659,11 @@ function createOneOnOneChat(userId, userData) {
     });
 }
 
-// Create Group Chat
-// You can implement a separate UI for creating group chats as needed
+// Create Group Chat (Optional: Implement a separate UI for this)
 
 // Setup Event Listeners
 function setupEventListeners() {
-    // New Chat Button
-    newChatButton.addEventListener("click", () => {
-        const email = prompt("Enter the email of the user you want to chat with:");
-        if (email) {
-            searchUserByEmail(email);
-        }
-    });
+    // New Chat Button is already handled above with search-button
 
     // Delete Chat Button
     deleteChatButton.addEventListener("click", () => {
@@ -653,10 +690,12 @@ function setupEventListeners() {
         }
     });
 
-    // Settings Button
-    settingsButton.addEventListener("click", () => {
-        settingsModal.style.display = "block";
-    });
+    // Settings Button (if exists)
+    if (settingsButton) {
+        settingsButton.addEventListener("click", () => {
+            settingsModal.style.display = "block";
+        });
+    }
 
     // Close Settings Modal
     settingsCloseButton.addEventListener("click", () => {
@@ -695,9 +734,9 @@ function setupEventListeners() {
     });
 }
 
-// Get User Settings
+// Get User Settings (Simplified)
 function getUserSettings() {
-    const userSettings = {
+    let settings = {
         readReceipts: true,
         lastActive: true,
         timeFormat: '12',
@@ -706,314 +745,42 @@ function getUserSettings() {
     db.collection("Users").doc(currentUser.uid).get()
         .then(doc => {
             if (doc.exists && doc.data().settings) {
-                return doc.data().settings;
-            } else {
-                return userSettings;
+                settings = doc.data().settings;
             }
-        })
-        .then(settings => {
-            // Apply settings as needed
         })
         .catch(error => {
             console.error("Error fetching user settings:", error);
         });
 
-    return userSettings;
+    return settings;
 }
 
-// Display Online Status
-function displayOnlineStatus(otherUserId) {
-    const statusRef = db.collection("Users").doc(otherUserId).collection("status").doc("currentStatus");
-    statusRef.onSnapshot(doc => {
-        if (doc.exists) {
-            const statusData = doc.data();
-            if (statusData.state === "online") {
-                chatStatusElement.textContent = "Online";
-                chatStatusElement.style.color = "green";
-            } else {
-                const lastActive = statusData.lastChanged.toDate();
-                chatStatusElement.textContent = `Last active: ${formatTimestamp(statusData.lastChanged)}`;
-                chatStatusElement.style.color = "gray";
-            }
-        } else {
-            chatStatusElement.textContent = "Offline";
-            chatStatusElement.style.color = "gray";
-        }
-    }, error => {
-        console.error("Error fetching online status:", error);
-    });
-}
+// Display Online Status (Already handled above)
 
 // Update User Online Status
-function updateOnlineStatus() {
-    const statusRef = db.collection("Users").doc(currentUser.uid).collection("status").doc("currentStatus");
-    const isOnline = {
-        state: "online",
-        lastChanged: firebase.firestore.FieldValue.serverTimestamp(),
-    };
-
-    const isOffline = {
-        state: "offline",
-        lastChanged: firebase.firestore.FieldValue.serverTimestamp(),
-    };
-
-    auth.onAuthStateChanged(user => {
-        if (user) {
-            statusRef.set(isOnline);
-
-            window.addEventListener("beforeunload", () => {
-                statusRef.set(isOffline);
-            });
-        }
-    });
-}
-
-// Setup Typing Listener
-function setupTypingListener() {
-    messageInput.addEventListener("input", () => {
-        if (selectedChatId) {
-            const typingRef = db.collection("Chats").doc(selectedChatId).collection("typing").doc(currentUser.uid);
-            typingRef.set({
-                isTyping: true,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            });
-
-            // Remove typing status after 2 seconds of inactivity
-            setTimeout(() => {
-                typingRef.delete();
-            }, 2000);
-        }
-    });
-
-    // Listen for typing indicators from other users
-    db.collection("Chats").doc(selectedChatId).collection("typing")
-        .onSnapshot(snapshot => {
-            let isTyping = false;
-            snapshot.forEach(doc => {
-                if (doc.id !== currentUser.uid) {
-                    isTyping = true;
-                }
-            });
-
-            if (isTyping) {
-                typingIndicator.style.display = "flex";
-                typingText.textContent = "Someone is typing...";
-            } else {
-                typingIndicator.style.display = "none";
-            }
-        });
-}
-
-// Setup Online Status Listener
-function setupOnlineStatusListener() {
-    // Listen to changes in user status
-    // This can be implemented similarly to typing indicators
-}
-
-// Schedule Messages Persistence (Optional)
-function loadScheduledMessages() {
-    // Implement persistence for scheduled messages if needed
-    // For example, fetch scheduled messages from Firestore and set timeouts
-}
-
-// Handle Scheduled Messages (Cloud Functions Recommended)
-function handleScheduledMessages() {
-    // For reliability, use Firebase Cloud Functions to handle scheduled messages
-    // Client-side scheduling is not reliable as it depends on the user's browser being open
-}
-
-// Group Chat Functionality
-function createGroupChat(groupName, memberEmails) {
-    // Fetch user IDs from emails
-    const memberPromises = memberEmails.map(email => {
-        return db.collection("Users").where("email", "==", email).get()
-            .then(snapshot => {
-                if (!snapshot.empty) {
-                    return snapshot.docs[0].id;
-                } else {
-                    alert(`No user found with email: ${email}`);
-                    return null;
-                }
-            });
-    });
-
-    Promise.all(memberPromises).then(memberIds => {
-        const validMemberIds = memberIds.filter(id => id !== null);
-        if (validMemberIds.length === 0) {
-            alert("No valid members to add to the group.");
-            return;
-        }
-
-        // Create group chat
-        const chatRef = db.collection("Chats").doc();
-        const chatId = chatRef.id;
-
-        const chatData = {
-            chatId: chatId,
-            chatName: groupName,
-            chatAvatar: "assets/img/default-group-avatar.png",
-            isGroup: true,
-            members: [currentUser.uid, ...validMemberIds],
-            lastMessage: null,
-            unreadCount: 0,
-        };
-
-        chatRef.set(chatData).then(() => {
-            // Add chat to each member's chat list
-            [currentUser.uid, ...validMemberIds].forEach(uid => {
-                db.collection("Users").doc(uid).update({
-                    chats: firebase.firestore.FieldValue.arrayUnion(chatId)
-                });
-            });
-            alert("Group chat created successfully.");
-        }).catch(error => {
-            console.error("Error creating group chat:", error);
-        });
+function updateOnlineStatus(status) {
+    db.collection("Users").doc(currentUser.uid).update({
+        online: status,
+        lastActive: firebase.firestore.FieldValue.serverTimestamp()
     }).catch(error => {
-        console.error("Error fetching group members:", error);
+        console.error("Error updating online status:", error);
     });
-}
 
-// Initiate Group Chat Creation (You can implement a UI for this)
-function initiateGroupChat() {
-    const groupName = prompt("Enter group name:");
-    if (!groupName) return;
-
-    const memberEmails = prompt("Enter member emails separated by commas:").split(",").map(email => email.trim());
-    if (memberEmails.length === 0) return;
-
-    createGroupChat(groupName, memberEmails);
-}
-
-// Optionally, add a button to create group chats and attach the listener
-const createGroupChatButton = document.getElementById("create-group-chat-button");
-if (createGroupChatButton) {
-    createGroupChatButton.addEventListener("click", initiateGroupChat);
-}
-
-// Handle User Online Status
-updateOnlineStatus();
-
-// Search Users by Email (Optional: Implement a search bar UI)
-function searchUserByEmail(email) {
-    db.collection("Users").where("email", "==", email).get()
-        .then(snapshot => {
-            if (!snapshot.empty) {
-                const userData = snapshot.docs[0].data();
-                const userId = snapshot.docs[0].id;
-                initiateChatWithUser(userId, userData);
-            } else {
-                alert("No user found with that email.");
-            }
-        })
-        .catch(error => {
-            console.error("Error searching user:", error);
-        });
-}
-
-// Initiate Chat with User
-function initiateChatWithUser(userId, userData) {
-    // Check if a one-on-one chat already exists
-    db.collection("Chats")
-        .where("isGroup", "==", false)
-        .where("members", "array-contains", currentUser.uid)
-        .get()
-        .then(snapshot => {
-            let chatExists = false;
-            snapshot.forEach(doc => {
-                const chatMembers = doc.data().members;
-                if (chatMembers.length === 2 && chatMembers.includes(userId)) {
-                    // Chat exists
-                    chatExists = true;
-                    selectChat(doc.id, doc.data());
-                }
-            });
-
-            if (!chatExists) {
-                // Create a new chat
-                createOneOnOneChat(userId, userData);
-            }
-        })
-        .catch(error => {
-            console.error("Error initiating chat:", error);
-        });
-}
-
-// Create One-on-One Chat
-function createOneOnOneChat(userId, userData) {
-    const chatRef = db.collection("Chats").doc();
-    const chatId = chatRef.id;
-
-    const chatData = {
-        chatId: chatId,
-        chatName: userData.displayName || "Chat",
-        chatAvatar: userData.profilePicture || "assets/img/default-avatar.png",
-        isGroup: false,
-        members: [currentUser.uid, userId],
-        lastMessage: null,
-        unreadCount: 0,
-    };
-
-    chatRef.set(chatData).then(() => {
-        // Update chats for both users
+    window.addEventListener("beforeunload", () => {
         db.collection("Users").doc(currentUser.uid).update({
-            chats: firebase.firestore.FieldValue.arrayUnion(chatId)
+            online: false,
+            lastActive: firebase.firestore.FieldValue.serverTimestamp()
         });
-        db.collection("Users").doc(userId).update({
-            chats: firebase.firestore.FieldValue.arrayUnion(chatId)
-        });
-        alert("Chat created successfully.");
-    }).catch(error => {
-        console.error("Error creating chat:", error);
     });
 }
 
-// Setup Typing Listener
-function setupTypingListener() {
-    messageInput.addEventListener("input", () => {
-        if (selectedChatId) {
-            const typingRef = db.collection("Chats").doc(selectedChatId).collection("typing").doc(currentUser.uid);
-            typingRef.set({
-                isTyping: true,
-                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-            });
+// Search Users by Email (Already handled above)
 
-            // Remove typing status after 2 seconds of inactivity
-            setTimeout(() => {
-                typingRef.delete();
-            }, 2000);
-        }
-    });
+// Initiate Group Chat (Optional: Implement a separate UI for this)
 
-    // Listen for typing indicators from other users
-    db.collection("Chats").doc(selectedChatId).collection("typing")
-        .onSnapshot(snapshot => {
-            let isTyping = false;
-            snapshot.forEach(doc => {
-                if (doc.id !== currentUser.uid) {
-                    isTyping = true;
-                }
-            });
+// Handle Scheduled Messages Persistence (Optional)
 
-            if (isTyping) {
-                typingIndicator.style.display = "flex";
-                typingText.textContent = "Someone is typing...";
-            } else {
-                typingIndicator.style.display = "none";
-            }
-        });
-}
-
-// Listen for Online Status
-function setupOnlineStatusListener() {
-    // You can implement additional listeners if needed
-}
-
-// Handle Scheduled Messages (Client-Side Scheduling)
-function handleScheduledMessages() {
-    // Note: For production, use Firebase Cloud Functions to handle scheduled messages
-    // Client-side scheduling is unreliable as it depends on the user's browser being open
-}
+// In-App Notifications (Optional Enhancement)
 
 // Additional Helper Functions
 
@@ -1036,6 +803,7 @@ function showToast(message) {
     toast.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
     toast.style.opacity = "1";
     toast.style.transition = "opacity 0.5s ease";
+    toast.style.zIndex = "10000";
 
     setTimeout(() => {
         toast.style.opacity = "0";
@@ -1044,13 +812,3 @@ function showToast(message) {
         }, 500);
     }, 3000);
 }
-
-// Emoji Handling is managed via the Emoji Picker library
-
-// Initialize Scheduled Message Minimum Time
-document.addEventListener("DOMContentLoaded", () => {
-    const scheduledTimeInput = document.getElementById("scheduled-time");
-    if (scheduledTimeInput) {
-        scheduledTimeInput.min = new Date().toISOString().slice(0, -8);
-    }
-});
