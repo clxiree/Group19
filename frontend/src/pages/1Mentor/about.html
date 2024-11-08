@@ -41,9 +41,9 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg">
-      </a>
+      <div class="logo d-flex align-items-center me-auto">
+        <img id="logo-img" alt="SmooTutor Logo">
+      </div>
 
       <nav id="navmenu" class="navmenu">
         <ul>
@@ -72,8 +72,7 @@
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
 
             </ul>
-            <li><a href="contact.html">Contact</a></li>
-          </li>
+     
           
           
   
@@ -407,6 +406,36 @@
   <script src="assets/js/main.js"></script>
 
 <script>
+
+  const firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
+    const logoimg = document.getElementById('logo-img');
+        img.classList.add('card-img-top');
+        img.alt = 'Course Image';
+
+        // Fetch image URL from Firebase Storage
+        firebase.storage().ref(`images/smootutor-logo.png`).getDownloadURL()
+            .then(url => {
+                img.src = url;  // Set the src to the retrieved URL
+            })
+            .catch(error => {
+                console.error("Error fetching image:", error);
+                img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
+            });
+
   function switchToBrowseNotes(event) {
       event.preventDefault();
       showBrowseNotes();
@@ -419,6 +448,20 @@
       showSavedNotes();
       history.pushState({}, '', '?section=saved');
     }
+
+    const logoRef = ref(storage, 'images/smootutor-logo.png');
+
+// Fetch the image URL and set it as the src of the img element
+getDownloadURL(logoRef)
+  .then((url) => {
+    // Set the src attribute of the image element
+    const logoImg = document.getElementById("logo-img");
+    logoImg.src = url;
+  })
+  .catch((error) => {
+    console.error("Error loading logo image:", error);
+  });
+ 
 </script>
 </body>
 
