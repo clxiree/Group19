@@ -2198,3 +2198,47 @@ section,
 .view-link:hover {
   color: blue; /* Change to your preferred hover color */
 }
+
+/* footer section */
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  background: rgba(46, 58, 144, 0.8);
+  /* padding: 10px 0; */
+  z-index: 9999;
+  transition: background-color 0.3s;
+}
+
+.boxes {
+  overflow: hidden;
+  background: rgba(46, 58, 144, 0.8);
+}
+
+.boxes-inner {
+  display: flex;
+  gap: 110px;
+  /* Increased gap for better spacing */
+}
+
+.box {
+  font-size: 20px;
+  line-height: 50px;
+  color: #fff;
+  text-transform: uppercase;
+  transition: color 0.3s, transform 0.3s;
+  white-space: nowrap;
+  cursor: pointer;
+  /* Change cursor to pointer on hover */
+}
+
+.box:hover {
+  color: #ffcc00;
+  transform: scale(1.15);
+}
+
+.wrapper:hover {
+  background-color: rgba(46, 58, 144, 0.8);
+  
+}
