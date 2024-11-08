@@ -1751,14 +1751,40 @@ section,
 }
 
 .btn-book-now:hover {
-  background-color: #1e6630; /* Darker green on hover */
-  color: white;
+  background-color: #28a745; /* Hover color */
+  color: #ffffff;
+  animation: bounce 0.6s ease; /* Apply bounce animation */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Start and end position */
+  }
+  50% {
+    transform: translateY(-8px); /* Move up slightly */
+  }
 }
 
 
-.btn-buy:hover{
+.btn-buy:hover {
+  background-color: #5f67a2; /* Hover color */
+  color: #ffffff;
+  animation: bounce 0.6s ease; /* Apply bounce animation */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
 
-  background-color: #5f67a2; /* Blue background */
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Start and end position */
+  }
+  50% {
+    transform: translateY(-8px); /* Move up slightly */
+  }
+}
+
+.btn-message{
+  background-color: #fa7e78; /* Blue background */
   color: #ffffff; /* White text */
   border: none;
   padding: 10px 20px;
@@ -1767,7 +1793,22 @@ section,
   cursor: pointer;
   text-align: center;
   transition: background-color 0.3s ease;
+}
 
+.btn-message:hover {
+  background-color: #fa7e78; /* Hover color */
+  color: #ffffff;
+  animation: bounce 0.6s ease; /* Apply bounce animation */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Start and end position */
+  }
+  50% {
+    transform: translateY(-8px); /* Move up slightly */
+  }
 }
 
 .trainers .member {
