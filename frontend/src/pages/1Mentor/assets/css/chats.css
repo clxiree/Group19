@@ -405,3 +405,98 @@ body.chats-page {
 .wrapper:hover {
     background-color: #333;
 }
+
+/* styles/chats.css */
+
+/* Existing chat styles... */
+
+/* Toast Notification Styles */
+.toast-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    opacity: 1;
+    transition: opacity 0.5s ease;
+    z-index: 10000;
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    /* 10% from the top and centered */
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    /* Could be more or less, depending on screen size */
+}
+
+.close-button {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close-button:hover {
+    color: #ff0000;
+}
+
+/* Typing Indicator Styles */
+.typing-indicator {
+    padding: 5px 15px;
+    font-size: 0.9em;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+}
+
+.typing-indicator::before {
+    content: '';
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #6c757d;
+    border-radius: 50%;
+    margin-right: 8px;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 0.2;
+    }
+
+    50% {
+        opacity: 1;
+    }
+}
+
+/* Responsive Modal */
+@media (max-width: 767px) {
+    .modal-content {
+        width: 80%;
+    }
+}

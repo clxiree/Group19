@@ -1,6 +1,6 @@
 // scripts/chats.js
 
-// Initialize Firebase
+// Initialize Firebase (Ensure firebaseConfig is correctly set)
 const firebaseConfig = {
     apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
     authDomain: "smootutor-ed94a.firebaseapp.com",
@@ -21,8 +21,6 @@ const storage = firebase.storage();
 let currentUser = null;
 let selectedChatId = null;
 let messagesListener = null;
-let typingListener = null;
-let scheduledMessages = [];
 
 // DOM Elements
 const chatListElement = document.getElementById("chat-list");
@@ -45,12 +43,13 @@ const scheduledMessageText = document.getElementById("scheduled-message-text");
 const scheduledTimeInput = document.getElementById("scheduled-time");
 const typingIndicator = document.getElementById("typing-indicator");
 const typingText = document.getElementById("typing-text");
-const settingsButton = document.getElementById("settings-button");
 const settingsModal = document.getElementById("settings-modal");
 const settingsCloseButton = document.getElementById("settings-close-button");
 const settingsForm = document.getElementById("settings-form");
 const deleteChatButton = document.getElementById("delete-chat-button");
 const noChatSelected = document.getElementById("no-chat-selected");
+const noChatImage = document.getElementById("no-chat-image");
+const logoImage = document.getElementById("logo-image");
 
 // Emoji Picker Initialization
 const picker = new EmojiButton({
@@ -66,7 +65,7 @@ emojiButton.addEventListener('click', () => {
     picker.togglePicker(emojiButton);
 });
 
-// Handle Authentication State
+// Authenticate and fetch chats
 auth.onAuthStateChanged(user => {
     if (user) {
         currentUser = user;
@@ -86,6 +85,8 @@ function initializeChatApp() {
     setupOnlineStatusListener();
     loadScheduledMessages();
     updateOnlineStatus(true);
+    loadLogoImage();
+    setNoChatPlaceholderImage();
 }
 
 // Fetch User Profile
@@ -94,14 +95,40 @@ function fetchUserProfile() {
     userRef.get().then(doc => {
         if (doc.exists) {
             const userData = doc.data();
-            // You can display the user's name and profile picture if needed
+            // Optionally, update UI with user data
         }
     }).catch(error => {
         console.error("Error fetching user profile:", error);
     });
 }
 
-// Fetch Chats
+// Load Logo Image from Firebase Storage
+function loadLogoImage() {
+    if (logoImage) {
+        const logoImageRef = storage.ref("images/smootutor-logo.jpg");
+        logoImageRef.getDownloadURL().then(url => {
+            logoImage.src = url;
+        }).catch(error => {
+            console.error("Error loading logo image:", error);
+            logoImage.src = "assets/img/smootutor-logo.jpg"; // Fallback to local image
+        });
+    }
+}
+
+// Set Placeholder Image for No Chat Selected
+function setNoChatPlaceholderImage() {
+    if (noChatImage) {
+        const placeholderRef = storage.ref("images/chats/chat-placeholder.png");
+        placeholderRef.getDownloadURL().then(url => {
+            noChatImage.src = url;
+        }).catch(error => {
+            console.error("Error loading placeholder image:", error);
+            noChatImage.src = "assets/img/chat-placeholder.png"; // Fallback to local image
+        });
+    }
+}
+
+// Fetch and display chats
 function fetchChats() {
     db.collection("Chats")
         .where("members", "array-contains", currentUser.uid)
@@ -123,19 +150,56 @@ function renderChatItem(chatId, chatData) {
     chatItem.classList.add("chat-item", "d-flex", "align-items-center");
     chatItem.dataset.chatId = chatId;
 
-    const avatarSrc = chatData.chatAvatar || "assets/img/default-avatar.png";
-    const lastMessage = chatData.lastMessage ? (chatData.lastMessage.type === 'text' ? chatData.lastMessage.content : '📎 Attachment') : '';
+    const defaultChatAvatar = "assets/img/default-avatar.png";
+    const chatAvatarSrc = chatData.chatAvatar ? chatData.chatAvatar : defaultChatAvatar;
 
-    chatItem.innerHTML = `
-      <img src="${avatarSrc}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
-      <div class="chat-item-info">
-        <div class="chat-item-name">${chatData.chatName || "Chat"}</div>
-        <div class="chat-item-last-message">${lastMessage}</div>
-      </div>
-      ${chatData.unreadCount > 0 ? `<span class="unread-count">${chatData.unreadCount}</span>` : ''}
-    `;
+    // Fetch chat avatar from Firebase Storage if chatAvatar is present
+    if (chatData.chatAvatar) {
+        const chatAvatarRef = storage.refFromURL(chatData.chatAvatar);
+        chatAvatarRef.getDownloadURL().then(url => {
+            chatItem.querySelector('img').src = url;
+        }).catch(error => {
+            console.error("Error loading chat avatar:", error);
+            chatItem.querySelector('img').src = defaultChatAvatar; // Fallback to default
+        });
+    }
 
+    // Create image element with a placeholder; src will be updated
+    const avatarImg = document.createElement("img");
+    avatarImg.src = defaultChatAvatar;
+    avatarImg.alt = "Chat Avatar";
+    avatarImg.classList.add("rounded-circle", "me-2");
+    avatarImg.width = 50;
+    avatarImg.height = 50;
+    avatarImg.style.objectFit = "cover";
+    chatItem.appendChild(avatarImg);
+
+    const chatItemInfo = document.createElement("div");
+    chatItemInfo.classList.add("chat-item-info");
+
+    const chatNameDiv = document.createElement("div");
+    chatNameDiv.classList.add("chat-item-name");
+    chatNameDiv.textContent = chatData.chatName || "Chat";
+    chatItemInfo.appendChild(chatNameDiv);
+
+    const lastMessageDiv = document.createElement("div");
+    lastMessageDiv.classList.add("chat-item-last-message");
+    lastMessageDiv.textContent = chatData.lastMessage ? (chatData.lastMessage.type === 'text' ? chatData.lastMessage.content : '📎 Attachment') : '';
+    chatItemInfo.appendChild(lastMessageDiv);
+
+    chatItem.appendChild(chatItemInfo);
+
+    // Display unread count if any
+    if (chatData.unreadCount > 0) {
+        const unreadSpan = document.createElement("span");
+        unreadSpan.classList.add("unread-count");
+        unreadSpan.textContent = chatData.unreadCount;
+        chatItem.appendChild(unreadSpan);
+    }
+
+    // Add click event listener to select chat
     chatItem.addEventListener("click", () => selectChat(chatId, chatData));
+
     chatListElement.appendChild(chatItem);
 }
 
@@ -154,9 +218,23 @@ function selectChat(chatId, chatData) {
 
     // Update Chat Header
     chatNameElement.textContent = chatData.chatName || "Chat";
-    chatAvatarElement.src = chatData.chatAvatar || "assets/img/default-avatar.png";
 
-    // Display Online Status
+    // Fetch and display chat avatar
+    const chatAvatarImg = chatAvatarElement;
+    const defaultChatAvatar = "assets/img/default-avatar.png";
+    chatAvatarImg.src = defaultChatAvatar; // Set default first
+
+    if (chatData.chatAvatar) {
+        const chatAvatarRef = storage.refFromURL(chatData.chatAvatar);
+        chatAvatarRef.getDownloadURL().then(url => {
+            chatAvatarImg.src = url;
+        }).catch(error => {
+            console.error("Error loading chat avatar:", error);
+            chatAvatarImg.src = defaultChatAvatar; // Fallback to default
+        });
+    }
+
+    // Display Online Status of the recipient
     displayOnlineStatus(chatData.members.filter(member => member !== currentUser.uid)[0]);
 
     // Highlight the selected chat
@@ -177,7 +255,6 @@ function fetchMessages(chatId) {
     if (messagesListener) {
         messagesListener(); // Detach previous listener
     }
-
     messagesListener = db.collection("Chats").doc(chatId).collection("messages")
         .orderBy("sentAt", "asc")
         .onSnapshot(snapshot => {
@@ -340,7 +417,7 @@ attachFileInput.addEventListener("change", event => {
     const file = event.target.files[0];
     if (file && selectedChatId) {
         if (file.size <= 10 * 1024 * 1024) { // 10MB limit
-            const fileRef = storage.ref(`chat_files/${selectedChatId}/${file.name}`);
+            const fileRef = storage.ref(`files/chats/${selectedChatId}/${file.name}`);
             const uploadTask = fileRef.put(file);
 
             uploadTask.on('state_changed',
@@ -364,11 +441,11 @@ attachFileInput.addEventListener("change", event => {
 });
 
 // Send File Message
-function sendFileMessage(downloadURL, fileName, fileType) {
+function sendFileMessage(fileURL, fileName, fileType) {
     const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
     const messageData = {
         messageId: messageRef.id,
-        content: downloadURL,
+        content: fileURL,
         fileName: fileName,
         fileType: fileType,
         senderId: currentUser.uid,
@@ -638,7 +715,7 @@ function createOneOnOneChat(userId, userData) {
     const chatData = {
         chatId: chatId,
         chatName: userData.displayName || "Chat",
-        chatAvatar: userData.profilePicture || "assets/img/default-avatar.png",
+        chatAvatar: userData.profilePicture || "https://via.placeholder.com/150", // Default avatar URL
         isGroup: false,
         members: [currentUser.uid, userId],
         lastMessage: null,
@@ -658,8 +735,6 @@ function createOneOnOneChat(userId, userData) {
         console.error("Error creating chat:", error);
     });
 }
-
-// Create Group Chat (Optional: Implement a separate UI for this)
 
 // Setup Event Listeners
 function setupEventListeners() {
@@ -689,13 +764,6 @@ function setupEventListeners() {
             }
         }
     });
-
-    // Settings Button (if exists)
-    if (settingsButton) {
-        settingsButton.addEventListener("click", () => {
-            settingsModal.style.display = "block";
-        });
-    }
 
     // Close Settings Modal
     settingsCloseButton.addEventListener("click", () => {
@@ -755,7 +823,361 @@ function getUserSettings() {
     return settings;
 }
 
-// Display Online Status (Already handled above)
+// Update User Online Status
+function updateOnlineStatus(status) {
+    db.collection("Users").doc(currentUser.uid).update({
+        online: status,
+        lastActive: firebase.firestore.FieldValue.serverTimestamp()
+    }).catch(error => {
+        console.error("Error updating online status:", error);
+    });
+
+    window.addEventListener("beforeunload", () => {
+        db.collection("Users").doc(currentUser.uid).update({
+            online: false,
+            lastActive: firebase.firestore.FieldValue.serverTimestamp()
+        });
+    });
+}
+
+// Handle Scheduled Messages (Persistence is optional)
+let scheduledMessages = []; // Array to keep track of scheduled messages
+
+// Listen for Scheduled Messages
+function scheduleMessage(text, scheduledTime) {
+    const delay = scheduledTime - Date.now();
+    if (delay > 0) {
+        const timeoutId = setTimeout(() => {
+            sendScheduledMessage(text);
+            // Remove from scheduledMessages array
+            scheduledMessages = scheduledMessages.filter(msg => msg.timeoutId !== timeoutId);
+        }, delay);
+        // Store the timeout ID to manage scheduled messages if needed
+        scheduledMessages.push({ text, scheduledTime, timeoutId });
+    }
+}
+
+// Send Scheduled Message
+function sendScheduledMessage(text) {
+    if (selectedChatId) {
+        const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
+        const messageData = {
+            messageId: messageRef.id,
+            content: text,
+            senderId: currentUser.uid,
+            sentAt: firebase.firestore.FieldValue.serverTimestamp(),
+            type: "text",
+            read: false,
+        };
+
+        messageRef.set(messageData).then(() => {
+            updateLastMessage(selectedChatId, messageData);
+            alert("Scheduled message sent.");
+        }).catch(error => {
+            console.error("Error sending scheduled message:", error);
+        });
+    } else {
+        alert("No chat selected. Scheduled message not sent.");
+    }
+}
+
+// Load Scheduled Messages on Page Load
+function loadScheduledMessages() {
+    scheduledMessages.forEach(msg => {
+        clearTimeout(msg.timeoutId);
+        const delay = msg.scheduledTime - Date.now();
+        if (delay > 0) {
+            msg.timeoutId = setTimeout(() => {
+                sendScheduledMessage(msg.text);
+                scheduledMessages = scheduledMessages.filter(m => m.timeoutId !== msg.timeoutId);
+            }, delay);
+        } else {
+            sendScheduledMessage(msg.text);
+            scheduledMessages = scheduledMessages.filter(m => m.timeoutId !== msg.timeoutId);
+        }
+    });
+}
+
+// Listen for Typing Indicators
+function setupTypingListener() {
+    messageInput.addEventListener("input", () => {
+        if (selectedChatId) {
+            const typingRef = db.collection("Chats").doc(selectedChatId).collection("typing").doc(currentUser.uid);
+            typingRef.set({
+                isTyping: true,
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+
+            // Remove typing status after 2 seconds of inactivity
+            setTimeout(() => {
+                typingRef.delete();
+            }, 2000);
+        }
+    });
+
+    // Listen for typing indicators from other users
+    db.collection("Chats").doc(selectedChatId).collection("typing")
+        .onSnapshot(snapshot => {
+            let isTyping = false;
+            snapshot.forEach(doc => {
+                if (doc.id !== currentUser.uid) {
+                    isTyping = true;
+                }
+            });
+
+            if (isTyping) {
+                typingIndicator.style.display = "flex";
+                typingText.textContent = "Someone is typing...";
+            } else {
+                typingIndicator.style.display = "none";
+            }
+        });
+}
+
+// Listen for Online Status
+function setupOnlineStatusListener() {
+    const recipientId = getRecipientId();
+    if (recipientId) {
+        db.collection("Users").doc(recipientId).onSnapshot(doc => {
+            if (doc.exists) {
+                const status = doc.data().online;
+                if (status) {
+                    chatStatusElement.textContent = "Online";
+                    chatStatusElement.style.color = "green";
+                } else {
+                    chatStatusElement.textContent = "Offline";
+                    chatStatusElement.style.color = "gray";
+                }
+            }
+        }, error => {
+            console.error("Error fetching online status:", error);
+        });
+    }
+}
+
+// Display Online Status
+function displayOnlineStatus(recipientId) {
+    if (!recipientId) return;
+    db.collection("Users").doc(recipientId).onSnapshot(doc => {
+        if (doc.exists) {
+            const status = doc.data().online;
+            if (status) {
+                chatStatusElement.textContent = "Online";
+                chatStatusElement.style.color = "green";
+            } else {
+                chatStatusElement.textContent = "Offline";
+                chatStatusElement.style.color = "gray";
+            }
+        }
+    }, error => {
+        console.error("Error fetching online status:", error);
+    });
+}
+
+// Reset Unread Count
+function resetUnreadCount(chatId) {
+    db.collection("Users").doc(currentUser.uid).collection("chats").doc(chatId).update({
+        unreadCount: 0
+    }).catch(error => {
+        console.error("Error resetting unread count:", error);
+    });
+}
+
+// Search Users by Email
+function searchUserByEmail(email) {
+    db.collection("Users").where("email", "==", email).get()
+        .then(snapshot => {
+            if (!snapshot.empty) {
+                const userData = snapshot.docs[0].data();
+                const userId = snapshot.docs[0].id;
+                initiateChatWithUser(userId, userData);
+            } else {
+                alert("No user found with that email.");
+            }
+        })
+        .catch(error => {
+            console.error("Error searching user:", error);
+        });
+}
+
+// Initiate Chat with User
+function initiateChatWithUser(userId, userData) {
+    // Check if a one-on-one chat already exists
+    db.collection("Chats")
+        .where("isGroup", "==", false)
+        .where("members", "array-contains", currentUser.uid)
+        .get()
+        .then(snapshot => {
+            let chatExists = false;
+            snapshot.forEach(doc => {
+                const chatMembers = doc.data().members;
+                if (chatMembers.length === 2 && chatMembers.includes(userId)) {
+                    // Chat exists
+                    chatExists = true;
+                    selectChat(doc.id, doc.data());
+                }
+            });
+
+            if (!chatExists) {
+                // Create a new chat
+                createOneOnOneChat(userId, userData);
+            }
+        })
+        .catch(error => {
+            console.error("Error initiating chat:", error);
+        });
+}
+
+// Create One-on-One Chat
+function createOneOnOneChat(userId, userData) {
+    const chatRef = db.collection("Chats").doc();
+    const chatId = chatRef.id;
+
+    // Upload chat avatar if userData has a profilePicture
+    let chatAvatarURL = "https://via.placeholder.com/150"; // Default avatar URL
+
+    if (userData.profilePicture) {
+        const chatAvatarRef = storage.ref(`images/chats/${chatId}.jpg`);
+        storage.refFromURL(userData.profilePicture).getDownloadURL()
+            .then(url => {
+                // Download the user's profile picture and upload it as chat avatar
+                return fetch(url);
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                return storage.ref(`images/chats/${chatId}.jpg`).put(blob);
+            })
+            .then(() => {
+                return storage.ref(`images/chats/${chatId}.jpg`).getDownloadURL();
+            })
+            .then(downloadURL => {
+                chatAvatarURL = downloadURL;
+                // Create chat data
+                const chatData = {
+                    chatId: chatId,
+                    chatName: userData.displayName || "Chat",
+                    chatAvatar: chatAvatarURL,
+                    isGroup: false,
+                    members: [currentUser.uid, userId],
+                    lastMessage: null,
+                    unreadCount: 0,
+                };
+
+                return chatRef.set(chatData);
+            })
+            .then(() => {
+                // Update chats for both users
+                db.collection("Users").doc(currentUser.uid).update({
+                    chats: firebase.firestore.FieldValue.arrayUnion(chatId)
+                });
+                db.collection("Users").doc(userId).update({
+                    chats: firebase.firestore.FieldValue.arrayUnion(chatId)
+                });
+                alert("Chat created successfully.");
+            })
+            .catch(error => {
+                console.error("Error creating chat:", error);
+            });
+    } else {
+        // If no profile picture, use default
+        const chatData = {
+            chatId: chatId,
+            chatName: userData.displayName || "Chat",
+            chatAvatar: chatAvatarURL,
+            isGroup: false,
+            members: [currentUser.uid, userId],
+            lastMessage: null,
+            unreadCount: 0,
+        };
+
+        chatRef.set(chatData).then(() => {
+            // Update chats for both users
+            db.collection("Users").doc(currentUser.uid).update({
+                chats: firebase.firestore.FieldValue.arrayUnion(chatId)
+            });
+            db.collection("Users").doc(userId).update({
+                chats: firebase.firestore.FieldValue.arrayUnion(chatId)
+            });
+            alert("Chat created successfully.");
+        }).catch(error => {
+            console.error("Error creating chat:", error);
+        });
+    }
+}
+
+// Setup Event Listeners
+function setupEventListeners() {
+    // Delete Chat Button is already handled above
+
+    // Close Settings Modal
+    settingsCloseButton.addEventListener("click", () => {
+        settingsModal.style.display = "none";
+    });
+
+    // Handle Settings Form
+    settingsForm.addEventListener("change", () => {
+        const readReceipts = document.getElementById("read-receipts").checked;
+        const lastActive = document.getElementById("last-active").checked;
+        const timeFormat = document.getElementById("time-format").value;
+
+        const settings = {
+            readReceipts: readReceipts,
+            lastActive: lastActive,
+            timeFormat: timeFormat,
+        };
+
+        db.collection("Users").doc(currentUser.uid).update({
+            settings: settings
+        }).then(() => {
+            console.log("Settings updated successfully.");
+        }).catch(error => {
+            console.error("Error updating settings:", error);
+        });
+    });
+
+    // Close Modals when clicking outside the modal content
+    window.addEventListener("click", (event) => {
+        if (event.target === settingsModal) {
+            settingsModal.style.display = "none";
+        }
+        if (event.target === scheduleMessageModal) {
+            scheduleMessageModal.style.display = "none";
+        }
+    });
+
+    // Schedule Message Button
+    scheduleMessageButton.addEventListener("click", () => {
+        scheduleMessageModal.style.display = "block";
+        // Set the minimum date and time to now
+        scheduledTimeInput.min = new Date().toISOString().slice(0, -8);
+    });
+
+    // Close Schedule Message Modal
+    scheduleCloseButton.addEventListener("click", () => {
+        scheduleMessageModal.style.display = "none";
+    });
+}
+
+// Get User Settings (Simplified)
+function getUserSettings() {
+    let settings = {
+        readReceipts: true,
+        lastActive: true,
+        timeFormat: '12',
+    };
+
+    db.collection("Users").doc(currentUser.uid).get()
+        .then(doc => {
+            if (doc.exists && doc.data().settings) {
+                settings = doc.data().settings;
+            }
+        })
+        .catch(error => {
+            console.error("Error fetching user settings:", error);
+        });
+
+    return settings;
+}
 
 // Update User Online Status
 function updateOnlineStatus(status) {
@@ -774,17 +1196,9 @@ function updateOnlineStatus(status) {
     });
 }
 
-// Search Users by Email (Already handled above)
-
-// Initiate Group Chat (Optional: Implement a separate UI for this)
-
-// Handle Scheduled Messages Persistence (Optional)
+// Scheduled Messages Handling is already implemented above
 
 // In-App Notifications (Optional Enhancement)
-
-// Additional Helper Functions
-
-// Show Toast Notification
 function showToast(message) {
     // Simple toast implementation
     const toast = document.createElement("div");
