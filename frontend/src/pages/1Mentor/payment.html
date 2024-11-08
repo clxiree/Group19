@@ -163,7 +163,7 @@
                       </div>
   
                       <!-- Continue Button -->
-                      <button id="continue-btn" class="btn btn-dark mt-3 w-100" style="background-color: #333; font-weight: 600; padding: 10px;">Continue</button>
+                      <button id="continue-btn" class="btn btn-dark mt-3 w-100" style="background-color: #333; font-weight: 600; padding: 10px;">Click to Process Payment</button>
                   </div>
               </div>
   
@@ -185,11 +185,7 @@
 
                 </div>
                 
-                      <!-- Secure SSL Checkout -->
-                      <div class="text-center secure-checkout mt-4">
-                          <img src="https://via.placeholder.com/40x40?text=SSL" alt="SSL Secure" style="width: 50px; margin-top: 10px;">
-                          <p class="mt-2" style="color: #888;">Secure SSL Checkout</p>
-                      </div>
+                      
   
                       <!-- Countdown Timer -->
                       <p class="text-center mt-4" style="font-weight: bold; color: #ff0000;">Time Remaining: <span id="countdown"></span></p>
@@ -553,7 +549,7 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
               // Add the booking to Firebase Bookings collection
             await db.collection("Bookings").add(bookingData);
             // Show success toast
-            showToast("Payment information saved successfully!", "success");
+            showToast("Payment is Successful!", "success");
           } catch (error) {
               console.error("Error saving payment information:", error);
               // Show error toast
