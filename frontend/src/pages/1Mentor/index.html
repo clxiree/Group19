@@ -54,7 +54,7 @@
       bottom: 0;
       width: 100%;
       overflow: hidden;
-      background: #2e3a90;
+      background: rgba(46, 58, 144, 0.8);
       /* padding: 10px 0; */
       z-index: 9999;
       transition: background-color 0.3s;
@@ -62,7 +62,7 @@
 
     .boxes {
       overflow: hidden;
-      background: #2e3a90;
+      background: rgba(46, 58, 144, 0.8);
     }
 
     .boxes-inner {
@@ -88,9 +88,13 @@
     }
 
     .wrapper:hover {
-      background-color: #2e3a90;
+      background-color: rgba(46, 58, 144, 0.8);
       /* Change background color on hover */
     }
+
+
+
+
     
   </style>
 
@@ -550,101 +554,21 @@
   <script src="assets/js/main.js"></script>
   <script src="index.js" type="module"></script>
 
-  <!-- <script>
-    $(document).ready(function () {
-      const topTutors = [
-        'Samuel Chua',
-        'Emily Tan',
-        'Michael Lee',
-        'Jessica Wong',
-        'David Lim',
-        'Sarah Ng',
-        'Alex Chen',
-        'Rachel Goh',
-        'Daniel Ong',
-        'Michelle Koh'
-        // Add more tutors if needed
-      ];
-
-      const marqueeContent = $('#marquee-content');
-
-      // Generate the boxes
-      topTutors.forEach((tutor, index) => {
-        const box = $('<div>').addClass('box').text(`TOP ${index + 1} TUTOR: ${tutor}`);
-        marqueeContent.append(box);
-      });
-
-      // Duplicate the content for seamless looping
-      marqueeContent.append(marqueeContent.html());
-
-      // Initialize the marquee animation
-      let direction = 1; // 1 for left to right, -1 for right to left
-      let marqueeTween;
-
-      function initMarquee() {
-        const totalWidth = $('#marquee-content').width();
-        const viewportWidth = $(window).width();
-
-        // Kill existing tween if any
-        if (marqueeTween) {
-          marqueeTween.kill();
-        }
-
-        marqueeTween = gsap.to('#marquee-content', {
-          duration: 10,
-          x: -direction * (totalWidth - viewportWidth) / 2,
-          ease: 'none',
-          repeat: -1,
-          modifiers: {
-            x: gsap.utils.unitize(function (x) {
-              return parseFloat(x) % (totalWidth / 2);
-            })
-          }
-        });
-      }
-
-      // Start the marquee
-      initMarquee();
-
-      // Pause movement on hover over boxes
-      $('.box').on('mouseenter', function () {
-        marqueeTween.pause();
-      }).on('mouseleave', function () {
-        marqueeTween.play();
-      });
-
-      // Reverse direction when mouse leaves the marquee wrapper
-      $('#marquee-wrapper').on('mouseleave', function () {
-        direction *= -1; // Reverse direction
-        initMarquee();
-      });
-
-      // Adjust marquee on window resize
-      $(window).on('resize', function () {
-        initMarquee();
-      });
-    });
-    const box = $('<div>').addClass('box');
-    const link = $('<a>').attr('href', `tutor-profile.html?name=${encodeURIComponent(tutor)}`).text(`TOP ${index + 1} TUTOR: ${tutor}`);
-    box.append(link);
-    marqueeContent.append(box);
-  </script> -->
-
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       const topTutors = [
-        'TOP_IS111: ChrispyChoo',
-        'TOP_CS440: ZennyPotato',
-        'TOP_MGMT293: YichiFinger',
-        'TOP_COR1702: HandsumPlast',
-        'TOP_FNC502: CloudyChong',
-        'TOP_ACCT101: LingLingLongLong'
+        'LIMITED TIME ONLY⏰',
+        'USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
+        'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
+        'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
       ];
 
       const marqueeContent = document.querySelector('.boxes-inner');
+      const marqueeWrapper = document.querySelector('.boxes');
+      const closeButton = document.querySelector('.close-marquee');
 
       // Generate the boxes
-      topTutors.forEach((tutor, index) => {
+      topTutors.forEach((tutor) => {
         const box = document.createElement('div');
         box.classList.add('box');
         box.textContent = tutor;
@@ -654,11 +578,8 @@
       // Duplicate the content for seamless scrolling
       marqueeContent.innerHTML += marqueeContent.innerHTML;
 
-      let contentWidth = marqueeContent.offsetWidth / 2; // Adjusted after duplication
-      const marqueeWrapper = document.querySelector('.boxes');
-
-      // Set initial direction
-      let direction = -1; // -1 for left to right, 1 for right to left
+      let contentWidth = marqueeContent.offsetWidth / 2;
+      let direction = -1;
 
       // Set up the GSAP animation
       let marqueeTween = gsap.to(".boxes-inner", {
@@ -671,34 +592,30 @@
         }
       });
 
-      // Pause movement and enhance interactivity on hover over boxes
+      // Pause and interactivity on hover
       const boxes = document.querySelectorAll('.box');
       boxes.forEach(box => {
         box.addEventListener('mouseenter', function () {
           marqueeTween.pause();
-          this.style.color = '#ffcc00'; // Change color on hover
-          this.style.transform = 'scale(1.1)'; // Scale up on hover
+          this.style.color = '#ffcc00';
+          this.style.transform = 'scale(1.1)';
         });
         box.addEventListener('mouseleave', function () {
           marqueeTween.play();
-          this.style.color = '#fff'; // Reset color
-          this.style.transform = 'scale(1)'; // Reset scale
+          this.style.color = '#fff';
+          this.style.transform = 'scale(1)';
         });
       });
 
-      // Change background color on marquee hover
+      // Background color and direction change on hover
       marqueeWrapper.addEventListener('mouseenter', function () {
         marqueeWrapper.style.backgroundColor = '#333';
       });
 
       marqueeWrapper.addEventListener('mouseleave', function () {
-        marqueeWrapper.style.backgroundColor = '#2e3a90';
-
-        // Reverse direction when mouse leaves the marquee wrapper
-        direction *= -1; // Reverse direction
-        marqueeTween.kill(); // Kill the existing animation
-
-        // Restart animation with new direction
+        marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
+        direction *= -1;
+        marqueeTween.kill();
         marqueeTween = gsap.to(".boxes-inner", {
           x: direction * contentWidth,
           duration: 30,
@@ -724,15 +641,19 @@
           }
         });
       });
+
+      // Close button functionality
+      closeButton.addEventListener('click', function () {
+        marqueeWrapper.style.display = 'none';
+      });
     });
   </script>
 
   <!-- Marquee Wrapper at the bottom -->
-  <div class="wrapper" id="marquee-wrapper">
-    <div class="boxes" id="marquee-content">
-      <div class="boxes-inner">
-        <!-- Boxes will be generated by JavaScript -->
-      </div>
+  
+  <div class="boxes">
+    <div class="boxes-inner">
+      <!-- Content generated by JavaScript will go here -->
     </div>
   </div>
 

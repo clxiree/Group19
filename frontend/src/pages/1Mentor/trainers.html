@@ -146,7 +146,7 @@ nav.breadcrumbs {
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Home<br></a></li>
+          <li><a href="tuteehomepage.html">Home<br></a></li>
           <li><a href="bookings.html">Bookings</a></li>
 
           <li class="dropdown">
@@ -171,12 +171,14 @@ nav.breadcrumbs {
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
 
             </ul>
-          <li><a href="contact.html">Contact</a></li>
+          
           </li>
 
 
 
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+         <!-- Hamburger Icon -->
+        <i class="mobile-nav-toggle bi bi-list d-lg-none"></i>
+    </div>
       </nav>
       <a class="btn-getstarted"><div id="my-email"></div></a>
     </div>
@@ -209,75 +211,40 @@ nav.breadcrumbs {
         class="bi bi-arrow-up-short"></i></a>
     <div id="preloader"></div>
 
-    <footer id="footer" class="footer position-relative light-background">
+    <!-- Footer Section -->
+<footer id="footer" class="footer position-relative light-background">
+  <div class="container footer-top">
+    <div class="row gy-4">
+      
+      <!-- About Section with Social Links -->
+      <div class="col-lg-3 md-6 sm-6 footer-about">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <span class="sitename"><img id="logo-image" alt="SMOOTutor Logo" /></span>
+        </a>
+        <div class="footer-contact pt-3">
+          <p>SMU</p>
+          <p>81 Victoria St, Singapore 188065</p>
+          <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+          <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
+        </div>
+        <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+          <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+          <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+        </div>
+     
+      </div>
 
-      <div class="container footer-top">
-        <div class="row gy-4">
-          <div class="col-lg-4 col-md-6 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">SMOOTutor</span>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>SMU</p>
-              <p>81 Victoria St, Singapore 188065</p>
-              <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
-              <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
-            </div>
-            <div class="social-links d-flex mt-4">
-              <a href=""><i class="bi bi-twitter-x"></i></a>
-              <a href=""><i class="bi bi-facebook"></i></a>
-              <a href=""><i class="bi bi-instagram"></i></a>
-              <a href=""><i class="bi bi-linkedin"></i></a>
-            </div>
-          </div>
-  
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Useful Links</h4>
-            <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="about.html">About us</a></li>
-              <li><a href="#">Services</a></li>
-              <li><a href="#">Terms of service</a></li>
-              <li><a href="#">Privacy policy</a></li>
-            </ul>
-          </div>
-  
-          <div class="col-lg-2 col-md-3 footer-links">
-            <h4>Our Services</h4>
-            <ul>
-              <li><a href="#">Find a Tutor</a></li>
-              <li><a href="#">Find Quality Notes</a></li>
-        
-            </ul>
-          </div>
-  
-          <div class="col-lg-4 col-md-12 footer-newsletter">
-            <h4>Our Newsletter</h4>
-            <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
-            <form action="forms/newsletter.php" method="post" class="php-email-form">
-              <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              <div class="sent-message">Your subscription request has been sent. Thank you!</div>
-            </form>
-          </div>
-  
-        </div>
+      <!-- Google Maps Section -->
+      <div class="col-lg-9 md-6 sm-6">
+        <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=80+Stanford+Road" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-  
-      <div class="container-fluid bg-light py-3">
-        <div class="row">
-          <div class="col-12 text-center">
-            <p>© <strong class="sitename">SMOOTUTOR</strong> <span>All Rights Reserved</span></p>
-            <div class="credits">
-              <!-- Keep all links intact for free version -->
-              Designed by SMOO students.
-            </div>
-          </div>
-        </div>
-      </div>
-  
-    </footer>
+
+
+    </div>
+  </div>
+</footer>
 
     <!-- Vendor JS Files -->
     <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -304,6 +271,8 @@ nav.breadcrumbs {
 
         const db = firebase.firestore();
         const auth = firebase.auth();
+       
+
         firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             console.log("User is logged in with email:", user.email);
@@ -316,6 +285,9 @@ nav.breadcrumbs {
             window.location.href = 'login.html';
         }
     });
+
+
+
 
        
     
