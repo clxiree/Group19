@@ -64,7 +64,7 @@ function setupSwipeEvents() {
           const userId = el.getAttribute("data-user-id");
           console.log(userId)
           setTimeout(() => {
-            // window.location.href = `tutorprofileupdated.html?userid=${userId}`;
+            window.location.href = `tutorprofileupdated.html?userid=${userId}`;
           }, 300);
         } else {
           setTimeout(() => {
@@ -140,7 +140,7 @@ function fetchParticulars() {
   }
 
   // Clear existing cards if any
-  cardsContainer.innerHTML = "";
+  cardsContainer.innerText = "";
 
   db.collection("Particulars")
     .where("Tutor", "==", true)
@@ -157,7 +157,7 @@ function fetchParticulars() {
           card.style.zIndex = totalCards - index;
 
           // Set UserId as a data attribute
-          card.setAttribute("data-user-id", data.UserId);
+          card.setAttribute("data-user-id", data.UserID);
 
           // Set the background image of the card
           card.style.backgroundImage = `url('../1Mentor/assets/img/team/${data.Image}')`;
@@ -243,7 +243,7 @@ function swipeCard(love) {
 
     // Redirect to trainers.html with UserId after animation
     
-      window.location.href = `trainers.html?UserId=${userId}`;
+      window.location.href = `tutorprofileupdated.html?userid=${userId}`;
     
   } else {
     // Swipe left

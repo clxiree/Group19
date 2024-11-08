@@ -396,17 +396,31 @@
         testimonialItem.appendChild(nameElement);
 
         const titleElement = document.createElement("h4");
-        titleElement.textContent = "Position"; // Replace "Position" with the actual position if available
+        titleElement.textContent = "Tutee"; // Replace "Position" with the actual position if available
         testimonialItem.appendChild(titleElement);
 
-        const starsContainer = document.createElement("div");
-        starsContainer.classList.add("stars");
-        for (let i = 0; i < Rate; i++) {
-          const star = document.createElement("i");
-          star.classList.add("bi", "bi-star-fill");
-          starsContainer.appendChild(star);
-        }
-        testimonialItem.appendChild(starsContainer);
+                // Stars Container
+                const starsContainer = document.createElement("div");
+                starsContainer.classList.add("stars");
+
+                // Populate stars based on Rate
+                for (let i = 1; i <= 5; i++) {
+                  const star = document.createElement("i");
+                  star.style.color = "#FFD700"; // Gold color
+
+                  if (i <= Math.floor(Rate)) {
+                    // Full star
+                    star.className = "bi bi-star-fill";
+                  } else if (i === Math.ceil(Rate) && Rate % 1 >= 0.5) {
+                    // Half star
+                    star.className = "bi bi-star-half";
+                  } else {
+                    // Empty star
+                    star.className = "bi bi-star";
+                  }
+                  starsContainer.appendChild(star);
+                }
+                testimonialItem.appendChild(starsContainer);
 
         const commentParagraph = document.createElement("p");
         const quoteLeft = document.createElement("i");

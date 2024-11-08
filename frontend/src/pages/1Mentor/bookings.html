@@ -119,7 +119,7 @@ document.getElementById('statusFilter').addEventListener('change', function(e) {
 function displayFilteredBookings(status) {
     const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
     const bookingList = document.getElementById("booking-list");
-    bookingList.innerHTML = '';
+    bookingList.innerText = '';
 
     const row = document.createElement('div');
     row.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-md-3', 'g-4');
@@ -192,15 +192,15 @@ function displayFilteredBookings(status) {
 
         const status = document.createElement('p');
         status.classList.add('description');
-        status.innerHTML = `<b>Status:</b> ${bookingData.status}`;
+        status.innerText = `<b>Status:</b> ${bookingData.status}`;
 
         const dateOfLesson = document.createElement('p');
         dateOfLesson.classList.add('description');
-        dateOfLesson.innerHTML = `<b>Date of Booking:</b> ${bookingData.dateOfLesson}`;
+        dateOfLesson.innerText = `<b>Date of Booking:</b> ${bookingData.dateOfLesson}`;
 
         const mode = document.createElement('p');
         mode.classList.add('description');
-        mode.innerHTML = `<b>Mode:</b> ${bookingData.mode}`;
+        mode.innerText = `<b>Mode:</b> ${bookingData.mode}`;
 
         const trainerDiv = document.createElement('div');
         trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
@@ -231,11 +231,31 @@ function displayFilteredBookings(status) {
         trainerLink.href = 'trainers.html';
         trainerLink.classList.add('trainer-link');
         trainerLink.textContent = bookingData.tutorName;
+        // Replace this section in displayFilteredBookings
+        const tutorStars = document.createElement("div");
+        tutorStars.style.marginLeft = "10px";
+        tutorStars.classList.add("stars"); // Add the 'stars' class if you have styling for it
 
-        const tutorStars = document.createElement('div');
-        tutorStars.textContent = bookingData.tutorStars;
-        tutorStars.style.marginLeft = '10px';
+        // Populate stars based on tutorStars value in bookingData
+        const rating = bookingData.tutorStars || 0; // Default to 0 if undefined
+        for (let i = 1; i <= 5; i++) {
+          const star = document.createElement("i");
+          star.style.color = "#FFD700"; // Gold color
 
+          if (i <= Math.floor(rating)) {
+            // Full star
+            star.className = "bi bi-star-fill";
+          } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
+            // Half star
+            star.className = "bi bi-star-half";
+          } else {
+            // Empty star
+            star.className = "bi bi-star";
+          }
+          tutorStars.appendChild(star);
+        }
+
+        // Append tutorStars to trainerProfile after trainerLink
         trainerProfile.appendChild(trainerImg);
         trainerProfile.appendChild(trainerLink);
         trainerProfile.appendChild(tutorStars);
@@ -248,7 +268,8 @@ function displayFilteredBookings(status) {
         const personIcon = document.createElement('i');
         personIcon.classList.add('bi', 'bi-person', 'user-icon');
         trainerRank.appendChild(personIcon);
-        trainerRank.innerHTML += `&nbsp;${bookingData.tutorReview}`;
+        trainerRank.innerText += ` ${bookingData.tutorReview}`;
+
 
         trainerDiv.appendChild(trainerRank);
 
