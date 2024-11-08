@@ -14,7 +14,7 @@ if (!firebase.apps.length) {
 }
 const db = firebase.firestore();
 
-const storage = firebase.storage();
+
 
 
 
@@ -258,17 +258,85 @@ function fetchTeamCards() {
     });
 }
 
+// Fetch and display testimonials from Firebase Firestore
+async function fetchTestimonials() {
+    const testimonialsContainer = document.getElementById("testimonials-container");
+    testimonialsContainer.innerHTML = ""; // Clear any existing testimonials
+
+    try {
+        const snapshot = await db.collection("Testimonials").get();
+        snapshot.forEach(async (doc) => {
+            const testimonialData = doc.data();
+            const { name, studentOf, review, stars, img } = testimonialData;
+
+            // Ensure `img` is a valid string before using it
+            if (typeof img !== "string") {
+                console.error("Invalid image filename:", img);
+                return;
+            }
+            // Create card elements
+            const testimonialCard = document.createElement("div");
+            testimonialCard.classList.add("testimonial-card", "col-lg-4", "col-md-6");
+
+            // Profile image
+            const profileImage = document.createElement("img");
+            profileImage.classList.add("testimonial-img");
+            profileImage.alt = `${name}'s picture`;
+
+            // Fetch the image from Firebase Storage
+            const imageRef = storage.ref(`testimonials/${img}`);
+            try {
+                const url = await imageRef.getDownloadURL();
+                profileImage.src = url;
+            } catch (error) {
+                console.error("Error fetching image:", error);
+                profileImage.src = "assets/img/default.jpg"; // Fallback image
+            }
+
+            // Name and tutor information
+            const nameElement = document.createElement("h3");
+            nameElement.textContent = name;
+
+            const tutorElement = document.createElement("h4");
+            tutorElement.textContent = `Student of ${studentOf}`;
+
+            // Star rating
+            const starsElement = document.createElement("div");
+            starsElement.classList.add("stars");
+            starsElement.innerHTML = "★".repeat(stars); // Dynamically add stars
+
+            // Review text
+            const reviewText = document.createElement("p");
+            reviewText.textContent = review;
+
+            // Append elements to the card
+            testimonialCard.appendChild(profileImage);
+            testimonialCard.appendChild(nameElement);
+            testimonialCard.appendChild(tutorElement);
+            testimonialCard.appendChild(starsElement);
+            testimonialCard.appendChild(reviewText);
+
+            // Add the card to the testimonials container
+            testimonialsContainer.appendChild(testimonialCard);
+        });
+    } catch (error) {
+        console.error("Error fetching testimonials:", error);
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", () => {
     
     fetchTeamCards();
     fetchCourses();
+    fetchTestimonials();
 
     // Fetch and set the logo image from Firebase Storage
     const logoImage = document.getElementById("logo-image");
 
     if (logoImage) {
         // Reference the image in Firebase Storage
-        const logoImageRef = storage.ref("images/smootutor-logo.jpg");
+        const logoImageRef = storage.ref("images/smootutor-logo.png");
 
         // Get the download URL for the image and set it as the logo image src
         logoImageRef.getDownloadURL().then((url) => {
