@@ -39,6 +39,12 @@
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
 
+  <!-- AOS CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+
+  <!-- AOS JavaScript -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
 
 </head>
 
@@ -162,9 +168,25 @@
         </div>
       </div>
     </section>
-  </main>
+
+    <section id="testimonials" class="testimonials section">
+
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up" >
+        <h2><span id="getreviewnumber" style="font-size: 25px; color: #6da2f2; font-weight: bold;"></span> Reviews</h2>
+        <p>What are they saying</p>
+      </div><!-- End Section Title -->
+    </section>
+
+
+
+
+
+</main>
 
   <script>
+    AOS.init();
+
     document.addEventListener("DOMContentLoaded", function () {
       var firebaseConfig = {
           apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
@@ -207,6 +229,9 @@
         // Populate Name
         const userNameHeading = document.getElementById("userNameHeading");
         userNameHeading.textContent = data.Name || "Unknown Tutor";
+
+        const reviewnumber = document.getElementById("getreviewnumber");
+        reviewnumber.textContent = data.Reviews || "Unknown Tutor";
 
         // Populate One-liner
         const userOneLiner = document.getElementById("userOneLiner");
@@ -324,8 +349,9 @@
         }
         ratingElement.appendChild(star);
       }
-}
+    }
 
+      
       const userId = getUserIdFromURL();
       if (userId) {
         fetchUserData(userId);
