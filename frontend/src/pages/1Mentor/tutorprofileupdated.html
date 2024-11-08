@@ -170,12 +170,20 @@
     </section>
 
     <section id="testimonials" class="testimonials section">
-
       <!-- Section Title -->
-      <div class="container section-title" data-aos="fade-up" >
+      <div class="container section-title" data-aos="fade-up">
         <h2><span id="getreviewnumber" style="font-size: 25px; color: #6da2f2; font-weight: bold;"></span> Reviews</h2>
         <p>What are they saying</p>
       </div><!-- End Section Title -->
+    
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper init-swiper">
+          <div class="swiper-wrapper" id="testimonialsContainer">
+            <!-- Testimonial items will be populated here dynamically -->
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
     </section>
 
 
@@ -351,14 +359,118 @@
       }
     }
 
-      
-      const userId = getUserIdFromURL();
+    async function fetchReviews(userId) {
+    const testimonialsContainer = document.getElementById("testimonialsContainer");
+    testimonialsContainer.innerHTML = ""; // Clear existing content
+
+    const reviewsRef = db.collection("Reviews").doc(`UserID: ${userId}`).collection("Review 1");
+    const snapshot = await reviewsRef.get();
+
+    // Collect promises for each review's image URL fetch
+    const reviewPromises = snapshot.docs.map(async (doc) => {
+        const data = doc.data();
+        const { Name, Comments, Image, Rate } = data;
+
+        // Get the image URL from Firebase Storage
+        try {
+            const imageUrl = await storage.ref(`images/reviews/${Image}`).getDownloadURL();
+
+            // Create testimonial structure
+            const swiperSlide = document.createElement("div");
+            swiperSlide.classList.add("swiper-slide");
+
+            const testimonialWrap = document.createElement("div");
+            testimonialWrap.classList.add("testimonial-wrap");
+
+            const testimonialItem = document.createElement("div");
+            testimonialItem.classList.add("testimonial-item");
+
+            const img = document.createElement("img");
+            img.src = imageUrl;
+            img.alt = Name;
+            img.classList.add("testimonial-img");
+            testimonialItem.appendChild(img);
+
+            const nameElement = document.createElement("h3");
+            nameElement.textContent = Name;
+            testimonialItem.appendChild(nameElement);
+
+            const starsContainer = document.createElement("div");
+            starsContainer.classList.add("stars");
+            for (let i = 0; i < Rate; i++) {
+                const star = document.createElement("i");
+                star.classList.add("bi", "bi-star-fill");
+                starsContainer.appendChild(star);
+            }
+            testimonialItem.appendChild(starsContainer);
+
+            const commentParagraph = document.createElement("p");
+            const quoteLeft = document.createElement("i");
+            quoteLeft.classList.add("bi", "bi-quote", "quote-icon-left");
+            commentParagraph.appendChild(quoteLeft);
+
+            const commentText = document.createElement("span");
+            commentText.textContent = Comments;
+            commentParagraph.appendChild(commentText);
+
+            const quoteRight = document.createElement("i");
+            quoteRight.classList.add("bi", "bi-quote", "quote-icon-right");
+            commentParagraph.appendChild(quoteRight);
+
+            testimonialItem.appendChild(commentParagraph);
+            testimonialWrap.appendChild(testimonialItem);
+            swiperSlide.appendChild(testimonialWrap);
+
+            // Append each review to the testimonials container
+            testimonialsContainer.appendChild(swiperSlide);
+        } catch (error) {
+            console.error("Error fetching image from storage:", error);
+        }
+    });
+
+    // Wait until all reviews are processed
+    await Promise.all(reviewPromises);
+
+    // Initialize Swiper after dynamically loading content
+    new Swiper(".init-swiper", {
+        loop: true,
+        speed: 600,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false
+        },
+        slidesPerView: "auto",
+        pagination: {
+            el: ".swiper-pagination",
+            type: "bullets",
+            clickable: true
+        },
+        breakpoints: {
+            320: {
+                slidesPerView: 1,
+                spaceBetween: 40
+            },
+            1200: {
+                slidesPerView: 2,
+                spaceBetween: 20
+            }
+        }
+    });
+}
+
+
+
+  const userId = getUserIdFromURL();
       if (userId) {
         fetchUserData(userId);
+        fetchReviews(userId);
       } else {
         console.log("UserID not found in the URL.");
       }
-    });
+});
+
+     
+
   </script>
 </body>
 </html>
