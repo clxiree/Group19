@@ -177,6 +177,7 @@
     
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper init-swiper">
+          
           <div class="swiper-wrapper" id="testimonialsContainer">
             <!-- Testimonial items will be populated here dynamically -->
           </div>
@@ -297,7 +298,7 @@
 
         // Populate Qualifications
         const qualificationsContainer = document.getElementById("qualificationsContainer");
-        qualificationsContainer.innerHTML = ''; // Clear existing content
+        qualificationsContainer.innerText = ''; // Clear existing content
         if (data.Qualifications && Array.isArray(data.Qualifications)) {
           data.Qualifications.forEach(qualification => {
             const bubble = document.createElement("span");
@@ -313,7 +314,7 @@
 
         // Populate Subjects
         const subjectsContainer = document.getElementById("subjectsContainer");
-        subjectsContainer.innerHTML = '';  // Clear any existing content
+        subjectsContainer.innerText = '';  // Clear any existing content
 
         if (data.SubjectsTaught && Array.isArray(data.SubjectsTaught)) {
           data.SubjectsTaught.forEach(subject => {
@@ -360,7 +361,7 @@
 
     async function fetchReviews(userId) {
     const testimonialsContainer = document.getElementById("testimonialsContainer");
-    testimonialsContainer.innerHTML = ""; // Clear any existing content
+    testimonialsContainer.innerText = ""; // Clear any existing content
 
     const reviewsRef = db.collection("Reviews").doc(`UserID: ${userId}`).collection("Review 1");
     const snapshot = await reviewsRef.get();
@@ -393,7 +394,7 @@
         testimonialItem.appendChild(nameElement);
 
         const titleElement = document.createElement("h4");
-        titleElement.textContent = "Position"; // Replace "Position" with the actual position if available
+        titleElement.textContent = "Tutee"; // Replace "Position" with the actual position if available
         testimonialItem.appendChild(titleElement);
 
         const starsContainer = document.createElement("div");
