@@ -1737,6 +1737,24 @@ section,
   transition: background-color 0.3s ease;
 }
 
+.btn-message {
+  background-color: #ed7464; /* Blue background */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-message:hover {
+  background-color: #ed7464; /* Darker green on hover */
+  color: white;
+  animation: bounce 0.5s ease; /* Apply bounce animation on hover */
+}
+
 /* Green "Book Now" button style */
 .btn-book-now {
   background-color: #28a745; /* Green background */
@@ -1753,21 +1771,33 @@ section,
 .btn-book-now:hover {
   background-color: #1e6630; /* Darker green on hover */
   color: white;
+  animation: bounce 0.5s ease; /* Apply bounce animation on hover */
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Start and end position */
+  }
+  50% {
+    transform: translateY(-5px); /* Move up slightly */
+  }
 }
 
 
-.btn-buy:hover{
 
-  background-color: #5f67a2; /* Blue background */
-  color: #ffffff; /* White text */
-  border: none;
-  padding: 10px 20px;
-  font-size: 18px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s ease;
+.btn-buy:hover {
+  background-color: #5f67a2; /* Blue background on hover */
+  color: #ffffff;
+  animation: bounce 0.5s ease; /* Apply bounce animation on hover */
+}
 
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Start and end position */
+  }
+  50% {
+    transform: translateY(-5px); /* Move up slightly */
+  }
 }
 
 .trainers .member {

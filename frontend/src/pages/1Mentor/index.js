@@ -258,93 +258,25 @@ function fetchTeamCards() {
     });
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-    const topTutors = [
-      'LIMITED TIME ONLY⏰',
-      'USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
-      'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
-      'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
-    ];
-
-    const marqueeContent = document.querySelector('.boxes-inner');
-    const marqueeWrapper = document.querySelector('.boxes');
+document.addEventListener("DOMContentLoaded", () => {
     
+    fetchTeamCards();
+    fetchCourses();
 
-    // Generate the boxes
-    topTutors.forEach((tutor) => {
-      const box = document.createElement('div');
-      box.classList.add('box');
-      box.textContent = tutor;
-      marqueeContent.appendChild(box);
-    });
+    // Fetch and set the logo image from Firebase Storage
+    const logoImage = document.getElementById("logo-image");
 
-    // Duplicate the content for seamless scrolling
-    marqueeContent.innerHTML += marqueeContent.innerHTML;
+    if (logoImage) {
+        // Reference the image in Firebase Storage
+        const logoImageRef = storage.ref("images/smootutor-logo.png");
 
-    let contentWidth = marqueeContent.offsetWidth / 2;
-    let direction = -1;
-
-    // Set up the GSAP animation
-    let marqueeTween = gsap.to(".boxes-inner", {
-      x: direction * contentWidth,
-      duration: 30,
-      ease: "linear",
-      repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-      }
-    });
-
-    // Pause and interactivity on hover
-    const boxes = document.querySelectorAll('.box');
-    boxes.forEach(box => {
-      box.addEventListener('mouseenter', function () {
-        marqueeTween.pause();
-        this.style.color = '#ffcc00';
-        this.style.transform = 'scale(1.1)';
-      });
-      box.addEventListener('mouseleave', function () {
-        marqueeTween.play();
-        this.style.color = '#fff';
-        this.style.transform = 'scale(1)';
-      });
-    });
-
-    // Background color and direction change on hover
-    marqueeWrapper.addEventListener('mouseenter', function () {
-      marqueeWrapper.style.backgroundColor = '#333';
-    });
-
-    marqueeWrapper.addEventListener('mouseleave', function () {
-      marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
-      direction *= -1;
-      marqueeTween.kill();
-      marqueeTween = gsap.to(".boxes-inner", {
-        x: direction * contentWidth,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-        }
-      });
-    });
-
-    // Adjust marquee on window resize
-    window.addEventListener('resize', function () {
-      contentWidth = marqueeContent.offsetWidth / 2;
-      marqueeTween.kill();
-      marqueeTween = gsap.to(".boxes-inner", {
-        x: direction * contentWidth,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-        }
-      });
-    });
-    
-  });
-
-
+        // Get the download URL for the image and set it as the logo image src
+        logoImageRef.getDownloadURL().then((url) => {
+            logoImage.src = url;
+        }).catch((error) => {
+            console.error("Error fetching logo image:", error);
+        });
+    } else {
+        console.error("Logo image element not found");
+    }
+});
