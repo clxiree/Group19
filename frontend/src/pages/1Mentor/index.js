@@ -268,7 +268,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const welcomeVideo = document.getElementById("welcome-video");
 
     if (logoImage) {
-        const logoImageRef = storage.ref("images/smootutor-logo.jpg");
+        // Reference the image in Firebase Storage
+        const logoImageRef = storage.ref("images/smootutor-logo.png");
+
+        // Get the download URL for the image and set it as the logo image src
         logoImageRef.getDownloadURL().then((url) => {
             logoImage.src = url;
         }).catch((error) => {
