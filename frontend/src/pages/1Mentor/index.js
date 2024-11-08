@@ -262,4 +262,21 @@ document.addEventListener("DOMContentLoaded", () => {
     
     fetchTeamCards();
     fetchCourses();
+
+    // Fetch and set the logo image from Firebase Storage
+    const logoImage = document.getElementById("logo-image");
+
+    if (logoImage) {
+        // Reference the image in Firebase Storage
+        const logoImageRef = storage.ref("images/smootutor-logo.jpg");
+
+        // Get the download URL for the image and set it as the logo image src
+        logoImageRef.getDownloadURL().then((url) => {
+            logoImage.src = url;
+        }).catch((error) => {
+            console.error("Error fetching logo image:", error);
+        });
+    } else {
+        console.error("Logo image element not found");
+    }
 });
