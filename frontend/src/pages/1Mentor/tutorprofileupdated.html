@@ -64,13 +64,13 @@
         <ul>
           <li><a href="index.html">Home<br></a></li>
           <li><a href="bookings.html">Bookings</a></li>
-
+          
           <li class="dropdown">
             <a href="trainers.html" id="notesDropdown" aria-expanded="false">
               Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
+              
               <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
               <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
 
@@ -82,14 +82,17 @@
               Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
+              
               <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
 
             </ul>
-         
-        </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            <li><a href="contact.html">Contact</a></li>
+          </li>
+          
+          
+  
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
 
       <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
@@ -177,7 +180,6 @@
     
       <div class="container" data-aos="fade-up" data-aos-delay="100">
         <div class="swiper init-swiper">
-          
           <div class="swiper-wrapper" id="testimonialsContainer">
             <!-- Testimonial items will be populated here dynamically -->
           </div>
@@ -298,7 +300,7 @@
 
         // Populate Qualifications
         const qualificationsContainer = document.getElementById("qualificationsContainer");
-        qualificationsContainer.innerText = ''; // Clear existing content
+        qualificationsContainer.innerHTML = ''; // Clear existing content
         if (data.Qualifications && Array.isArray(data.Qualifications)) {
           data.Qualifications.forEach(qualification => {
             const bubble = document.createElement("span");
@@ -314,7 +316,7 @@
 
         // Populate Subjects
         const subjectsContainer = document.getElementById("subjectsContainer");
-        subjectsContainer.innerText = '';  // Clear any existing content
+        subjectsContainer.innerHTML = '';  // Clear any existing content
 
         if (data.SubjectsTaught && Array.isArray(data.SubjectsTaught)) {
           data.SubjectsTaught.forEach(subject => {
@@ -361,7 +363,7 @@
 
     async function fetchReviews(userId) {
     const testimonialsContainer = document.getElementById("testimonialsContainer");
-    testimonialsContainer.innerText = ""; // Clear any existing content
+    testimonialsContainer.innerHTML = ""; // Clear any existing content
 
     const reviewsRef = db.collection("Reviews").doc(`UserID: ${userId}`).collection("Review 1");
     const snapshot = await reviewsRef.get();
@@ -394,7 +396,7 @@
         testimonialItem.appendChild(nameElement);
 
         const titleElement = document.createElement("h4");
-        titleElement.textContent = "Tutee"; // Replace "Position" with the actual position if available
+        titleElement.textContent = "Position"; // Replace "Position" with the actual position if available
         testimonialItem.appendChild(titleElement);
 
         const starsContainer = document.createElement("div");

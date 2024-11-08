@@ -24,14 +24,7 @@ let messagesListener = null;
 
 // DOM Elements
 const chatListElement = document.getElementById("chat-list");
-window.onload = () => {
-    const newChatButton = document.getElementById("new-chat-button");
-    if (newChatButton) {
-        newChatButton.addEventListener("click", () => {
-            console.log("New chat button clicked");
-        });
-    }
-};
+const newChatButton = document.getElementById("new-chat-button");
 const chatHeader = document.getElementById("chat-header");
 const chatNameElement = document.getElementById("chat-name");
 const chatAvatarElement = document.getElementById("chat-avatar");
@@ -75,12 +68,13 @@ emojiButton.addEventListener('click', () => {
 // Authenticate and fetch chats
 auth.onAuthStateChanged(user => {
     if (user) {
+        currentUser = user;
         initializeChatApp();
     } else {
+        // Redirect to login page if not authenticated
         window.location.href = 'home/login.html';
     }
 });
-
 
 // Initialize Chat Application
 function initializeChatApp() {
@@ -289,11 +283,11 @@ function renderMessage(messageData) {
     }
 
     messageDiv.innerHTML = `
-        ${messageContent}
-        <div class="timestamp">${formatTimestamp(messageData.sentAt)} 
+      ${messageContent}
+      <div class="timestamp">${formatTimestamp(messageData.sentAt)} 
         ${messageData.senderId === currentUser.uid ? (messageData.read ? '<i class="fas fa-check-double" style="color: blue;"></i>' : '<i class="fas fa-check"></i>') : ''}
-        </div>
-        ${messageData.senderId === currentUser.uid ? `<button class="delete-message" data-message-id="${messageData.messageId}"><i class="fas fa-trash-alt"></i></button>` : ''}
+      </div>
+      ${messageData.senderId === currentUser.uid ? `<button class="delete-message" data-message-id="${messageData.messageId}"><i class="fas fa-trash-alt"></i></button>` : ''}
     `;
 
     // Delete message functionality
@@ -720,8 +714,8 @@ function createOneOnOneChat(userId, userData) {
 
     const chatData = {
         chatId: chatId,
-        chatName: userData.Name || "Chat",
-        chatAvatar: userData.Image || "https://via.placeholder.com/150", // Default avatar URL
+        chatName: userData.displayName || "Chat",
+        chatAvatar: userData.profilePicture || "https://via.placeholder.com/150", // Default avatar URL
         isGroup: false,
         members: [currentUser.uid, userId],
         lastMessage: null,
@@ -1042,9 +1036,9 @@ function createOneOnOneChat(userId, userData) {
     // Upload chat avatar if userData has a profilePicture
     let chatAvatarURL = "https://via.placeholder.com/150"; // Default avatar URL
 
-    if (userData.Image) {
+    if (userData.profilePicture) {
         const chatAvatarRef = storage.ref(`images/chats/${chatId}.jpg`);
-        storage.refFromURL(userData.Image).getDownloadURL()
+        storage.refFromURL(userData.profilePicture).getDownloadURL()
             .then(url => {
                 // Download the user's profile picture and upload it as chat avatar
                 return fetch(url);
@@ -1061,7 +1055,7 @@ function createOneOnOneChat(userId, userData) {
                 // Create chat data
                 const chatData = {
                     chatId: chatId,
-                    chatName: userData.Name || "Chat",
+                    chatName: userData.displayName || "Chat",
                     chatAvatar: chatAvatarURL,
                     isGroup: false,
                     members: [currentUser.uid, userId],
@@ -1088,7 +1082,7 @@ function createOneOnOneChat(userId, userData) {
         // If no profile picture, use default
         const chatData = {
             chatId: chatId,
-            chatName: userData.Name || "Chat",
+            chatName: userData.displayName || "Chat",
             chatAvatar: chatAvatarURL,
             isGroup: false,
             members: [currentUser.uid, userId],

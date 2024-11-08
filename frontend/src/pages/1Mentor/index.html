@@ -40,55 +40,13 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <style>
-    .wrapper {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      overflow: hidden;
-      background: rgba(46, 58, 144, 0.8);
-      /* padding: 10px 0; */
-      z-index: 9999;
-      transition: background-color 0.3s;
-    }
-
-    .boxes {
-      overflow: hidden;
-      background: rgba(46, 58, 144, 0.8);
-    }
-
-    .boxes-inner {
-      display: flex;
-      gap: 110px;
-      /* Increased gap for better spacing */
-    }
-
-    .box {
-      font-size: 20px;
-      line-height: 50px;
-      color: #fff;
-      text-transform: uppercase;
-      transition: color 0.3s, transform 0.3s;
-      white-space: nowrap;
-      cursor: pointer;
-      /* Change cursor to pointer on hover */
-    }
-
-    .box:hover {
-      color: #ffcc00;
-      transform: scale(1.15);
-    }
-
-    .wrapper:hover {
-      background-color: rgba(46, 58, 144, 0.8);
-      /* Change background color on hover */
-    }
-
-
-
-
-    
-  </style>
+  <!-- =======================================================
+  * Template Name: Mentor
+  * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
   
 
 
@@ -140,7 +98,9 @@
       <div class="row gy-4">
 
         <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-
+            <video id="welcome-video" autoplay muted loop style="width: 100%; height: auto;">
+              Hi
+            </video>
         </div>
 
         <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
@@ -291,16 +251,6 @@
           <div id="teamCardsContainer" class="row">
             <!-- Tutor cards will be dynamically populated here by JavaScript -->
           </div>
-
-          <!-- Controls for navigating the carousel -->
-          <button class="carousel-control-prev" type="button" data-bs-target="#teamCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#teamCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>
         </div>
 
 
@@ -313,147 +263,15 @@
 
   <!-- Testimonials Section -->
   <section id="testimonials" class="testimonials section">
-
-    <!-- Section Title -->
     <div class="container section-title" data-aos="fade-up">
-      <h2>Testimonials</h2>
-      <p>What are our students saying</p>
-    </div><!-- End Section Title -->
-
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-      <div class="swiper init-swiper">
-        <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  },
-                  "breakpoints": {
-                    "320": {
-                      "slidesPerView": 1,
-                      "spaceBetween": 40
-                    },
-                    "1200": {
-                      "slidesPerView": 2,
-                      "spaceBetween": 20
-                    }
-                  }
-                }
-              </script>
-        <div class="swiper-wrapper">
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Student of Zenny</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Amazing tutoring provided at such a flexible arrangement. Highly recommended to everyone</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Student of Chrispy Choo</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Very patient and understanding. Always ready for our online lessons.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Student of Cloudy Ng</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Her methods of teaching are unique and allows me to understand so much easier!</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt</h3>
-                <h4>Student of Yichy Nose</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Super patient and understanding. He always makes extra time for me if I have any additional
-                    questions.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Student of Zenny</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Unique ways of teaching. Keeps every lesson interesting and engaging. It was a joy to be his
-                    student.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
-
+        <h2>Testimonials</h2>
+        <p>What are our students saying</p>
     </div>
 
-  </section><!-- /Testimonials Section -->
+    <div class="container testimonials-grid" data-aos="fade-up" data-aos-delay="100" id="testimonials-container">
+        <!-- Testimonial cards will be dynamically populated here by JavaScript -->
+    </div>
+  </section>
 
   </main>
 
@@ -465,7 +283,7 @@
       <!-- About Section with Social Links -->
       <div class="col-lg-3 md-6 sm-6 footer-about">
         <a href="index.html" class="logo d-flex align-items-center">
-          <span class="sitename"><img id="logo-image" alt="SMOOTutor Logo" style="width: 200px; height: 500px;" /></span>
+          <span class="sitename">SMOOTutor</span>
         </a>
         <div class="footer-contact pt-3">
           <p>SMU</p>
@@ -510,104 +328,12 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
   <script src="index.js" type="module"></script>
+  
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const topTutors = [
-        'LIMITED TIME ONLY⏰',
-        'USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
-        'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
-        'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
-      ];
-
-      const marqueeContent = document.querySelector('.boxes-inner');
-      const marqueeWrapper = document.querySelector('.boxes');
-      const closeButton = document.querySelector('.close-marquee');
-
-      // Generate the boxes
-      topTutors.forEach((tutor) => {
-        const box = document.createElement('div');
-        box.classList.add('box');
-        box.textContent = tutor;
-        marqueeContent.appendChild(box);
-      });
-
-      // Duplicate the content for seamless scrolling
-      marqueeContent.innerHTML += marqueeContent.innerHTML;
-
-      let contentWidth = marqueeContent.offsetWidth / 2;
-      let direction = -1;
-
-      // Set up the GSAP animation
-      let marqueeTween = gsap.to(".boxes-inner", {
-        x: direction * contentWidth,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-        }
-      });
-
-      // Pause and interactivity on hover
-      const boxes = document.querySelectorAll('.box');
-      boxes.forEach(box => {
-        box.addEventListener('mouseenter', function () {
-          marqueeTween.pause();
-          this.style.color = '#ffcc00';
-          this.style.transform = 'scale(1.1)';
-        });
-        box.addEventListener('mouseleave', function () {
-          marqueeTween.play();
-          this.style.color = '#fff';
-          this.style.transform = 'scale(1)';
-        });
-      });
-
-      // Background color and direction change on hover
-      marqueeWrapper.addEventListener('mouseenter', function () {
-        marqueeWrapper.style.backgroundColor = '#333';
-      });
-
-      marqueeWrapper.addEventListener('mouseleave', function () {
-        marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
-        direction *= -1;
-        marqueeTween.kill();
-        marqueeTween = gsap.to(".boxes-inner", {
-          x: direction * contentWidth,
-          duration: 30,
-          ease: "linear",
-          repeat: -1,
-          modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-          }
-        });
-      });
-
-      // Adjust marquee on window resize
-      window.addEventListener('resize', function () {
-        contentWidth = marqueeContent.offsetWidth / 2;
-        marqueeTween.kill();
-        marqueeTween = gsap.to(".boxes-inner", {
-          x: direction * contentWidth,
-          duration: 30,
-          ease: "linear",
-          repeat: -1,
-          modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-          }
-        });
-      });
-
-      // Close button functionality
-      closeButton.addEventListener('click', function () {
-        marqueeWrapper.style.display = 'none';
-      });
-    });
-  </script>
+  
+    
 
   <!-- Marquee Wrapper at the bottom -->
-  
   <div class="boxes">
     <div class="boxes-inner">
       <!-- Content generated by JavaScript will go here -->
