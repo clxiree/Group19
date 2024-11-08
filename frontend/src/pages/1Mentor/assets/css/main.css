@@ -547,12 +547,8 @@ header img{
   color: var(--default-color);
   background-color: var(--background-color);
   font-size: 14px;
-  padding-bottom: 50px;
+  padding-bottom: 10px;
   position: relative;
-}
-
-.footer .footer-top {
-  padding-top: 50px;
 }
 
 .footer .footer-about .logo {
@@ -587,7 +583,7 @@ header img{
   border: 1px solid color-mix(in srgb, var(--default-color), transparent 50%);
   font-size: 16px;
   color: color-mix(in srgb, var(--default-color), transparent 30%);
-  margin-right: 10px;
+  /* margin-right: 10px; */
   transition: 0.3s;
 }
 
@@ -603,10 +599,6 @@ header img{
   padding-bottom: 12px;
 }
 
-.footer .footer-links {
-  margin-bottom: 30px;
-}
-
 .footer .footer-links ul {
   list-style: none;
   padding: 0;
@@ -619,16 +611,6 @@ header img{
   line-height: 0;
 }
 
-.footer .footer-links ul li {
-  padding: 10px 0;
-  display: flex;
-  align-items: center;
-}
-
-.footer .footer-links ul li:first-child {
-  padding-top: 0;
-}
-
 .footer .footer-links ul a {
   color: color-mix(in srgb, var(--default-color), transparent 30%);
   display: inline-block;
@@ -639,47 +621,8 @@ header img{
   color: var(--accent-color);
 }
 
-.footer .footer-contact p {
-  margin-bottom: 5px;
-}
-
-.footer .footer-newsletter .newsletter-form {
-  margin-top: 30px;
-  margin-bottom: 15px;
-  padding: 6px 8px;
-  position: relative;
-  border-radius: 50px;
-  border: 1px solid color-mix(in srgb, var(--default-color), transparent 80%);
-  display: flex;
-  background-color: var(--surface-color);
-  transition: 0.3s;
-}
-
 .footer .footer-newsletter .newsletter-form:focus-within {
   border-color: var(--accent-color);
-}
-
-.footer .footer-newsletter .newsletter-form input[type=email] {
-  border: 0;
-  padding: 4px 8px;
-  width: 100%;
-  background-color: var(--surface-color);
-  color: var(--default-color);
-}
-
-.footer .footer-newsletter .newsletter-form input[type=email]:focus-visible {
-  outline: none;
-}
-
-.footer .footer-newsletter .newsletter-form input[type=submit] {
-  border: 0;
-  font-size: 16px;
-  padding: 0 20px 2px 20px;
-  margin: -7px -8px -7px 0;
-  background: var(--accent-color);
-  color: var(--contrast-color);
-  transition: 0.3s;
-  border-radius: 50px;
 }
 
 .footer .footer-newsletter .newsletter-form input[type=submit]:hover {
@@ -700,6 +643,52 @@ header img{
   margin-top: 6px;
   font-size: 13px;
 }
+
+/* footer section */
+.wrapper {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  overflow: hidden;
+  background: rgba(46, 58, 144, 0.8);
+  /* padding: 10px 0; */
+  z-index: 9999;
+  transition: background-color 0.3s;
+}
+
+.boxes {
+  overflow: hidden;
+  background: rgba(46, 58, 144, 0.8);
+}
+
+.boxes-inner {
+  display: flex;
+  gap: 110px;
+  /* Increased gap for better spacing */
+}
+
+.box {
+  font-size: 20px;
+  line-height: 50px;
+  color: #fff;
+  text-transform: uppercase;
+  transition: color 0.3s, transform 0.3s;
+  white-space: nowrap;
+  cursor: pointer;
+  /* Change cursor to pointer on hover */
+}
+
+.box:hover {
+  color: #ffcc00;
+  transform: scale(1.15);
+}
+
+.wrapper:hover {
+  background-color: rgba(46, 58, 144, 0.8);
+  
+}
+
+
 
 /*--------------------------------------------------------------
 # Preloader
@@ -854,7 +843,7 @@ section,
 # Global Section Titles
 --------------------------------------------------------------*/
 .section-title {
-  padding-bottom: 60px;
+  padding-bottom: 10px;
   position: relative;
 }
 
@@ -893,7 +882,7 @@ section,
 --------------------------------------------------------------*/
 .hero {
   width: 100%;
-  min-height: 50vh;
+  min-height: 80vh;
   position: relative;
   padding: 80px 0;
   display: flex;
@@ -1297,21 +1286,26 @@ section,
 
 .trainers-index .member .social {
   margin-top: 15px;
+  
 }
 
 .trainers-index .member .social a {
   color: color-mix(in srgb, var(--default-color), transparent 60%);
   transition: 0.3s;
+  margin-right: 15px;
 }
 
 .trainers-index .member .social a:hover {
   color: var(--accent-color);
+  /* margin-right: 15px; */
 }
 
 .trainers-index .member .social i {
   font-size: 18px;
   margin: 0 2px;
+  
 }
+
 
 
 /*--------------------------------------------------------------
@@ -1403,48 +1397,121 @@ section,
 /*--------------------------------------------------------------
 # Testimonials Section
 --------------------------------------------------------------*/
-#testimonials-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
+.testimonials .testimonial-wrap {
+  padding-left: 50px;
 }
 
-.testimonial-card {
+.testimonials .testimonials-carousel,
+.testimonials .testimonials-slider {
+  overflow: hidden;
+}
+
+.testimonials .testimonial-item {
   background-color: var(--surface-color);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: calc(33.333% - 20px); /* 3 columns */
-  max-width: 300px;
-  padding: 20px;
-  text-align: center;
+  border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+  box-sizing: content-box;
+  padding: 30px 30px 30px 60px;
+  margin: 30px 15px;
+  min-height: 200px;
+  position: relative;
 }
 
-.testimonial-card img {
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  margin-bottom: 10px;
+.testimonials .testimonial-item .testimonial-img {
+  width: 90px;
+  border-radius: 10px;
+  border: 6px solid var(--background-color);
+  position: absolute;
+  left: -45px;
 }
 
-.testimonial-card .stars {
-  color: #FFD700; /* Gold color for stars */
+.testimonials .testimonial-item h3 {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0 5px 0;
 }
 
-@media (max-width: 992px) {
-  .testimonial-card {
-      width: calc(50% - 20px); /* 2 columns on medium screens */
+.testimonials .testimonial-item h4 {
+  color: color-mix(in srgb, var(--default-color), transparent 50%);
+  font-size: 14px;
+  margin: 0;
+}
+
+.testimonials .testimonial-item .stars {
+  margin: 10px 0;
+}
+
+.testimonials .testimonial-item .stars i {
+  color: #ffc107;
+  margin: 0 1px;
+}
+
+.testimonials .testimonial-item .quote-icon-left,
+.testimonials .testimonial-item .quote-icon-right {
+  color: color-mix(in srgb, var(--accent-color), transparent 60%);
+  font-size: 26px;
+  line-height: 0;
+}
+
+.testimonials .testimonial-item .quote-icon-left {
+  display: inline-block;
+  left: -5px;
+  position: relative;
+}
+
+.testimonials .testimonial-item .quote-icon-right {
+  display: inline-block;
+  right: -5px;
+  position: relative;
+  top: 10px;
+  transform: scale(-1, -1);
+}
+
+.testimonials .testimonial-item p {
+  font-style: italic;
+  margin: 15px auto 15px auto;
+}
+
+.testimonials .swiper-wrapper {
+  height: auto;
+}
+
+.testimonials .swiper-pagination {
+  margin-top: 20px;
+  position: relative;
+}
+
+.testimonials .swiper-pagination .swiper-pagination-bullet {
+  width: 12px;
+  height: 12px;
+  background-color: var(--background-color);
+  opacity: 1;
+  border: 1px solid var(--accent-color);
+}
+
+.testimonials .swiper-pagination .swiper-pagination-bullet-active {
+  background-color: var(--accent-color);
+}
+
+@media (max-width: 767px) {
+  .testimonials .testimonial-wrap {
+    padding-left: 0;
+  }
+
+  .testimonials .testimonials-carousel,
+  .testimonials .testimonials-slider {
+    overflow: hidden;
+  }
+
+  .testimonials .testimonial-item {
+    padding: 30px;
+    margin: 15px;
+  }
+
+  .testimonials .testimonial-item .testimonial-img {
+    position: static;
+    left: auto;
   }
 }
-
-@media (max-width: 576px) {
-  .testimonial-card {
-      width: 100%; /* Full width on small screens */
-  }
-}
-
 
 /*--------------------------------------------------------------
 # Courses Course Details Section
@@ -1664,24 +1731,6 @@ section,
   transition: background-color 0.3s ease;
 }
 
-.btn-message {
-  background-color: #ed7464; /* Blue background */
-  color: #ffffff; /* White text */
-  border: none;
-  padding: 10px 20px;
-  font-size: 18px;
-  border-radius: 4px;
-  cursor: pointer;
-  text-align: center;
-  transition: background-color 0.3s ease;
-}
-
-.btn-message:hover {
-  background-color: #ed7464; /* Darker green on hover */
-  color: white;
-  animation: bounce 0.5s ease; /* Apply bounce animation on hover */
-}
-
 /* Green "Book Now" button style */
 .btn-book-now {
   background-color: #28a745; /* Green background */
@@ -1696,9 +1745,10 @@ section,
 }
 
 .btn-book-now:hover {
-  background-color: #1e6630; /* Darker green on hover */
-  color: white;
-  animation: bounce 0.5s ease; /* Apply bounce animation on hover */
+  background-color: #28a745; /* Hover color */
+  color: #ffffff;
+  animation: bounce 0.6s ease; /* Apply bounce animation */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes bounce {
@@ -1706,16 +1756,16 @@ section,
     transform: translateY(0); /* Start and end position */
   }
   50% {
-    transform: translateY(-5px); /* Move up slightly */
+    transform: translateY(-8px); /* Move up slightly */
   }
 }
-
 
 
 .btn-buy:hover {
-  background-color: #5f67a2; /* Blue background on hover */
+  background-color: #5f67a2; /* Hover color */
   color: #ffffff;
-  animation: bounce 0.5s ease; /* Apply bounce animation on hover */
+  animation: bounce 0.6s ease; /* Apply bounce animation */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes bounce {
@@ -1723,7 +1773,35 @@ section,
     transform: translateY(0); /* Start and end position */
   }
   50% {
-    transform: translateY(-5px); /* Move up slightly */
+    transform: translateY(-8px); /* Move up slightly */
+  }
+}
+
+.btn-message{
+  background-color: #fa7e78; /* Blue background */
+  color: #ffffff; /* White text */
+  border: none;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.btn-message:hover {
+  background-color: #fa7e78; /* Hover color */
+  color: #ffffff;
+  animation: bounce 0.6s ease; /* Apply bounce animation */
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0); /* Start and end position */
+  }
+  50% {
+    transform: translateY(-8px); /* Move up slightly */
   }
 }
 
@@ -1807,7 +1885,7 @@ section,
   font-size: 16px;
   font-weight: bold;
   color: #007BFF; /* Adjust the color to match your design */
-  margin-bottom: 10px;
+  /* margin-bottom: 10px; */
 
 }
 
@@ -1829,23 +1907,7 @@ section,
   border-radius: 8px;
 }
 
-/* Ensure #courses-container and #teamCardsContainer have similar layout and spacing */
-#courses-container{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-  justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 0 15px; /* Add padding for better alignment with container */
-}
 
-/* Ensure each item takes up 3 columns' worth of space on large screens */
-.courses .course-item,
-.trainers-index .member {
-  flex: 1 1 30%; /* Approximately 3 items per row */
-  box-sizing: border-box;
-}
 
 
 
@@ -2142,46 +2204,82 @@ section,
   color: blue; /* Change to your preferred hover color */
 }
 
-/* footer section */
-.wrapper {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  overflow: hidden;
-  background: rgba(46, 58, 144, 0.8);
-  /* padding: 10px 0; */
-  z-index: 9999;
-  transition: background-color 0.3s;
+.logo img {
+  max-width: 150px; /* Set this to the desired width */
+  height: auto; /* Keeps the aspect ratio */
 }
 
-.boxes {
-  overflow: hidden;
-  background: rgba(46, 58, 144, 0.8);
+.header {
+  padding: 13px 0; /* Reduces the vertical padding inside the header */
 }
 
-.boxes-inner {
-  display: flex;
-  gap: 110px;
-  /* Increased gap for better spacing */
+/* Adjust the logo size to reduce overall navbar height */
+.header .logo img {
+  max-height: 40px; /* Set a max height for the logo */
+  height: auto;
+  width: auto;
 }
 
-.box {
-  font-size: 20px;
-  line-height: 50px;
-  color: #fff;
-  text-transform: uppercase;
-  transition: color 0.3s, transform 0.3s;
-  white-space: nowrap;
-  cursor: pointer;
-  /* Change cursor to pointer on hover */
+/* Reduce the vertical padding of nav links */
+.header .navmenu ul li a {
+  padding: 8px 15px; /* Adjust as needed */
+  font-size: 0.9rem; /* Optionally, reduce font size */
 }
 
-.box:hover {
-  color: #ffcc00;
-  transform: scale(1.15);
+/* Align the "Login" button with reduced height */
+.header .btn-getstarted {
+  padding: 6px 12px; /* Reduce padding for a smaller button */
+  font-size: 0.9rem; /* Optionally reduce font size */
 }
 
-.wrapper:hover {
-  background-color: rgba(46, 58, 144, 0.8);
+
+/* Optional: adjust the font size if you want a more compact title */
+.page-title h1 {
+  font-size: 2rem; /* Adjust the title font size as needed */
+  margin-bottom: 5px; /* Reduce space under the title */
+}
+
+.page-title p {
+  margin-bottom: 60px; /* Remove extra margin */
+}
+
+/* Breadcrumbs section height adjustment */
+.page-title .heading h2 {
+    font-weight: bold;
+    font-size: 1.8rem;  /* Adjust font size for a smaller look */
+    margin-bottom: 10px; /* Optional: add some spacing below */
   
+}
+
+/* Style for the subtitle */
+.page-title .heading p.mb-0 {
+    font-size: 1rem;  /* Smaller than the heading */
+    color: #ffffff; /* Optional: set a lighter color for distinction */
+    margin-top: 5px; /* Optional: add a little space above */
+}
+.page-title .heading {
+    padding-top: 30px; /* Reduce padding from the top */
+    padding-bottom: 30px; /* Reduce padding from the bottom */
+}
+
+/* Optional: adjust the breadcrumbs section padding */
+.page-title .breadcrumbs {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Adjust the breadcrumbs section */
+nav.breadcrumbs {
+    padding: 15px 0;  /* reduce padding to make it shorter */
+    font-size: 0.9rem;  /* optional: reduce font size slightly */
+}
+
+/* Trainers section compact layout */
+.section.trainers {
+  padding-top: 50px; /* Slightly reduce top padding */
+  padding-bottom: 15px; /* Slightly reduce bottom padding */
+}
+.heading {
+  padding-top: 5px; /* Reduce top padding */
+  padding-bottom: 5px; 
 }

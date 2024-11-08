@@ -67,7 +67,7 @@
     
     let currentUser = null;
 
-    // Authenticate anonymously and fetch bookings
+
     
 
     // Declare userId in the outer scope
@@ -395,9 +395,9 @@ function fetchBookings(userId) {
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg">
-      </a>
+      <div class="logo d-flex align-items-center me-auto">
+        <img id="logo-img" alt="SmooTutor Logo">
+      </div>
 
       <nav id="navmenu" class="navmenu">
         <ul>
@@ -426,9 +426,7 @@ function fetchBookings(userId) {
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
 
             </ul>
-            <li><a href="contact.html">Contact</a></li>
-          </li>
-          
+            
           
   
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>

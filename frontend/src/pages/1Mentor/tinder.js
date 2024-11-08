@@ -62,8 +62,9 @@ function setupSwipeEvents() {
         // Check if swipe is to the right
         if (event.deltaX > 0) {
           const userId = el.getAttribute("data-user-id");
+          console.log(userId)
           setTimeout(() => {
-            window.location.href = `trainers.html?UserId=${userId}`;
+            // window.location.href = `tutorprofileupdated.html?userid=${userId}`;
           }, 300);
         } else {
           setTimeout(() => {
