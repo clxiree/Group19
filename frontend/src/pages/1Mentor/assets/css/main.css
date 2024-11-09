@@ -1640,6 +1640,19 @@ section,
 # Trainers Section
 --------------------------------------------------------------*/
 
+.member-img video {
+  width: 100%; /* Ensures the video fills the width of the container */
+  height: 100%; /* Ensures the video fills the height of the container */
+  object-fit: cover; /* Scales the video to cover the container without distortion */
+  border-radius: 50%; /* Makes the video circular */
+}
+
+/* Optional styling for smoother transitions and hover effects */
+.member-img video:hover {
+  transform: scale(1.05); /* Slight zoom effect on hover */
+  transition: transform 0.3s ease-in-out; /* Smooth zoom transition */
+}
+
 .mute-icon {
   position: absolute;
   bottom: 10px; /* Adjust bottom distance to sit right at the bottom of the video */
