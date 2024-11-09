@@ -206,7 +206,18 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
       const storage = firebase.storage();
-
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in with email:", user.email);
+            document.getElementById("my-email").innerText = user.email;
+            // fetchAllTutors()
+            // You can use user.email to retrieve user-specific data
+        } else {
+            console.log("No user is logged in.");
+            // Redirect to login page if needed
+            window.location.href = 'login.html';
+        }
+    });
       function getUserIdFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('userid');

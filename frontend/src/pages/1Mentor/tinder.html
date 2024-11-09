@@ -331,13 +331,27 @@
       const auth = firebase.auth();
     
       // Authenticate and fetch data only if Firebase is initialized
-      auth.signInAnonymously().then(() => {
-        console.log("User authenticated successfully.");
-        fetchParticulars(); // Call fetchParticulars after successful authentication
-      }).catch(error => {
-        console.error("Authentication error:", error);
-      });
+    //   auth.signInAnonymously().then(() => {
+    //     console.log("User authenticated successfully.");
+    //     fetchParticulars(); // Call fetchParticulars after successful authentication
+    //   }).catch(error => {
+    //     console.error("Authentication error:", error);
+    //   });
+    // });
+
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in with email:", user.email);
+            document.getElementById("my-email").innerText = user.email;
+            fetchParticulars();
+            // You can use user.email to retrieve user-specific data
+        } else {
+            console.log("No user is logged in.");
+            // Redirect to login page if needed
+            window.location.href = 'login.html';
+        }
     });
+  })
     
     </script>
 </head>
@@ -599,18 +613,7 @@
         }
       });
     });
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            console.log("User is logged in with email:", user.email);
-            document.getElementById("my-email").innerText = user.email;
-            fetchAllTutors()
-            // You can use user.email to retrieve user-specific data
-        } else {
-            console.log("No user is logged in.");
-            // Redirect to login page if needed
-            window.location.href = 'login.html';
-        }
-    });
+
     
   });
   </script>

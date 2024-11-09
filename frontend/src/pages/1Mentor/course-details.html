@@ -409,29 +409,40 @@
           return;
         }
 
-        auth.signInAnonymously()
-          .then(() => {
-            return db.collection('Bookings')
-              .where('bookingId', '==', searchBookingId)
-              .get();
-          })
-          .then((querySnapshot) => {
-            if (!querySnapshot.empty) {
-              const doc = querySnapshot.docs[0];
-              const bookingData = doc.data();
-              updateUIElements(bookingData);
-              const cancelButton = document.querySelector('.btn-danger');
-              if (cancelButton) {
-                cancelButton.addEventListener('click', () => handleCancelBooking(doc.id));
-              }
-            } else {
-              console.error('No booking found with ID:', searchBookingId);
-            }
-          })
-          .catch((error) => {
-            console.error('Error fetching booking details:', error);
-          });
-      }
+        firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        document.getElementById("my-email").innerText = user.email;
+
+        // Retrieve booking details if user is logged in
+        db.collection('Bookings')
+            .where('bookingId', '==', searchBookingId)
+            .get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    const doc = querySnapshot.docs[0];
+                    const bookingData = doc.data();
+                    updateUIElements(bookingData);
+
+                    // Add event listener for cancel button
+                    const cancelButton = document.querySelector('.btn-danger');
+                    if (cancelButton) {
+                        cancelButton.addEventListener('click', () => handleCancelBooking(doc.id));
+                    }
+                } else {
+                    console.error('No booking found with ID:', searchBookingId);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching booking details:', error);
+            });
+
+    } else {
+        console.log("No user is logged in.");
+        // Redirect to login page if needed
+        window.location.href = 'login.html';
+    }
+});}
 
       function handleCancelBooking(docId) {
         // Show custom modal for confirmation
