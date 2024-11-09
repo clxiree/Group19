@@ -55,21 +55,22 @@
   
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <img src="assets/img/smootutor-logo.jpg">
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="tuteehomepage.html">Home<br></a></li>
+          <li><a href="index.html">Home<br></a></li>
           <li><a href="bookings.html">Bookings</a></li>
-
+          
           <li class="dropdown">
             <a href="trainers.html" id="notesDropdown" aria-expanded="false">
               Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
+              
               <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
               <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
 
@@ -81,16 +82,21 @@
               Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
+              
               <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
 
             </ul>
-         
-        </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+            <li><a href="contact.html">Contact</a></li>
+          </li>
+          
+          
+  
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted"><div id="my-email"></div></a>
+
+      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
+
     </div>
   </header>
 
@@ -162,8 +168,19 @@
             </div>
           </div>
         </div>
+        <!-- Book Now Button -->
+        <div id="book-noww" class="text-center mb-4" data-aos="fade-up">
+          <a id="book-now-link" href="#" class="btn btn-primary btn-lg">
+            <i class="bi bi-calendar2-check-fill me-2"></i> Book Them Now
+          </a>
+        </div>
+        
+        
       </div>
     </section>
+
+
+    
 
     <section id="testimonials" class="testimonials section">
       <!-- Section Title -->
@@ -206,18 +223,7 @@
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
       const storage = firebase.storage();
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            console.log("User is logged in with email:", user.email);
-            document.getElementById("my-email").innerText = user.email;
-            // fetchAllTutors()
-            // You can use user.email to retrieve user-specific data
-        } else {
-            console.log("No user is logged in.");
-            // Redirect to login page if needed
-            window.location.href = 'login.html';
-        }
-    });
+
       function getUserIdFromURL() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('userid');
@@ -254,6 +260,11 @@
 
         const rating = data.Rating || 0;  // Use default 0 if rating is undefined
         populateStarRating(rating);
+
+        // Update the "Book Them Now" button link with the UserID
+        const bookNowLink = document.getElementById("book-now-link");
+        bookNowLink.href = `calendar.html?UserId=${data.UserID}`;
+
 
         // Populate About
         const aboutText = document.getElementById("aboutText");
@@ -368,7 +379,7 @@
 
     async function fetchReviews(userId) {
     const testimonialsContainer = document.getElementById("testimonialsContainer");
-    testimonialsContainer.innerHTML = ""; // Clear any existing content
+    testimonialsContainer.innerText = ""; // Clear any existing content
 
     const reviewsRef = db.collection("Reviews").doc(`UserID: ${userId}`).collection("Review 1");
     const snapshot = await reviewsRef.get();
@@ -401,31 +412,17 @@
         testimonialItem.appendChild(nameElement);
 
         const titleElement = document.createElement("h4");
-        titleElement.textContent = "Tutee"; // Replace "Position" with the actual position if available
+        titleElement.textContent = "Tutee"; 
         testimonialItem.appendChild(titleElement);
 
-                // Stars Container
-                const starsContainer = document.createElement("div");
-                starsContainer.classList.add("stars");
-
-                // Populate stars based on Rate
-                for (let i = 1; i <= 5; i++) {
-                  const star = document.createElement("i");
-                  star.style.color = "#FFD700"; // Gold color
-
-                  if (i <= Math.floor(Rate)) {
-                    // Full star
-                    star.className = "bi bi-star-fill";
-                  } else if (i === Math.ceil(Rate) && Rate % 1 >= 0.5) {
-                    // Half star
-                    star.className = "bi bi-star-half";
-                  } else {
-                    // Empty star
-                    star.className = "bi bi-star";
-                  }
-                  starsContainer.appendChild(star);
-                }
-                testimonialItem.appendChild(starsContainer);
+        const starsContainer = document.createElement("div");
+        starsContainer.classList.add("stars");
+        for (let i = 0; i < Rate; i++) {
+          const star = document.createElement("i");
+          star.classList.add("bi", "bi-star-fill");
+          starsContainer.appendChild(star);
+        }
+        testimonialItem.appendChild(starsContainer);
 
         const commentParagraph = document.createElement("p");
         const quoteLeft = document.createElement("i");

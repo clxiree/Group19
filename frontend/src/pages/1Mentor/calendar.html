@@ -317,7 +317,7 @@
         // Function to populate tutors dynamically and set the selected option based on UserId
         async function populateTutors() {
             const tutorSelect = document.getElementById("tutor");
-            tutorSelect.innerHTML = ""; // Clear existing options
+            tutorSelect.innerText = ""; // Clear existing options
 
             try {
                 const urlTutorId = getUrlParameter('UserId'); // Get UserId from URL
@@ -325,16 +325,22 @@
 
                 snapshot.forEach(doc => {
                     const data = doc.data();
+                    // console.log(data)
                     const option = document.createElement("option");
-                    option.value = doc.id;
+                    option.value = data.UserID;
                     option.textContent = `${data.Name} ($${data.Rate || 0}/h)`;
+                    // console.log(data.Name)
 
                     // Set the option as selected if it matches the UserId from the URL
-                    if (urlTutorId && doc.id === urlTutorId) {
+                    console.log(urlTutorId)
+                    console.log(data.UserID)
+                  // Convert to string before calling `trim` to avoid errors
+                    if (String(data.UserID).trim() === String(urlTutorId).trim()) {
                         option.selected = true;
-                    }
-
+                        console.log("HI");
+}
                     tutorSelect.appendChild(option);
+                    // console.log("end")
                 });
 
                 // If a tutor was preselected from the URL, fetch their availability
@@ -354,10 +360,14 @@
         // Fetch availability and subjects for the selected tutor
         async function fetchTutorAvailability() {
             const tutorId = document.getElementById("tutor").value;
-            const doc = await db.collection("Particulars").doc(tutorId).get();
+            const urlTutorId = getUrlParameter('UserId'); // Get UserId from URL
+            const documentId = `UserID: ${urlTutorId}`;
+            const doc = await db.collection("Particulars").doc(documentId).get();
+            // console.log(tutorId)
 
             if (doc.exists) {
                 const data = doc.data();
+                console.log(data)
                 subjectsTaught = data.SubjectsTaught || [];
                 tutorTimeslots = {};
                 const rate = data.Rate * 2 || 0; // Fetch the rate or default to 0
