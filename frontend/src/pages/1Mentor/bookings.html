@@ -290,24 +290,6 @@ function displayFilteredBookings(status) {
     bookingList.appendChild(row);
 }
 
-// let allBookings = []; // Declare globally
-// function fetchBookings() {
-//     db.collection("Bookings").get().then(snapshot => {
-//         allBookings = []; // Reset global variable for new data
-
-//         snapshot.forEach(doc => {
-//             const booking = doc.data(); // Rename to booking for clarity within the loop
-//             allBookings.push(booking);
-//             console.log(booking); // Log each booking for debugging if needed
-//         });
-
-//         // Display all bookings initially
-//         displayFilteredBookings('');
-        
-//     }).catch(error => {
-//         console.error("Error fetching bookings:", error);
-//     });
-// }})
 
 function fetchBookings(userId) {
     if (!userId) {
