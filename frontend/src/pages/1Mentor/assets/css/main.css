@@ -2221,7 +2221,7 @@ section,
   width: auto;
 }
 
-/* Reduce the vertical padding of nav links */
+
 .header .navmenu ul li a {
   padding: 8px 15px; /* Adjust as needed */
   font-size: 0.9rem; /* Optionally, reduce font size */
@@ -2243,7 +2243,6 @@ section,
 .page-title p {
   margin-bottom: 60px; /* Remove extra margin */
 }
-
 /* Breadcrumbs section height adjustment */
 .page-title .heading h2 {
     font-weight: bold;
@@ -2253,28 +2252,45 @@ section,
 }
 
 /* Style for the subtitle */
+.page-title .heading h2 {
+  font-weight: bold;
+  font-size: 1.8rem;  /* Adjust font size for a smaller look */
+  margin-bottom: 10px; /* Optional: add some spacing below */
+
+}
+
+/* Style for the subtitle */
 .page-title .heading p.mb-0 {
-    font-size: 1rem;  /* Smaller than the heading */
-    color: #ffffff; /* Optional: set a lighter color for distinction */
-    margin-top: 5px; /* Optional: add a little space above */
+  font-size: 1rem;  /* Smaller than the heading */
+  color: #ffffff; /* Optional: set a lighter color for distinction */
+  margin-top: 5px; /* Optional: add a little space above */
 }
 .page-title .heading {
-    padding-top: 30px; /* Reduce padding from the top */
-    padding-bottom: 30px; /* Reduce padding from the bottom */
+  padding-top: 30px; /* Reduce padding from the top */
+  padding-bottom: 30px; /* Reduce padding from the bottom */
 }
 
 /* Optional: adjust the breadcrumbs section padding */
 .page-title .breadcrumbs {
-    padding-top: 10px;
-    padding-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 /* Adjust the breadcrumbs section */
 nav.breadcrumbs {
-    padding: 15px 0;  /* reduce padding to make it shorter */
-    font-size: 0.9rem;  /* optional: reduce font size slightly */
+  padding: 15px 0;  /* reduce padding to make it shorter */
+  font-size: 0.9rem;  /* optional: reduce font size slightly */
 }
 
+/* Trainers section compact layout */
+.section.trainers {
+  padding-top: 50px; /* Slightly reduce top padding */
+  padding-bottom: 15px; /* Slightly reduce bottom padding */
+}
+.heading {
+  padding-top: 5px; /* Reduce top padding */
+  padding-bottom: 5px; 
+}
 /* Trainers section compact layout */
 .section.trainers {
   padding-top: 50px; /* Slightly reduce top padding */

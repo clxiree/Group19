@@ -346,7 +346,6 @@
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
       <a href="index.html" class="logo d-flex align-items-center me-auto">
         <img src="assets/img/smootutor-logo.jpg">
       </a>
@@ -379,13 +378,10 @@
 
             </ul>
          
-          </ul>
+        </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-
-
-      <a class="btn-getstarted" href="../home/login.html">LOGIN</a>
-
+      <a class="btn-getstarted"><div id="my-email"></div></a>
     </div>
   </header>
 
@@ -602,6 +598,18 @@
           x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
         }
       });
+    });
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in with email:", user.email);
+            document.getElementById("my-email").innerText = user.email;
+            fetchAllTutors()
+            // You can use user.email to retrieve user-specific data
+        } else {
+            console.log("No user is logged in.");
+            // Redirect to login page if needed
+            window.location.href = 'login.html';
+        }
     });
     
   });
