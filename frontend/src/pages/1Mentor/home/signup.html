@@ -13,7 +13,9 @@
     <link rel="stylesheet" href="styles.css">
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
     <!-- Include particles.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
 </head>
@@ -70,42 +72,62 @@
     <!-- Firebase Initialization and Signup Script -->
     <script>
         // Your web app's Firebase configuration
-        var firebaseConfig = {
+        // Initialize Firebase
+        const firebaseConfig = {
             apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
             authDomain: "smootutor-ed94a.firebaseapp.com",
-            databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "smootutor-ed94a",
             storageBucket: "smootutor-ed94a.appspot.com",
             messagingSenderId: "289686522861",
             appId: "1:289686522861:web:5811385ced42106d78b5e4",
             measurementId: "G-46QED8ZFKJ"
         };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+firebase.initializeApp(firebaseConfig);
+// const auth = firebase.auth();
+const db = firebase.firestore();
 
-        // Signup Functionality
-        document.getElementById('signup-form').addEventListener('submit', function (e) {
-            e.preventDefault();
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
+// Signup Functionality
+document.getElementById('signup-form').addEventListener('submit', function (e) {
+    e.preventDefault();
+    const email = document.getElementById('signup-email').value;
+    const password = document.getElementById('signup-password').value;
+    const confirmPassword = document.getElementById('confirm-password').value;
 
-            if (password !== confirmPassword) {
-                alert('Passwords do not match.');
-                return;
-            }
+    if (password !== confirmPassword) {
+        alert('Passwords do not match.');
+        return;
+    }
 
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
+    auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+            const user = userCredential.user;
+            
+            // Get the current user count to determine the next userId
+            db.collection("Particulars").get().then(snapshot => {
+                const userId = snapshot.size + 1; // 8 if 7 users already exist
+
+                // Add the new user to the "Particulars" collection
+                db.collection("Particulars").add({
+                    UserID: userId,
+                    email: email
+                }).then(() => {
+                    console.log("User particulars added successfully.");
                     // Redirect or display success message
                     window.location.href = '../tuteehomepage.html';
-                })
-                .catch(error => {
-                    console.error('Signup Error:', error.message);
-                    alert('Error creating account: ' + error.message);
+                }).catch(error => {
+                    console.error("Error adding user particulars:", error.message);
+                    alert("Error creating account: " + error.message);
                 });
+            }).catch(error => {
+                console.error("Error retrieving user count:", error.message);
+                alert("Error retrieving user count: " + error.message);
+            });
+        })
+        .catch(error => {
+            console.error('Signup Error:', error.message);
+            alert('Error creating account: ' + error.message);
         });
+});
     </script>
 
     <!-- Additional JS -->
