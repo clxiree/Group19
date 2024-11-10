@@ -211,10 +211,11 @@
                   <!-- Subscription Summary -->
                   <div class="checkout-section p-4 rounded" style="background-color: #f9f9f9; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
                     <h5 class="section-title mb-3" style="font-weight: 600; color: #333;">Payment Summary</h5>
-                    <p id="selected-tutor" style="color: #555;"></p>
-                    <p id="selected-subject" style="color: #777;"></p>
-                    <p id="selected-mode" style="color: #777;"></p>
-                    <p id="booking-date" style="color: #777;"></p>
+                    <p id="course-code" style="color: #555;"></p>
+                    <p id="course-name" style="color: #777;"></p>
+                    <p id="professor" style="color: #777;"></p>
+                    <p id="owner" style="color: #777;"></p>
+                    <p id="price" style="color: #777;"></p>
                     <p style="color: #777;">Payment by QR code</p>
                     <hr>
                     <p>Subtotal: <span class="float-end" style="color: #333;">SGD 0.00</span></p>
@@ -386,32 +387,32 @@
       return urlParams.get(name);
   }
 
-  async function displayBookingDetails() {
-    const date = getUrlParameter("date");
-    const time = getUrlParameter("time");
-    const tutorId = getUrlParameter("tutor"); // This will be the UserID
-    const subject = getUrlParameter("subject");
-    const mode = getUrlParameter("mode");
-    const rate = parseFloat(getUrlParameter("rate")) || 0;
+//   async function displayBookingDetails() {
+//     const date = getUrlParameter("date");
+//     const time = getUrlParameter("time");
+//     const tutorId = getUrlParameter("tutor"); // This will be the UserID
+//     const subject = getUrlParameter("subject");
+//     const mode = getUrlParameter("mode");
+//     const rate = parseFloat(getUrlParameter("rate")) || 0;
 
-    // Fetch the tutor's name from Firebase Firestore based on the UserID (tutorId)
-    try {
-        const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
-        const tutorName = tutorDoc.exists ? tutorDoc.data().Name : "Unknown Tutor";
+//     // Fetch the tutor's name from Firebase Firestore based on the UserID (tutorId)
+//     try {
+//         const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
+//         const tutorName = tutorDoc.exists ? tutorDoc.data().Name : "Unknown Tutor";
 
-        // Insert data into the relevant HTML elements
-        document.getElementById("booking-date").textContent = `Scheduled for: ${date} at ${time}`;
-        document.getElementById("selected-tutor").textContent = `Tutor: ${tutorName}`;
-        document.getElementById("selected-subject").textContent = `Subject: ${subject}`;
-        document.getElementById("selected-mode").textContent = `Mode: ${mode}`;
+//         // Insert data into the relevant HTML elements
+//         document.getElementById("booking-date").textContent = `Scheduled for: ${date} at ${time}`;
+//         document.getElementById("selected-tutor").textContent = `Tutor: ${tutorName}`;
+//         document.getElementById("selected-subject").textContent = `Subject: ${subject}`;
+//         document.getElementById("selected-mode").textContent = `Mode: ${mode}`;
 
-        // Display rate and calculate subtotal and total
-        document.querySelector(".float-end").textContent = `SGD ${rate.toFixed(2)}`;
-        document.querySelector(".total-amount").textContent = `SGD ${rate.toFixed(2)}`;
-    } catch (error) {
-        console.error("Error fetching tutor's name:", error);
-    }
-}
+//         // Display rate and calculate subtotal and total
+//         document.querySelector(".float-end").textContent = `SGD ${rate.toFixed(2)}`;
+//         document.querySelector(".total-amount").textContent = `SGD ${rate.toFixed(2)}`;
+//     } catch (error) {
+//         console.error("Error fetching tutor's name:", error);
+//     }
+// }
 
     // Start the countdown when the page loads
     window.onload = startCountdown;
@@ -491,86 +492,79 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
 
     // Call the function to display the QR code when the page loads
     document.addEventListener("DOMContentLoaded", () => {
-      // Call existing functions to display booking details and QR code
-      displayBookingDetails();
-      displayQRCode();
+    displayQRCode(); // Keep this if you want to display the QR code, otherwise, remove it.
 
-      // Add event listener for the "Continue" button
-      const continueBtn = document.getElementById("continue-btn");
-      continueBtn.addEventListener("click", async () => {
-          // Retrieve booking details from the URL or page content
-          const subject = getUrlParameter("subject"); // Course code passed as subject in URL
-          const tutorId = getUrlParameter("tutor"); // This should match the tutor's UserID
-          const courseCode = document.getElementById("selected-subject").textContent.split(": ")[1];
-          const mode = document.getElementById("selected-mode").textContent.split(": ")[1];
-          const date = getUrlParameter("date");
-          const time = getUrlParameter("time");
-          const totalText = document.querySelector(".total-amount").textContent;
-          const total = parseFloat(totalText.replace("SGD ", "").trim());
+    // Retrieve notesId from the URL
+    const notesId = getUrlParameter("notesId");
 
-          // Retrieve and parse totalAmount from the displayed HTML element
-          let totalAmount = 0;
-          const totalAmountElement = document.querySelector(".total-amount");
-          if (totalAmountElement) {
-              totalAmount = parseFloat(totalAmountElement.textContent.replace("SGD ", "").trim());
-          } else {
-              console.error("Total amount element not found.");
-              return;
-          }
+    if (notesId) {
+        // Fetch and display note details from the database
+        displayNoteDetails(notesId);
+    } else {
+        console.error("No notesId found in URL.");
+        return;
+    }
 
-          try {
-              // Retrieve course details from the Courses collection using the course code (subject)
-              const courseQuery = await db.collection("Courses").where("Code", "==", subject).get();
-              let courseData;
-              if (!courseQuery.empty) {
-                  courseData = courseQuery.docs[0].data();
-              } else {
-                  throw new Error("Course not found in database.");
-              }
-              
-              // Fetch additional data from the Particulars collection
-              const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
-              if (!tutorDoc.exists) {
-                  throw new Error("Tutor details not found.");
-              }
-              const tutorData = tutorDoc.data();
+    // Event listener for the "Continue" button
+    const continueBtn = document.getElementById("continue-btn");
+    continueBtn.addEventListener("click", async () => {
+        // Retrieve and parse totalAmount from the displayed HTML element
+        let totalAmount = 0;
+        const totalAmountElement = document.querySelector(".total-amount");
+        if (totalAmountElement) {
+            totalAmount = parseFloat(totalAmountElement.textContent.replace("SGD ", "").trim());
+        } else {
+            console.error("Total amount element not found.");
+            return;
+        }
 
-              // Populate the data for the Bookings collection
-            const bookingData = {
-                bookingId: Math.floor(Math.random() * 100000), // Example booking ID, you may want a different logic
-                tutorId: tutorData.UserID,
-                tutorName: tutorData.Name,
-                tutorImg: tutorData.Image,
-                tutorReview: tutorData.Reviews || 0,
-                tutorStars: tutorData.tutorStars || "⭐️⭐️⭐️",
-                courseCode: courseData.Code,
-                courseName: courseData.Name,
-                dateOfLesson: date,
-                time: time,
-                mode: mode,
-                fee: tutorData.Rate || total,
-                totalAmount: totalAmount,
-                status: "Pending", // Start as "Pending"
-                tuteeId: 4 // Replace with the actual Tutee ID
-            };
+        try {
+            // After successful payment, update the isSaved status to true in the BrowseNotes collection
+            await db.collection("BrowseNotes").doc(notesId).update({
+                isSaved: true
+            });
 
-              // Add the booking to Firebase Bookings collection
-            await db.collection("Bookings").add(bookingData);
             // Show success toast
-            showToast("Payment is Successful!", "success");
-          } catch (error) {
-              console.error("Error saving payment information:", error);
-              // Show error toast
-              showToast("Failed to save payment information. Please try again.", "error");
-          }
-      });
+            showToast("Payment is successful! Note saved.", "success");
+        } catch (error) {
+            console.error("Error saving payment information:", error);
+            // Show error toast
+            showToast("Failed to save note information. Please try again.", "error");
+        }
+    });
 
-      // Function to retrieve URL parameters
-      function getUrlParameter(name) {
-          const urlParams = new URLSearchParams(window.location.search);
-          return urlParams.get(name);
-      }
-  });
+    // Function to display note details above the payment summary
+    async function displayNoteDetails(notesId) {
+        try {
+            const noteDoc = await db.collection("BrowseNotes").doc(notesId).get();
+            if (noteDoc.exists) {
+                const noteData = noteDoc.data();
+
+                // Populate course information
+                document.getElementById("course-code").textContent = `Course Code: ${noteData.courseId || "N/A"}`;
+                document.getElementById("course-name").textContent = `Course Name: ${noteData.courseName || "N/A"}`;
+                document.getElementById("professor").textContent = `Professor: ${noteData.courseProf || "N/A"}`;
+                document.getElementById("owner").textContent = `Owner: ${noteData.owner || "N/A"}`;
+
+                // Populate price in the payment summary
+                const price = noteData.price || 0;
+                document.querySelector(".float-end").textContent = `SGD ${price.toFixed(2)}`;
+                document.querySelector(".total-amount").textContent = `SGD ${price.toFixed(2)}`;
+            } else {
+                console.error("No document found with the provided notesId.");
+            }
+        } catch (error) {
+            console.error("Error fetching note details:", error);
+        }
+    }
+
+    // Function to retrieve URL parameters
+    function getUrlParameter(name) {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get(name);
+    }
+});
+
   </script>
   
 

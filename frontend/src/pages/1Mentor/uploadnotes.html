@@ -15,6 +15,47 @@
  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+ <style>
+  .custom-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: #fff;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: none; /* Initially hidden */
+    z-index: 1000;
+    max-width: 300px;
+    text-align: center;
+  }
+
+  .custom-toast.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .custom-toast.success {
+    background-color: #28a745; /* Green for success */
+  }
+
+  .custom-toast.error {
+    background-color: #dc3545; /* Red for error */
+  }
+
+  .close-toast-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 16px;
+    margin-left: 10px;
+    cursor: pointer;
+  }
+  </style>
 </head>
 
 <body class="course-details-page">
@@ -154,6 +195,11 @@
     </div>
   </div>
 </footer>
+<!-- Toast Notification -->
+<div id="customToast" class="custom-toast">
+  <span id="customToastMessage"></span>
+  <button class="close-toast-btn" onclick="closeToast()">×</button>
+</div>
 
 
   <!-- Firebase Configuration and JS Code -->
@@ -187,6 +233,34 @@
         window.location.href = 'login.html';
     }
     });
+
+    // Function to show the toast with a message and type
+    function showToast(message, type) {
+    const toast = document.getElementById("customToast");
+    const toastMessage = document.getElementById("customToastMessage");
+
+    if (!toast || !toastMessage) {
+        console.error("Toast elements not found.");
+        return;
+    }
+
+    // Set the message and apply success/error style
+    toastMessage.textContent = message;
+    toast.classList.add("show");
+    toast.classList.toggle("success", type === "success");
+    toast.classList.toggle("error", type === "error");
+
+    // Hide the toast after 5 seconds
+    setTimeout(() => {
+        toast.classList.remove("show", "success", "error");
+    }, 5000);
+}
+
+    // Close button function for the toast
+    function closeToast() {
+        const toast = document.getElementById("customToast");
+        toast.classList.remove("show", "success", "error");
+    }
 
     // Upload Notes Functionality
     document.getElementById("uploadForm").addEventListener("submit", function (e) {
@@ -230,23 +304,23 @@
             courseLink: notesURL,
             previewImage: previewURL
           }).then(() => {
-            alert("Note and preview image uploaded successfully!");
+            showToast("Note and preview image uploaded successfully!", "success");
             document.getElementById("uploadForm").reset();
             window.location.href = "notes.html";
           }).catch((error) => {
             console.error("Error adding note to Firestore:", error);
-            alert("Failed to upload note.");
+            showToast("Failed to upload note.", "error");
           });
         });
       }).catch((error) => {
         console.error("Error uploading preview image:", error);
-        alert("Failed to upload preview image.");
+        showToast("Failed to upload preview image.", "error");
       });
 
     });
   }).catch((error) => {
     console.error("Error uploading file:", error);
-    alert("Failed to upload file.");
+    showToast("Failed to upload file.", "error");
   });
 });
   </script>
