@@ -608,8 +608,9 @@
             chatItem.classList.add("chat-item", "d-flex", "align-items-center");
             chatItem.setAttribute('data-chat-id', doc.id); // Optional: for easier selection
 
-            // Determine the recipient's email and fetch their avatar if not already stored
+            // Determine the recipient's email
             const recipientEmail = chatData.members.find(email => email !== currentUser.email);
+
             let recipientName = "Chat"; // Initialize with a default name
             let recipientAvatar = "assets/img/default-avatar.png"; // Initialize with a fallback avatar
 
@@ -630,22 +631,37 @@
         <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
       </div>
     `;
-              });
 
-            // chatItem.innerHTML = `
-            //   <img src="${recipientAvatar}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
-            //   <div class="chat-item-info">
-            //     <div class="chat-item-name">${recipientName}</div>
-            //     <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
-            //   </div>
-            // `;
-            chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
-            chatList.appendChild(chatItem);
+                // Add the click event listener after setting the inner HTML
+                chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
+
+                // Append the chat item to the chat list
+                chatList.appendChild(chatItem);
+              })
+              .catch(error => {
+                console.error("Error fetching recipient's details:", error);
+
+                // In case of an error, use the fallback avatar and default name
+                chatItem.innerHTML = `
+      <img src="assets/img/default-avatar.png" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
+      <div class="chat-item-info">
+        <div class="chat-item-name">Chat</div>
+        <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
+      </div>
+    `;
+
+                // Add the click event listener after setting the inner HTML
+                chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
+
+                // Append the chat item to the chat list
+                chatList.appendChild(chatItem);
+              });
           });
         }, error => {
           console.error("Error fetching chats:", error);
         });
     }
+
 
     // Utility function to truncate text
     function truncateText(text, maxLength) {
@@ -658,8 +674,8 @@
       document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
       chatItem.classList.add('active');
 
-      document.getElementById("chat-name").textContent = chatData.chat_name || "Chat";
-      document.getElementById("chat-avatar").src = chatData.chat_avatar || "assets/img/default-avatar.png";
+      let recipientName = "Chat";
+      let recipientAvatar = "assets/img/default-avatar.png";
 
       // Show chat header and message input
       document.getElementById("no-chat-selected").style.display = "none";
