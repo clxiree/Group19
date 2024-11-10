@@ -13,7 +13,7 @@
 
   <!-- Fonts and Icons -->
   <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
     rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
@@ -30,19 +30,12 @@
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
 
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ModifiersPlugin.min.js"></script>
-
   <!-- Custom CSS -->
   <style>
     /* Improved CSS to make the page more modern and appealing */
+    #no-chat-selected {
+      display: none;
+    }
 
     body.chats-page {
       background-color: #f8f9fa;
@@ -134,6 +127,9 @@
       font-size: 0.9em;
       color: #6c757d;
       margin-top: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     /* Chat Window */
@@ -462,7 +458,9 @@
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted"><div id="my-email"></div></a>
+      <a class="btn-getstarted">
+        <div id="my-email"></div>
+      </a>
     </div>
   </header>
 
@@ -491,8 +489,8 @@
       <div class="chat-list" id="chat-list">
         <!-- Chat List Header -->
         <div class="chat-list-header">
-          <h4><a href="chats.html">All Chats</a></h4>
-          <button id="new-chat-button"><i class="fas fa-plus"></i></button>
+          <h4>All Chats</h4>
+          <button id="new-chat-button" title="Start a new chat"><i class="fas fa-plus"></i></button>
         </div>
         <!-- Chat items will be added here dynamically -->
       </div>
@@ -503,16 +501,16 @@
         <!-- Chat Header -->
         <div class="chat-header" id="chat-header" style="display: none;">
           <div class="chat-header-info">
-            <img src="assets/img/trainers/zenny.jpg" alt="Chat Avatar" id="chat-avatar">
+            <img src="assets/img/default-avatar.png" alt="Chat Avatar" id="chat-avatar">
             <div>
               <span id="chat-name">Select a chat</span><br>
               <span class="chat-status" id="chat-status">Online</span>
             </div>
           </div>
           <div class="chat-header-actions">
-            <button id="delete-chat-button"><i class="fas fa-trash-alt"></i></button>
-            <button><i class="fas fa-search"></i></button>
-            <button><i class="fas fa-ellipsis-v"></i></button>
+            <button id="delete-chat-button" title="Delete Chat"><i class="fas fa-trash-alt"></i></button>
+            <button title="Search in Chat"><i class="fas fa-search"></i></button>
+            <button title="More Options"><i class="fas fa-ellipsis-v"></i></button>
           </div>
         </div>
 
@@ -523,17 +521,20 @@
         </div>
 
         <!-- Message List -->
-        <div style="width: 100%; height: 100%; background-image: url('assets/img/background_chat.jpg'); 
-        background-size: cover; background-position: center;" class="message-list" id="message-list">
+        <div class="message-list" id="message-list"
+          style="background-image: url('assets/img/background_chat.jpg'); background-size: cover; background-position: center;">
           <!-- Messages will appear here -->
         </div>
 
         <!-- Message Input -->
         <div class="message-input-container" id="message-input-container" style="display: none;">
-          <button id="emoji-button" class="message-input-actions"><i class="far fa-smile"></i></button>
+          <button id="emoji-button" class="message-input-actions" title="Add Emoji"><i
+              class="far fa-smile"></i></button>
           <input type="text" id="message-text" class="message-input" placeholder="Type a message..." disabled />
-          <button id="attach-file-button" class="message-input-actions"><i class="fas fa-paperclip"></i></button>
-          <button id="send-message-button" class="message-input-actions"><i class="fas fa-paper-plane"></i></button>
+          <button id="attach-file-button" class="message-input-actions" title="Attach File"><i
+              class="fas fa-paperclip"></i></button>
+          <button id="send-message-button" class="message-input-actions" title="Send Message"><i
+              class="fas fa-paper-plane"></i></button>
           <input type="file" id="attach-file-input" style="display: none;">
         </div>
         <div class="typing-indicator" id="typing-indicator" style="display: none;">Typing...</div>
@@ -605,12 +606,18 @@
             const chatData = doc.data();
             const chatItem = document.createElement("div");
             chatItem.classList.add("chat-item", "d-flex", "align-items-center");
-            var picture_link = "assets/img/team/" + chatData.chat_name + ".jpg";
+            chatItem.setAttribute('data-chat-id', doc.id); // Optional: for easier selection
+
+            // Determine the recipient's email and fetch their avatar if not already stored
+            const recipientEmail = chatData.members.find(email => email !== currentUser.email);
+            const recipientName = chatData.chat_name || "Chat";
+            const recipientAvatar = chatData.chat_avatar || "assets/img/default-avatar.png"; // Fallback avatar
+
             chatItem.innerHTML = `
-              <img src="${chatData.chat_avatar || picture_link}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
+              <img src="${recipientAvatar}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
               <div class="chat-item-info">
-                <div class="chat-item-name">${chatData.chat_name || "Chat"}</div>
-                <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? chatData.last_message.content : 'Attachment') : ''}</div>
+                <div class="chat-item-name">${recipientName}</div>
+                <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
               </div>
             `;
             chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
@@ -621,6 +628,11 @@
         });
     }
 
+    // Utility function to truncate text
+    function truncateText(text, maxLength) {
+      return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+    }
+
     // Select chat
     function selectChat(chatId, chatItem, chatData) {
       selectedChatId = chatId;
@@ -628,8 +640,7 @@
       chatItem.classList.add('active');
 
       document.getElementById("chat-name").textContent = chatData.chat_name || "Chat";
-      var picture_link = "assets/img/team/" + chatData.chat_name + ".jpg";
-      document.getElementById("chat-avatar").src = chatData.chat_avatar || picture_link;
+      document.getElementById("chat-avatar").src = chatData.chat_avatar || "assets/img/default-avatar.png";
 
       // Show chat header and message input
       document.getElementById("no-chat-selected").style.display = "none";
@@ -677,9 +688,9 @@
       let messageContent = '';
 
       if (messageData.type === "text") {
-        messageContent = messageData.content;
+        messageContent = escapeHTML(messageData.content);
       } else if (messageData.type === "file") {
-        messageContent = `<a href="${messageData.content}" target="_blank">File Attachment</a>`;
+        messageContent = `<a href="${messageData.content}" target="_blank">📎 File Attachment</a>`;
       }
 
       messageDiv.innerHTML = `
@@ -689,6 +700,13 @@
       `;
 
       messageList.appendChild(messageDiv);
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHTML(str) {
+      const div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
     }
 
     // Format timestamp
@@ -725,7 +743,10 @@
 
           // Update last message in chat document
           db.collection("Chats").doc(selectedChatId).update({
-            last_message: messageData
+            last_message: {
+              ...messageData,
+              sent_at: firebase.firestore.FieldValue.serverTimestamp()
+            }
           });
         }).catch(error => {
           console.error("Error sending message:", error);
@@ -774,7 +795,10 @@
       messageRef.set(messageData).then(() => {
         // Update last message in chat document
         db.collection("Chats").doc(selectedChatId).update({
-          last_message: messageData
+          last_message: {
+            ...messageData,
+            sent_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
         });
       }).catch(error => {
         console.error("Error sending file message:", error);
@@ -803,7 +827,7 @@
             selectedChatId = null;
             document.getElementById("chat-header").style.display = "none";
             document.getElementById("message-input-container").style.display = "none";
-            document.getElementById("no-chat-selected").style.display = "flex";
+            document.getElementById("no-chat-selected").style.display = "none";
             document.getElementById("message-list").innerHTML = "";
           })
           .catch(error => {
@@ -829,7 +853,7 @@
         }
 
         // Check if recipient exists in Users collection
-        db.collection("Users").where("email", "==", recipientEmail).get()
+        db.collection("Particulars").where("email", "==", recipientEmail).get()
           .then(querySnapshot => {
             if (!querySnapshot.empty) {
               const recipientDoc = querySnapshot.docs[0];
@@ -848,7 +872,10 @@
                       chatExists = true;
                       alert("Chat with this user already exists.");
                       // Optionally, select the existing chat
-                      selectChat(chatDoc.id, document.querySelector(`[data-chat-id="${chatDoc.id}"]`), chatData);
+                      const existingChatItem = document.querySelector(`[data-chat-id="${chatDoc.id}"]`);
+                      if (existingChatItem) {
+                        selectChat(chatDoc.id, existingChatItem, chatData);
+                      }
                     }
                   });
 
@@ -858,7 +885,7 @@
                     const chatData = {
                       chat_id: chatRef.id,
                       chat_name: recipientName,
-                      chat_avatar: recipientAvatar,
+                      chat_avatar: recipientAvatar, // Set to recipient's avatar
                       members: [currentUser.email, recipientEmail], // Include both emails in the members array
                       last_message: null
                     };
@@ -975,112 +1002,6 @@
     </div>
 
   </footer>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      const topTutors = [
-        'TOP_IS111: ChrispyChoo',
-        'TOP_CS440: ZennyPotato',
-        'TOP_MGMT293: YichiFinger',
-        'TOP_COR1702: HandsumPlast',
-        'TOP_FNC502: CloudyChong',
-        'TOP_ACCT101: LingLingLongLong'
-      ];
-
-      const marqueeContent = document.querySelector('.boxes-inner');
-
-      // Generate the boxes
-      topTutors.forEach((tutor, index) => {
-        const box = document.createElement('div');
-        box.classList.add('box');
-        box.textContent = tutor;
-        marqueeContent.appendChild(box);
-      });
-
-      // Duplicate the content for seamless scrolling
-      marqueeContent.innerHTML += marqueeContent.innerHTML;
-
-      let contentWidth = marqueeContent.offsetWidth / 2; // Adjusted after duplication
-      const marqueeWrapper = document.querySelector('.boxes');
-
-      // Set initial direction
-      let direction = -1; // -1 for left to right, 1 for right to left
-
-      // Set up the GSAP animation
-      let marqueeTween = gsap.to(".boxes-inner", {
-        x: direction * contentWidth,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-        }
-      });
-
-      // Pause movement and enhance interactivity on hover over boxes
-      const boxes = document.querySelectorAll('.box');
-      boxes.forEach(box => {
-        box.addEventListener('mouseenter', function () {
-          marqueeTween.pause();
-          this.style.color = '#ffcc00'; // Change color on hover
-          this.style.transform = 'scale(1.1)'; // Scale up on hover
-        });
-        box.addEventListener('mouseleave', function () {
-          marqueeTween.play();
-          this.style.color = '#fff'; // Reset color
-          this.style.transform = 'scale(1)'; // Reset scale
-        });
-      });
-
-      // Change background color on marquee hover
-      marqueeWrapper.addEventListener('mouseenter', function () {
-        marqueeWrapper.style.backgroundColor = '#333';
-      });
-
-      marqueeWrapper.addEventListener('mouseleave', function () {
-        marqueeWrapper.style.backgroundColor = '#2e3a90';
-
-        // Reverse direction when mouse leaves the marquee wrapper
-        direction *= -1; // Reverse direction
-        marqueeTween.kill(); // Kill the existing animation
-
-        // Restart animation with new direction
-        marqueeTween = gsap.to(".boxes-inner", {
-          x: direction * contentWidth,
-          duration: 30,
-          ease: "linear",
-          repeat: -1,
-          modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-          }
-        });
-      });
-
-      // Adjust marquee on window resize
-      window.addEventListener('resize', function () {
-        contentWidth = marqueeContent.offsetWidth / 2;
-        marqueeTween.kill();
-        marqueeTween = gsap.to(".boxes-inner", {
-          x: direction * contentWidth,
-          duration: 30,
-          ease: "linear",
-          repeat: -1,
-          modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-          }
-        });
-      });
-    });
-  </script>
-
-  <!-- Marquee Wrapper at the bottom -->
-  <div class="wrapper" id="marquee-wrapper">
-    <div class="boxes" id="marquee-content">
-      <div class="boxes-inner">
-        <!-- Boxes will be generated by JavaScript -->
-      </div>
-    </div>
-  </div>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
