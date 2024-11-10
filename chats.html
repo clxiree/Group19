@@ -8,7 +8,7 @@
   <meta name="viewport">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/faviconn.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts and Icons -->
@@ -680,7 +680,7 @@
           document.getElementById("message-text").focus({ preventScroll: true });
           document.querySelector('.chat-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
           const chatContainer = document.querySelector('.chat-container');
-          const yOffset = -200; // Adjust this value as needed
+          const yOffset = -2000; // Adjust this value as needed
           const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: yPosition, behavior: 'smooth' });
         })
