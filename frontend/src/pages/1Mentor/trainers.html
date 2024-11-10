@@ -54,6 +54,37 @@
 
 </head>
 <style>
+.background-vid {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+.heading {
+  position: relative;
+  z-index: 1;
+  background-color: transparent;
+}
+.heading-text {
+  text-align:center;
+}
+.heading h2 {
+  font-size:160px;
+  color: #fff;
+  font-weight: 600;
+}
+
+
 
 </style>
 
@@ -69,16 +100,13 @@
         <ul>
           <li><a href="tuteehomepage.html">Home<br></a></li>
           <li><a href="bookings.html">Bookings</a></li>
-
           <li class="dropdown">
             <a href="trainers.html" id="notesDropdown" aria-expanded="false">
               Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
               <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
               <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-
             </ul>
           </li>
           <li><a href="chats.html">Chats</a></li>
@@ -87,33 +115,38 @@
               Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
               <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-
             </ul>
-         
+          </li>
         </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
       <a class="btn-getstarted"><div id="my-email"></div></a>
     </div>
   </header>
-
+  
   <main class="main">
-    <div class="page-title" data-aos="fade">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h2>Our Tutors</h2>
-              <p class="mb-0">Find the SMOO tutor that you like BEST</p>
+    <div class="hero" data-aos="fade">
+      <!-- Video Background Container -->
+      <div id="background-vid" class="background-vid">
+        <video autoplay loop muted playsinline class="background-video"></video>
+        
+        <!-- Overlay to display text above the video -->
+        <div class="heading-overlay">
+          <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+              <div class="col-lg-8">
+                <h2 class="heading-text">Our Tutors</h2>
+                <p class="heading-subtext mb-0">Find the SMOO tutor that you like BEST</p>
+              </div>
             </div>
           </div>
         </div>
       </div>
-      
     </div>
+    
+
 
     <section id="trainers" class="section trainers">
       <div class="container">
@@ -404,6 +437,53 @@
     } else {
         console.error("Logo image element not found");
     }
+    // Define the fetchVideo function first
+    function fetchVideo() {
+  const videoContainer = document.getElementById("background-vid");
+  videoContainer.innerHTML = ''; // Clear any previous content
+
+  // Create and configure the video element
+  const video = document.createElement("video");
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.className = "background-video";
+
+  // Firebase storage reference
+  const storage = firebase.storage();
+  const videoStorageRef = storage.ref('videos/trainers.mp4');
+
+  // Get video URL and log it for debugging
+  videoStorageRef.getDownloadURL()
+    .then(url => {
+      console.log("Loaded video URL for trainers.mp4:", url);
+      video.src = url;
+      videoContainer.appendChild(video);  // Append video to container
+    })
+    .catch(error => {
+      console.error("Error loading trainers.mp4:", error);
+      // Optional: Fallback to a local or default video
+      video.src = "assets/videos/default.mov"; // Local fallback
+      videoContainer.appendChild(video);
+    });
+}
+
+// Call fetchVideo when the DOM is loaded
+document.addEventListener("DOMContentLoaded", fetchVideo);
+
+
+
+
+// Attach the event listener after defining fetchVideo
+document.addEventListener("DOMContentLoaded", fetchVideo);
+
+    
+
+  
+
+
+
 
       
     </script>
