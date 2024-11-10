@@ -162,6 +162,7 @@
 }
 
 
+
     /* Ensures layout responsiveness */
     @media (max-width: 768px) {
       .note-grid {
@@ -211,7 +212,7 @@
         </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted"><div id="my-email"></div></a>
+      <a class="btn-getstarted" id="auth-button"><div id="my-email"></div></a>
     </div>
   </header>
 
@@ -315,18 +316,50 @@
       const db = firebase.firestore();
       const storage = firebase.storage();
       const auth = firebase.auth();
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            console.log("User is logged in with email:", user.email);
-            document.getElementById("my-email").innerText = user.email;
-            // fetchAllTutors()
-            // You can use user.email to retrieve user-specific data
-        } else {
-            console.log("No user is logged in.");
-            // Redirect to login page if needed
-            window.location.href = 'login.html';
-        }
-    });
+    //   firebase.auth().onAuthStateChanged((user) => {
+    //     if (user) {
+    //         console.log("User is logged in with email:", user.email);
+    //         document.getElementById("my-email").innerText = user.email;
+    //         // fetchAllTutors()
+    //         // You can use user.email to retrieve user-specific data
+    //     } else {
+    //         console.log("No user is logged in.");
+    //         // Redirect to login page if needed
+    //         window.location.href = 'login.html';
+    //     }
+    // });
+    firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        
+        const emailDiv = document.getElementById("my-email");
+        const authButton = document.getElementById("auth-button");
+
+        // Display the user's email by default
+        emailDiv.innerText = user.email;
+
+        // Add a click event to handle changing to logout and then logging out
+        authButton.addEventListener("click", function() {
+            if (emailDiv.innerText === user.email) {
+                // Change to "LOGOUT" and apply red style
+                emailDiv.innerText = "LOGOUT";
+                emailDiv.classList.add("logout-button");
+            } else if (emailDiv.innerText === "LOGOUT") {
+                // Sign out and redirect
+                firebase.auth().signOut().then(() => {
+                    console.log("User has logged out.");
+                    window.location.href = 'index.html'; // Redirect to home page
+                }).catch((error) => {
+                    console.error("Error logging out:", error);
+                });
+            }
+        });
+    } else {
+        console.log("No user is logged in.");
+        window.location.href = 'login.html';
+    }
+});
+
 
 
       
