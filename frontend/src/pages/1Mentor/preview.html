@@ -115,6 +115,11 @@
     const urlParams = new URLSearchParams(window.location.search);
     const notesId = urlParams.get('notesId');
 
+    if (notesId) {
+        const buyNotesButton = document.getElementById("buy-notes-btn");
+        buyNotesButton.href = `payment_notes.html?notesId=${notesId}`;
+    }
+
     function fetchNoteDetails() {
       if (!notesId) {
         console.error("No notesId found in URL");
@@ -256,7 +261,7 @@
               <span id="coursePrice">$11</span>
             </div>
             <div class="text-center mt-3"> <!-- Center-align the button and add some spacing -->
-              <a href="payment_notes.html" class="btn btn-primary">Buy Notes</a>
+              <a id="buy-notes-btn" class="btn btn-primary" href="#">Buy Notes</a>
             </div>            
             </div>
           </div>
