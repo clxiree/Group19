@@ -140,6 +140,26 @@
 .upload-button-wrapper .btn i {
   margin-right: 5px; /* Adds space between the icon and the text */
 }
+.note-container {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8); /* 20% transparency */
+    z-index: 1;
+}
+
+.course-content {
+    position: relative;
+    z-index: 2; /* Ensure the content appears above the overlay */
+}
 
 
     /* Ensures layout responsiveness */
@@ -312,53 +332,117 @@
       
 
 
-      // Function to render notes in the specified container (Browse or Saved)
-      function renderNotes(containerId, notes) {
+// Function to render notes in the specified container (Browse or Saved)
+function renderNotes(containerId, notes) {
     const container = document.getElementById(containerId);
-    container.innerHTML = ""; // Clear the container before adding new items
+    container.textContent = ""; // Clear the container before adding new items
 
     notes.forEach(note => {
-        // Check if the note is saved to display the appropriate link
-        const previewLink = note.isSaved
-            ? `<a href="${note.courseLink}" target="_blank"><i class="fas fa-unlock"></i> View Notes</a>`
-            : `<a href="preview.html?notesId=${note.id}" target="_blank"><i class="fas fa-lock"></i> Preview Notes</a>`;
+        const noteContainer = document.createElement("div");
+        noteContainer.className = "note-container";
+        noteContainer.style.backgroundImage = `url('${note.img}')`;
 
-        const noteItem = `
-            <div class="note-container">
-                <div class="course-content">
-                    <span class="course-code">${note.courseId}</span>
-                    <h3>${note.courseName}</h3>
-                    <p><strong>Professor:</strong> ${note.courseProf}</p>
-                    <p><strong>Owner:</strong> ${note.owner}</p>
-                    <p><strong>Price:</strong> \$${note.price}</p>
-                    ${previewLink}
-                </div>
-            </div>`;
-        container.insertAdjacentHTML("beforeend", noteItem);
+        // Create an overlay div for transparency
+        const overlay = document.createElement("div");
+        overlay.className = "overlay";
+
+        const courseContent = document.createElement("div");
+        courseContent.className = "course-content";
+
+        const courseCode = document.createElement("span");
+        courseCode.className = "course-code";
+        courseCode.textContent = note.courseId;
+
+        const courseName = document.createElement("h3");
+        courseName.textContent = note.courseName;
+
+        const courseProf = document.createElement("p");
+        courseProf.innerHTML = `<strong>Professor:</strong> ${note.courseProf}`;
+
+        const owner = document.createElement("p");
+        owner.innerHTML = `<strong>Owner:</strong> ${note.owner}`;
+
+        const price = document.createElement("p");
+        price.innerHTML = `<strong>Price:</strong> $${note.price}`;
+
+        const previewLink = document.createElement("a");
+        previewLink.href = note.isSaved ? note.courseLink : `preview.html?notesId=${note.id}`;
+        previewLink.target = "_blank";
+        previewLink.innerHTML = `<i class="fas ${note.isSaved ? 'fa-unlock' : 'fa-lock'}"></i> ${note.isSaved ? "View Notes" : "Preview Notes"}`;
+
+        // Append all elements to courseContent
+        courseContent.appendChild(courseCode);
+        courseContent.appendChild(courseName);
+        courseContent.appendChild(courseProf);
+        courseContent.appendChild(owner);
+        courseContent.appendChild(price);
+        courseContent.appendChild(previewLink);
+
+        // Append overlay and courseContent to noteContainer
+        noteContainer.appendChild(overlay);
+        noteContainer.appendChild(courseContent);
+
+        // Append noteContainer to the main container
+        container.appendChild(noteContainer);
     });
 }
 
 
-  function fetchNotes() {
-    db.collection("BrowseNotes").get().then((snapshot) => {
-      const browseNotes = [];
-      const savedNotes = [];
+function fetchNotes() {
+    // Reference to the default image in Firebase Storage
+    const defaultImageRef = storage.ref('images/notes/default_image.jpg');
+    
+    defaultImageRef.getDownloadURL().then(defaultImageUrl => {
+        db.collection("BrowseNotes").get().then((snapshot) => {
+            const browseNotes = [];
+            const savedNotes = [];
 
-      snapshot.forEach((doc) => {
-        const note = { id: doc.id, ...doc.data() };
-        if (note.isSaved) {
-          savedNotes.push(note);
-        } else {
-          browseNotes.push(note);
-        }
-      });
+            snapshot.forEach((doc) => {
+                const note = { id: doc.id, ...doc.data() };
 
-      renderNotes("browse-notes-container", browseNotes); // For Browse Notes
-      renderNotes("saved-notes-container", savedNotes);    // For Saved Notes
-    }).catch((error) => {
-      console.error("Error fetching notes:", error);
+                if (note.img) {
+                    // Prefix with the correct path in Firebase Storage
+                    const imgPath = `images/notes/${note.img}`;
+                    storage.ref(imgPath).getDownloadURL().then((url) => {
+                        note.img = url; // Set the full URL for the image
+                        if (note.isSaved) {
+                            savedNotes.push(note);
+                        } else {
+                            browseNotes.push(note);
+                        }
+                        
+                        // Render notes after the image URL is set
+                        renderNotes("browse-notes-container", browseNotes);
+                        renderNotes("saved-notes-container", savedNotes);
+                    }).catch((error) => {
+                        console.error("Error fetching image URL:", error);
+                        note.img = defaultImageUrl; // Use default image as fallback
+                        if (note.isSaved) {
+                            savedNotes.push(note);
+                        } else {
+                            browseNotes.push(note);
+                        }
+                        renderNotes("browse-notes-container", browseNotes);
+                        renderNotes("saved-notes-container", savedNotes);
+                    });
+                } else {
+                    note.img = defaultImageUrl; // Set default image for new notes without specific image
+                    if (note.isSaved) {
+                        savedNotes.push(note);
+                    } else {
+                        browseNotes.push(note);
+                    }
+                    renderNotes("browse-notes-container", browseNotes);
+                    renderNotes("saved-notes-container", savedNotes);
+                }
+            });
+        }).catch((error) => {
+            console.error("Error fetching notes:", error);
+        });
+    }).catch(error => {
+        console.error("Error fetching default image URL:", error);
     });
-  }
+}
 
   // Toggle between Browse and Saved notes sections
   function showSection(section) {
