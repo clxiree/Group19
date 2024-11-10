@@ -428,12 +428,12 @@
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg">
+        <img src="assets/img/smootutor-logo.jpg" alt="SMOOTutor Logo">
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="tuteehomepage.html">Home<br></a></li>
+          <li><a href="tuteehomepage.html">Home</a></li>
           <li><a href="bookings.html">Bookings</a></li>
 
           <li class="dropdown">
@@ -458,9 +458,9 @@
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
 
             </ul>
-         
+
         </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
       <a class="btn-getstarted"><div id="my-email"></div></a>
     </div>
@@ -476,14 +476,14 @@
           <div class="row d-flex justify-content-center text-center">
             <div class="col-lg-8">
               <h1>Chats</h1>
-              <p class="mb-0">Chat with our helpful tutors to learn and growth stronger. Our tutors are 
+              <p class="mb-0">Chat with our helpful tutors to learn and grow stronger. Our tutors are
                 always ready to help you with your studies. Feel free to ask any questions you have.
               </p>
             </div>
           </div>
         </div>
       </div>
-      
+
     </div><!-- End Page Title -->
 
     <div class="chat-container">
@@ -501,7 +501,7 @@
       <div class="chat-window">
 
         <!-- Chat Header -->
-        <div class="chat-header" id="chat-header">
+        <div class="chat-header" id="chat-header" style="display: none;">
           <div class="chat-header-info">
             <img src="assets/img/trainers/zenny.jpg" alt="Chat Avatar" id="chat-avatar">
             <div>
@@ -518,7 +518,8 @@
 
         <!-- Placeholder for picture when no chat is selected -->
         <div class="no-chat-selected" id="no-chat-selected">
-          <!-- Content here -->
+          <img src="assets/img/no-chat-selected.png" alt="No Chat Selected">
+          <p>Select a chat to start messaging.</p>
         </div>
 
         <!-- Message List -->
@@ -528,7 +529,7 @@
         </div>
 
         <!-- Message Input -->
-        <div class="message-input-container" id="message-input-container">
+        <div class="message-input-container" id="message-input-container" style="display: none;">
           <button id="emoji-button" class="message-input-actions"><i class="far fa-smile"></i></button>
           <input type="text" id="message-text" class="message-input" placeholder="Type a message..." disabled />
           <button id="attach-file-button" class="message-input-actions"><i class="fas fa-paperclip"></i></button>
@@ -578,21 +579,23 @@
 
     // Authenticate and fetch chats
     firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            console.log("User is logged in with email:", user.email);
-            document.getElementById("my-email").innerText = user.email;
-            fetchChats()
-            // You can use user.email to retrieve user-specific data
-        } else {
-            console.log("No user is logged in.");
-            // Redirect to login page if needed
-            window.location.href = 'login.html';
-        }
+      if (user) {
+        currentUser = user; // Set the current user
+        console.log("User is logged in with email:", user.email, "and UID:", user.uid);
+        document.getElementById("my-email").innerText = user.email;
+        fetchChats();
+        // You can use user.email to retrieve user-specific data
+      } else {
+        console.log("No user is logged in.");
+        // Redirect to login page if needed
+        window.location.href = 'login.html';
+      }
     });
 
-    // Fetch and display chats
+    // Fetch and display chats belonging to the current user based on email
     function fetchChats() {
       db.collection("Chats")
+        .where("members", "array-contains", currentUser.email) // Filter chats where currentUser's email is a member
         .onSnapshot(snapshot => {
           const chatList = document.getElementById("chat-list");
           // Remove existing chat items except header
@@ -642,7 +645,6 @@
       const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
       window.scrollTo({ top: yPosition, behavior: 'smooth' });
-
     }
 
     // Load messages for the selected chat
@@ -670,7 +672,7 @@
       const messageList = document.getElementById("message-list");
       const messageDiv = document.createElement("div");
       messageDiv.classList.add("message");
-      messageDiv.classList.add(messageData.sender_id === currentUser.uid ? "sent" : "received");
+      messageDiv.classList.add(messageData.sender_email === currentUser.email ? "sent" : "received");
 
       let messageContent = '';
 
@@ -682,7 +684,7 @@
 
       messageDiv.innerHTML = `
         ${messageContent}
-        <div class="timestamp">${formatTimestamp(messageData.sent_at)} ${messageData.sender_id === currentUser.uid ? (messageData.read_by_receiver ? '<i class="fas fa-check-double"></i>' : '<i class="fas fa-check"></i>') : ''}</div>
+        <div class="timestamp">${formatTimestamp(messageData.sent_at)} ${messageData.sender_email === currentUser.email ? (messageData.read_by_receiver ? '<i class="fas fa-check-double"></i>' : '<i class="fas fa-check"></i>') : ''}</div>
         <button class="delete-message" onclick="deleteMessage('${selectedChatId}', '${messageId}')"><i class="fas fa-trash-alt"></i></button>
       `;
 
@@ -712,7 +714,7 @@
         const messageData = {
           message_id: messageRef.id,
           content: messageText,
-          sender_id: currentUser.uid,
+          sender_email: currentUser.email, // Use email instead of UID
           sent_at: firebase.firestore.FieldValue.serverTimestamp(),
           type: "text",
           read_by_receiver: false
@@ -739,7 +741,7 @@
     document.getElementById("attach-file-input").addEventListener("change", event => {
       const file = event.target.files[0];
       if (file && selectedChatId) {
-        const fileRef = storage.ref().child("chat_files/" + file.name);
+        const fileRef = storage.ref().child("chat_files/" + selectedChatId + "/" + file.name); // Organize files by chat
         const uploadTask = fileRef.put(file);
 
         uploadTask.on('state_changed',
@@ -763,7 +765,7 @@
       const messageData = {
         message_id: messageRef.id,
         content: fileURL,
-        sender_id: currentUser.uid,
+        sender_email: currentUser.email, // Use email instead of UID
         sent_at: firebase.firestore.FieldValue.serverTimestamp(),
         type: "file",
         read_by_receiver: false
@@ -812,20 +814,73 @@
 
     // New Chat
     document.getElementById("new-chat-button").addEventListener("click", () => {
-      const chatName = prompt("Enter the name of the recipient:");
-      if (chatName) {
-        const chatRef = db.collection("Chats").doc();
-        const chatData = {
-          chat_id: chatRef.id,
-          chat_name: chatName,
-          chat_avatar: "assets/img/default-avatar.png",
-          last_message: null
-        };
-        chatRef.set(chatData).then(() => {
-          console.log("New chat created.");
-        }).catch(error => {
-          console.error("Error creating new chat:", error);
-        });
+      const recipientEmail = prompt("Enter the email of the recipient:");
+      if (recipientEmail) {
+        if (recipientEmail === currentUser.email) {
+          alert("You cannot start a chat with yourself.");
+          return;
+        }
+
+        // Optional: Validate email format
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(recipientEmail)) {
+          alert("Please enter a valid email address.");
+          return;
+        }
+
+        // Check if recipient exists in Users collection
+        db.collection("Users").where("email", "==", recipientEmail).get()
+          .then(querySnapshot => {
+            if (!querySnapshot.empty) {
+              const recipientDoc = querySnapshot.docs[0];
+              const recipientName = recipientDoc.data().name || "Chat";
+              const recipientAvatar = recipientDoc.data().avatar || "assets/img/default-avatar.png";
+
+              // Check if chat already exists between the two users
+              db.collection("Chats")
+                .where("members", "array-contains", currentUser.email)
+                .get()
+                .then(existingChats => {
+                  let chatExists = false;
+                  existingChats.forEach(chatDoc => {
+                    const chatData = chatDoc.data();
+                    if (chatData.members.includes(recipientEmail)) {
+                      chatExists = true;
+                      alert("Chat with this user already exists.");
+                      // Optionally, select the existing chat
+                      selectChat(chatDoc.id, document.querySelector(`[data-chat-id="${chatDoc.id}"]`), chatData);
+                    }
+                  });
+
+                  if (!chatExists) {
+                    // Create a new chat
+                    const chatRef = db.collection("Chats").doc();
+                    const chatData = {
+                      chat_id: chatRef.id,
+                      chat_name: recipientName,
+                      chat_avatar: recipientAvatar,
+                      members: [currentUser.email, recipientEmail], // Include both emails in the members array
+                      last_message: null
+                    };
+                    chatRef.set(chatData).then(() => {
+                      console.log("New chat created.");
+                      // Optionally, select the newly created chat
+                      selectChat(chatRef.id, null, chatData); // Adjust if necessary
+                    }).catch(error => {
+                      console.error("Error creating new chat:", error);
+                    });
+                  }
+                })
+                .catch(error => {
+                  console.error("Error checking existing chats:", error);
+                });
+            } else {
+              alert("No user found with that email.");
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching user:", error);
+          });
       }
     });
 
@@ -886,7 +941,7 @@
           <ul>
             <li><a href="#">Find a Tutor</a></li>
             <li><a href="#">Find Quality Notes</a></li>
-      
+
           </ul>
         </div>
 
@@ -894,7 +949,10 @@
           <h4>Our Newsletter</h4>
           <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
           <form action="forms/newsletter.php" method="post" class="php-email-form">
-            <div class="newsletter-form"><input type="email" name="email"><input type="submit" value="Subscribe"></div>
+            <div class="newsletter-form">
+              <input type="email" name="email" required placeholder="Enter your email">
+              <input type="submit" value="Subscribe">
+            </div>
             <div class="loading">Loading</div>
             <div class="error-message"></div>
             <div class="sent-message">Your subscription request has been sent. Thank you!</div>
