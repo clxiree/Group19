@@ -177,7 +177,6 @@
         .calendar-container .selected {
             background-color: #ff4d4f;
             color: white;
-            box-shadow: 0 3px 6px rgba(255, 77, 79, 0.4);
             font-weight: 600;
         }
 
@@ -272,6 +271,11 @@
         .calendar-day.unavailable {
             color: #ccc;
         }
+
+        .calendar-day.available.selected {
+        background-color: #5f8acf;  /* Dark blue for selected date */
+        color: white;
+    }
     </style>
     <script>
         // Firebase configuration
@@ -449,59 +453,69 @@
                 calendarContainer.appendChild(dayDiv);
             }
         }
-        // Display timeslots for the selected date
-        function selectDate(date) {
-            const timeslotContainer = document.getElementById("timeslots-container");
-            document.getElementById("selected-date").textContent = new Date(date).toDateString();
-            const confirmBtn = document.getElementById("confirm-btn");
+// Assuming the calendar container is holding the calendar dates.
+function selectDate(date) {
+    const timeslotContainer = document.getElementById("timeslots-container");
+    document.getElementById("selected-date").textContent = new Date(date).toDateString();
+    const confirmBtn = document.getElementById("confirm-btn");
 
-            // Clear previous timeslots
-            timeslotContainer.innerHTML = "";
-            selectedTimeslot = null; // Reset selected timeslot
-            selectedTimeslotElement = null; // Reset selected timeslot element
-            confirmBtn.classList.remove("enabled");
-            confirmBtn.disabled = true; // Disable confirm button initially
+    // Clear previous timeslot selection and calendar date selection
+    timeslotContainer.innerHTML = "";
+    selectedTimeslot = null; // Reset selected timeslot
+    confirmBtn.classList.remove("enabled");
+    confirmBtn.disabled = true; // Disable confirm button initially
 
-            // Fetch and display timeslots for the selected date
-            const timeslots = tutorTimeslots[date] || [];
+    // Fetch and display timeslots for the selected date
+    const timeslots = tutorTimeslots[date] || [];
 
-            if (timeslots.length) {
-                timeslots.forEach(time => {
-                    const slotElem = document.createElement("div");
-                    slotElem.textContent = time;
-                    slotElem.classList.add("timeslot");
+    // Remove 'selected' class from any previously selected date
+    document.querySelectorAll('.calendar-container .selected').forEach(element => {
+        element.classList.remove('selected');
+    });
 
-                    // Add click event to select or deselect timeslot
-                    slotElem.onclick = () => {
-                        if (selectedTimeslotElement === slotElem) {
-                            // Deselect if the same timeslot is clicked
-                            slotElem.classList.remove("selected");
-                            selectedTimeslotElement = null;
-                            selectedTimeslot = null;
-                            confirmBtn.classList.remove("enabled");
-                            confirmBtn.disabled = true;
-                        } else {
-                            // Deselect previously selected timeslot if any
-                            if (selectedTimeslotElement) {
-                                selectedTimeslotElement.classList.remove("selected");
-                            }
-                            // Select the new timeslot
-                            slotElem.classList.add("selected");
-                            selectedTimeslotElement = slotElem;
-                            selectedTimeslot = { date, time };
+    // Find and add 'selected' class to the clicked date
+    const selectedDateElement = Array.from(document.querySelectorAll('.calendar-container div')).find(div => {
+        return div.textContent == new Date(date).getDate();
+    });
+    if (selectedDateElement) {
+        selectedDateElement.classList.add('selected');
+    }
 
-                            // Enable the confirm button
-                            confirmBtn.classList.add("enabled");
-                            confirmBtn.disabled = false;
-                        }
-                    };
+    // Populate available timeslots for the selected date
+    if (timeslots.length) {
+        timeslots.forEach(time => {
+            const slotElem = document.createElement("div");
+            slotElem.textContent = time;
+            slotElem.classList.add("timeslot");
 
-                    timeslotContainer.appendChild(slotElem);
-                });
-            } else {
-                timeslotContainer.textContent = "No available timeslots";
-            }
-        }
+            // Add event listener to select a timeslot
+            slotElem.onclick = () => {
+
+
+                // Toggle selection of timeslot
+                if (selectedTimeslotElement === slotElem) {
+                    slotElem.classList.remove("selected");
+                    selectedTimeslotElement = null;
+                    selectedTimeslot = null;
+                    confirmBtn.classList.remove("enabled");
+                    confirmBtn.disabled = true;
+                } else {
+                    if (selectedTimeslotElement) {
+                        selectedTimeslotElement.classList.remove("selected");
+                    }
+                    slotElem.classList.add("selected");
+                    selectedTimeslotElement = slotElem;
+                    selectedTimeslot = { date, time };
+                    confirmBtn.classList.add("enabled");
+                    confirmBtn.disabled = false;
+                }
+            };
+            timeslotContainer.appendChild(slotElem);
+        });
+    } else {
+        timeslotContainer.textContent = "No available timeslots";
+    }
+}
 
         // Confirm booking and redirect to payment page if a timeslot is selected
         // Confirm booking and redirect to payment page with selected parameters
