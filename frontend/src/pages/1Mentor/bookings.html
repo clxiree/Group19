@@ -148,11 +148,6 @@ function displayFilteredBookings(status) {
             courseItem.appendChild(overlay);
         }
 
-        // const img = document.createElement('img');
-        // img.src = `../1Mentor/assets/img/bookings/${bookingData.courseCode}.jpg`;
-        // img.classList.add('card-img-top');
-        // img.alt = 'Course Image';
-
         const img = document.createElement('img');
         img.classList.add('card-img-top');
         img.alt = 'Course Image';
@@ -190,28 +185,35 @@ function displayFilteredBookings(status) {
         titleLink.textContent = bookingData.courseName;
         titleContainer.appendChild(titleLink);
 
+        // Status
         const status = document.createElement('p');
         status.classList.add('description');
-        status.innerText = `<b>Status:</b> ${bookingData.status}`;
+        const statusLabel = document.createElement('b');
+        statusLabel.textContent = 'Status: ';
+        status.appendChild(statusLabel);
+        status.appendChild(document.createTextNode(bookingData.status));
 
+        // Date of Lesson
         const dateOfLesson = document.createElement('p');
         dateOfLesson.classList.add('description');
-        dateOfLesson.innerText = `<b>Date of Booking:</b> ${bookingData.dateOfLesson}`;
+        const dateLabel = document.createElement('b');
+        dateLabel.textContent = 'Date of Booking: ';
+        dateOfLesson.appendChild(dateLabel);
+        dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
 
+        // Mode
         const mode = document.createElement('p');
         mode.classList.add('description');
-        mode.innerText = `<b>Mode:</b> ${bookingData.mode}`;
+        const modeLabel = document.createElement('b');
+        modeLabel.textContent = 'Mode: ';
+        mode.appendChild(modeLabel);
+        mode.appendChild(document.createTextNode(bookingData.mode));
 
         const trainerDiv = document.createElement('div');
         trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
 
         const trainerProfile = document.createElement('div');
         trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
-
-        // const trainerImg = document.createElement('img');
-        // trainerImg.src = `../1Mentor/assets/img/team/${bookingData.tutorImg}`;
-        // trainerImg.classList.add('img-fluid');
-        // trainerImg.alt = '';
 
         const trainerImg = document.createElement('img');
         trainerImg.classList.add('img-fluid');
@@ -228,34 +230,29 @@ function displayFilteredBookings(status) {
             });
 
         const trainerLink = document.createElement('a');
-        trainerLink.href = 'trainers.html';
+        trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
         trainerLink.classList.add('trainer-link');
         trainerLink.textContent = bookingData.tutorName;
-        // Replace this section in displayFilteredBookings
+
         const tutorStars = document.createElement("div");
         tutorStars.style.marginLeft = "10px";
-        tutorStars.classList.add("stars"); // Add the 'stars' class if you have styling for it
+        tutorStars.classList.add("stars");
 
-        // Populate stars based on tutorStars value in bookingData
-        const rating = bookingData.tutorStars || 0; // Default to 0 if undefined
+        const rating = bookingData.tutorStars || 0;
         for (let i = 1; i <= 5; i++) {
-          const star = document.createElement("i");
-          star.style.color = "#FFD700"; // Gold color
+            const star = document.createElement("i");
+            star.style.color = "#FFD700";
 
-          if (i <= Math.floor(rating)) {
-            // Full star
-            star.className = "bi bi-star-fill";
-          } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
-            // Half star
-            star.className = "bi bi-star-half";
-          } else {
-            // Empty star
-            star.className = "bi bi-star";
-          }
-          tutorStars.appendChild(star);
+            if (i <= Math.floor(rating)) {
+                star.className = "bi bi-star-fill";
+            } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
+                star.className = "bi bi-star-half";
+            } else {
+                star.className = "bi bi-star";
+            }
+            tutorStars.appendChild(star);
         }
 
-        // Append tutorStars to trainerProfile after trainerLink
         trainerProfile.appendChild(trainerImg);
         trainerProfile.appendChild(trainerLink);
         trainerProfile.appendChild(tutorStars);
@@ -269,7 +266,6 @@ function displayFilteredBookings(status) {
         personIcon.classList.add('bi', 'bi-person', 'user-icon');
         trainerRank.appendChild(personIcon);
         trainerRank.innerText += ` ${bookingData.tutorReview}`;
-
 
         trainerDiv.appendChild(trainerRank);
 
