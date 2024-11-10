@@ -95,6 +95,7 @@ firebase.auth().onAuthStateChanged((user) => {
                         // Now you can call other functions that depend on userId
                         fetchBookings(userId); // Example of using userId in another function
                     });
+                    
                 } else {
                     console.log("No matching user found with this email.");
                 }
