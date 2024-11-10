@@ -389,43 +389,58 @@ function renderNotes(containerId, notes) {
 
 
 function fetchNotes() {
-    db.collection("BrowseNotes").get().then((snapshot) => {
-        const browseNotes = [];
-        const savedNotes = [];
+    // Reference to the default image in Firebase Storage
+    const defaultImageRef = storage.ref('images/notes/default_image.jpg');
+    
+    defaultImageRef.getDownloadURL().then(defaultImageUrl => {
+        db.collection("BrowseNotes").get().then((snapshot) => {
+            const browseNotes = [];
+            const savedNotes = [];
 
-        snapshot.forEach((doc) => {
-            const note = { id: doc.id, ...doc.data() };
+            snapshot.forEach((doc) => {
+                const note = { id: doc.id, ...doc.data() };
 
-            if (note.img) {
-                // Prefix with the correct path in Firebase Storage
-                const imgPath = `images/notes/${note.img}`;
-                console.log(imgPath);
-                storage.ref(imgPath).getDownloadURL().then((url) => {
-                    note.img = url; // Set the full URL for the image
+                if (note.img) {
+                    // Prefix with the correct path in Firebase Storage
+                    const imgPath = `images/notes/${note.img}`;
+                    storage.ref(imgPath).getDownloadURL().then((url) => {
+                        note.img = url; // Set the full URL for the image
+                        if (note.isSaved) {
+                            savedNotes.push(note);
+                        } else {
+                            browseNotes.push(note);
+                        }
+                        
+                        // Render notes after the image URL is set
+                        renderNotes("browse-notes-container", browseNotes);
+                        renderNotes("saved-notes-container", savedNotes);
+                    }).catch((error) => {
+                        console.error("Error fetching image URL:", error);
+                        note.img = defaultImageUrl; // Use default image as fallback
+                        if (note.isSaved) {
+                            savedNotes.push(note);
+                        } else {
+                            browseNotes.push(note);
+                        }
+                        renderNotes("browse-notes-container", browseNotes);
+                        renderNotes("saved-notes-container", savedNotes);
+                    });
+                } else {
+                    note.img = defaultImageUrl; // Set default image for new notes without specific image
                     if (note.isSaved) {
                         savedNotes.push(note);
                     } else {
                         browseNotes.push(note);
                     }
-                    
-                    // Render notes after the image URL is set
                     renderNotes("browse-notes-container", browseNotes);
                     renderNotes("saved-notes-container", savedNotes);
-                }).catch((error) => {
-                    console.error("Error fetching image URL:", error);
-                });
-            } else {
-                if (note.isSaved) {
-                    savedNotes.push(note);
-                } else {
-                    browseNotes.push(note);
                 }
-                renderNotes("browse-notes-container", browseNotes);
-                renderNotes("saved-notes-container", savedNotes);
-            }
+            });
+        }).catch((error) => {
+            console.error("Error fetching notes:", error);
         });
-    }).catch((error) => {
-        console.error("Error fetching notes:", error);
+    }).catch(error => {
+        console.error("Error fetching default image URL:", error);
     });
 }
 
