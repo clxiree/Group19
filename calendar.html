@@ -438,8 +438,8 @@ async function fetchTutorAvailability() {
             const confirmBtn = document.getElementById("confirm-btn");
 
             // Clear previous calendar and timeslots
-            calendarContainer.innerHTML = "";
-            timeslotContainer.innerHTML = "No available timeslots";
+            calendarContainer.innerText = "";
+            timeslotContainer.innerText = "";
             selectedTimeslot = null;
             selectedTimeslotElement = null;
             confirmBtn.classList.remove("enabled");
@@ -673,7 +673,7 @@ function selectDate(date) {
                 </div>
 
                 <div class="timeslots">
-                    <h3>Available Timeslots for <span id="selected-date">20 May 2024</span>:</h3>
+                    <h3>Available Timeslots for <span id="selected-date" style="font-weight: bold;">(Select date below)</span>:</h3>
                     <div id="timeslots-container">
                         <!-- Timeslots will be dynamically generated -->
                     </div>
