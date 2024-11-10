@@ -87,6 +87,10 @@ h6 {
   font-family: var(--heading-font);
 }
 
+main{
+  padding:0;
+}
+
 
 header img{
   width: 350px;
