@@ -523,3 +523,7 @@
       
       }
   });
+  if (typeof PureCounter !== 'undefined') {
+    new PureCounter();
+}
+
