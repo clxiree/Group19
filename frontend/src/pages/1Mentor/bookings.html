@@ -228,7 +228,7 @@ function displayFilteredBookings(status) {
             });
 
         const trainerLink = document.createElement('a');
-        trainerLink.href = 'trainers.html';
+        trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
         trainerLink.classList.add('trainer-link');
         trainerLink.textContent = bookingData.tutorName;
         // Replace this section in displayFilteredBookings
