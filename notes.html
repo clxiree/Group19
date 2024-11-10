@@ -54,10 +54,27 @@
   <style>
     /* Reduce unnecessary padding or margin for notes section */
     .notes-section {
-      padding-top: 20px;
-      padding-bottom: 40px;
-      background-color: #f9f9f9;
-    }
+    padding-top: 30px;
+    padding-bottom: 20px; /* Set to 0 to remove gap */
+    background-color: #f9f9f9;
+    margin-bottom: 0; /* Ensure no margin below */
+  }
+  .h2{
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+.overlay {
+  border-radius: 18px;
+}
+  /* Footer adjustments */
+  #footer {
+    margin-top: 0; /* Remove any margin above footer */
+    padding: 20px 0; /* Adjust padding as needed */
+  }
+  .container {
+  border-radius: 20px;
+  overflow: hidden; /* Add this line */
+}
 
     /* Grid container for notes */
     .note-grid {
@@ -75,7 +92,7 @@
     .note-container {
       border: 1px solid #ddd;
       padding: 20px;
-      border-radius: 12px;
+      border-radius: 20px;
       background-color: #ffffff;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
@@ -83,11 +100,13 @@
       flex-direction: column;
       justify-content: space-between;
       min-height: 350px;
+      margin-top: 20px;
       /* Set a fixed height to standardize */
     }
 
     .note-container:hover {
       transform: scale(1.02);
+      overflow: hidden;
       /* Slight zoom effect on hover */
     }
 
