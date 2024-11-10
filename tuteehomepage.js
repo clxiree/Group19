@@ -186,7 +186,7 @@ function fetchCourses() {
 
 function fetchTeamCards() {
     const teamCardsContainer = document.querySelector("#teamCardsContainer");
-    teamCardsContainer.innerHTML = ""; // Clear existing items
+    teamCardsContainer.innerText = ""; // Clear existing items
 
     // Set up a default image URL from Firebase Storage
     const defaultImageRef = storage.ref('images/team/default.jpg');

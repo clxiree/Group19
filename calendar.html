@@ -339,7 +339,6 @@
         async function populateTutors() {
     const tutorSelect = document.getElementById("tutor");
     tutorSelect.innerHTML = ""; // Clear existing options
-    tutorSelect.innerText = ""; // Clear existing options
     const urlTutorId = getUrlParameter(); // Get UserID from URL
 
     try {
@@ -406,7 +405,6 @@ async function fetchTutorAvailability() {
         function populateSubjects() {
             const subjectSelect = document.getElementById("subject");
             subjectSelect.innerHTML = ""; // Clear existing options
-            subjectSelect.innerText = ""; // Clear existing options
             subjectsTaught.forEach(subject => {
                 const option = document.createElement("option");
                 option.value = subject;
@@ -441,11 +439,7 @@ async function fetchTutorAvailability() {
 
             // Clear previous calendar and timeslots
             calendarContainer.innerText = "";
-<<<<<<< Updated upstream:calendar.html
             timeslotContainer.innerText = "";
-=======
-            timeslotContainer.innerText = "No available timeslots";
->>>>>>> Stashed changes:frontend/src/pages/1Mentor/calendar.html
             selectedTimeslot = null;
             selectedTimeslotElement = null;
             confirmBtn.classList.remove("enabled");
@@ -475,6 +469,8 @@ async function fetchTutorAvailability() {
                 calendarContainer.appendChild(dayDiv);
             }
         }
+// Assuming the calendar container is holding the calendar dates.
+function selectDate(date) {
     const timeslotContainer = document.getElementById("timeslots-container");
     document.getElementById("selected-date").textContent = new Date(date).toDateString();
     const confirmBtn = document.getElementById("confirm-btn");
@@ -501,7 +497,8 @@ async function fetchTutorAvailability() {
         selectedDateElement.classList.add('selected');
     }
 
-        timeslotContainer2.style.display = "block"; // Show the header if timeslots are available
+    // Populate available timeslots for the selected date
+    if (timeslots.length) {
         timeslots.forEach(time => {
             const slotElem = document.createElement("div");
             slotElem.textContent = time;
@@ -509,6 +506,9 @@ async function fetchTutorAvailability() {
 
             // Add event listener to select a timeslot
             slotElem.onclick = () => {
+
+
+                // Toggle selection of timeslot
                 if (selectedTimeslotElement === slotElem) {
                     slotElem.classList.remove("selected");
                     selectedTimeslotElement = null;
@@ -529,9 +529,9 @@ async function fetchTutorAvailability() {
             timeslotContainer.appendChild(slotElem);
         });
     } else {
+        timeslotContainer.textContent = "No available timeslots";
     }
 }
-
 
         // Confirm booking and redirect to payment page if a timeslot is selected
         // Confirm booking and redirect to payment page with selected parameters
@@ -671,9 +671,10 @@ async function fetchTutorAvailability() {
                     <label for="fee">Fee</label>
                     <p></p>
                 </div>
+                
 
                 <div class="timeslots">
-                    <h3>Available Timeslots for <span id="selected-date" style="font-weight: bold;">(Select date below)</span>:</h3>
+                    <h3>Available Timeslots for <span id="selected-date" style="font-weight: bold;">(Select date below)</span></h3>
                     <div id="timeslots-container">
                         <!-- Timeslots will be dynamically generated -->
                     </div>

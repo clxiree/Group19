@@ -284,7 +284,7 @@ nav.breadcrumbs {
     
         function fetchAllTutors() {
           const trainersSection = document.getElementById("trainer-container");
-          trainersSection.innerHTML = '';
+          trainersSection.innerText = '';
           const storage = firebase.storage();
           const storageRef = storage.ref('images/team');
           const videoStorageRef = storage.ref('videos');
