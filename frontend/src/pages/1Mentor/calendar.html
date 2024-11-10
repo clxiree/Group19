@@ -313,77 +313,75 @@
 
         // Populate tutor dropdown with data from Firestore
         // Populate tutor dropdown with data from Firestore
-        function getUrlParameter(name) {
+        function getUrlParameter() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get(name);
+            return urlParams.get(`UserId`);
         }
 
-        // Function to populate tutors dynamically and set the selected option based on UserId
         async function populateTutors() {
-            const tutorSelect = document.getElementById("tutor");
-            tutorSelect.innerText = ""; // Clear existing options
+    const tutorSelect = document.getElementById("tutor");
+    tutorSelect.innerHTML = ""; // Clear existing options
+    const urlTutorId = getUrlParameter(); // Get UserID from URL
 
-            try {
-                const urlTutorId = getUrlParameter('UserId'); // Get UserId from URL
-                const snapshot = await db.collection("Particulars").where("Tutor", "==", true).get();
+    try {
+        const snapshot = await db.collection("Particulars").where("Tutor", "==", true).get();
+        snapshot.forEach(doc => {
+            const data = doc.data();
+            const option = document.createElement("option");
+            option.value = data.UserID; // Set the UserID as the option value
+            option.textContent = `${data.Name} ($${data.Rate || 0}/h)`;
+            tutorSelect.appendChild(option);
+            
+            // Log to verify matching ID
+            if (String(data.UserID).trim() === String(urlTutorId).trim()) {
+                console.log("Matching tutor found:", data.Name);
+            }
+        });
 
-                snapshot.forEach(doc => {
-                    const data = doc.data();
-                    // console.log(data)
-                    const option = document.createElement("option");
-                    option.value = data.UserID;
-                    option.textContent = `${data.Name} ($${data.Rate || 0}/h)`;
-                    // console.log(data.Name)
+        // Set the dropdown value directly after all options are appended
+        tutorSelect.value = urlTutorId;
+        tutorSelect.dispatchEvent(new Event('change')); // Trigger change event if necessary
 
-                    // Set the option as selected if it matches the UserId from the URL
-                    console.log(urlTutorId)
-                    console.log(data.UserID)
-                  // Convert to string before calling `trim` to avoid errors
-                    if (String(data.UserID).trim() === String(urlTutorId).trim()) {
-                        option.selected = true;
-                        console.log("HI");
+    } catch (error) {
+        console.error("Error fetching tutors:", error);
+    }
 }
-                    tutorSelect.appendChild(option);
-                    // console.log("end")
-                });
 
-                // If a tutor was preselected from the URL, fetch their availability
-                if (urlTutorId) {
-                    fetchTutorAvailability();
-                } else if (tutorSelect.options.length > 0) {
-                    // Default to the first option and fetch its availability if no UserId in URL
-                    tutorSelect.selectedIndex = 0;
-                    fetchTutorAvailability();
-                }
 
-            } catch (error) {
-                console.error("Error fetching tutors:", error);
-            }
+
+// Fetch availability, subjects, and fee for the selected tutor
+async function fetchTutorAvailability() {
+    const tutorSelect = document.getElementById("tutor");
+    const tutorId = tutorSelect.value; // Get selected tutor ID directly from the dropdown
+
+    if (!tutorId) return; // Exit if no tutor is selected
+
+    try {
+        const doc = await db.collection("Particulars").doc(`UserID: ${tutorId}`).get();
+
+        if (doc.exists) {
+            const data = doc.data();
+            subjectsTaught = data.SubjectsTaught || [];
+            tutorTimeslots = {};
+            const rate = data.Rate * 2 || 0; // Get tutor rate
+
+            // Populate subjects dropdown
+            populateSubjects();
+
+            // Process timeslots and update the calendar
+            processTimeslots(data.availableTimeslots || []);
+            updateCalendar();
+
+            // Display the rate in the Fee section
+            document.querySelector(".lesson-options p").textContent = `SGD ${rate.toFixed(2)} (2 hours)`;
+        } else {
+            console.error("Tutor document not found.");
         }
+    } catch (error) {
+        console.error("Error fetching tutor availability:", error);
+    }
+}
 
-        // Fetch availability and subjects for the selected tutor
-        async function fetchTutorAvailability() {
-            const tutorId = document.getElementById("tutor").value;
-            const urlTutorId = getUrlParameter('UserId'); // Get UserId from URL
-            const documentId = `UserID: ${urlTutorId}`;
-            const doc = await db.collection("Particulars").doc(documentId).get();
-            // console.log(tutorId)
-
-            if (doc.exists) {
-                const data = doc.data();
-                console.log(data)
-                subjectsTaught = data.SubjectsTaught || [];
-                tutorTimeslots = {};
-                const rate = data.Rate * 2 || 0; // Fetch the rate or default to 0
-
-                populateSubjects();
-                processTimeslots(data.availableTimeslots || []);
-                updateCalendar();
-
-                // Display the rate in the Fee section
-                document.querySelector(".lesson-options p").textContent = `SGD ${rate.toFixed(2)} (2 hours)`;
-            }
-        }
 
         // Function to populate subjects dynamically based on selected tutor
         function populateSubjects() {
@@ -628,10 +626,6 @@ function selectDate(date) {
     </div>
 </main>
 
-
-
-    
-        <!-- Bookings Heading Section -->
 
         <!-- Lesson Booking Section -->
         <div class="lesson-container">
