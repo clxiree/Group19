@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Trainers - Mentor Bootstrap Template</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+
+  <!-- Vue CDN (Production Build) -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+
+  <!-- Axios CDN -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+
+
+    <!-- Vue CDN -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <!-- Axios CDN -->
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="footer.js"></script>
+
+</head>
+<style>
+  .logo img {
+  max-width: 150px; /* Set this to the desired width */
+  height: auto; /* Keeps the aspect ratio */
+}
+
+.header {
+  padding: 13px 0; /* Reduces the vertical padding inside the header */
+}
+
+/* Adjust the logo size to reduce overall navbar height */
+.header .logo img {
+  max-height: 40px; /* Set a max height for the logo */
+  height: auto;
+  width: auto;
+}
+
+/* Reduce the vertical padding of nav links */
+.header .navmenu ul li a {
+  padding: 8px 15px; /* Adjust as needed */
+  font-size: 0.9rem; /* Optionally, reduce font size */
+}
+
+/* Align the "Login" button with reduced height */
+.header .btn-getstarted {
+  padding: 6px 12px; /* Reduce padding for a smaller button */
+  font-size: 0.9rem; /* Optionally reduce font size */
+}
+
+
+/* Optional: adjust the font size if you want a more compact title */
+.page-title h1 {
+  font-size: 2rem; /* Adjust the title font size as needed */
+  margin-bottom: 5px; /* Reduce space under the title */
+}
+
+.page-title p {
+  margin-bottom: 60px; /* Remove extra margin */
+}
+
+/* Breadcrumbs section height adjustment */
+.page-title .heading h2 {
+    font-weight: bold;
+    font-size: 1.8rem;  /* Adjust font size for a smaller look */
+    margin-bottom: 10px; /* Optional: add some spacing below */
+  
+}
+
+/* Style for the subtitle */
+.page-title .heading p.mb-0 {
+    font-size: 1rem;  /* Smaller than the heading */
+    color: #ffffff; /* Optional: set a lighter color for distinction */
+    margin-top: 5px; /* Optional: add a little space above */
+}
+.page-title .heading {
+    padding-top: 30px; /* Reduce padding from the top */
+    padding-bottom: 30px; /* Reduce padding from the bottom */
+}
+
+/* Optional: adjust the breadcrumbs section padding */
+.page-title .breadcrumbs {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+/* Adjust the breadcrumbs section */
+nav.breadcrumbs {
+    padding: 15px 0;  /* reduce padding to make it shorter */
+    font-size: 0.9rem;  /* optional: reduce font size slightly */
+}
+
+/* Trainers section compact layout */
+.section.trainers {
+  padding-top: 50px; /* Slightly reduce top padding */
+  padding-bottom: 15px; /* Slightly reduce bottom padding */
+}
+.heading {
+  padding-top: 5px; /* Reduce top padding */
+  padding-bottom: 5px; 
+}
+</style>
+
+<body class="trainers-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/smootutor-logo.jpg">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="index.html">Home<br></a></li>
+          <li><a href="bookings.html">Bookings</a></li>
+
+          <li class="dropdown">
+            <a href="trainers.html" id="notesDropdown" aria-expanded="false">
+              Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
+              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+
+            </ul>
+          </li>
+          <li><a href="chats.html">Chats</a></li>
+          <li class="dropdown">
+            <a href="notes.html" id="notesDropdown" aria-expanded="false">
+              Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+            </ul>
+         
+        </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted"><div id="my-email"></div></a>
+    </div>
+  </header>
+
+  <main class="main">
+    <div class="page-title" data-aos="fade">
+      <div class="heading text-center">
+        <h2>Our Tutors</h2>
+        <p class="mb-0">Find the SMOO tutor that you like BEST</p>
+      </div>
+    </div>
+  </main>
+  
+
+    <section id="trainers" class="section trainers">
+      <div class="container">
+        <div class="row gy-5 mb-2" id="trainer-container"></div>
+        
+      </div>
+    </section>
+
+    <!-- Scroll Top -->
+    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+        class="bi bi-arrow-up-short"></i></a>
+    <div id="preloader"></div>
+
+    <footer id="footer" class="footer position-relative light-background">
+      <div class="container footer-top">
+        <div class="row gy-4">
+          
+          <!-- About Section with Social Links -->
+          <div class="col-lg-3 md-6 sm-6 footer-about">
+            <a href="index.html" class="logo d-flex align-items-center">
+              <span class="sitename">SMOOTutor</span>
+            </a>
+            <div class="footer-contact pt-3">
+              <p>SMU</p>
+              <p>81 Victoria St, Singapore 188065</p>
+              <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+              <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
+            </div>
+            <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+              <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+              <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+              <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+              <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+            </div>
+         
+          </div>
+    
+          <!-- Google Maps Section -->
+          <div class="col-lg-9 md-6 sm-6">
+            <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+    
+    
+        </div>
+      </div>
+    </footer>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/js/main.js"></script>
+    
+
+    <script>
+
+      document.addEventListener("DOMContentLoaded", function () {
+        var firebaseConfig = {
+          apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+          authDomain: "smootutor-ed94a.firebaseapp.com",
+          databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "smootutor-ed94a",
+          storageBucket: "smootutor-ed94a.appspot.com",
+          messagingSenderId: "289686522861",
+          appId: "1:289686522861:web:5811385ced42106d78b5e4",
+          measurementId: "G-46QED8ZFKJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+        const storage = firebase.storage();
+        
+
+        firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in with email:", user.email);
+            document.getElementById("my-email").innerText = user.email;
+            fetchAllTutors()
+            // You can use user.email to retrieve user-specific data
+        } else {
+            console.log("No user is logged in.");
+            // Redirect to login page if needed
+            window.location.href = 'login.html';
+        }
+    });
+
+
+
+
+       
+    
+        function fetchAllTutors() {
+          const trainersSection = document.getElementById("trainer-container");
+          trainersSection.innerText = '';
+          const storage = firebase.storage();
+          const storageRef = storage.ref('images/team');
+          const videoStorageRef = storage.ref('videos');
+
+          // Get default image URL once to use for all fallbacks
+          let defaultImageUrl = '';
+          storageRef.child('default.jpg').getDownloadURL()
+            .then(url => {
+              defaultImageUrl = url;
+            })
+            .catch(error => {
+              console.error("Error loading default image:", error);
+            });
+
+          // Fetch all tutor data from Firestore
+          db.collection("Particulars").get().then(snapshot => {
+            if (snapshot.empty) {
+              console.log("No tutors found in the 'Particulars' collection.");
+              return;
+            }
+
+            snapshot.forEach(doc => {
+              const userData = doc.data();
+
+              // Log each user ID and check if it's a tutor
+              console.log(`Processing UserID ${userData.UserID} - Tutor status: ${userData.Tutor}`);
+              if (userData.Tutor !== true) {
+                console.log(`Skipping UserID ${userData.UserID} as they are not marked as a tutor.`);
+                return;
+              }
+
+              const imageName = userData.Image || 'default.jpg';
+              const imageRef = storageRef.child(imageName);
+
+              const memberDiv = document.createElement("div");
+              memberDiv.className = "col-lg-4 col-md-6 member";
+              memberDiv.setAttribute("data-aos", "fade-up");
+              memberDiv.setAttribute("data-aos-delay", "100");
+
+              const imgDiv = document.createElement("div");
+              imgDiv.className = "member-img";
+              const tutorImg = document.createElement("img");
+
+              // Initially set to the default image
+              tutorImg.src = defaultImageUrl || "assets/img/team/default.jpg";
+              tutorImg.className = "img-fluid";
+              tutorImg.alt = userData.Name || "Unknown Tutor";
+
+              // Get the actual image URL from Firebase Storage
+              imageRef.getDownloadURL()
+                .then(url => {
+                  tutorImg.src = url;
+                })
+                .catch(error => {
+                  console.log(`Using default image for ${userData.Name}: ${error.code}`);
+                });
+
+              imgDiv.appendChild(tutorImg);
+
+              const socialDiv = document.createElement("div");
+              socialDiv.className = "social";
+              const video = document.createElement("video");
+              video.id = `tutorVideo${userData.UserID}`;
+              video.autoplay = true;
+              video.muted = true;  // Ensure video is muted to enable autoplay
+              video.loop = true;
+
+              // Generate video filename from userData
+              const videoName = userData.Video || 'default.mp4';
+
+              // Fetch the video from Firebase Storage
+              videoStorageRef.child(videoName).getDownloadURL()
+                .then(url => {
+                  console.log(`Loaded video URL for ${userData.Name}: ${url}`);
+                  video.src = url;  // Set the video source to the fetched URL
+                })
+                .catch(error => {
+                  console.error(`Error loading video for ${userData.Name}:`, error);
+                  // Fallback to default video if needed
+                  videoStorageRef.child('default.mp4').getDownloadURL()
+                    .then(defaultUrl => {
+                      console.log("Using default video fallback:", defaultUrl);
+                      video.src = defaultUrl;
+                    })
+                    .catch(defaultError => {
+                      console.error("Error loading default video:", defaultError);
+                      video.src = "assets/videos/default.mov"; // Local fallback
+                    });
+                });
+
+              socialDiv.appendChild(video);
+
+              const muteButton = document.createElement("div");
+              muteButton.id = `muteButton${userData.UserID}`;
+              muteButton.className = "mute-icon";
+              muteButton.style.display = "none";
+              const muteIcon = document.createElement("i");
+              muteIcon.className = "fas fa-volume-mute";
+              muteButton.appendChild(muteIcon);
+              socialDiv.appendChild(muteButton);
+
+              imgDiv.appendChild(socialDiv);
+              memberDiv.appendChild(imgDiv);
+
+              const infoDiv = document.createElement("div");
+              infoDiv.className = "member-info text-center";
+              const nameHeader = document.createElement("h4");
+              nameHeader.textContent = userData.Name || "Unknown Tutor";
+              infoDiv.appendChild(nameHeader);
+
+              const subjectSpan = document.createElement("span");
+              subjectSpan.className = "mb-2";  // Adds bottom margin to create spacing
+              subjectSpan.textContent = userData.SubjectsTaught ? userData.SubjectsTaught.join(", ") : "N/A";
+              infoDiv.appendChild(subjectSpan);
+
+              const buttonContainer = document.createElement("div");
+              buttonContainer.style.display = "flex";
+              buttonContainer.style.justifyContent = "center";
+              buttonContainer.style.gap = "10px";
+              buttonContainer.style.marginTop = "15px";  // Adds top margin to create spacing between subjects and buttons
+
+
+              const viewMoreLink = document.createElement("a");
+              viewMoreLink.className = "btn-buy";
+              viewMoreLink.textContent = "View More";
+              viewMoreLink.style = "font-size: 14px; text-decoration: none;";
+              viewMoreLink.href = `tutorprofileupdated.html?userid=${userData.UserID}`;
+              buttonContainer.appendChild(viewMoreLink);
+
+              const messageButton = document.createElement("button");
+              messageButton.className = "btn-message";
+              messageButton.textContent = "Message";
+              messageButton.style = "font-size: 14px;";
+              buttonContainer.appendChild(messageButton);
+
+              const bookNowLink = document.createElement("a");
+              bookNowLink.className = "btn-book-now";
+              bookNowLink.textContent = "Book Now";
+              bookNowLink.style = "font-size: 14px; display: block; margin-top: 5px;";
+              bookNowLink.href = `calendar.html?UserId=${userData.UserID} `;
+              const icon = document.createElement("i");
+              icon.className = "bi bi-calendar2-check-fill";
+              icon.style.marginRight = "5px";
+              bookNowLink.prepend(icon);
+
+              infoDiv.appendChild(buttonContainer);
+              infoDiv.appendChild(bookNowLink);
+
+              memberDiv.appendChild(infoDiv);
+              trainersSection.appendChild(memberDiv);
+
+              // Video event listeners for autoplay and mute handling
+              video.addEventListener('mouseenter', () => {
+                console.log(`Hovering over video for ${userData.Name}`);
+                video.currentTime = 0;
+                video.muted = true;
+                muteButton.style.display = 'block';
+                video.play().catch(err => console.error("Error playing video on hover:", err));
+              });
+
+              video.addEventListener('mouseleave', () => {
+                console.log(`Mouse left video for ${userData.Name}`);
+                video.pause();
+                muteButton.style.display = 'none';
+              });
+
+              video.addEventListener('click', () => {
+                video.muted = !video.muted;
+                muteButton.style.display = video.muted ? 'block' : 'none';
+                console.log(`Video for ${userData.Name} is now ${video.muted ? "muted" : "unmuted"}`);
+              });
+            });
+          }).catch(error => {
+            console.error("Error fetching tutor data:", error);
+          });
+        }
+      });
+      const logoImage = document.getElementById("logo-image");
+
+    if (logoImage) {
+        // Reference the image in Firebase Storage
+        const logoImageRef = storage.ref("images/smootutor-logo.png");
+
+        // Get the download URL for the image and set it as the logo image src
+        logoImageRef.getDownloadURL().then((url) => {
+            logoImage.src = url;
+        }).catch((error) => {
+            console.error("Error fetching logo image:", error);
+        });
+    } else {
+        console.error("Logo image element not found");
+    }
+
+      
+    </script>
+
+
+</body>
+
+</html>
