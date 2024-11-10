@@ -98,6 +98,18 @@
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const auth = firebase.auth();
+
+        firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User is logged in with email:", user.email);
+            document.getElementById("my-email").innerText = user.email;
+            // You can use user.email to retrieve user-specific data
+        } else {
+            console.log("No user is logged in.");
+            // Redirect to login page if needed
+            window.location.href = 'login.html';
+        }});
 
     // Get the `notesId` from the URL to fetch the specific document
     const urlParams = new URLSearchParams(window.location.search);
@@ -264,7 +276,7 @@
         <!-- About Section with Social Links -->
         <div class="col-lg-3 md-6 sm-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename"><img id="logo-image" alt="SMOOTutor Logo" style="width: 200px; height: 500px;" /></span>
+            <span class="sitename">SMOOTutor</span>
           </a>
           <div class="footer-contact pt-3">
             <p>SMU</p>
