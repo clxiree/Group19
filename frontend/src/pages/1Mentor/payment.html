@@ -370,12 +370,12 @@
             const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
 
             // Display the countdown timer
-            countdownElement.innerHTML = `${hours}h ${minutes}m ${seconds}s`;
+            countdownElement.innerText = `${hours}h ${minutes}m ${seconds}s`;
 
             // When the countdown reaches zero, stop the interval and display a message
             if (timeRemaining <= 0) {
                 clearInterval(countdownInterval);
-                countdownElement.innerHTML = "Time is up!";
+                countdownElement.innerText = "Time is up!";
             }
         }, 1000);
     }
@@ -390,13 +390,15 @@
     const date = getUrlParameter("date");
     const time = getUrlParameter("time");
     const tutorId = getUrlParameter("tutor"); // This will be the UserID
+    console.log(tutorId)
     const subject = getUrlParameter("subject");
     const mode = getUrlParameter("mode");
     const rate = parseFloat(getUrlParameter("rate")) || 0;
 
     // Fetch the tutor's name from Firebase Firestore based on the UserID (tutorId)
     try {
-        const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
+
+        const tutorDoc = await db.collection("Particulars").doc(`UserID: ${tutorId}`).get();
         const tutorName = tutorDoc.exists ? tutorDoc.data().Name : "Unknown Tutor";
 
         // Insert data into the relevant HTML elements

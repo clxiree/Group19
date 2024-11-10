@@ -202,7 +202,7 @@
 
 
         .timeslot:hover {
-            background-color: #0056b3;
+            background-color: #218838;
             transform: translateY(-3px);
         }
 
@@ -248,6 +248,24 @@
             color: #fff;
             cursor: pointer;
 
+        }
+
+        .button-apply.enabled:hover {
+            background-color: #28a745; /* Hover color */
+            color: #ffffff;
+            animation: bounce 0.6s ease; /* Apply bounce animation */
+            box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+
+            }
+
+
+        @keyframes bounce {
+        0%, 100% {
+            transform: translateY(0); /* Start and end position */
+        }
+        50% {
+            transform: translateY(-8px); /* Move up slightly */
+        }
         }
 
         /* Main content should grow to fill the available space */
