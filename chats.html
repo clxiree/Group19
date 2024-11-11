@@ -647,37 +647,135 @@
               storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
                 .then(url => {
                   // Set the chat item's inner HTML with the dynamically fetched URL and recipient name
-                  chatItem.innerHTML = `
-                    <img src="${url}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
-                    <div class="chat-item-info">
-                      <div class="chat-item-name">${recipientName}</div>
-                      <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
-                    </div>
-                  `;
-                  chatList.appendChild(chatItem); // Add to chat list after setting innerHTML
+                  // Create the main chat item container
+                  const chatItem = document.createElement("div");
+                  chatItem.classList.add("chat-item", "d-flex", "align-items-center");
+
+                  // Create and configure the avatar image
+                  const img = document.createElement("img");
+                  img.src = url; // Set the dynamic URL for the avatar
+                  img.alt = "Avatar";
+                  img.classList.add("rounded-circle", "me-2");
+                  img.width = 50;
+                  img.height = 50;
+
+                  // Create the container for chat information
+                  const chatInfoDiv = document.createElement("div");
+                  chatInfoDiv.classList.add("chat-item-info");
+
+                  // Create and set the chat name
+                  const chatNameDiv = document.createElement("div");
+                  chatNameDiv.classList.add("chat-item-name");
+                  chatNameDiv.textContent = recipientName;
+
+                  // Create and set the last message preview
+                  const chatLastMessageDiv = document.createElement("div");
+                  chatLastMessageDiv.classList.add("chat-item-last-message");
+                  chatLastMessageDiv.textContent = chatData.last_message 
+                    ? (chatData.last_message.type === 'text' 
+                      ? truncateText(chatData.last_message.content, 30) 
+                      : '📎 Attachment')
+                    : '';
+
+                  // Append the name and last message elements to the chat info container
+                  chatInfoDiv.appendChild(chatNameDiv);
+                  chatInfoDiv.appendChild(chatLastMessageDiv);
+
+                  // Append the avatar image and chat info container to the main chat item container
+                  chatItem.appendChild(img);
+                  chatItem.appendChild(chatInfoDiv);
+
+                  // Attach a click event listener to the chat item
+                  chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
+
+                  // Append the complete chat item to the chat list
+                  chatList.appendChild(chatItem);
+
                 })
                 .catch(error => {
                   console.error("Error fetching avatar URL:", error);
                   // Use default avatar if there's an error retrieving the image
-                  chatItem.innerHTML = `
-                    <img src="assets/img/default-avatar.png" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
-                    <div class="chat-item-info">
-                      <div class="chat-item-name">${recipientName}</div>
-                      <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
-                    </div>
-                  `;
+                  // Create the main chat item container
+                  const chatItem = document.createElement("div");
+                  chatItem.classList.add("chat-item", "d-flex", "align-items-center");
+
+                  // Create and configure the avatar image
+                  const img = document.createElement("img");
+                  img.src = "assets/img/default-avatar.png";
+                  img.alt = "Avatar";
+                  img.classList.add("rounded-circle", "me-2");
+                  img.width = 50;
+                  img.height = 50;
+
+                  // Create the container for chat information
+                  const chatInfoDiv = document.createElement("div");
+                  chatInfoDiv.classList.add("chat-item-info");
+
+                  // Create and set the chat name
+                  const chatNameDiv = document.createElement("div");
+                  chatNameDiv.classList.add("chat-item-name");
+                  chatNameDiv.textContent = recipientName;
+
+                  // Create and set the last message preview
+                  const chatLastMessageDiv = document.createElement("div");
+                  chatLastMessageDiv.classList.add("chat-item-last-message");
+                  chatLastMessageDiv.textContent = chatData.last_message 
+                    ? (chatData.last_message.type === 'text' 
+                      ? truncateText(chatData.last_message.content, 30) 
+                      : '📎 Attachment')
+                    : '';
+
+                  // Append the name and last message elements to the chat info container
+                  chatInfoDiv.appendChild(chatNameDiv);
+                  chatInfoDiv.appendChild(chatLastMessageDiv);
+
+                  // Append the avatar image and chat info container to the main chat item container
+                  chatItem.appendChild(img);
+                  chatItem.appendChild(chatInfoDiv);
+
+                  // Attach a click event listener to the chat item
+                  chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
+
+                  // Append the complete chat item to the chat list
                   chatList.appendChild(chatItem);
+
                 });
             } else {
               // If no user data found, display default values
-              chatItem.innerHTML = `
-                <img src="assets/img/default-avatar.png" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
-                <div class="chat-item-info">
-                  <div class="chat-item-name">${recipientName}</div>
-                  <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
-                </div>
-              `;
-              chatList.appendChild(chatItem);
+              const img = document.createElement("img");
+              img.src = "assets/img/default-avatar.png";
+              img.alt = "Avatar";
+              img.classList.add("rounded-circle", "me-2");
+              img.width = 50;
+              img.height = 50;
+
+              const chatInfoDiv = document.createElement("div");
+              chatInfoDiv.classList.add("chat-item-info");
+
+              const chatNameDiv = document.createElement("div");
+              chatNameDiv.classList.add("chat-item-name");
+              chatNameDiv.textContent = recipientName;
+
+              const chatLastMessageDiv = document.createElement("div");
+              chatLastMessageDiv.classList.add("chat-item-last-message");
+
+              if (chatData.last_message) {
+                chatLastMessageDiv.textContent = chatData.last_message.type === 'text'
+                  ? truncateText(chatData.last_message.content, 30)
+                  : '📎 Attachment';
+              }
+
+              chatInfoDiv.appendChild(chatNameDiv);
+              chatInfoDiv.appendChild(chatLastMessageDiv);
+              chatItem.appendChild(img);
+              chatItem.appendChild(chatInfoDiv);
+
+              // Attach click event listener to chat item
+              chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
+
+              // Append the chat item to the chat list
+chatList.appendChild(chatItem);
+
             }
 
             // Attach click event to open the chat when clicked
@@ -1044,79 +1142,39 @@
     });
   </script>
 
-  <!-- Footer -->
-  <footer id="footer" class="footer position-relative light-background">
-
-    <div class="container footer-top">
-      <div class="row gy-4">
-        <div class="col-lg-4 col-md-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">SMOOTutor</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>SMU</p>
-            <p>81 Victoria St, Singapore 188065</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
-            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
-          </div>
-          <div class="social-links d-flex mt-4">
-            <a href=""><i class="bi bi-twitter-x"></i></a>
-            <a href=""><i class="bi bi-facebook"></i></a>
-            <a href=""><i class="bi bi-instagram"></i></a>
-            <a href=""><i class="bi bi-linkedin"></i></a>
-          </div>
+<footer id="footer" class="footer position-relative light-background">
+  <div class="container footer-top">
+    <div class="row gy-4">
+      
+      <!-- About Section with Social Links -->
+      <div class="col-lg-3 md-6 sm-6 footer-about">
+        <a href="index.html" class="logo d-flex align-items-center">
+          <span class="sitename">SMOOTutor</span>
+        </a>
+        <div class="footer-contact pt-3">
+          <p>SMU</p>
+          <p>81 Victoria St, Singapore 188065</p>
+          <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+          <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
         </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Useful Links</h4>
-          <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="about.html">About us</a></li>
-            <li><a href="#">Services</a></li>
-            <li><a href="#">Terms of service</a></li>
-            <li><a href="#">Privacy policy</a></li>
-          </ul>
+        <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+          <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+          <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+          <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+          <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
         </div>
-
-        <div class="col-lg-2 col-md-3 footer-links">
-          <h4>Our Services</h4>
-          <ul>
-            <li><a href="#">Find a Tutor</a></li>
-            <li><a href="#">Find Quality Notes</a></li>
-
-          </ul>
-        </div>
-
-        <div class="col-lg-4 col-md-12 footer-newsletter">
-          <h4>Our Newsletter</h4>
-          <p>Subscribe to our newsletter and receive the latest news about our products and services!</p>
-          <form action="forms/newsletter.php" method="post" class="php-email-form">
-            <div class="newsletter-form">
-              <input type="email" name="email" required placeholder="Enter your email">
-              <input type="submit" value="Subscribe">
-            </div>
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your subscription request has been sent. Thank you!</div>
-          </form>
-        </div>
-
+     
       </div>
-    </div>
 
-    <div class="container-fluid bg-light py-3">
-      <div class="row">
-        <div class="col-12 text-center">
-          <p>© <strong class="sitename">SMOOTUTOR</strong> <span>All Rights Reserved</span></p>
-          <div class="credits">
-            <!-- Keep all links intact for free version -->
-            Designed by SMOO students.
-          </div>
-        </div>
+      <!-- Google Maps Section -->
+      <div class="col-lg-9 md-6 sm-6">
+        <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-    </div>
 
-  </footer>
+
+    </div>
+  </div>
+</footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
