@@ -9,8 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <!-- Include Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="styles.css">
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
@@ -23,7 +21,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <!-- Include particles.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-
+    <!-- Inline CSS -->
     <style>
         /* Existing CSS styles from your current styling */
         body.signup-page {
@@ -293,10 +291,16 @@
     </style>
 </head>
 
-<body class="signup-page">
+<body>
+    <div id="loading-screen" style="display: none;">
+        <div class="loader"></div>
+        <p>Checking your credentials...</p>
+    </div>
+
     <div class="background">
         <div id="particles-js"></div>
     </div>
+
     <div class="signup-container">
         <div class="col-lg-1"></div>
         <div class="signup-box">
@@ -331,10 +335,6 @@
         </div>
         <div class="col-lg-1"></div>
         <div class="signup-box2">
-            <div class="logo">
-                <img src="password.png" alt="Password" style="width:15%;">
-            </div>
-            <p class="subtitle">Login Information</p>
             <div class="input-group">
                 <label for="about">About</label>
                 <textarea id="about" rows="4" placeholder="Tell us about yourself" required></textarea>
@@ -356,15 +356,27 @@
                 <div class="input-underline"></div>
             </div>
             <button type="submit" class="btn">Sign Up</button>
+            <p class="or">OR</p>
+            <div class="social-login">
+                <button type="button" class="facebook"><i class="fab fa-facebook-f"></i></button>
+                <button type="button" class="google"><i class="fab fa-google"></i></button>
+                <button type="button" class="twitter"><i class="fab fa-twitter"></i></button>
+            </div>
             </form>
             <p class="signup-text">Already have an account? <a href="login.html">Log In</a></p>
         </div>
-        <div class="col-lg-1"></div>
+        <!-- Mascot Container -->
+        <div class="mascot-container" id="mascot-animation"></div>
     </div>
 
-    <!-- Firebase Initialization and Signup Script -->
+    <!-- Toast Notification -->
+    <div id="customToast">
+        <span id="customToastMessage"></span>
+        <span class="close-toast" onclick="closeToast()">&times;</span>
+    </div>
+
+    <!-- JavaScript Code -->
     <script>
-        // Your web app's Firebase configuration
         // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
@@ -376,55 +388,210 @@
             measurementId: "G-46QED8ZFKJ"
         };
         firebase.initializeApp(firebaseConfig);
-        // const auth = firebase.auth();
         const db = firebase.firestore();
+        // const auth = firebase.auth();
+        // const storage = firebase.storage();
 
-        // Signup Functionality
+        // Show/Hide Password
+        document.querySelectorAll('.toggle-password').forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                const passwordInput = document.querySelector(toggle.getAttribute('data-toggle'));
+                const icon = toggle.querySelector('i');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Input Field Animation
+        const inputGroups = document.querySelectorAll('.input-group input, .input-group textarea');
+        inputGroups.forEach((input) => {
+            input.addEventListener('focus', () => {
+                const underline = input.nextElementSibling;
+                gsap.to(underline, { width: '100%', duration: 0.5, ease: 'power2.out' });
+            });
+            input.addEventListener('blur', () => {
+                if (input.value === '') {
+                    const underline = input.nextElementSibling;
+                    gsap.to(underline, { width: '0%', duration: 0.5, ease: 'power2.out' });
+                }
+            });
+        });
+
+        // Show Lesson Description based on email domain
+        document.getElementById('signup-email').addEventListener('input', function () {
+            const email = this.value.trim().toLowerCase();
+            const lessonDescGroup = document.getElementById('lesson-desc-group');
+            if (email.endsWith('@scis.tutor.edu.sg')) {
+                gsap.to(lessonDescGroup, { height: 'auto', opacity: 1, duration: 0.5, display: 'block' });
+                document.getElementById('lesson-desc').required = true;
+            } else {
+                gsap.to(lessonDescGroup, { height: 0, opacity: 0, duration: 0.5, display: 'none' });
+                document.getElementById('lesson-desc').required = false;
+            }
+        });
+
+        // Mascot Animation
+        let mascotAnimation = lottie.loadAnimation({
+            container: document.getElementById('mascot-animation'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'path/to/mascot_excited.json' // Replace with your mascot animation JSON file
+        });
+
+        // Change Mascot Animation on Password Input Focus
+        const passwordInput = document.getElementById('signup-password');
+        passwordInput.addEventListener('focus', () => {
+            mascotAnimation.destroy();
+            mascotAnimation = lottie.loadAnimation({
+                container: document.getElementById('mascot-animation'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'path/to/mascot_eye_closed.json' // Replace with your mascot animation JSON file
+            });
+        });
+        passwordInput.addEventListener('blur', () => {
+            mascotAnimation.destroy();
+            mascotAnimation = lottie.loadAnimation({
+                container: document.getElementById('mascot-animation'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'path/to/mascot_excited.json' // Replace with your mascot animation JSON file
+            });
+        });
+
+        // Background Animation
+        const background = document.getElementById('background-animation');
+        gsap.to(background, { backgroundPosition: '400% 0%', duration: 20, ease: 'none', repeat: -1 });
+
+        // Sound Effects
+        const clickSound = new Howl({
+            src: ['path/to/click_sound.mp3'] // Replace with your sound file
+        });
+
+        document.querySelectorAll('input, textarea, button').forEach(element => {
+            element.addEventListener('click', () => {
+                clickSound.play();
+            });
+        });
+
+        // Signup Button Fire Animation
+        // const signupBtn = document.querySelector('.btn');
+        // let fireAnimation;
+
+        // signupBtn.addEventListener('mouseenter', () => {
+        //     fireAnimation = lottie.loadAnimation({
+        //         container: signupBtn,
+        //         renderer: 'svg',
+        //         loop: false,
+        //         autoplay: true,
+        //         path: 'path/to/fire_animation.json' // Replace with your fire animation JSON file
+        //     });
+        // });
+
+        // signupBtn.addEventListener('mouseleave', () => {
+        //     if (fireAnimation) {
+        //         fireAnimation.destroy();
+        //     }
+        // });
+
+        // Utility function to show the toast with a message and type
+        function showToast(message, type) {
+            const toast = document.getElementById("customToast");
+            const toastMessage = document.getElementById("customToastMessage");
+
+            // Set the message and apply success/error style
+            toastMessage.textContent = message;
+            toast.classList.add("show", type);
+
+            // Hide the toast after 5 seconds
+            setTimeout(() => {
+                toast.classList.remove("show", type);
+            }, 5000);
+        }
+
+        // Close button function for the toast
+        function closeToast() {
+            const toast = document.getElementById("customToast");
+            toast.classList.remove("show");
+        }
+
+        // Signup Functionality (simplified for this example)
         document.getElementById('signup-form').addEventListener('submit', function (e) {
             e.preventDefault();
-            const email = document.getElementById('signup-email').value;
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-
-            if (password !== confirmPassword) {
-                alert('Passwords do not match.');
-                return;
-            }
-
-            auth.createUserWithEmailAndPassword(email, password)
-                .then(userCredential => {
-                    const user = userCredential.user;
-
-                    // Get the current user count to determine the next userId
-                    db.collection("Particulars").get().then(snapshot => {
-                        const userId = snapshot.size + 1; // 8 if 7 users already exist
-
-                        // Add the new user to the "Particulars" collection
-                        db.collection("Particulars").add({
-                            UserID: userId,
-                            email: email
-                        }).then(() => {
-                            console.log("User particulars added successfully.");
-                            // Redirect or display success message
-                            window.location.href = '../tuteehomepage.html';
-                        }).catch(error => {
-                            console.error("Error adding user particulars:", error.message);
-                            alert("Error creating account: " + error.message);
-                        });
-                    }).catch(error => {
-                        console.error("Error retrieving user count:", error.message);
-                        alert("Error retrieving user count: " + error.message);
-                    });
-                })
-                .catch(error => {
-                    console.error('Signup Error:', error.message);
-                    alert('Error creating account: ' + error.message);
-                });
+            showToast('Registration successful!', 'success');
         });
-    </script>
 
-    <!-- Additional JS -->
-    <script src="script.js"></script>
+        // Initialize Particles.js
+        particlesJS('particles-js',
+            {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5
+                    },
+                    "size": {
+                        "value": 3
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 6
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        }
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 200
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            }
+        );
+
+    </script>
 </body>
 
 </html>
