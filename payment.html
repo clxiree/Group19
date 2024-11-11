@@ -490,7 +490,17 @@
 
 document.getElementById("apply-btn").addEventListener("click", applyDiscount);
 
-
+// Function to get Tutee's UserID based on their email
+async function getTuteeId(userEmail) {
+    // Query the Particulars collection to get the UserID based on email
+    const tuteeQuery = await db.collection("Particulars").where("email", "==", userEmail).get();
+    if (!tuteeQuery.empty) {
+        const tuteeData = tuteeQuery.docs[0].data();
+        return tuteeData.UserID; // Assuming `UserID` is the field you need
+    } else {
+        throw new Error("Tutee not found in the database.");
+    }
+}
 
     // Call the function to display the QR code when the page loads
     document.addEventListener("DOMContentLoaded", () => {
@@ -522,6 +532,13 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
           }
 
           try {
+              // Get the logged-in user's email from Firebase Auth
+              const user = firebase.auth().currentUser;
+              if (!user) throw new Error("User is not logged in.");
+              const userEmail = user.email;
+
+            // Retrieve the tutee's UserID based on their email
+            const tuteeId = await getTuteeId(userEmail);
               // Retrieve course details from the Courses collection using the course code (subject)
               const courseQuery = await db.collection("Courses").where("Code", "==", subject).get();
               let courseData;
@@ -532,7 +549,7 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
               }
               
               // Fetch additional data from the Particulars collection
-              const tutorDoc = await db.collection("Particulars").doc(tutorId).get();
+              const tutorDoc = await db.collection("Particulars").doc(`UserID: ${tutorId}`).get();
               if (!tutorDoc.exists) {
                   throw new Error("Tutor details not found.");
               }
@@ -545,7 +562,7 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
                 tutorName: tutorData.Name,
                 tutorImg: tutorData.Image,
                 tutorReview: tutorData.Reviews || 0,
-                tutorStars: tutorData.tutorStars || "⭐️⭐️⭐️",
+                tutorStars: tutorData.Rating || 3,
                 courseCode: courseData.Code,
                 courseName: courseData.Name,
                 dateOfLesson: date,
@@ -554,7 +571,7 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
                 fee: tutorData.Rate || total,
                 totalAmount: totalAmount,
                 status: "Pending", // Start as "Pending"
-                tuteeId: 4 // Replace with the actual Tutee ID
+                tuteeId: tuteeId // Replace with the actual Tutee ID
             };
 
               // Add the booking to Firebase Bookings collection
