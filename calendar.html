@@ -393,6 +393,10 @@
             appId: "1:289686522861:web:5811385ced42106d78b5e4",
             measurementId: "G-46QED8ZFKJ"
         };
+        firebase.initializeApp(firebaseConfig);
+
+        const db = firebase.firestore();
+        const auth = firebase.auth();
 
         document.addEventListener("DOMContentLoaded", function () {
     
