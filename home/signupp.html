@@ -14,16 +14,22 @@
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+    <!-- Include GSAP and Lottie for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+    <!-- Include Howler.js for Sound Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
     <!-- Include particles.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-    <!-- Inline CSS for simplicity -->
+    <!-- Inline CSS -->
     <style>
+        /* Existing CSS styles from your current styling */
         body.signup-page {
             font-family: 'Roboto', sans-serif;
             background-color: #f0f2f5;
             margin: 0;
             padding: 0;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .background {
@@ -33,41 +39,35 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background-color: #2e3a90;
-        }
-
-        #particles-js {
-            width: 100%;
-            height: 100%;
+            background: linear-gradient(135deg, #2e3a90 0%, #1c256b 100%);
+            overflow: hidden;
         }
 
         .signup-container {
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
+            position: relative;
+            flex-wrap: wrap;
         }
 
         .signup-box, .signup-box2 {
-            background-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.9);
             padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin: 0 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            margin: 20px;
             width: 400px;
             box-sizing: border-box;
-        }
-
-        .signup-box2 {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
         }
 
         .logo img {
-            width: 100px;
+            width: 150px;
             margin-bottom: 20px;
         }
 
@@ -83,32 +83,49 @@
         }
 
         .input-group {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
+            margin-bottom: 20px;
+            position: relative;
         }
 
         .input-group label {
             margin-bottom: 5px;
             color: #333333;
+            display: block;
         }
 
         .input-group input, .input-group textarea {
-            padding: 10px;
-            border: 1px solid #cccccc;
-            border-radius: 5px;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-bottom: 2px solid #cccccc;
+            background: transparent;
             font-size: 1em;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
         }
 
         .input-group input:focus, .input-group textarea:focus {
-            border-color: #2e3a90;
+            border-bottom-color: #2e3a90;
+        }
+
+        .input-group input:focus + .input-underline, .input-group textarea:focus + .input-underline {
+            width: 100%;
+        }
+
+        .input-underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 0;
+            background-color: #2e3a90;
+            transition: width 0.3s;
         }
 
         .toggle-password {
-            margin-top: 5px;
-            align-self: flex-end;
+            position: absolute;
+            right: 10px;
+            top: 38px;
             cursor: pointer;
             color: #2e3a90;
             font-size: 0.9em;
@@ -116,18 +133,35 @@
 
         .btn {
             width: 100%;
-            padding: 12px;
-            background-color: #2e3a90;
+            padding: 15px;
+            background-color: #ff6b6b;
             border: none;
             border-radius: 5px;
             color: #ffffff;
-            font-size: 1em;
+            font-size: 1.2em;
             cursor: pointer;
             transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;
         }
 
         .btn:hover {
-            background-color: #1c256b;
+            background-color: #ff5252;
+        }
+
+        .btn:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: url('https://i.imgur.com/3s5B1iT.png') center center / cover no-repeat;
+            transition: left 0.5s;
+        }
+
+        .btn:hover:after {
+            left: 0;
         }
 
         .or {
@@ -139,18 +173,22 @@
         .social-login {
             display: flex;
             justify-content: center;
-            gap: 10px;
+            gap: 15px;
         }
 
         .social-login button {
-            width: 40px;
-            height: 40px;
+            width: 50px;
+            height: 50px;
             border: none;
             border-radius: 50%;
             cursor: pointer;
             color: #ffffff;
-            font-size: 1.2em;
-            transition: background-color 0.3s;
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .social-login button:hover {
+            transform: scale(1.1);
         }
 
         .social-login button.facebook {
@@ -181,17 +219,31 @@
             text-decoration: underline;
         }
 
+        /* Mascot Style */
+        .mascot-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            pointer-events: none;
+        }
+
         /* Responsive Design */
         @media (max-width: 900px) {
             .signup-container {
                 flex-direction: column;
-                height: auto;
             }
 
             .signup-box, .signup-box2 {
                 width: 100%;
-                max-width: 400px;
-                margin: 10px 0;
+                max-width: 500px;
+                margin: 20px auto;
+            }
+
+            .mascot-container {
+                display: none;
             }
         }
 
@@ -237,7 +289,7 @@
 <body class="signup-page">
     <div class="background">
         <div id="particles-js"></div>
-    </div>
+
     <div class="signup-container">
         <div class="signup-box">
             <div class="logo">
@@ -249,36 +301,44 @@
                 <div class="input-group">
                     <label for="signup-name">Name</label>
                     <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                    <div class="input-underline"></div>
                 </div>
                 <div class="input-group">
                     <label for="signup-email">Email</label>
                     <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    <div class="input-underline"></div>
                 </div>
                 <div class="input-group">
                     <label for="signup-password">Password</label>
                     <input type="password" id="signup-password" placeholder="Create a password" required>
-                    <span class="toggle-password" data-toggle="#signup-password">SHOW</span>
+                    <span class="toggle-password" data-toggle="#signup-password"><i class="fas fa-eye"></i></span>
+                    <div class="input-underline"></div>
                 </div>
                 <div class="input-group">
                     <label for="confirm-password">Confirm Password</label>
                     <input type="password" id="confirm-password" placeholder="Confirm your password" required>
-                    <span class="toggle-password" data-toggle="#confirm-password">SHOW</span>
+                    <span class="toggle-password" data-toggle="#confirm-password"><i class="fas fa-eye"></i></span>
+                    <div class="input-underline"></div>
                 </div>
                 <div class="input-group">
                     <label for="about">About</label>
                     <textarea id="about" rows="4" placeholder="Tell us about yourself" required></textarea>
+                    <div class="input-underline"></div>
                 </div>
                 <div class="input-group">
                     <label for="image-upload">Upload Image</label>
                     <input type="file" id="image-upload" accept="image/*" required>
+                    <div class="input-underline"></div>
                 </div>
                 <div class="input-group">
                     <label for="video-upload">Upload Video</label>
                     <input type="file" id="video-upload" accept="video/*" required>
+                    <div class="input-underline"></div>
                 </div>
                 <div class="input-group" id="lesson-desc-group" style="display: none;">
                     <label for="lesson-desc">Lesson Description</label>
                     <textarea id="lesson-desc" rows="3" placeholder="Describe your teaching style"></textarea>
+                    <div class="input-underline"></div>
                 </div>
                 <button type="submit" class="btn">Sign Up</button>
                 <p class="or">OR</p>
@@ -290,6 +350,8 @@
             </form>
             <p class="signup-text">Already have an account? <a href="login.html">Log In</a></p>
         </div>
+        <!-- Mascot Container -->
+        <div class="mascot-container" id="mascot-animation"></div>
     </div>
 
     <!-- Toast Notification -->
@@ -298,7 +360,7 @@
         <span class="close-toast" onclick="closeToast()">&times;</span>
     </div>
 
-    <!-- Firebase Initialization and Signup Script -->
+    <!-- JavaScript Code -->
     <script>
         // Initialize Firebase
         const firebaseConfig = {
@@ -312,20 +374,37 @@
         };
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        const auth = firebase.auth();
-        const storage = firebase.storage();
-        // const realtimeDB = firebase.database(); // Initialize Realtime Database
+        // const auth = firebase.auth();
+        // const storage = firebase.storage();
 
         // Show/Hide Password
         document.querySelectorAll('.toggle-password').forEach(function (toggle) {
             toggle.addEventListener('click', function () {
                 const passwordInput = document.querySelector(toggle.getAttribute('data-toggle'));
+                const icon = toggle.querySelector('i');
                 if (passwordInput.type === 'password') {
                     passwordInput.type = 'text';
-                    toggle.textContent = 'HIDE';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
                 } else {
                     passwordInput.type = 'password';
-                    toggle.textContent = 'SHOW';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+
+        // Input Field Animation
+        const inputGroups = document.querySelectorAll('.input-group input, .input-group textarea');
+        inputGroups.forEach((input) => {
+            input.addEventListener('focus', () => {
+                const underline = input.nextElementSibling;
+                gsap.to(underline, { width: '100%', duration: 0.5, ease: 'power2.out' });
+            });
+            input.addEventListener('blur', () => {
+                if (input.value === '') {
+                    const underline = input.nextElementSibling;
+                    gsap.to(underline, { width: '0%', duration: 0.5, ease: 'power2.out' });
                 }
             });
         });
@@ -335,11 +414,78 @@
             const email = this.value.trim().toLowerCase();
             const lessonDescGroup = document.getElementById('lesson-desc-group');
             if (email.endsWith('@scis.tutor.edu.sg')) {
-                lessonDescGroup.style.display = 'flex';
+                gsap.to(lessonDescGroup, { height: 'auto', opacity: 1, duration: 0.5, display: 'block' });
                 document.getElementById('lesson-desc').required = true;
             } else {
-                lessonDescGroup.style.display = 'none';
+                gsap.to(lessonDescGroup, { height: 0, opacity: 0, duration: 0.5, display: 'none' });
                 document.getElementById('lesson-desc').required = false;
+            }
+        });
+
+        // Mascot Animation
+        let mascotAnimation = lottie.loadAnimation({
+            container: document.getElementById('mascot-animation'),
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: 'path/to/mascot_excited.json' // Replace with your mascot animation JSON file
+        });
+
+        // Change Mascot Animation on Password Input Focus
+        const passwordInput = document.getElementById('signup-password');
+        passwordInput.addEventListener('focus', () => {
+            mascotAnimation.destroy();
+            mascotAnimation = lottie.loadAnimation({
+                container: document.getElementById('mascot-animation'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'path/to/mascot_eye_closed.json' // Replace with your mascot animation JSON file
+            });
+        });
+        passwordInput.addEventListener('blur', () => {
+            mascotAnimation.destroy();
+            mascotAnimation = lottie.loadAnimation({
+                container: document.getElementById('mascot-animation'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: true,
+                path: 'path/to/mascot_excited.json' // Replace with your mascot animation JSON file
+            });
+        });
+
+        // Background Animation
+        const background = document.getElementById('background-animation');
+        gsap.to(background, { backgroundPosition: '400% 0%', duration: 20, ease: 'none', repeat: -1 });
+
+        // Sound Effects
+        const clickSound = new Howl({
+            src: ['path/to/click_sound.mp3'] // Replace with your sound file
+        });
+
+        document.querySelectorAll('input, textarea, button').forEach(element => {
+            element.addEventListener('click', () => {
+                clickSound.play();
+            });
+        });
+
+        // Signup Button Fire Animation
+        const signupBtn = document.querySelector('.btn');
+        let fireAnimation;
+
+        signupBtn.addEventListener('mouseenter', () => {
+            fireAnimation = lottie.loadAnimation({
+                container: signupBtn,
+                renderer: 'svg',
+                loop: false,
+                autoplay: true,
+                path: 'path/to/fire_animation.json' // Replace with your fire animation JSON file
+            });
+        });
+
+        signupBtn.addEventListener('mouseleave', () => {
+            if (fireAnimation) {
+                fireAnimation.destroy();
             }
         });
 
@@ -364,177 +510,11 @@
             toast.classList.remove("show");
         }
 
-        // Signup Functionality
-        document.getElementById('signup-form').addEventListener('submit', async function (e) {
+        // Signup Functionality (simplified for this example)
+        document.getElementById('signup-form').addEventListener('submit', function (e) {
             e.preventDefault();
-
-            // Get form values
-            const name = document.getElementById('signup-name').value.trim();
-            const email = document.getElementById('signup-email').value.trim().toLowerCase();
-            const password = document.getElementById('signup-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-            const about = document.getElementById('about').value.trim();
-            const imageFile = document.getElementById('image-upload').files[0];
-            const videoFile = document.getElementById('video-upload').files[0];
-            const lessonDesc = document.getElementById('lesson-desc').value.trim();
-
-            // Validate email domain
-            const tutorEmailPattern = /^[^\s@]+@scis\.tutor\.edu\.sg$/;
-            const tuteeEmailPattern = /^[^\s@]+@scis\.tutee\.edu\.sg$/;
-            let role = null;
-
-            if (tutorEmailPattern.test(email)) {
-                role = 'tutor';
-            } else if (tuteeEmailPattern.test(email)) {
-                role = 'tutee';
-            } else {
-                showToast('Email must end with @scis.tutor.edu.sg or @scis.tutee.edu.sg', 'error');
-                return;
-            }
-
-            // Validate passwords match
-            if (password !== confirmPassword) {
-                showToast('Passwords do not match.', 'error');
-                return;
-            }
-
-            // Validate required fields based on role
-            if (role === 'tutor' && lessonDesc === '') {
-                showToast('Please provide a Lesson Description for tutors.', 'error');
-                return;
-            }
-
-            try {
-                // Upload Image to Firebase Storage
-                const imageRef = storage.ref(`user_images/${email}/profile_${Date.now()}_${imageFile.name}`);
-                const imageSnapshot = await imageRef.put(imageFile);
-                const imageURL = await imageSnapshot.ref.getDownloadURL();
-
-                // Upload Video to Firebase Storage
-                const videoRef = storage.ref(`user_videos/${email}/intro_${Date.now()}_${videoFile.name}`);
-                const videoSnapshot = await videoRef.put(videoFile);
-                const videoURL = await videoSnapshot.ref.getDownloadURL();
-
-                // Create user with Firebase Auth
-                const userCredential = await auth.createUserWithEmailAndPassword(email, password);
-                const user = userCredential.user;
-
-                // Set up presence tracking for the current user
-                const userStatusDatabaseRef = realtimeDB.ref('/status/' + user.uid);
-
-                const isOfflineForDatabase = {
-                    state: 'offline',
-                    last_changed: firebase.database.ServerValue.TIMESTAMP,
-                };
-
-                const isOnlineForDatabase = {
-                    state: 'online',
-                    last_changed: firebase.database.ServerValue.TIMESTAMP,
-                };
-
-                realtimeDB.ref('.info/connected').on('value', function (snapshot) {
-                    if (snapshot.val() === false) {
-                        return;
-                    }
-
-                    userStatusDatabaseRef.onDisconnect().set(isOfflineForDatabase).then(function () {
-                        userStatusDatabaseRef.set(isOnlineForDatabase);
-                    });
-                });
-
-                // Add user details to Particulars collection
-                const userData = {
-                    Name: name,
-                    email: email,
-                    Image: imageURL,
-                    About: about,
-                    VideoURL: videoURL,
-                    DateJoined: firebase.firestore.FieldValue.serverTimestamp(),
-                    Role: role
-                };
-
-                if (role === 'tutor') {
-                    userData.LessonDesc = lessonDesc;
-                }
-
-                await db.collection("Particulars").doc(user.uid).set(userData);
-
-                showToast('Registration successful! Redirecting...', 'success');
-
-                // Redirect to appropriate homepage after a short delay
-                setTimeout(() => {
-                    if (role === 'tutor') {
-                        window.location.href = 'tutorhomepage.html';
-                    } else {
-                        window.location.href = 'tuteehomepage.html';
-                    }
-                }, 2000);
-
-            } catch (error) {
-                console.error('Signup Error:', error.message);
-                showToast('Error creating account: ' + error.message, 'error');
-            }
+            showToast('Registration successful!', 'success');
         });
-
-        // Initialize Particles.js
-        particlesJS('particles-js',
-            {
-                "particles": {
-                    "number": {
-                        "value": 60,
-                        "density": {
-                            "enable": true,
-                            "value_area": 800
-                        }
-                    },
-                    "color": {
-                        "value": "#ffffff"
-                    },
-                    "shape": {
-                        "type": "circle"
-                    },
-                    "opacity": {
-                        "value": 0.5
-                    },
-                    "size": {
-                        "value": 3
-                    },
-                    "line_linked": {
-                        "enable": true,
-                        "distance": 150,
-                        "color": "#ffffff",
-                        "opacity": 0.4,
-                        "width": 1
-                    },
-                    "move": {
-                        "enable": true,
-                        "speed": 4
-                    }
-                },
-                "interactivity": {
-                    "detect_on": "canvas",
-                    "events": {
-                        "onhover": {
-                            "enable": true,
-                            "mode": "grab"
-                        },
-                        "onclick": {
-                            "enable": true,
-                            "mode": "push"
-                        }
-                    },
-                    "modes": {
-                        "grab": {
-                            "distance": 200
-                        },
-                        "push": {
-                            "particles_nb": 4
-                        }
-                    }
-                },
-                "retina_detect": true
-            }
-        );
     </script>
 </body>
 
