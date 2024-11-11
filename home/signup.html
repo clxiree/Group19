@@ -45,12 +45,12 @@
 
         .signup-container {
             display: flex;
-            justify-content: center;
+            justify-content: space-around;
+            /* Spread the boxes evenly within the container */
             align-items: center;
             min-height: 100vh;
             padding: 20px;
             box-sizing: border-box;
-            position: relative;
             flex-wrap: wrap;
         }
 
@@ -60,11 +60,10 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-            margin: 20px;
-            width: 400px;
+            width: 450px;
+            /* Set a fixed width for both boxes to make them identical */
             box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
+            margin: 20px;
         }
 
         .logo img {
@@ -85,7 +84,8 @@
 
         .input-group {
             margin-bottom: 20px;
-            position: relative;
+            padding: 0 10px;
+            /* Add horizontal padding for equal spacing inside the box */
         }
 
         .input-group label {
@@ -291,7 +291,12 @@
     </style>
 </head>
 
-<body class="signup-page">
+<body>
+    <div id="loading-screen" style="display: none;">
+        <div class="loader"></div>
+        <p>Checking your credentials...</p>
+    </div>
+
     <div class="background">
         <div id="particles-js"></div>
     </div>
@@ -480,24 +485,24 @@
         });
 
         // Signup Button Fire Animation
-        const signupBtn = document.querySelector('.btn');
-        let fireAnimation;
+        // const signupBtn = document.querySelector('.btn');
+        // let fireAnimation;
 
-        signupBtn.addEventListener('mouseenter', () => {
-            fireAnimation = lottie.loadAnimation({
-                container: signupBtn,
-                renderer: 'svg',
-                loop: false,
-                autoplay: true,
-                path: 'path/to/fire_animation.json' // Replace with your fire animation JSON file
-            });
-        });
+        // signupBtn.addEventListener('mouseenter', () => {
+        //     fireAnimation = lottie.loadAnimation({
+        //         container: signupBtn,
+        //         renderer: 'svg',
+        //         loop: false,
+        //         autoplay: true,
+        //         path: 'path/to/fire_animation.json' // Replace with your fire animation JSON file
+        //     });
+        // });
 
-        signupBtn.addEventListener('mouseleave', () => {
-            if (fireAnimation) {
-                fireAnimation.destroy();
-            }
-        });
+        // signupBtn.addEventListener('mouseleave', () => {
+        //     if (fireAnimation) {
+        //         fireAnimation.destroy();
+        //     }
+        // });
 
         // Utility function to show the toast with a message and type
         function showToast(message, type) {
@@ -531,7 +536,7 @@
             {
                 "particles": {
                     "number": {
-                        "value": 60,
+                        "value": 80,
                         "density": {
                             "enable": true,
                             "value_area": 800
@@ -558,7 +563,7 @@
                     },
                     "move": {
                         "enable": true,
-                        "speed": 4
+                        "speed": 6
                     }
                 },
                 "interactivity": {
@@ -585,6 +590,7 @@
                 "retina_detect": true
             }
         );
+
     </script>
 </body>
 
