@@ -11,7 +11,14 @@
   <!-- Firebase JS SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-  
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ModifiersPlugin.min.js"></script>
+
   <!-- Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,7 +27,30 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <!-- Favicons -->
+  <!-- <link href="assets/img/stlogo.png" rel="icon"> -->
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
     /* Reduce unnecessary padding or margin for notes section */
@@ -34,9 +64,15 @@
     .note-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      /* 3 in a row if space allows */
       gap: 20px;
     }
 
+    .note-grid-container {
+      margin-top: 30px;
+    }
+
+    /* Styling for each note container */
     .note-container {
       border: 1px solid #ddd;
       padding: 20px;
@@ -44,76 +80,122 @@
       background-color: #ffffff;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       transition: transform 0.3s ease;
-      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 350px;
+      /* Set a fixed height to standardize */
+    }
+
+    .note-container:hover {
+      transform: scale(1.02);
+      /* Slight zoom effect on hover */
+    }
+
+    .course-content {
+      text-align: left;
+      flex: 1;
+      /* Ensures consistent spacing */
       display: flex;
       flex-direction: column;
       justify-content: space-between;
     }
 
-    .note-container:hover {
-      transform: scale(1.02);
-    }
-
+    /* Styling for course code label */
     .course-code {
-      display: inline-block;
-      padding: 5px 10px;
-      background-color: #337ab7;
-      color: #ffffff;
-      font-weight: bold;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      text-align: center;
-      font-size: 0.9rem;
-      width: 100px;
-    }
+    display: inline-block;
+    padding: 5px 10px; /* Keep original padding for height */
+    background-color: #337ab7;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    width: 100px; /* Set a specific width to control the length */
+    text-align: center; /* Center-align the text within the element */
+}
 
-    .upload-button-wrapper {
+    /* Align Professor and Owner in the same row with reduced spacing */
+    .info-row {
       display: flex;
-      justify-content: flex-end;
-      margin-bottom: 20px;
+      align-items: center;
+      gap: 5px;
+      /* Reduced space between items */
     }
 
-    .upload-button-wrapper .btn i {
-      margin-right: 5px;
+    .info-row p {
+      margin: 0;
+      /* Remove default paragraph margin */
     }
+    .upload-button-wrapper {
+  display: flex;
+  justify-content: flex-end; /* Aligns the button to the right */
+  margin-bottom: 20px; /* Adjust as needed to add space below */
+}
 
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(255, 255, 255, 0.8);
-      z-index: 1;
-    }
+.upload-button-wrapper .btn {
+  display: inline-flex;
+  align-items: center;
+}
+
+.upload-button-wrapper .btn i {
+  margin-right: 5px; /* Adds space between the icon and the text */
+}
+.note-container {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8); /* 20% transparency */
+    z-index: 1;
+}
+
+.course-content {
+    position: relative;
+    z-index: 2; /* Ensure the content appears above the overlay */
+}
+
+
 
     /* Ensures layout responsiveness */
     @media (max-width: 768px) {
       .note-grid {
         grid-template-columns: 1fr;
+        /* Single column on smaller screens */
       }
     }
   </style>
 </head>
 
 <body class="course-details-page">
+
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg" alt="Logo">
+        <img src="assets/img/smootutor-logo.jpg">
       </a>
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="tuteehomepage.html">Home</a></li>
+          <li><a href="tuteehomepage.html">Home<br></a></li>
           <li><a href="bookings.html">Bookings</a></li>
+
           <li class="dropdown">
             <a href="trainers.html" id="notesDropdown" aria-expanded="false">
               Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
               <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
               <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+
             </ul>
           </li>
           <li><a href="chats.html">Chats</a></li>
@@ -122,17 +204,22 @@
               Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
             </a>
             <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="newnotes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="newnotes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
             </ul>
-          </li>
+         
         </ul>
-        <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
+      <a class="btn-getstarted" id="auth-button"><div id="my-email"></div></a>
     </div>
   </header>
 
   <main class="main">
+
+    <!-- Page Title -->
     <div class="page-title" data-aos="fade">
       <div class="heading">
         <div class="container">
@@ -140,12 +227,14 @@
             <div class="col-lg-8">
               <h1>Notes</h1>
               <p class="mb-0">Upload your notes</p>
+
             </div>
           </div>
         </div>
       </div>
-    </div>
-
+      
+    </div><!-- End Page Title -->
+    <!-- Browse Notes Section -->
     <section id="browse-notes-section" class="notes-section">
       <div class="container d-flex justify-content-between align-items-center">
         <h2>Browse Notes</h2>
@@ -153,15 +242,27 @@
           <a class="btn btn-primary" href="uploadnotes.html">
             <i class="fas fa-upload"></i> Upload Your Notes
           </a>
-        </div>
+        </div>        
       </div>
       <div class="container note-grid" id="browse-notes-container"></div>
     </section>
+    <section id="saved-notes-section" class="notes-section" style="display: none;">
+      <div class="container">
+        <h2>Saved Notes</h2>
+        <div class="container note-grid" id="saved-notes-container"></div>
+      </div>
+    </section>
+
+
+
+
   </main>
 
   <footer id="footer" class="footer position-relative light-background">
     <div class="container footer-top">
       <div class="row gy-4">
+        
+        <!-- About Section with Social Links -->
         <div class="col-lg-3 md-6 sm-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
             <span class="sitename">SMOOTutor</span>
@@ -169,18 +270,33 @@
           <div class="footer-contact pt-3">
             <p>SMU</p>
             <p>81 Victoria St, Singapore 188065</p>
-            <p><strong>Phone:</strong> +65 8111 9222</p>
-            <p><strong>Email:</strong> SMOOTutor@gmail.com</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
           </div>
+          <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+            <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+            <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+          </div>
+       
         </div>
+  
+        <!-- Google Maps Section -->
         <div class="col-lg-9 md-6 sm-6">
-          <iframe style="border:0; width: 100%; height: 350px;"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street"
-            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
+  
+  
       </div>
     </div>
   </footer>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
 
   <!-- Firebase Initialization and JavaScript Functions -->
   <script>
@@ -192,55 +308,216 @@
         projectId: "smootutor-ed94a",
         storageBucket: "smootutor-ed94a.appspot.com",
         messagingSenderId: "289686522861",
-        appId: "1:289686522861:web:5811385ced42106d78b5e4"
+        appId: "1:289686522861:web:5811385ced42106d78b5e4",
+        measurementId: "G-46QED8ZFKJ"
       };
 
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
       const db = firebase.firestore();
+      const storage = firebase.storage();
+      const auth = firebase.auth();
+    //   firebase.auth().onAuthStateChanged((user) => {
+    //     if (user) {
+    //         console.log("User is logged in with email:", user.email);
+    //         document.getElementById("my-email").innerText = user.email;
+    //         // fetchAllTutors()
+    //         // You can use user.email to retrieve user-specific data
+    //     } else {
+    //         console.log("No user is logged in.");
+    //         // Redirect to login page if needed
+    //         window.location.href = 'login.html';
+    //     }
+    // });
+    firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        
+        const emailDiv = document.getElementById("my-email");
+        const authButton = document.getElementById("auth-button");
 
-      function renderNotes(containerId, notes) {
-        const container = document.getElementById(containerId);
-        container.textContent = ""; // Clear the container before adding new items
+        // Display the user's email by default
+        emailDiv.innerText = user.email;
 
-        notes.forEach(note => {
-          const noteContainer = document.createElement("div");
-          noteContainer.className = "note-container";
-
-          const courseCode = document.createElement("span");
-          courseCode.className = "course-code";
-          courseCode.textContent = note.Name || "No Title";
-
-          const courseName = document.createElement("h3");
-          courseName.textContent = note.courseName || "Untitled";
-
-          // Append elements to the note container
-          noteContainer.appendChild(courseCode);
-          noteContainer.appendChild(courseName);
-
-          // Append noteContainer to the main container
-          container.appendChild(noteContainer);
+        // Add a click event to handle changing to logout and then logging out
+        authButton.addEventListener("click", function() {
+            if (emailDiv.innerText === user.email) {
+                // Change to "LOGOUT" and apply red style
+                emailDiv.innerText = "LOGOUT";
+                emailDiv.classList.add("logout-button");
+            } else if (emailDiv.innerText === "LOGOUT") {
+                // Sign out and redirect
+                firebase.auth().signOut().then(() => {
+                    console.log("User has logged out.");
+                    window.location.href = 'index.html'; // Redirect to home page
+                }).catch((error) => {
+                    console.error("Error logging out:", error);
+                });
+            }
         });
-      }
+    } else {
+        console.log("No user is logged in.");
+        window.location.href = 'login.html';
+    }
+});
 
-      function fetchNotes() {
-        db.collection("TestNotes").get().then((snapshot) => {
-          const notes = [];
-          snapshot.forEach((doc) => {
-            notes.push(doc.data());
-          });
-          renderNotes("browse-notes-container", notes);
-        }).catch((error) => {
-          console.error("Error fetching notes:", error);
-        });
-      }
 
-      fetchNotes(); // Fetch notes on page load
+
+      
+
+
+// Function to render notes in the specified container (Browse or Saved)
+function renderNotes(containerId, notes) {
+    const container = document.getElementById(containerId);
+    container.textContent = ""; // Clear the container before adding new items
+
+    notes.forEach(note => {
+        const noteContainer = document.createElement("div");
+        noteContainer.className = "note-container";
+        noteContainer.style.backgroundImage = `url('${note.img}')`;
+
+        // Create an overlay div for transparency
+        const overlay = document.createElement("div");
+        overlay.className = "overlay";
+
+        const courseContent = document.createElement("div");
+        courseContent.className = "course-content";
+
+        const courseCode = document.createElement("span");
+        courseCode.className = "course-code";
+        courseCode.textContent = note.courseId;
+
+        const courseName = document.createElement("h3");
+        courseName.textContent = note.courseName;
+
+        const courseProf = document.createElement("p");
+        courseProf.innerHTML = `<strong>Professor:</strong> ${note.courseProf}`;
+
+        const owner = document.createElement("p");
+        owner.innerHTML = `<strong>Owner:</strong> ${note.owner}`;
+
+        const price = document.createElement("p");
+        price.innerHTML = `<strong>Price:</strong> $${note.price}`;
+
+        const previewLink = document.createElement("a");
+        previewLink.href = note.isSaved ? note.courseLink : `preview.html?notesId=${note.id}`;
+        previewLink.target = "_blank";
+        previewLink.innerHTML = `<i class="fas ${note.isSaved ? 'fa-unlock' : 'fa-lock'}"></i> ${note.isSaved ? "View Notes" : "Preview Notes"}`;
+
+        // Append all elements to courseContent
+        courseContent.appendChild(courseCode);
+        courseContent.appendChild(courseName);
+        courseContent.appendChild(courseProf);
+        courseContent.appendChild(owner);
+        courseContent.appendChild(price);
+        courseContent.appendChild(previewLink);
+
+        // Append overlay and courseContent to noteContainer
+        noteContainer.appendChild(overlay);
+        noteContainer.appendChild(courseContent);
+
+        // Append noteContainer to the main container
+        container.appendChild(noteContainer);
     });
+}
+
+
+function fetchNotes() {
+    // Reference to the default image in Firebase Storage
+    const defaultImageRef = storage.ref('images/notes/default_image.jpg');
+    
+    defaultImageRef.getDownloadURL().then(defaultImageUrl => {
+        db.collection("BrowseNotes").get().then((snapshot) => {
+            const browseNotes = [];
+            const savedNotes = [];
+
+            snapshot.forEach((doc) => {
+                const note = { id: doc.id, ...doc.data() };
+
+                if (note.img) {
+                    // Prefix with the correct path in Firebase Storage
+                    const imgPath = `images/notes/${note.img}`;
+                    storage.ref(imgPath).getDownloadURL().then((url) => {
+                        note.img = url; // Set the full URL for the image
+                        if (note.isSaved) {
+                            savedNotes.push(note);
+                        } else {
+                            browseNotes.push(note);
+                        }
+                        
+                        // Render notes after the image URL is set
+                        renderNotes("browse-notes-container", browseNotes);
+                        renderNotes("saved-notes-container", savedNotes);
+                    }).catch((error) => {
+                        console.error("Error fetching image URL:", error);
+                        note.img = defaultImageUrl; // Use default image as fallback
+                        if (note.isSaved) {
+                            savedNotes.push(note);
+                        } else {
+                            browseNotes.push(note);
+                        }
+                        renderNotes("browse-notes-container", browseNotes);
+                        renderNotes("saved-notes-container", savedNotes);
+                    });
+                } else {
+                    note.img = defaultImageUrl; // Set default image for new notes without specific image
+                    if (note.isSaved) {
+                        savedNotes.push(note);
+                    } else {
+                        browseNotes.push(note);
+                    }
+                    renderNotes("browse-notes-container", browseNotes);
+                    renderNotes("saved-notes-container", savedNotes);
+                }
+            });
+        }).catch((error) => {
+            console.error("Error fetching notes:", error);
+        });
+    }).catch(error => {
+        console.error("Error fetching default image URL:", error);
+    });
+}
+
+  // Toggle between Browse and Saved notes sections
+  function showSection(section) {
+    const browseSection = document.getElementById("browse-notes-section");
+    const savedSection = document.getElementById("saved-notes-section");
+    const pageTitle = document.querySelector(".page-title h1");
+
+    if (section === "browse") {
+      browseSection.style.display = "block";
+      savedSection.style.display = "none";
+      pageTitle.textContent = "Browse Notes";
+    } else if (section === "saved") {
+      browseSection.style.display = "none";
+      savedSection.style.display = "block";
+      pageTitle.textContent = "Saved Notes";
+    }
+  }
+
+  // Attach event listeners to dropdown items
+  document.querySelector("a[href='notes.html?section=browse']").addEventListener("click", function (e) {
+    e.preventDefault();
+    showSection("browse");
+  });
+
+  document.querySelector("a[href='notes.html?section=saved']").addEventListener("click", function (e) {
+    e.preventDefault();
+    showSection("saved");
+  });
+
+  // Initial load
+  fetchNotes();
+  showSection("browse"); // Default to browse section on load
+});
+    
+    // Initialize AOS (Animate on Scroll)
+    AOS.init();
   </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
