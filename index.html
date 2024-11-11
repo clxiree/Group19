@@ -46,30 +46,25 @@
 
   <style>
 
-.card {
-  border-radius: 15px; /* Match this with the card's corner radius */
-  overflow: hidden; /* Ensures the image respects the card's rounded corners */
-  cursor: default; /* Ensures cursor does not change on hover */
-  transition: transform 0.3s ease; /* Add transition for smooth scaling effect */
-}
+    .card {
+      border-radius: 15px; /* Match this with the card's corner radius */
+      overflow: hidden; /* Ensures the image respects the card's rounded corners */
+      cursor: default; /* Ensures cursor does not change on hover */
+      transition: transform 0.3s ease; /* Add transition for smooth scaling effect */
+    }
 
-.card-img-top {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Makes sure the image covers the entire area */
-  border-radius: inherit; /* Inherit the card's rounded corners */
-  object-position: center;
-  cursor: default; /* Ensures cursor does not change on hover */
-}
+    .card-img-top {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Makes sure the image covers the entire area */
+      border-radius: inherit; /* Inherit the card's rounded corners */
+      object-position: center;
+      cursor: default; /* Ensures cursor does not change on hover */
+    }
 
-.card:hover {
-  transform: scale(1.05); /* Increase the scale of the card on hover */
-}
-
-
-
-
-
+    .card:hover {
+      transform: scale(1.05); /* Increase the scale of the card on hover */
+    }
 
 
     .wrapper {
@@ -148,6 +143,17 @@
 
 
 
+.login-message {
+  font-family: 'Poppins', sans-serif; /* Use the same font as the rest of the page */
+  font-weight: 600; /* Make it bold */
+  font-size: 1.0rem; /* Slightly larger font size */
+  color: #5f8acf; /* Matching color for better blending */
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Space between text and button */
+
+}
 
     
   </style>
@@ -165,8 +171,8 @@
         <img src="assets/img/smootutor-logo.jpg">
       </a>
 
-      <h4>Please login for us to serve you better ->
-        <a class="btn-getstarted" href="home/login.html">LOGIN</a>
+      <h4 class="login-message">Please login for us to serve you better <span style="font-size: 20px;">➛</span>
+        <a class="btn-getstarted" href="home/login.html">Login</a>
       </h4>
 
       <!-- Toast Notification -->
