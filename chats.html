@@ -498,6 +498,7 @@
       <!-- Chat Window -->
       <div class="chat-window">
 
+
         <!-- Chat Header -->
         <div class="chat-header" id="chat-header" style="display: none;">
           <div class="chat-header-info">
@@ -593,6 +594,27 @@
         window.location.href = 'login.html';
       }
     });
+
+    document.addEventListener("DOMContentLoaded", function() {
+    setBackgroundFromFirebaseStorage();
+  });
+
+    // Function to set the background image from Firebase Storage
+    function setBackgroundFromFirebaseStorage() {
+      const backgroundPath = 'chats/chat_background.png'; // Replace with your image path in Firebase Storage
+      const storage = firebase.storage();
+
+      // Get the download URL from Firebase Storage
+      storage.ref(backgroundPath).getDownloadURL()
+      .then((url) => {
+      // Set the background image of the message-list div
+      const messageList = document.getElementById("message-list");
+      messageList.style.backgroundImage = `url('${url}')`;
+      })
+      .catch((error) => {
+        console.error("Error fetching background image from storage:", error);
+        });
+    }
 
     // Fetch and display chats belonging to the current user based on email
     function fetchChats() {
