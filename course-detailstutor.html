@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Booking Details - SMOOTutor</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
+
+  <style>
+    /* Ensuring the image fits the space nicely */
+    .img-fluid {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      /* This property will ensure the image covers the space evenly */
+    }
+
+    /* Custom Toast Notification Styles */
+    .custom-toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 15px 20px;
+      border-radius: 5px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+      display: flex;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .custom-toast.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .custom-toast.success {
+      background-color: #28a745;
+    }
+
+    .custom-toast.error {
+      background-color: #dc3545;
+    }
+
+    .close-toast-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    /* Custom Modal Styles */
+    .custom-modal {
+      display: none;
+      position: fixed;
+      z-index: 10000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .custom-modal-content {
+      background-color: #fff;
+      margin: 15% auto;
+      padding: 20px;
+      border-radius: 5px;
+      width: 80%;
+      max-width: 500px;
+    }
+
+    .custom-modal-header,
+    .custom-modal-body,
+    .custom-modal-footer {
+      padding: 10px;
+    }
+
+    .custom-modal-header {
+      border-bottom: 1px solid #ddd;
+    }
+
+    .custom-modal-footer {
+      border-top: 1px solid #ddd;
+      text-align: right;
+    }
+  </style>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+</head>
+
+<body class="course-details-page">
+
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/smootutor-logo.jpg">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="tutorhomepage.html">Home<br></a></li>
+          <li><a href="bookingstutor.html">Bookings</a></li>
+
+          
+          <li><a href="chats.html">Chats</a></li>
+          <li class="dropdown">
+            <a href="notes.html" id="notesDropdown" aria-expanded="false">
+              Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+            </ul>
+         
+        </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted"><div id="my-email"></div></a>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Booking Details</h1>
+              <p class="mb-0">Attached are the details of your booking!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div><!-- End Page Title -->
+
+    <!-- Courses Course Details Section -->
+    <section id="courses-course-details" class="courses-course-details section">
+
+      <div class="container" data-aos="fade-up">
+
+        <div class="row">
+          <div class="col-lg-8">
+            <img src="assets/img/course-details.jpg" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-4">
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Booking ID</h5>
+              <p></p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Status</h5>
+              <p></p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Trainer</h5>
+              <p><a href="#"></a></p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Course Fee</h5>
+              <p></p>
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Schedule</h5>
+
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Time</h5>
+              <p></p>
+
+            </div>
+
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Mode</h5>
+              <p></p>
+
+            </div>
+            <button class="btn btn-success mx-5">Accept Lesson</button>
+            <button class="btn btn-danger">Cancel Lesson</button>
+
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+    <!-- /Courses Course Details Section -->
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        
+        <!-- About Section with Social Links -->
+        <div class="col-lg-3 md-6 sm-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">SMOOTutor</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>SMU</p>
+            <p>81 Victoria St, Singapore 188065</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+            <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+            <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+          </div>
+       
+        </div>
+  
+        <!-- Google Maps Section -->
+        <div class="col-lg-9 md-6 sm-6">
+          <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+  
+  
+      </div>
+    </div>
+  </footer>
+
+  <!-- Custom Toast Notification -->
+  <div id="customToast" class="custom-toast">
+    <span id="customToastMessage"></span>
+    <button onclick="closeToast()" class="close-toast-btn">&times;</button>
+  </div>
+
+  <!-- Custom Modal for Confirmation -->
+  <div id="customModal" class="custom-modal">
+    <div class="custom-modal-content">
+      <div class="custom-modal-header">
+        <h5>Confirmation</h5>
+      </div>
+      <div class="custom-modal-body">
+        
+        <p>Are you sure you want to cancel this booking?</p>
+      </div>
+      <div class="custom-modal-footer">
+        <button id="modalCancelBtn" class="btn btn-secondary">No</button>
+        <button id="modalConfirmBtn" class="btn btn-danger">Yes, Cancel Booking</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- Custom Modal for Acceptance Confirmation -->
+  <div id="acceptModal" class="custom-modal">
+    <div class="custom-modal-content">
+      <div class="custom-modal-header">
+        <h5>Confirmation</h5>
+      </div>
+      <div class="custom-modal-body">
+        <p>Please make sure that you have received the payment from your student.</p>
+        <p>Are you sure you want to confirm this booking?</p>
+      </div>
+      <div class="custom-modal-footer">
+        <button id="acceptModalCancelBtn" class="btn btn-secondary">No</button>
+        <button id="acceptModalConfirmBtn" class="btn btn-success">Yes, Confirm Booking</button>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script src="assets/js/main.js"></script>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Firebase config and initialization
+      const firebaseConfig = {
+        apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+        authDomain: "smootutor-ed94a.firebaseapp.com",
+        databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "smootutor-ed94a",
+        storageBucket: "smootutor-ed94a.appspot.com",
+        messagingSenderId: "289686522861",
+        appId: "1:289686522861:web:5811385ced42106d78b5e4",
+        measurementId: "G-46QED8ZFKJ"
+      };
+      firebase.initializeApp(firebaseConfig);
+
+      const db = firebase.firestore();
+      const auth = firebase.auth();
+
+      // Get bookingId from URL and convert to number
+      const urlParams = new URLSearchParams(window.location.search);
+      const searchBookingId = Number(urlParams.get('bookingId')); // Convert to number
+
+      // Function to show the toast with a message and type
+      function showToast(message, type) {
+        const toast = document.getElementById("customToast");
+        const toastMessage = document.getElementById("customToastMessage");
+
+        // Set the message and apply success/error style
+        toastMessage.textContent = message;
+        toast.classList.add("show", type);
+
+        // Hide the toast after 5 seconds
+        setTimeout(() => {
+          toast.classList.remove("show", type);
+        }, 5000);
+      }
+
+      // Close button function for the toast
+      function closeToast() {
+        const toast = document.getElementById("customToast");
+        toast.classList.remove("show");
+      }
+
+      // Function to update UI elements
+      function updateUIElements(bookingData) {
+        const elements = {
+          bookingId: document.querySelector('.course-info:nth-child(1) p'),
+          status: document.querySelector('.course-info:nth-child(2) p'),
+          trainer: document.querySelector('.course-info:nth-child(3) p a'),
+          courseFee: document.querySelector('.course-info:nth-child(4) p'),
+          schedule: document.querySelector('.course-info:nth-child(5) '),
+          time: document.querySelector('.course-info:nth-child(6) p'),
+          mode: document.querySelector('.course-info:nth-child(7) p'),
+          courseImage: document.querySelector('.img-fluid')
+        };
+
+        // Update booking ID
+        elements.bookingId.textContent = `#${bookingData.bookingId}`;
+        elements.status.textContent = bookingData.status;
+        if (elements.trainer) {
+          elements.trainer.textContent = bookingData.tutorName;
+        }
+        elements.courseFee.textContent = `$${bookingData.fee * 2}`;
+
+        // Update schedule
+        const existingSchedulePs = elements.schedule.querySelectorAll('p');
+        existingSchedulePs.forEach(p => p.remove());
+        const dateP = document.createElement('p');
+        dateP.textContent = bookingData.dateOfLesson;
+        elements.schedule.appendChild(dateP);
+
+        // Populate Mode and Time
+        if (elements.mode) {
+          elements.mode.textContent = bookingData.mode;
+        }
+
+        if (elements.time) {
+          elements.time.textContent = bookingData.time;
+        }
+
+        // Update course image
+        if (bookingData.img) {
+          elements.courseImage.src = `assets/img/bookings/${bookingData.img}`;
+        }
+      }
+
+      function fetchBookingDetails() {
+        if (!searchBookingId || isNaN(searchBookingId)) {
+          console.error('Invalid booking ID:', searchBookingId);
+          return;
+        }
+
+        firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        document.getElementById("my-email").innerText = user.email;
+
+        // Retrieve booking details if user is logged in
+        db.collection('Bookings')
+            .where('bookingId', '==', searchBookingId)
+            .get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    const doc = querySnapshot.docs[0];
+                    const bookingData = doc.data();
+                    updateUIElements(bookingData);
+
+                    // Add event listener for cancel button
+                    const cancelButton = document.querySelector('.btn-danger');
+                    if (cancelButton) {
+                        cancelButton.addEventListener('click', () => handleCancelBooking(doc.id));
+                    }
+                    const acceptButton = document.querySelector('.btn-success'); // Use a button with class 'btn-success' for accept
+                    if (acceptButton) {
+                      acceptButton.addEventListener('click', () => handleAcceptBooking(doc.id));
+                    }
+                } else {
+                    console.error('No booking found with ID:', searchBookingId);
+                }
+            })
+            .catch((error) => {
+                console.error('Error fetching booking details:', error);
+            });
+
+    } else {
+        console.log("No user is logged in.");
+        // Redirect to login page if needed
+        window.location.href = 'login.html';
+    }
+});}
+function handleAcceptBooking(docId) {
+  // Show custom modal for acceptance confirmation
+  const acceptModal = document.getElementById('acceptModal');
+  acceptModal.style.display = 'block';
+
+  // Handle modal buttons
+  const acceptModalCancelBtn = document.getElementById('acceptModalCancelBtn');
+  const acceptModalConfirmBtn = document.getElementById('acceptModalConfirmBtn');
+
+  acceptModalCancelBtn.onclick = function () {
+    acceptModal.style.display = 'none';
+  };
+
+  acceptModalConfirmBtn.onclick = function () {
+    acceptModal.style.display = 'none';
+    // Proceed to confirm booking
+    db.collection('Bookings').doc(docId).update({
+      status: 'Confirmed'
+    })
+      .then(() => {
+        showToast('Booking confirmed successfully.', 'success');
+        fetchBookingDetails(); // Refresh the booking details after acceptance
+      })
+      .catch((error) => {
+        console.error('Error confirming booking:', error);
+        showToast('Failed to confirm booking. Please try again.', 'error');
+      });
+  };
+}
+      function handleCancelBooking(docId) {
+        // Show custom modal for confirmation
+        const modal = document.getElementById('customModal');
+        modal.style.display = 'block';
+
+        // Handle modal buttons
+        const modalCancelBtn = document.getElementById('modalCancelBtn');
+        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+
+        modalCancelBtn.onclick = function () {
+          modal.style.display = 'none';
+        };
+
+        modalConfirmBtn.onclick = function () {
+          modal.style.display = 'none';
+          // Proceed to cancel booking
+          db.collection('Bookings').doc(docId).update({
+            status: 'Cancelled'
+          })
+            .then(() => {
+              showToast('Booking cancelled successfully.', 'success');
+              fetchBookingDetails(); // Refresh the booking details after cancellation
+            })
+            .catch((error) => {
+              console.error('Error cancelling booking:', error);
+              showToast('Failed to cancel booking. Please try again.', 'error');
+            });
+        };
+
+        // Close the modal when clicking outside of it
+        window.onclick = function (event) {
+          if (event.target == modal) {
+            modal.style.display = 'none';
+          }
+        };
+      }
+
+      fetchBookingDetails();
+    });
+  </script>
+
+</body>
+
+</html>
