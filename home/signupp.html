@@ -301,10 +301,9 @@
     <!-- Firebase Initialization and Signup Script -->
     <script>
         // Initialize Firebase
-        var firebaseConfig = {
+        const firebaseConfig = {
             apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
             authDomain: "smootutor-ed94a.firebaseapp.com",
-            databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "smootutor-ed94a",
             storageBucket: "smootutor-ed94a.appspot.com",
             messagingSenderId: "289686522861",
@@ -315,7 +314,7 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
         const storage = firebase.storage();
-        const realtimeDB = firebase.database(); // Initialize Realtime Database
+        // const realtimeDB = firebase.database(); // Initialize Realtime Database
 
         // Show/Hide Password
         document.querySelectorAll('.toggle-password').forEach(function (toggle) {
