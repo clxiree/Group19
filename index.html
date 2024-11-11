@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Index - Mentor Bootstrap Template</title>
+  <title>SMOOtutor</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -27,6 +27,9 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
@@ -42,6 +45,33 @@
   <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
+
+.card {
+  border-radius: 15px; /* Match this with the card's corner radius */
+  overflow: hidden; /* Ensures the image respects the card's rounded corners */
+  cursor: default; /* Ensures cursor does not change on hover */
+  transition: transform 0.3s ease; /* Add transition for smooth scaling effect */
+}
+
+.card-img-top {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Makes sure the image covers the entire area */
+  border-radius: inherit; /* Inherit the card's rounded corners */
+  object-position: center;
+  cursor: default; /* Ensures cursor does not change on hover */
+}
+
+.card:hover {
+  transform: scale(1.05); /* Increase the scale of the card on hover */
+}
+
+
+
+
+
+
+
     .wrapper {
       position: fixed;
       bottom: 0;
@@ -310,8 +340,8 @@
       </div><!-- End Section Title -->
       <div class="row">
 
-        <div class="container">
-          <div id="teamCardsContainer" class="row">
+        <div class="container" data-aos="fade-up">
+          <div id="teamCardsContainer" class="row" data-aos="fade-up">
             <!-- Tutor cards will be dynamically populated here by JavaScript -->
           </div>
 
