@@ -697,70 +697,80 @@
     function truncateText(text, maxLength) {
       return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
     }
-
     function selectChat(chatId, chatItem, chatData) {
-      selectedChatId = chatId;
-      document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
-      chatItem.classList.add('active');
+  selectedChatId = chatId;
+  document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+  chatItem.classList.add('active');
 
-      // Determine the recipient's email
-      const recipientEmail = chatData.members.find(email => email !== currentUser.email);
+  // Determine the recipient's email
+  const recipientEmail = chatData.members.find(email => email !== currentUser.email);
 
-      // Fetch recipient's details from Users collection
-      db.collection("Particulars").where("email", "==", recipientEmail).get()
-        .then(userSnapshot => {
-          if (!userSnapshot.empty) {
-            const userData = userSnapshot.docs[0].data();
-            const recipientName = userData.Name || "Chat";
-            const recipientAvatar = userData.Image || "assets/img/default-avatar.png";
-            // console.log(recipientAvatar)
+  // Fetch recipient's details from Users collection
+  db.collection("Particulars").where("email", "==", recipientEmail).get()
+    .then(userSnapshot => {
+      if (!userSnapshot.empty) {
+        const userData = userSnapshot.docs[0].data();
+        const recipientName = userData.Name || "Chat";
+        const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
 
-            // Update the chat header with recipient's name and avatar
+        // Get the download URL for the avatar image from Firebase Storage
+        storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
+          .then(url => {
+            // Update the chat header with recipient's name and avatar URL
             document.getElementById("chat-name").textContent = recipientName;
-            document.getElementById("chat-avatar").src = recipientAvatar;
-          } else {
-            // Fallback if user data not found
-            document.getElementById("chat-name").textContent = "Chat";
+            document.getElementById("chat-avatar").src = url;
+            console.log("Avatar URL:", url);
+          })
+          .catch(error => {
+            console.error("Error fetching avatar URL:", error);
+            // Fallback to default avatar if there's an error
             document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
-          }
+          });
+      } else {
+        // Fallback if no user data is found
+        document.getElementById("chat-name").textContent = "Chat";
+        document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
+      }
 
-          // Show chat header and message input
-          document.getElementById("chat-header").style.display = "flex";
-          document.getElementById("message-input-container").style.display = "flex";
+      // Show chat header and message input
+      document.getElementById("chat-header").style.display = "flex";
+      document.getElementById("message-input-container").style.display = "flex";
 
-          // Load chat messages
-          loadChat(chatId);
-          document.getElementById("message-text").disabled = false;
-          document.getElementById("message-text").focus({ preventScroll: true });
-          document.querySelector('.chat-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-          const chatContainer = document.querySelector('.chat-container');
-          const yOffset = -2000; // Adjust this value as needed
-          const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: yPosition, behavior: 'smooth' });
-        })
-        .catch(error => {
-          console.error("Error fetching recipient's details:", error);
+      // Load chat messages
+      loadChat(chatId);
+      document.getElementById("message-text").disabled = false;
+      document.getElementById("message-text").focus({ preventScroll: true });
 
-          // Fallback in case of error
-          document.getElementById("chat-name").textContent = "Chat";
-          document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
+      // Smooth scroll to the chat container
+      const chatContainer = document.querySelector('.chat-container');
+      const yOffset = -2000; // Adjust this value as needed
+      const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: yPosition, behavior: 'smooth' });
+    })
+    .catch(error => {
+      console.error("Error fetching recipient's details:", error);
 
-          // Show chat header and message input
-          document.getElementById("chat-header").style.display = "flex";
-          document.getElementById("message-input-container").style.display = "flex";
+      // Fallback in case of error
+      document.getElementById("chat-name").textContent = "Chat";
+      document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
 
-          // Load chat messages
-          loadChat(chatId);
-          document.getElementById("message-text").disabled = false;
-          document.getElementById("message-text").focus({ preventScroll: true });
-          document.querySelector('.chat-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
-          const chatContainer = document.querySelector('.chat-container');
-          const yOffset = -120; // Adjust this value as needed
-          const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      // Show chat header and message input
+      document.getElementById("chat-header").style.display = "flex";
+      document.getElementById("message-input-container").style.display = "flex";
 
-          window.scrollTo({ top: yPosition, behavior: 'smooth' });
-        });
-    }
+      // Load chat messages
+      loadChat(chatId);
+      document.getElementById("message-text").disabled = false;
+      document.getElementById("message-text").focus({ preventScroll: true });
+
+      // Smooth scroll to the chat container
+      const chatContainer = document.querySelector('.chat-container');
+      const yOffset = -120; // Adjust this value as needed
+      const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+      window.scrollTo({ top: yPosition, behavior: 'smooth' });
+    });
+}
+
 
 
     // Load messages for the selected chat
