@@ -110,6 +110,18 @@ firebase.auth().onAuthStateChanged((user) => {
         window.location.href = 'login.html';
     }
 });
+const myEmailButton = document.getElementById("my-email");
+const logoutButton = document.getElementById("logout-button");
+logoutButton.addEventListener("click", () => {
+    firebase.auth().signOut().then(() => {
+        // Set a flag in localStorage to show the toast on index.html
+        localStorage.setItem("logoutSuccess", "true");
+        // Redirect to index.html
+        window.location.href = 'index.html';
+    }).catch((error) => {
+        console.error("Error logging out:", error);
+    });
+});
 
 // Add event listener for the filter select
 document.getElementById('statusFilter').addEventListener('change', function(e) {
@@ -388,6 +400,90 @@ function fetchBookings(userId) {
     padding-top: 20px;
   }
 }
+
+/* Container styling */
+#my-email-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Email Button styling */
+#my-email {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1;
+}
+
+/* Show dropdown on hover */
+/* Container styling */
+#my-email-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Email Button styling */
+#my-email {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1;
+    min-width: 100%; /* Match width to parent */
+}
+
+/* Show dropdown on hover */
+#my-email-container:hover .dropdown-content {
+    display: block;
+}
+
+/* Dropdown button styling */
+#logout-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 10px 20px;
+    text-align: left;
+    width: 100%; /* Match width to dropdown */
+    font-size: 14px;
+}
+
+#logout-button:hover {
+    background-color: #f1f1f1;
+    color: red;
+}
   </style>
 </head>
 
@@ -430,7 +526,12 @@ function fetchBookings(userId) {
         </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted"><div id="my-email"></div></a>
+      <div id="my-email-container">
+        <button id="my-email"></button>
+        <div id="dropdown-menu" class="dropdown-content">
+            <button id="logout-button">Logout</button>
+        </div>
+      </div>
     </div>
   </header>
 
