@@ -574,6 +574,7 @@
     const db = firebase.firestore();
     const auth = firebase.auth();
     const storage = firebase.storage();
+    const realtimeDB = firebase.database();
 
     let currentUser = null;
     let selectedChatId = null;
@@ -586,13 +587,37 @@
         console.log("User is logged in with email:", user.email, "and UID:", user.uid);
         document.getElementById("my-email").innerText = user.email;
         fetchChats();
-        // You can use user.email to retrieve user-specific data
+
+        // Set up presence tracking for the current user
+        const userStatusDatabaseRef = realtimeDB.ref('/status/' + currentUser.uid);
+
+        const isOfflineForDatabase = {
+          state: 'offline',
+          last_changed: firebase.database.ServerValue.TIMESTAMP,
+        };
+
+        const isOnlineForDatabase = {
+          state: 'online',
+          last_changed: firebase.database.ServerValue.TIMESTAMP,
+        };
+
+        realtimeDB.ref('.info/connected').on('value', function (snapshot) {
+          if (snapshot.val() === false) {
+            return;
+          }
+
+          userStatusDatabaseRef.onDisconnect().set(isOfflineForDatabase).then(function () {
+            userStatusDatabaseRef.set(isOnlineForDatabase);
+          });
+        });
+
       } else {
         console.log("No user is logged in.");
         // Redirect to login page if needed
         window.location.href = 'login.html';
       }
     });
+
 
     // Fetch and display chats belonging to the current user based on email
     function fetchChats() {
@@ -646,6 +671,9 @@
     }
 
     function selectChat(chatId, chatItem, chatData) {
+      if (selectedChatId && recipientStatusRef) {
+        recipientStatusRef.off();
+      }
       selectedChatId = chatId;
       document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
       chatItem.classList.add('active');
@@ -653,7 +681,7 @@
       // Determine the recipient's email
       const recipientEmail = chatData.members.find(email => email !== currentUser.email);
 
-      // Fetch recipient's details from Users collection
+      // Fetch recipient's details from Particulars collection
       db.collection("Particulars").where("email", "==", recipientEmail).get()
         .then(userSnapshot => {
           if (!userSnapshot.empty) {
@@ -664,10 +692,27 @@
             // Update the chat header with recipient's name and avatar
             document.getElementById("chat-name").textContent = recipientName;
             document.getElementById("chat-avatar").src = recipientAvatar;
+
+            // Listen to recipient's online status from Realtime Database
+            const recipientUserId = userSnapshot.docs[0].id; // Assuming the document ID is the user's UID
+            const recipientStatusRef = realtimeDB.ref('/status/' + recipientUserId);
+
+            recipientStatusRef.on('value', (snapshot) => {
+              const status = snapshot.val();
+              if (status && status.state === 'online') {
+                document.getElementById("chat-status").textContent = "Online";
+                document.getElementById("chat-status").style.color = "#28a745"; // Green color for online
+              } else {
+                document.getElementById("chat-status").textContent = "Offline";
+                document.getElementById("chat-status").style.color = "#dc3545"; // Red color for offline
+              }
+            });
           } else {
             // Fallback if user data not found
             document.getElementById("chat-name").textContent = "Chat";
             document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
+            document.getElementById("chat-status").textContent = "Offline";
+            document.getElementById("chat-status").style.color = "#dc3545"; // Red color for offline
           }
 
           // Show chat header and message input
@@ -680,7 +725,7 @@
           document.getElementById("message-text").focus({ preventScroll: true });
           document.querySelector('.chat-container').scrollIntoView({ behavior: 'smooth', block: 'start' });
           const chatContainer = document.querySelector('.chat-container');
-          const yOffset = -2000; // Adjust this value as needed
+          const yOffset = -200; // Adjust this value as needed
           const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: yPosition, behavior: 'smooth' });
         })
@@ -690,6 +735,8 @@
           // Fallback in case of error
           document.getElementById("chat-name").textContent = "Chat";
           document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
+          document.getElementById("chat-status").textContent = "Offline";
+          document.getElementById("chat-status").style.color = "#dc3545"; // Red color for offline
 
           // Show chat header and message input
           document.getElementById("chat-header").style.display = "flex";
@@ -888,6 +935,7 @@
     });
 
     // New Chat
+    // New Chat
     document.getElementById("new-chat-button").addEventListener("click", () => {
       const recipientEmail = prompt("Enter the email of the recipient:");
       if (recipientEmail) {
@@ -903,13 +951,13 @@
           return;
         }
 
-        // Check if recipient exists in Users collection
+        // Check if recipient exists in Particulars collection
         db.collection("Particulars").where("email", "==", recipientEmail).get()
           .then(querySnapshot => {
             if (!querySnapshot.empty) {
               const recipientDoc = querySnapshot.docs[0];
-              const recipientName = recipientDoc.data().name || "Chat";
-              const recipientAvatar = recipientDoc.data().avatar || "assets/img/default-avatar.png";
+              const recipientName = recipientDoc.data().Name || "Chat";
+              const recipientAvatar = recipientDoc.data().Image || "assets/img/default-avatar.png";
 
               // Check if chat already exists between the two users
               db.collection("Chats")
@@ -935,8 +983,8 @@
                     const chatRef = db.collection("Chats").doc();
                     const chatData = {
                       chat_id: chatRef.id,
-                      chat_name: recipientName,
-                      chat_avatar: recipientAvatar, // Set to recipient's avatar
+                      chat_name: recipientName, // Use recipient's actual name
+                      chat_avatar: recipientAvatar, // Use recipient's actual image
                       members: [currentUser.email, recipientEmail], // Include both emails in the members array
                       last_message: null
                     };
