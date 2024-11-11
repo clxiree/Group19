@@ -616,51 +616,82 @@
         });
     }
 
-    // Fetch and display chats belonging to the current user based on email
     function fetchChats() {
-      db.collection("Chats")
-        .where("members", "array-contains", currentUser.email) // Filter chats where currentUser's email is a member
-        .onSnapshot(snapshot => {
-          const chatList = document.getElementById("chat-list");
-          // Remove existing chat items except header
-          chatList.querySelectorAll('.chat-item').forEach(item => item.remove());
+  db.collection("Chats")
+    .where("members", "array-contains", currentUser.email) // Filter chats where currentUser's email is a member
+    .onSnapshot(snapshot => {
+      const chatList = document.getElementById("chat-list");
+      // Remove existing chat items except header
+      chatList.querySelectorAll('.chat-item').forEach(item => item.remove());
 
-          snapshot.forEach(doc => {
-            const chatData = doc.data();
-            const chatItem = document.createElement("div");
-            chatItem.classList.add("chat-item", "d-flex", "align-items-center");
-            chatItem.setAttribute('data-chat-id', doc.id); // Optional: for easier selection
+      snapshot.forEach(doc => {
+        const chatData = doc.data();
+        const chatItem = document.createElement("div");
+        chatItem.classList.add("chat-item", "d-flex", "align-items-center");
+        chatItem.setAttribute('data-chat-id', doc.id); // Optional: for easier selection
 
-            // Determine the recipient's email and fetch their avatar if not already stored
-            const recipientEmail = chatData.members.find(email => email !== currentUser.email);
-            let recipientName = "Chat"; // Initialize with a default name
-            let recipientAvatar = "assets/img/default-avatar.png"; // Initialize with a fallback avatar
+        // Determine the recipient's email and fetch their avatar if not already stored
+        const recipientEmail = chatData.members.find(email => email !== currentUser.email);
+        let recipientName = "Chat"; // Default name
+        let recipientAvatar = "assets/img/default-avatar.png"; // Default avatar
 
-            // Fetch the recipient's details from the Users collection
-            db.collection("Particulars").where("email", "==", recipientEmail).get()
-              .then(userSnapshot => {
-                if (!userSnapshot.empty) {
-                  const userData = userSnapshot.docs[0].data();
-                  recipientAvatar = userData.Image || "assets/img/default-avatar.png"; // Update avatar
-                  recipientName = userData.Name || "Chat"; // Update recipientName with the actual name
-                }
+        // Fetch the recipient's details from the Users collection
+        db.collection("Particulars").where("email", "==", recipientEmail).get()
+          .then(userSnapshot => {
+            if (!userSnapshot.empty) {
+              const userData = userSnapshot.docs[0].data();
+              recipientName = userData.Name || "Chat"; // Update with actual name
+              const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
 
-                // Set the chat item's inner HTML with the recipient's avatar and name
-                chatItem.innerHTML = `
-      <img src="${recipientAvatar}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
-      <div class="chat-item-info">
-        <div class="chat-item-name">${recipientName}</div>
-        <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
-      </div>
-    `;
-              });
+              // Get the download URL for the avatar image from Firebase Storage
+              storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
+                .then(url => {
+                  // Set the chat item's inner HTML with the dynamically fetched URL and recipient name
+                  chatItem.innerHTML = `
+                    <img src="${url}" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
+                    <div class="chat-item-info">
+                      <div class="chat-item-name">${recipientName}</div>
+                      <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
+                    </div>
+                  `;
+                  chatList.appendChild(chatItem); // Add to chat list after setting innerHTML
+                })
+                .catch(error => {
+                  console.error("Error fetching avatar URL:", error);
+                  // Use default avatar if there's an error retrieving the image
+                  chatItem.innerHTML = `
+                    <img src="assets/img/default-avatar.png" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
+                    <div class="chat-item-info">
+                      <div class="chat-item-name">${recipientName}</div>
+                      <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
+                    </div>
+                  `;
+                  chatList.appendChild(chatItem);
+                });
+            } else {
+              // If no user data found, display default values
+              chatItem.innerHTML = `
+                <img src="assets/img/default-avatar.png" alt="Avatar" class="rounded-circle me-2" width="50" height="50">
+                <div class="chat-item-info">
+                  <div class="chat-item-name">${recipientName}</div>
+                  <div class="chat-item-last-message">${chatData.last_message ? (chatData.last_message.type === 'text' ? truncateText(chatData.last_message.content, 30) : '📎 Attachment') : ''}</div>
+                </div>
+              `;
+              chatList.appendChild(chatItem);
+            }
+
+            // Attach click event to open the chat when clicked
             chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
-            chatList.appendChild(chatItem);
+          })
+          .catch(error => {
+            console.error("Error fetching user details:", error);
           });
-        }, error => {
-          console.error("Error fetching chats:", error);
-        });
-    }
+      });
+    }, error => {
+      console.error("Error fetching chats:", error);
+    });
+}
+
 
     // Utility function to truncate text
     function truncateText(text, maxLength) {
@@ -682,6 +713,7 @@
             const userData = userSnapshot.docs[0].data();
             const recipientName = userData.Name || "Chat";
             const recipientAvatar = userData.Image || "assets/img/default-avatar.png";
+            // console.log(recipientAvatar)
 
             // Update the chat header with recipient's name and avatar
             document.getElementById("chat-name").textContent = recipientName;

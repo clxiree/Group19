@@ -9,8 +9,9 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <!-- <link href="assets/img/favicon.png" rel="icon"> -->
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -26,255 +27,19 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
-  <!-- Firebase JS SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
-
-  <script src="tutorhomepage.js" type="module"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ModifiersPlugin.min.js"></script>
 
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
-  <style>
-    /* Lesson Booking Container */
-    .lesson-container {
-      max-width: 850px;
-      margin: 40px auto;
-      padding: 30px;
-      background: #fff;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    }
-
-    .title {
-      text-align: center;
-      font-weight: 700;
-      color: #007bff;
-      font-size: 2rem;
-      margin-bottom: 30px;
-    }
-    .timeslot-selection, .calendar {
-      margin-top: 20px;
-    }
-
-    .calendar-days, .calendar-container {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-weight: 600;
-      color: #999;
-      font-size: 14px;
-    }
-
-    .calendar-container div {
-      padding: 10px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .calendar-container div.selected {
-      background-color: #ff4d4f;
-      color: white;
-    }
-
-    /* Styling for the Buttons */
-    .button-container {
-      text-align: center;
-      margin-top: 20px;
-    }
-
-    .button-save {
-      background-color: #28a745;
-      color: white;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    .button-save:hover {
-      background-color: #218838;
-    }
-
-    /* Time Slot List */
-    #timeslots-list {
-      list-style: none;
-      padding: 0;
-      margin-top: 10px;
-    }
-
-    #timeslots-list li {
-      background-color: #007bff;
-      color: white;
-      padding: 8px;
-      border-radius: 5px;
-      margin-top: 5px;
-    }
-
-
-    .lesson-options {
-      width: 45%;
-    }
-
-    .timeslots {
-      width: 45%;
-    }
-
-    /* Adjusting Font Size for Labels */
-    .lesson-options label {
-      font-weight: 600;
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      color: #333;
-    }
-
-    /* Select Boxes Styling */
-    .lesson-options select {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      font-size: 1rem;
-      margin-bottom: 15px;
-      transition: border 0.3s ease;
-    }
-
-    .lesson-options select:focus {
-      border-color: #007bff;
-    }
-
-    /* Timeslot Font Size and Margin */
-    .timeslots h3 {
-      font-size: 0.9rem;
-      font-weight: 500;
-      margin-bottom: 10px;
-      color: #4b4b4b;
-    }
-
-    /* Calendar Styles */
-    .calendar {
-      margin-top: 15px;
-    }
-
-    .calendar-selectors {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 15px;
-      border-radius: 15px;
-      background-color: #f5f5f5;
-      padding: 10px 15px;
-    }
-
-    .calendar-selectors select {
-      padding: 8px;
-      font-size: 16px;
-      background: none;
-      border: none;
-      font-weight: 600;
-      border-radius: 8px;
-      cursor: pointer;
-    }
-
-    .calendar-days {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      color: #999;
-      font-weight: 600;
-      padding-bottom: 10px;
-      font-size: 14px;
-    }
-
-    .calendar-days div {
-      padding: 10px 0;
-    }
-
-    .calendar-container {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 10px;
-    }
-
-    .calendar-container div {
-      padding: 10px;
-      text-align: center;
-      cursor: pointer;
-      border-radius: 50%;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
-      font-size: 14px;
-      font-weight: 500;
-    }
-
-    .calendar-container div:hover {
-      background-color: #e7f1ff;
-      box-shadow: 0 4px 10px rgba(0, 123, 255, 0.1);
-    }
-
-    .calendar-container .selected {
-      background-color: #ff4d4f;
-      color: white;
-      box-shadow: 0 3px 6px rgba(255, 77, 79, 0.4);
-      font-weight: 600;
-    }
-
-    /* Timeslots Styling */
-    .timeslot {
-      display: block;
-      margin: 10px 0;
-      padding: 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.3s ease, transform 0.3s ease;
-      font-size: 14px;
-    }
-
-    .timeslot:hover {
-      background-color: #0056b3;
-      transform: translateY(-3px);
-    }
-
-    /* Buttons Styling */
-    .button-container {
-      display: flex;
-      justify-content: space-between;
-      margin-top: 20px;
-    }
-
-    .button {
-      width: 48%;
-      padding: 12px 0;
-      border-radius: 10px;
-      border: none;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-
-    .button:hover {
-      transform: translateY(-3px);
-    }
-
-    .button-back {
-      background-color: #f3f3f3;
-      color: #666;
-    }
-
-    .button-apply {
-      background-color: #007bff;
-      color: #fff;
-    }
-  </style>
-
 
   <!-- =======================================================
   * Template Name: Mentor
@@ -283,6 +48,10 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+
+
+
+
 </head>
 
 <body class="index-page">
@@ -295,20 +64,10 @@
 
       <nav id="navmenu" class="navmenu">
         <ul>
-          <li><a href="index.html">Home<br></a></li>
-          <li><a href="bookings.html">Bookings</a></li>
+          <li><a href="tutorhomepage.html">Home<br></a></li>
+          <li><a href="bookingstutor.html">Bookings</a></li>
 
-          <li class="dropdown">
-            <a href="trainers.html" id="notesDropdown" aria-expanded="false">
-              Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
-              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-
-            </ul>
-          </li>
+          
           <li><a href="chats.html">Chats</a></li>
           <li class="dropdown">
             <a href="notes.html" id="notesDropdown" aria-expanded="false">
@@ -324,263 +83,502 @@
         </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted"><div id="my-email"></div></a>
+      <!-- <a class="btn-getstarted">
+        <div id="my-email"></div>
+    </a> -->
+    <!-- Email Button with Dropdown -->
+<div id="my-email-container">
+  <button id="my-email"></button>
+  <div id="dropdown-menu" class="dropdown-content">
+      <button id="logout-button">Logout</button>
+  </div>
+</div>
+
+
+
+
+    
     </div>
   </header>
 
+  <!-- Hero Section -->
   <main class="main">
-
-    <!-- Hero Section -->
-    <section id="hero" class="hero section dark-background">
-
-      <img src="assets/img/trainers/zen2.jpg" alt="" data-aos="fade-in">
-
-      <div class="container">
-        <h2 data-aos="fade-up" data-aos-delay="100">Tutee Today,<br>Tutor Tomorrow</h2>
-        <p data-aos="fade-up" data-aos-delay="200">We can help to alleviate your study difficulties</p>
-        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-          <a href="courses.html" class="btn-get-started">Get Started</a>
+    <div class="hero" data-aos="fade">
+        <!-- Video Background Container -->
+        <div id="background-vid" class="background-vid">
+            <video autoplay loop muted playsinline class="background-video"></video>
+            
+            <!-- Overlay to display text above the video -->
+            <div class="heading-overlay">
+                <div class="container">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div class="col-lg-8">
+                            <h2 class="heading-text">Our Tutors</h2>
+                            <p class="heading-subtext mb-0">Find the SMOO tutor that you like BEST</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
-
-    </section><!-- /Hero Section -->
-
-    <!-- About Section -->
-    <section id="about" class="about section">
-
-      <div class="container">
-
-        <div class="row gy-4">
-
-          <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-
-          </div>
-
-
-
+        
+        <!-- Additional Overlay Content -->
+        <div class="container heading-overlay">
+            <h2 data-aos="fade-up" data-aos-delay="100">Tutee Today,<br>Tutor Tomorrow</h2>
+            <p data-aos="fade-up" data-aos-delay="200">We can help to alleviate your study difficulties</p>
+            <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+                <a href="trainers.html" class="btn-get-started">Get Started</a>
+            </div>
         </div>
-
-      </div>
-
-    </section><!-- /About Section -->
-
-    <!-- upcoming bookings -->
-    <section class="courses section">
-      <div class="filter-container">
-        <!-- <label for="statusFilter">Filter by Status:</label> -->
-        <select id="statusFilter">
-            <option value="">All</option>
-            <option value="Pending">Pending</option>
-            <option value="Confirmed">Confirmed</option>
-            <option value="Cancelled">Cancelled</option>
-        </select>
     </div>
-      <div id="booking-list"></div>
-    </section>
-
-    
-
-    <!-- Trainers Index Section -->
-    <section id="trainers-index" class="section trainers-index">
-
-      <div class="lesson-container">
-        <h1 class="title">Set Your Available Timeslots</h1>
-        <div class="calendar">
-          <div class="calendar-selectors">
-            <select id="calendar-month"></select>
-            <select id="calendar-year"></select>
-          </div>
-          <div class="calendar-days">
-            <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
-          </div>
-          <div class="calendar-container" id="calendar-container"></div>
-        </div>
-        <div class="timeslot-selection">
-          <h3>Available Timeslots for <span id="selected-date">Select a Date</span>:</h3>
-          <div>
-            <label for="timeslot-time">Select Time Slot (1-Hour Intervals):</label>
-            <input type="time" id="timeslot-time" step="3600">
-            <button onclick="addTimeslot()">Add Timeslot</button>
-          </div>
-          <ul id="timeslots-list"></ul>
-        </div>
-        <div class="button-container">
-          <button class="button-save" onclick="saveAvailability()">Save Availability</button>
-        </div>
-      </div>
-          </main>
-
-
-
-          <script>
-            // Firebase configuration
-            const firebaseConfig = {
-              apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-              authDomain: "smootutor-ed94a.firebaseapp.com",
-              projectId: "smootutor-ed94a",
-              storageBucket: "smootutor-ed94a.appspot.com",
-              messagingSenderId: "289686522861",
-              appId: "1:289686522861:web:5811385ced42106d78b5e4",
-              measurementId: "G-46QED8ZFKJ"
-              };
-              firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    let selectedDate = null;
-    const timeslots = {};  // Stores timeslots for each date
-
-    // Populate calendar selectors
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    function populateSelectors() {
-      const monthSelect = document.getElementById('calendar-month');
-      const yearSelect = document.getElementById('calendar-year');
-      const currentYear = new Date().getFullYear();
-      const currentMonth = new Date().getMonth();
-
-      monthNames.forEach((month, index) => {
-        const option = document.createElement('option');
-        option.value = index;
-        option.textContent = month;
-        monthSelect.appendChild(option);
-      });
-      for (let year = currentYear - 5; year <= currentYear + 5; year++) {
-        const option = document.createElement('option');
-        option.value = year;
-        option.textContent = year;
-        yearSelect.appendChild(option);
-      }
-      monthSelect.value = currentMonth;
-      yearSelect.value = currentYear;
+</main>
+  
+  
+  <style>
+    /* Full viewport height and width for hero section */
+    /* Hero Section Styling */
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      padding: 0;
     }
 
-    function daysInMonth(month, year) {
-      return new Date(year, month + 1, 0).getDate();
+
+    .h2 {
+      color: #fff;
     }
 
-    function generateCalendar(month, year) {
-      const calendarContainer = document.getElementById('calendar-container');
-      calendarContainer.innerHTML = '';
-      const daysInSelectedMonth = daysInMonth(month, year);
-      const firstDayOfWeek = new Date(year, month, 1).getDay();
-      const calendarDates = [];
-
-      for (let i = 0; i < (firstDayOfWeek === 0 ? 6 : firstDayOfWeek - 1); i++) {
-        calendarDates.push('');
-      }
-      for (let day = 1; day <= daysInSelectedMonth; day++) {
-        calendarDates.push(day);
-      }
-
-      calendarDates.forEach(date => {
-        const dateElement = document.createElement('div');
-        dateElement.textContent = date;
-        if (date !== '') {
-          const formattedDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-          dateElement.dataset.date = formattedDate;
-          dateElement.classList.add('calendar-day');
-          dateElement.onclick = () => selectDate(formattedDate);
-        }
-        calendarContainer.appendChild(dateElement);
-      });
+    /* Background Video Container */
+    .background-vid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80%;
+      overflow: hidden;
+      z-index: -1;
+      padding: 0
     }
 
-    function selectDate(date) {
-      selectedDate = date;
-      document.getElementById('selected-date').textContent = new Date(date).toDateString();
-      document.getElementById('timeslots-list').innerHTML = '';
-      if (timeslots[date]) {
-        timeslots[date].forEach(displayTimeslot);
-      }
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
-// Initialize timeslots as an object to store arrays of times for each date
 
-
-function addTimeslot() {
-    const timeslotTime = document.getElementById('timeslot-time').value;
-    if (selectedDate && timeslotTime) {
-        const [hours, minutes] = timeslotTime.split(':').map(Number);
-        
-        // Create a Date object for the selected date and time
-        const timestamp = new Date(selectedDate);
-        timestamp.setHours(hours);
-        timestamp.setMinutes(minutes);
-        timestamp.setSeconds(0);
-
-        // Initialize the array for the selected date if it doesn't exist
-        if (!timeslots[selectedDate]) timeslots[selectedDate] = [];
-        
-        // Add the timestamp to the array for the selected date
-        timeslots[selectedDate].push(timestamp);
-
-        displayTimeslot(timestamp.toTimeString().slice(0, 5));  // Display the timeslot on the UI
-        document.getElementById('timeslot-time').value = '';  // Clear the input
-    }
+    /* Green Overlay Content */
+    .heading-overlay {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* Text color */
+    text-align: center;
+    width: 100%;
+    height: 100%;
 }
 
-function displayTimeslot(timeslot) {
-    const timeslotItem = document.createElement('li');
-    timeslotItem.textContent = timeslot;
-    document.getElementById('timeslots-list').appendChild(timeslotItem);
+.heading-overlay h2 {
+    font-size: 4rem; /* Increased font size for the heading */
+    font-weight: bold; /* Make the heading bold */
+    margin: 0; /* Remove default margin */
+    color: #132b18; /* Change text color to blue */
+}
+.heading-overlay p {
+    font-size: 1.5rem; /* Increased font size for the paragraph */
+    font-weight: bold; /* Make the paragraph bold */
+    margin: 10px 0; /* Add margin for spacing */
+    color: #fff; /* Ensure the text is white */
 }
 
-async function saveAvailability() {
-    if (Object.keys(timeslots).length === 0) {
-        alert("Please select timeslots to save.");
-        return;
-    }
-
-    const UserID = "2";  // Replace with the actual user/tutor ID
-    try {
-        // Convert the `timeslots` object format to save in Firestore as an array of timestamps
-        const formattedTimeslots = [];
-        for (const date in timeslots) {
-            timeslots[date].forEach(time => {
-                formattedTimeslots.push(firebase.firestore.Timestamp.fromDate(time));  // Convert to Firestore Timestamp
-            });
-        }
-
-        console.log("Saving timeslots:", formattedTimeslots);
-
-        await db.collection("Particulars").doc(UserID).set(
-            { availableTimeslots: formattedTimeslots }, 
-            { merge: true }
-        );
-        alert("Availability saved successfully!");
-    } catch (error) {
-        console.error("Error saving availability:", error.message);
-        alert("Error saving availability.");
-    }
+.btn-get-started {
+    position: relative;
+    cursor: pointer;
+}
+/* Container styling */
+#my-email-container {
+    position: relative;
+    display: inline-block;
 }
 
-    
-    document.getElementById('calendar-month').addEventListener('change', () => {
-      const month = parseInt(document.getElementById('calendar-month').value);
-      const year = parseInt(document.getElementById('calendar-year').value);
-      generateCalendar(month, year);
-    });
+/* Email Button styling */
+#my-email {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+    font-size: 14px;
+}
 
-    document.getElementById('calendar-year').addEventListener('change', () => {
-      const month = parseInt(document.getElementById('calendar-month').value);
-      const year = parseInt(document.getElementById('calendar-year').value);
-      generateCalendar(month, year);
-    });
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1;
+}
 
-    // Initialize the calendar
-    populateSelectors();
-    const currentDate = new Date();
-    generateCalendar(currentDate.getMonth(), currentDate.getFullYear());
-        </script>
-        </div><!-- End Section Title -->
-        <div class="row">
+/* Show dropdown on hover */
+/* Container styling */
+#my-email-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Email Button styling */
+#my-email {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1;
+    min-width: 100%; /* Match width to parent */
+}
+
+/* Show dropdown on hover */
+#my-email-container:hover .dropdown-content {
+    display: block;
+}
+
+/* Dropdown button styling */
+#logout-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 10px 20px;
+    text-align: left;
+    width: 100%; /* Match width to dropdown */
+    font-size: 14px;
+}
+
+#logout-button:hover {
+    background-color: #f1f1f1;
+    color: red;
+}
 
 
 
 
+
+  </style>
+
+  <!-- About Section -->
+  <section id="about" class="about section">
+
+    <div class="container">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
+
+        </div>
+
+        <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
+          <h3>Find tutors at a university level</h3>
+          <p class="fst-italic">
+            We provide flexible learning opportunities for students while enabling seniors to monetize their expertise
+          </p>
+          <ul>
+            <li><i class="bi bi-check-circle"></i> <span>Connect with experienced seniors</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>We feature user profiles, advanced search, and booking
+                systems</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>Facilitates easy matchmaking between students and tutors</span>
+            </li>
+            <li><i class="bi bi-check-circle"></i> <span>Secure payment processing</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>Feedback system for ratings and reviews</span></li>
+            <li><i class="bi bi-check-circle"></i> <span>In-platform communication tools</span></li>
+          </ul>
         </div>
 
       </div>
 
-    </section><!-- /Trainers Index Section -->
+    </div>
+
+  </section><!-- /About Section -->
+
+  <!-- Counts Section -->
+  <section id="counts" class="section counts light-background">
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-3 col-md-6">
+          <div class="stats-item text-center w-100 h-100">
+            <span data-purecounter-start="0" data-purecounter-end="1232" data-purecounter-duration="1"
+              class="purecounter"></span>
+            <p>Students</p>
+          </div>
+        </div><!-- End Stats Item -->
+
+        <div class="col-lg-3 col-md-6">
+          <div class="stats-item text-center w-100 h-100">
+            <span data-purecounter-start="0" data-purecounter-end="64" data-purecounter-duration="1"
+              class="purecounter"></span>
+            <p>Courses</p>
+          </div>
+        </div><!-- End Stats Item -->
+
+        <div class="col-lg-3 col-md-6">
+          <div class="stats-item text-center w-100 h-100">
+            <span data-purecounter-start="0" data-purecounter-end="42" data-purecounter-duration="1"
+              class="purecounter"></span>
+            <p>Chats</p>
+          </div>
+        </div><!-- End Stats Item -->
+
+        <div class="col-lg-3 col-md-6">
+          <div class="stats-item text-center w-100 h-100">
+            <span data-purecounter-start="0" data-purecounter-end="24" data-purecounter-duration="1"
+              class="purecounter"></span>
+            <p>Trainers</p>
+          </div>
+        </div><!-- End Stats Item -->
+
+      </div>
+
+    </div>
+
+  </section><!-- /Counts Section -->
+
+  <!-- Why Us Section -->
+  <section id="why-us" class="section why-us">
+
+    <div class="container">
+
+      <div class="row gy-4">
+
+        <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+          <div class="why-box">
+            <h3>Why Choose SMOOTutor?</h3>
+            <p>
+              It is much harder for students to find tutoring at a university level. This can bring them many challenges
+              they find difficult to overcome alone. With SMOOTutor, we can help to alleviate their study difficulties.
+            </p>
+
+          </div>
+        </div><!-- End Why Box -->
+
+        <div class="col-lg-8 d-flex align-items-stretch">
+          <div class="row gy-4" data-aos="fade-up" data-aos-delay="200">
+
+            <div class="col-xl-4">
+              <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                <i class="bi bi-clipboard-data"></i>
+                <h4>Verified Tutors</h4>
+                <p>Only SMU students can use our platform for tutoring</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+            <div class="col-xl-4" data-aos="fade-up" data-aos-delay="300">
+              <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                <i class="bi bi-gem"></i>
+                <h4>Flexible learning arrangements</h4>
+                <p>Tutees can decide if they want an online or physical lesson</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+            <div class="col-xl-4" data-aos="fade-up" data-aos-delay="400">
+              <div class="icon-box d-flex flex-column justify-content-center align-items-center">
+                <i class="bi bi-inboxes"></i>
+                <h4>Feedback System</h4>
+                <p>Look at the reviews so you can find the tutor that is right for you!</p>
+              </div>
+            </div><!-- End Icon Box -->
+
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </section><!-- /Why Us Section -->
+
+  <!-- Courses Section -->
+  <!-- <section id="courses" class="courses section">
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Courses</h2>
+      <p><a href="courses.html">Suggested Tutors for My Courses</a></p>
+    </div>
+    <div class="row" id="courses-container">
+      
+    </div>
+  </section> -->
+
+
+  <!-- Testimonials Section -->
+  <section id="testimonials" class="testimonials section">
+
+    <!-- Section Title -->
+    <div class="container section-title" data-aos="fade-up">
+      <h2>Testimonials</h2>
+      <p>What are our students saying</p>
+    </div><!-- End Section Title -->
+
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+
+      <div class="swiper init-swiper">
+        <script type="application/json" class="swiper-config">
+                {
+                  "loop": true,
+                  "speed": 600,
+                  "autoplay": {
+                    "delay": 5000
+                  },
+                  "slidesPerView": "auto",
+                  "pagination": {
+                    "el": ".swiper-pagination",
+                    "type": "bullets",
+                    "clickable": true
+                  },
+                  "breakpoints": {
+                    "320": {
+                      "slidesPerView": 1,
+                      "spaceBetween": 40
+                    },
+                    "1200": {
+                      "slidesPerView": 2,
+                      "spaceBetween": 20
+                    }
+                  }
+                }
+              </script>
+        <div class="swiper-wrapper">
+
+          <div class="swiper-slide">
+            <div class="testimonial-wrap">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
+                <h3>Saul Goodman</h3>
+                <h4>Student of Zenny</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Amazing tutoring provided at such a flexible arrangement. Highly recommended to everyone</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-wrap">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
+                <h3>Sara Wilsson</h3>
+                <h4>Student of Chrispy Choo</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Very patient and understanding. Always ready for our online lessons.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-wrap">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
+                <h3>Jena Karlis</h3>
+                <h4>Student of Cloudy Ng</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Her methods of teaching are unique and allows me to understand so much easier!</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-wrap">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
+                <h3>Matt</h3>
+                <h4>Student of Yichy Nose</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Super patient and understanding. He always makes extra time for me if I have any additional
+                    questions.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+          </div><!-- End testimonial item -->
+
+          <div class="swiper-slide">
+            <div class="testimonial-wrap">
+              <div class="testimonial-item">
+                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
+                <h3>John Larson</h3>
+                <h4>Student of Zenny</h4>
+                <div class="stars">
+                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                </div>
+                <p>
+                  <i class="bi bi-quote quote-icon-left"></i>
+                  <span>Unique ways of teaching. Keeps every lesson interesting and engaging. It was a joy to be his
+                    student.</span>
+                  <i class="bi bi-quote quote-icon-right"></i>
+                </p>
+              </div>
+            </div>
+          </div><!-- End testimonial item -->
+
+        </div>
+        <div class="swiper-pagination"></div>
+      </div>
+
+    </div>
+
+  </section><!-- /Testimonials Section -->
 
   </main>
 
@@ -591,7 +589,7 @@ async function saveAvailability() {
         <!-- About Section with Social Links -->
         <div class="col-lg-3 md-6 sm-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename"><img id="logo-image" alt="SMOOTutor Logo" style="width: 200px; height: 500px;" /></span>
+            <span class="sitename">SMOOTutor</span>
           </a>
           <div class="footer-contact pt-3">
             <p>SMU</p>
@@ -635,6 +633,165 @@ async function saveAvailability() {
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="tuteehomepage.js" type="module"></script>
+
+
+  <script>
+
+document.addEventListener("DOMContentLoaded", function () {
+    
+    
+
+    // Display user's email on load
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            myEmailButton.textContent = user.email;
+        } else {
+            window.location.href = 'index.html';
+        }
+    });
+
+    const myEmailButton = document.getElementById("my-email");
+    const logoutButton = document.getElementById("logout-button");
+    logoutButton.addEventListener("click", () => {
+    firebase.auth().signOut().then(() => {
+        // Set a flag in localStorage to show the toast on index.html
+        localStorage.setItem("logoutSuccess", "true");
+        // Redirect to index.html
+        window.location.href = 'index.html';
+    }).catch((error) => {
+        console.error("Error logging out:", error);
+    });
+});});
+  
+    
+    document.addEventListener("DOMContentLoaded", function () {
+    const topTutors = [
+      
+      'LIMITED TIME ONLY⏰ USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
+      'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
+      'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
+    ];
+
+    const marqueeContent = document.querySelector('.boxes-inner');
+    const marqueeWrapper = document.querySelector('.boxes');
+    
+
+    // Generate the boxes
+    topTutors.forEach((tutor) => {
+      const box = document.createElement('div');
+      box.classList.add('box');
+      box.textContent = tutor;
+      marqueeContent.appendChild(box);
+    });
+
+    // Duplicate the content for seamless scrolling
+    marqueeContent.innerHTML += marqueeContent.innerHTML;
+
+    let contentWidth = marqueeContent.offsetWidth / 2;
+    let direction = -1;
+
+    // Set up the GSAP animation
+    let marqueeTween = gsap.to(".boxes-inner", {
+      x: direction * contentWidth,
+      duration: 30,
+      ease: "linear",
+      repeat: -1,
+      modifiers: {
+        x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+      }
+    });
+
+    // Pause and interactivity on hover
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+      box.addEventListener('mouseenter', function () {
+        marqueeTween.pause();
+        this.style.color = '#ffcc00';
+        this.style.transform = 'scale(1.1)';
+      });
+      box.addEventListener('mouseleave', function () {
+        marqueeTween.play();
+        this.style.color = '#fff';
+        this.style.transform = 'scale(1)';
+      });
+    });
+
+    // Background color and direction change on hover
+    marqueeWrapper.addEventListener('mouseenter', function () {
+      marqueeWrapper.style.backgroundColor = '#333';
+    });
+
+    marqueeWrapper.addEventListener('mouseleave', function () {
+      marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
+      direction *= -1;
+      marqueeTween.kill();
+      marqueeTween = gsap.to(".boxes-inner", {
+        x: direction * contentWidth,
+        duration: 30,
+        ease: "linear",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+        }
+      });
+    });
+
+    // Adjust marquee on window resize
+    window.addEventListener('resize', function () {
+      contentWidth = marqueeContent.offsetWidth / 2;
+      marqueeTween.kill();
+      marqueeTween = gsap.to(".boxes-inner", {
+        x: direction * contentWidth,
+        duration: 30,
+        ease: "linear",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+        }
+      });
+    });
+    
+  });
+  
+  function fetchVideo() {
+      const videoContainer = document.getElementById("background-vid");
+      videoContainer.innerHTML = ''; // Clear any previous content
+
+      // Create the video element
+      const video = document.createElement("video");
+      video.autoplay = true;
+      video.muted = true;
+      video.loop = true;
+      video.playsInline = true;
+      video.className = "background-video";
+
+      // Firebase storage reference
+      const storage = firebase.storage();
+      const videoStorageRef = storage.ref('videos/trainers.mp4');
+
+      // Fetch the video URL and set it as the video source
+      videoStorageRef.getDownloadURL()
+        .then(url => {
+          video.src = url;
+          videoContainer.appendChild(video); // Append video to container
+        })
+        .catch(error => {
+          console.error("Error loading video:", error);
+        });
+    }
+
+    // Call fetchVideo when the DOM is loaded
+    document.addEventListener("DOMContentLoaded", fetchVideo);
+
+  </script>
+
+  <!-- Marquee Wrapper at the bottom -->
+  <div class="boxes">
+    <div class="boxes-inner">
+      <!-- Content generated by JavaScript will go here -->
+    </div>
+  </div>
 
 </body>
 
