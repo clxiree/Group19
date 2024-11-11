@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>New Notes Page - Firebase Test</title>
+
+  <!-- Firebase JS SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+
+  <!-- Basic CSS and Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      background-color: #007bff;
+      color: white;
+      padding: 15px 0;
+      text-align: center;
+    }
+
+    header .navmenu ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .notes-section {
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .note-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .note-container {
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 150px;
+      justify-content: center;
+    }
+
+    .note-container:hover {
+      transform: scale(1.02);
+    }
+
+    .note-title {
+      font-size: 18px;
+      font-weight: bold;
+      color: #007bff;
+      text-align: center;
+    }
+    
+    .btn-upload {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    .btn-upload a {
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo">
+      <h1>New Notes Page - Firebase Test</h1>
+    </div>
+    <nav class="navmenu">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="bookings.html">Bookings</a></li>
+        <li><a href="trainers.html">Tutors</a></li>
+        <li><a href="chats.html">Chats</a></li>
+        <li><a href="newnotes.html">Notes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Notes Section -->
+  <main class="notes-section">
+    <div class="btn-upload">
+      <a href="uploadnotes.html"><i class="fas fa-upload"></i> Upload Your Notes</a>
+    </div>
+    <h2>Browse Notes</h2>
+    <div class="note-grid" id="noteGrid">
+      <!-- Notes will be populated here by JavaScript -->
+    </div>
+  </main>
+
+  <!-- Firebase Initialization and JavaScript to Fetch Notes -->
+  <script>
+    // Firebase configuration for SMOOTutor project (replace with your own config if needed)
+    const firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Function to fetch notes from the 'TestNotes' collection
+    async function fetchNotes() {
+      const notesContainer = document.getElementById("noteGrid");
+      notesContainer.innerHTML = ""; // Clear container
+
+      try {
+        const snapshot = await db.collection("TestNotes").get();
+        snapshot.forEach(doc => {
+          const note = doc.data();
+          const noteElement = document.createElement("div");
+          noteElement.className = "note-container";
+          noteElement.innerHTML = `
+            <div class="note-title">${note.Name || "Untitled Note"}</div>
+          `;
+          notesContainer.appendChild(noteElement);
+        });
+      } catch (error) {
+        console.error("Error fetching notes:", error);
+      }
+    }
+
+    // Load notes on page load
+    document.addEventListener("DOMContentLoaded", fetchNotes);
+  </script>
+</body>
+</html>
