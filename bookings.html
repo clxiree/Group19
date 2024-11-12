@@ -345,6 +345,22 @@ function fetchBookings(userId) {
   </script>
   <style>
 
+.course-item {
+    width: 400px;           /* Set a fixed width for the card */
+    height: 600px;          /* Set a fixed height for the card */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.card-img-top {
+    width: 100%;            /* Image takes full width of the card */
+    height: 200px;          /* Fixed height for the image */
+    object-fit: cover;      /* Ensures the image covers the area without stretching */
+}
+
 .courses.section {
   position: relative;
   padding: 20px;
