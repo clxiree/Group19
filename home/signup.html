@@ -41,7 +41,7 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            background: linear-gradient(135deg, #2e3a90 0%, #1c256b 100%);
+            background-color: #0d47a1;
             overflow: hidden;
         }
 
@@ -68,9 +68,12 @@
             margin: 20px;
         }
 
+        .logo {
+            text-align: center;
+        }
+
         .logo img {
-            width: 150px;
-            margin-bottom: 20px;
+            width: 200px;
         }
 
         h2 {
@@ -152,7 +155,7 @@
         }
 
         .btn:hover {
-            background-color: #ff5252;
+            background-color: #db4437;
         }
 
         .btn:after {
@@ -236,24 +239,6 @@
             pointer-events: none;
         }
 
-        /* Responsive Design */
-        @media (max-width: 900px) {
-            .signup-container {
-                flex-direction: column;
-            }
-
-            .signup-box,
-            .signup-box2 {
-                width: 100%;
-                max-width: 500px;
-                margin: 20px auto;
-            }
-
-            .mascot-container {
-                display: none;
-            }
-        }
-
         /* Toast Notification Styles */
         #customToast {
             position: fixed;
@@ -291,6 +276,7 @@
             font-weight: bold;
         }
     </style>
+    
 </head>
 
 <body class="signup-page">
@@ -298,7 +284,6 @@
         <div id="particles-js"></div>
     </div>
     <div class="signup-container">
-        <div class="col-lg-1"></div>
         <div class="signup-box">
             <div class="logo">
                 <img src="SMOOTutor.png" alt="SMOOTutor Logo">
@@ -329,11 +314,8 @@
                     <div class="input-underline"></div>
                 </div>
         </div>
-        <div class="col-lg-1"></div>
         <div class="signup-box2">
-            <div class="logo">
-                <img src="password.png" alt="Password" style="width:15%;">
-            </div>
+            <h2>Personalise Your Account</h2>
             <p class="subtitle">Login Information</p>
             <div class="input-group">
                 <label for="about">About</label>
@@ -359,7 +341,6 @@
             </form>
             <p class="signup-text">Already have an account? <a href="login.html">Log In</a></p>
         </div>
-        <div class="col-lg-1"></div>
     </div>
 
     <!-- Firebase Initialization and Signup Script -->
@@ -421,10 +402,84 @@
                     alert('Error creating account: ' + error.message);
                 });
         });
+        // Initialize Particles.js
+        particlesJS('particles-js',
+            {
+                "particles": {
+                    "number": {
+                        "value": 60,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5
+                    },
+                    "size": {
+                        "value": 3
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 4
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        }
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 200
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            }
+        );
+
+        document.querySelectorAll('.toggle-password').forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                const passwordInput = document.querySelector(toggle.getAttribute('data-toggle'));
+                const icon = toggle.querySelector('i');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
     </script>
 
     <!-- Additional JS -->
-    <script src="script.js"></script>
 </body>
 
 </html>
