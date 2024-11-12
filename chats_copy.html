@@ -167,7 +167,6 @@
       padding: 15px;
       background-color: #3e3e3e;
       color: #ffffff;
-      /* border-bottom: 1px solid #dee2e6; */
     }
 
     .chat-header-info {
@@ -228,7 +227,6 @@
       animation: fadeIn 0.3s ease-in-out;
       display: flex;
       justify-content: space-between;
-      /* Space between content and delete button */
       align-items: center;
     }
 
@@ -371,9 +369,7 @@
     /* Highlighted message */
     .message.highlighted {
       background-color: #ffffcc !important;
-      /* Light yellow background */
       border: 1px solid #ffeb3b !important;
-      /* Yellow border */
     }
 
     /* Toast Container Positioning */
@@ -382,7 +378,6 @@
       bottom: 20px;
       right: 20px;
       z-index: 1055;
-      /* Higher than other elements */
     }
 
     /* Modal Enhancements */
@@ -476,7 +471,22 @@
       <div class="chat-window">
         <!-- Chat Header -->
         <div class="chat-header" id="chat-header" style="display: none;">
-          <!-- ... (include your chat header code here) ... -->
+          <div class="chat-header-info">
+            <img src="assets/img/default-avatar.png" alt="Avatar" id="chat-avatar">
+            <div>
+              <div id="chat-name">Chat</div>
+              <div class="chat-status">Online</div>
+            </div>
+          </div>
+          <div class="chat-header-actions">
+            <button id="search-chat-button" title="Search in Chat" data-bs-toggle="modal"
+              data-bs-target="#searchChatModal">
+              <i class="fas fa-search"></i>
+            </button>
+            <button id="delete-chat-button" title="Delete Chat">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
 
         <!-- Placeholder for picture when no chat is selected -->
@@ -581,7 +591,7 @@
   <script>
     // Initialize Firebase
     var firebaseConfig = {
-      // TODO: Replace with your Firebase configuration
+      // Your Firebase configuration
       apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
       authDomain: "smootutor-ed94a.firebaseapp.com",
       databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
@@ -617,10 +627,31 @@
     const chatHeader = document.getElementById("chat-header");
     const messageInputContainer = document.getElementById("message-input-container");
     const noChatSelected = document.getElementById("no-chat-selected");
-    // const chatNameElement = document.getElementById("chat-name");
-    // const chatAvatarElement = document.getElementById("chat-avatar");
+    const chatNameElement = document.getElementById("chat-name");
+    const chatAvatarElement = document.getElementById("chat-avatar");
     const typingIndicator = document.getElementById("typing-indicator");
     const myEmailElement = document.getElementById("my-email");
+
+    // Function to truncate text to a specified length
+    function truncateText(text, maxLength) {
+      if (text.length <= maxLength) {
+        return text;
+      }
+      return text.substr(0, maxLength) + '...';
+    }
+
+    // Function to append chat item to the chat list
+    function appendChatItem(chatItem, chatId, chatData) {
+      // Attach a click event listener to the chat item
+      chatItem.addEventListener("click", () => selectChat(chatId, chatItem, chatData));
+
+      // Append the complete chat item to the chat list
+      chatList.appendChild(chatItem);
+
+      // Add to chatItemsMap
+      chatItemsMap[chatId] = chatItem;
+    }
+
 
     // Authenticate and fetch chats
     firebase.auth().onAuthStateChanged((user) => {
@@ -675,8 +706,6 @@
 
       console.log("Attaching chats listener.");
 
-      // Ensure the index exists in Firestore
-      // If not, create it via the Firebase console using the provided link in the error message
       chatsListener = db.collection("Chats")
         .where("members", "array-contains", currentUser.email)
         .orderBy("last_message.sent_at", "desc")
@@ -703,7 +732,6 @@
         }, error => {
           console.error("Error fetching chats:", error);
           showToast("Failed to load chats. Please try again later.", "danger");
-          // If the error is about a missing index, inform the user to create it
           if (error.code === 'failed-precondition' || error.code === 'permission-denied') {
             console.log("Firestore requires a composite index for this query.");
             showToast("Please create the required index in Firestore.", "warning");
@@ -713,7 +741,6 @@
 
     // Function to create and append a chat item
     function createChatItem(chatId, chatData) {
-      // Prevent duplicate creation if chat already exists in the map
       if (chatItemsMap[chatId]) {
         console.warn(`Chat item for ${chatId} already exists.`);
         return;
@@ -721,52 +748,79 @@
 
       const chatItem = document.createElement("div");
       chatItem.classList.add("chat-item", "d-flex", "align-items-center");
-      chatItem.setAttribute('data-chat-id', chatId); // For easier selection
+      chatItem.setAttribute('data-chat-id', chatId);
 
-      // Determine the recipient's email
       const recipientEmail = chatData.members.find(email => email !== currentUser.email);
-      let recipientName = "Chat"; // Default name
-      let recipientAvatar = "assets/img/default-avatar.png"; // Default avatar
+      let recipientName = "Chat";
+      let recipientAvatar = "assets/img/default-avatar.png";
 
-      // Fetch the recipient's details from the Particulars collection
       db.collection("Particulars").where("email", "==", recipientEmail).get()
         .then(userSnapshot => {
           if (!userSnapshot.empty) {
             const userData = userSnapshot.docs[0].data();
-            recipientName = userData.Name || "Chat"; // Update with actual name
-            const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
+            recipientName = userData.Name || "Chat";
+            const avatarFileName = userData.Image || "default.jpg";
 
-            // Get the download URL for the avatar image from Firebase Storage
             storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
               .then(url => {
-                appendChatItem(chatItem, url, recipientName, chatData);
+                recipientAvatar = url;
+                appendChatItemDetails(chatItem, recipientAvatar, recipientName, chatData);
+                appendChatItem(chatItem, chatId, chatData);
               })
               .catch(error => {
                 console.error("Error fetching avatar URL:", error);
-                appendChatItem(chatItem, recipientAvatar, recipientName, chatData);
+                appendChatItemDetails(chatItem, recipientAvatar, recipientName, chatData);
+                appendChatItem(chatItem, chatId, chatData);
               });
           } else {
-            // If no user data found, use default values
-            appendChatItem(chatItem, recipientAvatar, recipientName, chatData);
+            appendChatItemDetails(chatItem, recipientAvatar, recipientName, chatData);
+            appendChatItem(chatItem, chatId, chatData);
           }
         })
         .catch(error => {
           console.error("Error fetching user details:", error);
-          appendChatItem(chatItem, recipientAvatar, recipientName, chatData);
+          appendChatItemDetails(chatItem, recipientAvatar, recipientName, chatData);
+          appendChatItem(chatItem, chatId, chatData);
         });
     }
 
 
-    // Function to update a chat item
+    function appendChatItemDetails(chatItem, avatarURL, recipientName, chatData) {
+      const img = document.createElement("img");
+      img.src = avatarURL;
+      img.alt = "Avatar";
+      img.classList.add("rounded-circle", "me-2");
+      img.width = 50;
+      img.height = 50;
+
+      const chatInfoDiv = document.createElement("div");
+      chatInfoDiv.classList.add("chat-item-info");
+
+      const chatNameDiv = document.createElement("div");
+      chatNameDiv.classList.add("chat-item-name");
+      chatNameDiv.textContent = recipientName;
+
+      const chatLastMessageDiv = document.createElement("div");
+      chatLastMessageDiv.classList.add("chat-item-last-message");
+      chatLastMessageDiv.textContent = chatData && chatData.last_message
+        ? (chatData.last_message.type === 'text'
+          ? truncateText(chatData.last_message.content, 30)
+          : '📎 Attachment')
+        : '';
+
+      chatInfoDiv.appendChild(chatNameDiv);
+      chatInfoDiv.appendChild(chatLastMessageDiv);
+      chatItem.appendChild(img);
+      chatItem.appendChild(chatInfoDiv);
+    }
+
     function updateChatItem(chatId, chatData) {
-      const chatItem = chatItemsMap[chatId];
+      let chatItem = chatItemsMap[chatId];
       if (!chatItem) {
         console.warn(`Chat item for ${chatId} does not exist. Creating a new one.`);
         createChatItem(chatId, chatData);
         return;
       }
-
-      // Update the last message preview
       const chatLastMessageDiv = chatItem.querySelector(".chat-item-last-message");
       if (chatLastMessageDiv) {
         chatLastMessageDiv.textContent = chatData.last_message
@@ -775,12 +829,9 @@
             : '📎 Attachment')
           : '';
       }
-
-      // Optionally, you can reorder the chat items based on last_message.sent_at
-      // For simplicity, we'll skip reordering in this example
     }
 
-    // Function to remove a chat item
+
     function removeChatItem(chatId) {
       const chatItem = chatItemsMap[chatId];
       if (chatItem) {
@@ -799,7 +850,6 @@
       if (chatItem) {
         chatItem.classList.add('active');
       } else {
-        // Try to get the chat item from the chatItemsMap
         chatItem = chatItemsMap[chatId];
         if (chatItem) {
           chatItem.classList.add('active');
@@ -808,78 +858,51 @@
         }
       }
 
-      // Determine the recipient's email
       const recipientEmail = chatData.members.find(email => email !== currentUser.email);
 
-      // Fetch recipient's details from Particulars collection
       db.collection("Particulars").where("email", "==", recipientEmail).get()
         .then(userSnapshot => {
           if (!userSnapshot.empty) {
             const userData = userSnapshot.docs[0].data();
             const recipientName = userData.Name || "Chat";
-            const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
+            const avatarFileName = userData.Image || "default.jpg";
 
-            // Get the download URL for the avatar image from Firebase Storage
             storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
               .then(url => {
-                // Update the chat header with recipient's name and avatar URL
                 chatNameElement.textContent = recipientName;
                 chatAvatarElement.src = url;
-                console.log("Avatar URL:", url);
               })
               .catch(error => {
                 console.error("Error fetching avatar URL:", error);
-                // Fallback to default avatar if there's an error
+                chatNameElement.textContent = recipientName;
                 chatAvatarElement.src = "assets/img/default-avatar.png";
               });
           } else {
-            // Fallback if no user data is found
             chatNameElement.textContent = "Chat";
             chatAvatarElement.src = "assets/img/default-avatar.png";
           }
 
-          // Show chat header and message input
           chatHeader.style.display = "flex";
           messageInputContainer.style.display = "flex";
           noChatSelected.style.display = "none";
 
-          // Load chat messages
           loadChat(chatId);
           messageTextInput.disabled = false;
           messageTextInput.focus({ preventScroll: true });
-
-          // Smooth scroll to the chat container
-          const chatContainer = document.querySelector('.chat-container');
-          const yOffset = -200; // Adjusted value for better scrolling
-          const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: yPosition, behavior: 'smooth' });
         })
         .catch(error => {
           console.error("Error fetching recipient's details:", error);
-
-          // Fallback in case of error
           chatNameElement.textContent = "Chat";
           chatAvatarElement.src = "assets/img/default-avatar.png";
-
-          // Show chat header and message input
           chatHeader.style.display = "flex";
           messageInputContainer.style.display = "flex";
           noChatSelected.style.display = "none";
-
-          // Load chat messages
           loadChat(chatId);
           messageTextInput.disabled = false;
           messageTextInput.focus({ preventScroll: true });
-
-          // Smooth scroll to the chat container
-          const chatContainer = document.querySelector('.chat-container');
-          const yOffset = -120; // Adjusted value as needed
-          const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: yPosition, behavior: 'smooth' });
         });
     }
 
-    // Load messages for the selected chat
     function loadChat(chatId) {
       if (messagesListener) {
         messagesListener();
@@ -899,61 +922,52 @@
         });
     }
 
-    // Render a single message
     function renderMessage(messageData, messageId) {
       const messageDiv = document.createElement("div");
       messageDiv.classList.add("message");
       messageDiv.classList.add(messageData.sender_email === currentUser.email ? "sent" : "received");
-      messageDiv.setAttribute("data-message-id", messageId); // Add data attribute
+      messageDiv.setAttribute("data-message-id", messageId);
 
-      // Create a container for message content and metadata
       const messageContentContainer = document.createElement("div");
       messageContentContainer.classList.add("d-flex", "align-items-center");
 
-      // Create message content element
       let messageContentElement;
 
       if (messageData.type === "text") {
         messageContentElement = document.createElement('span');
         messageContentElement.textContent = escapeHTML(messageData.content);
-        messageContentElement.classList.add("me-2"); // Margin end for spacing
+        messageContentElement.classList.add("me-2");
       } else if (messageData.type === "file") {
         messageContentElement = document.createElement('a');
         messageContentElement.href = messageData.content;
         messageContentElement.target = "_blank";
         messageContentElement.textContent = "📎 File Attachment";
-        messageContentElement.classList.add("me-2"); // Margin end for spacing
+        messageContentElement.classList.add("me-2");
       }
 
-      // Create metadata container (timestamp and tick)
       const metadataDiv = document.createElement("div");
       metadataDiv.classList.add("d-flex", "align-items-center");
 
-      // Timestamp
       const timestampSpan = document.createElement('span');
       timestampSpan.classList.add('timestamp', 'me-2');
       timestampSpan.textContent = formatTimestamp(messageData.sent_at);
 
-      // Tick Icon
       if (messageData.sender_email === currentUser.email) {
         const tickIcon = document.createElement('i');
         tickIcon.classList.add('fas');
         if (messageData.read_by_receiver) {
-          tickIcon.classList.add('fa-check-double', 'text-success'); // Double tick for read
+          tickIcon.classList.add('fa-check-double', 'text-success');
         } else {
-          tickIcon.classList.add('fa-check', 'text-secondary'); // Single tick for sent
+          tickIcon.classList.add('fa-check', 'text-secondary');
         }
         metadataDiv.appendChild(tickIcon);
       }
 
-      // Append timestamp
       metadataDiv.appendChild(timestampSpan);
 
-      // Assemble message content and metadata
       messageContentContainer.appendChild(messageContentElement);
       messageContentContainer.appendChild(metadataDiv);
 
-      // Create delete button
       const deleteButton = document.createElement('button');
       deleteButton.classList.add('delete-message');
       deleteButton.addEventListener('click', () => deleteMessage(selectedChatId, messageId));
@@ -961,30 +975,25 @@
       deleteIcon.classList.add('fas', 'fa-trash-alt');
       deleteButton.appendChild(deleteIcon);
 
-      // Assemble message components
       messageDiv.appendChild(messageContentContainer);
       messageDiv.appendChild(deleteButton);
 
       messageList.appendChild(messageDiv);
     }
 
-    // Escape HTML to prevent XSS
     function escapeHTML(str) {
       const div = document.createElement('div');
       div.textContent = str;
       return div.innerHTML;
     }
 
-    // Format timestamp
     function formatTimestamp(timestamp) {
       if (!timestamp) return '';
       const date = timestamp.toDate();
       return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
     }
 
-    // Initialize Event Listeners
     function initializeEventListeners() {
-      // Handle New Chat Form Submission
       const newChatForm = document.getElementById("new-chat-form");
       newChatForm.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -998,19 +1007,14 @@
           recipientEmailInput.classList.remove("is-invalid");
         }
 
-        // Proceed to create the chat
         createNewChat(recipientEmail);
-
-        // Reset the form
         newChatForm.reset();
 
-        // Hide the modal
         const newChatModalElement = document.getElementById('newChatModal');
         const newChatModal = bootstrap.Modal.getOrCreateInstance(newChatModalElement);
         newChatModal.hide();
       });
 
-      // Handle Search Chat Form Submission
       const searchChatForm = document.getElementById("search-chat-form");
       searchChatForm.addEventListener("submit", (event) => {
         event.preventDefault();
@@ -1024,19 +1028,14 @@
           searchQueryInput.classList.remove("is-invalid");
         }
 
-        // Perform the search
         performChatSearch(searchTerm);
-
-        // Reset the form
         searchChatForm.reset();
 
-        // Hide the modal
         const searchChatModalElement = document.getElementById('searchChatModal');
         const searchChatModal = bootstrap.Modal.getOrCreateInstance(searchChatModalElement);
         searchChatModal.hide();
       });
 
-      // Send a message
       sendMessageButton.addEventListener("click", sendMessage);
       messageTextInput.addEventListener("keypress", event => {
         if (event.key === "Enter" && !event.shiftKey) {
@@ -1045,7 +1044,6 @@
         }
       });
 
-      // Send a file
       attachFileButton.addEventListener("click", () => {
         attachFileInput.click();
       });
@@ -1073,7 +1071,6 @@
         }
       });
 
-      // Delete a chat
       deleteChatButton.addEventListener("click", () => {
         if (selectedChatId && confirm("Are you sure you want to delete this chat?")) {
           db.collection("Chats").doc(selectedChatId).delete()
@@ -1093,7 +1090,6 @@
         }
       });
 
-      // Emoji Picker
       const picker = new EmojiButton({
         position: 'top-start'
       });
@@ -1108,9 +1104,7 @@
       });
     }
 
-    // Function to show a toast notification
     function showToast(message, type = "info") {
-      // Define Bootstrap toast classes based on type
       const toastClasses = {
         success: "bg-success text-white",
         info: "bg-info text-white",
@@ -1120,7 +1114,6 @@
 
       const toastClass = toastClasses[type] || toastClasses.info;
 
-      // Create the toast element
       const toastElement = document.createElement("div");
       toastElement.classList.add("toast", "align-items-center", "border-0");
       toastElement.classList.add(...toastClass.split(" "));
@@ -1128,7 +1121,6 @@
       toastElement.setAttribute("aria-live", "assertive");
       toastElement.setAttribute("aria-atomic", "true");
 
-      // Toast content
       toastElement.innerHTML = `
         <div class="d-flex">
           <div class="toast-body">
@@ -1138,35 +1130,29 @@
         </div>
       `;
 
-      // Append the toast to the toast container
       const toastContainer = document.getElementById("toast-container");
       toastContainer.appendChild(toastElement);
 
-      // Initialize and show the toast
       const bsToast = new bootstrap.Toast(toastElement, { delay: 3000 });
       bsToast.show();
 
-      // Remove the toast element after it's hidden
       toastElement.addEventListener('hidden.bs.toast', () => {
         toastContainer.removeChild(toastElement);
       });
     }
 
-    // Function to create a new chat
     function createNewChat(recipientEmail) {
       if (recipientEmail === currentUser.email) {
         showToast("You cannot start a chat with yourself.", "warning");
         return;
       }
 
-      // Validate email format
       const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailPattern.test(recipientEmail)) {
         showToast("Please enter a valid email address.", "danger");
         return;
       }
 
-      // Check if recipient exists in Particulars collection
       db.collection("Particulars").where("email", "==", recipientEmail).get()
         .then(querySnapshot => {
           if (!querySnapshot.empty) {
@@ -1174,7 +1160,6 @@
             const recipientName = recipientDoc.data().Name || "Chat";
             const avatarFileName = recipientDoc.data().Image || "default.jpg";
 
-            // Check if chat already exists between the two users
             db.collection("Chats")
               .where("members", "array-contains", currentUser.email)
               .get()
@@ -1185,12 +1170,10 @@
                   if (chatData.members.includes(recipientEmail)) {
                     chatExists = true;
                     showToast("Chat with this user already exists.", "info");
-                    // Select the existing chat
                     const existingChatItem = chatItemsMap[chatDoc.id];
                     if (existingChatItem) {
                       selectChat(chatDoc.id, existingChatItem, chatData);
                     } else {
-                      // If chat item not found, wait for it to be created
                       setTimeout(() => {
                         const newChatItem = chatItemsMap[chatDoc.id];
                         selectChat(chatDoc.id, newChatItem, chatData);
@@ -1200,20 +1183,17 @@
                 });
 
                 if (!chatExists) {
-                  // Create a new chat
                   const chatRef = db.collection("Chats").doc();
                   const chatData = {
                     chat_id: chatRef.id,
                     chat_name: recipientName,
-                    chat_avatar: `images/team/${avatarFileName}`, // Store the path to the avatar
-                    members: [currentUser.email, recipientEmail], // Include both emails in the members array
+                    chat_avatar: `images/team/${avatarFileName}`,
+                    members: [currentUser.email, recipientEmail],
                     last_message: null
                   };
                   chatRef.set(chatData).then(() => {
                     console.log("New chat created.");
                     showToast("New chat created successfully.", "success");
-                    // Select the newly created chat
-                    // Wait for the chat item to be created by the listener
                     setTimeout(() => {
                       const newChatItem = chatItemsMap[chatRef.id];
                       selectChat(chatRef.id, newChatItem, chatData);
@@ -1238,14 +1218,12 @@
         });
     }
 
-    // Function to perform chat search
     function performChatSearch(searchTerm) {
       if (!selectedChatId) {
         showToast("No chat selected to search.", "warning");
         return;
       }
 
-      // Fetch messages containing the search term
       db.collection("Chats").doc(selectedChatId).collection("messages")
         .where("type", "==", "text")
         .orderBy("sent_at")
@@ -1272,20 +1250,16 @@
         });
     }
 
-    // Function to highlight matching messages
     function highlightMessages(messages) {
-      // Clear existing highlights
       const allMessages = messageList.querySelectorAll(".message");
       allMessages.forEach(msg => {
         msg.classList.remove("highlighted");
       });
 
-      // Highlight matching messages
       messages.forEach(message => {
         const messageDiv = messageList.querySelector(`[data-message-id="${message.message_id}"]`);
         if (messageDiv) {
           messageDiv.classList.add("highlighted");
-          // Scroll to the first matching message
           messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
           console.warn(`Message div for ${message.message_id} not found.`);
@@ -1293,7 +1267,6 @@
       });
     }
 
-    // Function to send a message
     function sendMessage() {
       const messageText = messageTextInput.value.trim();
 
@@ -1340,7 +1313,6 @@
       }
     }
 
-    // Function to send a file message
     function sendFileMessage(fileURL) {
       if (!selectedChatId) {
         showToast("No chat selected.", "warning");
@@ -1351,14 +1323,13 @@
       const messageData = {
         message_id: messageRef.id,
         content: fileURL,
-        sender_email: currentUser.email, // Use email instead of UID
+        sender_email: currentUser.email,
         sent_at: firebase.firestore.FieldValue.serverTimestamp(),
         type: "file",
         read_by_receiver: false
       };
 
       messageRef.set(messageData).then(() => {
-        // Update last message in chat document
         db.collection("Chats").doc(selectedChatId).update({
           last_message: {
             ...messageData,
@@ -1377,8 +1348,6 @@
       });
     }
 
-
-    // Function to delete a message
     function deleteMessage(chatId, messageId) {
       if (confirm("Are you sure you want to delete this message?")) {
         const messageRef = db.collection("Chats").doc(chatId).collection("messages").doc(messageId);
@@ -1387,19 +1356,16 @@
           if (docSnapshot.exists) {
             const deletedMessage = docSnapshot.data();
 
-            // Delete the message
             messageRef.delete()
               .then(() => {
                 console.log("Message deleted successfully.");
                 showToast("Message deleted successfully.", "success");
 
-                // Check if the deleted message was the last message
                 const chatRef = db.collection("Chats").doc(chatId);
                 chatRef.get().then(chatDoc => {
                   if (chatDoc.exists) {
                     const chatData = chatDoc.data();
                     if (chatData.last_message && chatData.last_message.message_id === messageId) {
-                      // Find the new last message
                       db.collection("Chats").doc(chatId).collection("messages")
                         .orderBy("sent_at", "desc")
                         .limit(1)
@@ -1419,7 +1385,6 @@
                               showToast("Failed to update last message.", "danger");
                             });
                           } else {
-                            // No messages left in the chat
                             chatRef.update({
                               last_message: null
                             }).then(() => {
@@ -1451,6 +1416,13 @@
         });
       }
     }
+
+    chatLastMessageDiv.textContent = chatData && chatData.last_message
+      ? (chatData.last_message.type === 'text'
+        ? truncateText(chatData.last_message.content, 30)
+        : '📎 Attachment')
+      : '';
+
 
   </script>
 
