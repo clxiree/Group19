@@ -288,6 +288,8 @@ header img{
   color: white;
 }
 
+
+
 @media (max-width: 1200px) {
   .header .logo {
     order: 1;

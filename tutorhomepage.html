@@ -629,7 +629,7 @@ document.addEventListener("DOMContentLoaded", function () {
   
   function fetchVideo() {
       const videoContainer = document.getElementById("background-vid");
-      videoContainer.innerHTML = ''; // Clear any previous content
+      videoContainer.innerText = ''; // Clear any previous content
 
       // Create the video element
       const video = document.createElement("video");
