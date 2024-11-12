@@ -160,7 +160,23 @@ function fetchParticulars() {
           card.setAttribute("data-user-id", data.UserID);
 
           // Set the background image of the card
-          card.style.backgroundImage = `url('../1Mentor/assets/img/team/${data.Image}')`;
+          // Reference Firebase Storage
+          const storage = firebase.storage();
+
+          // Get image URL from Firebase Storage
+          storage.ref(`images/team/${data.Image}`).getDownloadURL()
+              .then((url) => {
+                  // Set the background image to the retrieved URL
+                  card.style.backgroundImage = `url('${url}')`;
+                  card.style.backgroundSize = "cover";
+                  card.style.backgroundPosition = "center";
+              })
+              .catch((error) => {
+                  console.error("Error fetching image URL:", error);
+                  // Optionally, set a default image if there's an error
+                  card.style.backgroundImage = `url('path/to/default-image.jpg')`;
+              });
+
           card.style.backgroundSize = "cover";
           card.style.backgroundPosition = "center";
 

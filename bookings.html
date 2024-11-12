@@ -188,7 +188,7 @@ function displayFilteredBookings(status) {
 
         const price = document.createElement('p');
         price.classList.add('price');
-        price.textContent = `$${bookingData.fee}`;
+        price.textContent = `$${bookingData.fee * 2}`;
 
         categoryPriceDiv.appendChild(category);
         categoryPriceDiv.appendChild(price);
@@ -344,7 +344,7 @@ function fetchBookings(userId) {
 
   </script>
   <style>
-    
+
 .courses.section {
   position: relative;
   padding: 20px;
