@@ -95,73 +95,77 @@
         messagingSenderId: "289686522861",
         appId: "1:289686522861:web:5811385ced42106d78b5e4",
         measurementId: "G-46QED8ZFKJ"
-      };
+    };
 
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
 
-        firebase.auth().onAuthStateChanged((user) => {
+    // Function to check user authentication
+    firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            console.log("User is logged in with email:", user.email);
             document.getElementById("my-email").innerText = user.email;
-            // You can use user.email to retrieve user-specific data
         } else {
-            console.log("No user is logged in.");
-            // Redirect to login page if needed
             window.location.href = 'login.html';
-        }});
+        }
+    });
 
-    // Get the `notesId` from the URL to fetch the specific document
-    const urlParams = new URLSearchParams(window.location.search);
-    const notesId = urlParams.get('notesId');
+    // Extract the `notesId` from the URL parameters
+const urlParams = new URLSearchParams(window.location.search);
+const notesId = urlParams.get('notesId');
 
-    if (notesId) {
-        const buyNotesButton = document.getElementById("buy-notes-btn");
-        buyNotesButton.href = `payment_notes.html?notesId=${notesId}`;
-    }
+if (notesId) {
+    // Set the Buy Notes button link with notesId
+    const buyNotesButton = document.getElementById("buy-notes-btn");
+    buyNotesButton.href = `payment_notes.html?notesId=${notesId}`;
 
-    function fetchNoteDetails() {
-      if (!notesId) {
-        console.error("No notesId found in URL");
-        return;
-      }
+    // Fetch and display note details from Firebase
+    fetchNoteDetails(notesId);
+} else {
+    console.error("No notesId found in URL");
+}
 
-      // Fetch document from Firestore
-      db.collection("BrowseNotes").doc(notesId).get()
-        .then((doc) => {
-          if (doc.exists) {
-            const note = doc.data();
-            updateUI(note);
-          } else {
-            console.error("No document found with the given notesId");
-          }
+// Function to fetch and display the note details
+function fetchNoteDetails(notesId) {
+    const db = firebase.firestore();
+
+    db.collection("BrowseNotes").doc(notesId).get()
+        .then(doc => {
+            if (doc.exists) {
+                const note = doc.data();
+                
+                // Display the note details on the page
+                document.getElementById("note-title").innerText = note.courseName || "No Title";
+                document.getElementById("note-course-code").innerText = note.courseId || "Unknown Code";
+                document.getElementById("note-professor").innerText = note.courseProf || "Unknown Professor";
+                document.getElementById("note-owner").innerText = note.owner || "Unknown Owner";
+                document.getElementById("note-price").innerText = `$${note.price || "0.00"}`;
+                
+                // Set image if available, otherwise use a default image
+                const noteImage = document.getElementById("note-image");
+                noteImage.src = note.img ? note.img : "path/to/default_image.jpg";
+            } else {
+                console.error("No such document!");
+            }
         })
-        .catch((error) => {
-          console.error("Error fetching document:", error);
+        .catch(error => {
+            console.error("Error fetching note details:", error);
         });
-    }
+}
 
-    // Function to update the UI with fetched data
+    // Function to populate the UI with the fetched data
     function updateUI(note) {
-      document.querySelector('#courseCode').textContent = note.courseId || "N/A";
-      document.querySelector('#courseName').textContent = note.courseName || "N/A";
-      document.querySelector('#courseProf').textContent = note.courseProf || "N/A";
-      document.querySelector('#courseOwner').textContent = note.owner || "N/A";
-      document.querySelector('#coursePrice').textContent = note.price ? `$${note.price}` : "N/A";
-      // document.querySelector('#viewDownloadLink').href = note.courseLink || "#";
-      
-      var previewImageElement = document.getElementById("previewImage");
-      if (note.previewImage) {
-        previewImageElement.src = note.previewImage; // Set the preview image URL
-      } else {
-        previewImageElement.src = "assets/img/course-details.jpg"; // Fallback image
-      }
-    }
+        document.querySelector('#courseCode').textContent = note.courseId || "N/A";
+        document.querySelector('#courseName').textContent = note.courseName || "N/A";
+        document.querySelector('#courseProf').textContent = note.courseProf || "N/A";
+        document.querySelector('#courseOwner').textContent = note.owner || "N/A";
+        document.querySelector('#coursePrice').textContent = note.price ? `$${note.price}` : "N/A";
 
-    // Fetch note details on page load
-    fetchNoteDetails();
-  });
+        const previewImageElement = document.getElementById("previewImage");
+        previewImageElement.src = note.previewImage || "assets/img/course-details.jpg"; // Fallback image
+    }
+});
+
 </script>
 <body class="course-details-page">
 
