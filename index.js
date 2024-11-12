@@ -174,9 +174,11 @@ const storage = firebase.storage();
 
 
 
+
+
 function fetchTeamCards() {
     const teamCardsContainer = document.querySelector("#teamCardsContainer");
-    teamCardsContainer.innerHTML = ""; // Clear existing items
+    teamCardsContainer.innerText = ""; // Clear existing items
 
     // Set up a default image URL from Firebase Storage
     const defaultImageRef = storage.ref('images/team/default.jpg');
@@ -207,7 +209,6 @@ function fetchTeamCards() {
             img.classList.add("card-img-top", "img-fluid");
             img.alt = data.Name || "No Name";
             img.style.height = "300px"; // Fixed height for image
-            img.style.width = "300px";
             img.style.objectFit = "scale-down"; // Scale image to fit area
 
             // Set the default image from Firebase Storage while the actual image is loading
@@ -240,11 +241,14 @@ function fetchTeamCards() {
             about.classList.add("card-text");
             about.textContent = data.About || "No about information";
 
-            // Dynamic star rating based on Rating field
             const rating = document.createElement("p");
             rating.classList.add("card-text");
-            const starRating = "⭐".repeat(data.Rating || 0); // Repeat stars based on Rating, default to 0 stars if no rating
-            rating.textContent = starRating;
+            rating.id = "tutorRating"; // Add an id to the paragraph element
+    
+            // Pass the rating element directly to the populateStarRating function
+            populateStarRating(rating, data.Rating);
+           
+            console.log(data.Rating)
 
             // Append all elements in the right order
             cardBody.appendChild(name);
@@ -261,13 +265,34 @@ function fetchTeamCards() {
     });
 }
 
+function populateStarRating(ratingElement, rating) {
+  ratingElement.innerText = ""; // Clear previous content
+
+  for (let i = 1; i <= 5; i++) {
+      const star = document.createElement("i");
+      star.style.color = "#FFD700"; // Gold color
+
+      if (i <= Math.floor(rating)) {
+          // Full star
+          star.className = "bi bi-star-fill";
+      } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
+          // Half star
+          star.className = "bi bi-star-half";
+      } else {
+          // Empty star
+          star.className = "bi bi-star";
+      }
+      ratingElement.appendChild(star);
+  }
+}
+
 // <<<<<<< HEAD
 // =======
 // Fetch and display testimonials from Firebase Firestore
 // Fetch and display testimonials from Firebase Firestore in a Swiper carousel
 async function fetchTestimonials() {
   const testimonialsContainer = document.getElementById("testimonials-container");
-  testimonialsContainer.innerHTML = ""; // Clear any existing testimonials
+  testimonialsContainer.innerText = ""; // Clear any existing testimonials
 
   try {
       const snapshot = await db.collection("Testimonials").get();
@@ -322,6 +347,9 @@ async function fetchTestimonials() {
               star.classList.add("bi", "bi-star-fill");
               starsContainer.appendChild(star);
           }
+
+
+ 
 
           // Review text
           const reviewText = document.createElement("p");
