@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sign Up - SMOOTutor</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Include Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CSS Files -->
+    <!-- <link rel="stylesheet" href="styles.css"> -->
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+    <!-- Include GSAP and Lottie for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.7.4/lottie.min.js"></script>
+    <!-- Include Howler.js for Sound Effects -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"></script>
+    <!-- Include particles.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+
+    <style>
+        /* Existing CSS styles from your current styling */
+        body.signup-page {
+            font-family: 'Roboto', sans-serif;
+            position: relative;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #28a745;
+            /* Green background */
+            z-index: 1;
+            /* Background layer */
+            overflow: hidden;
+        }
+
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            /* Particles layer */
+            pointer-events: none;
+            /* Prevent interaction with particles */
+        }
+
+        .signup-container {
+            position: relative;
+            z-index: 3;
+            /* Signup container on top */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            flex-wrap: wrap;
+            height: 100%;
+            width: 100%;
+            overflow-y: scroll;
+        }
+
+
+
+        .signup-box,
+        .signup-box2 {
+            background-color: rgba(255, 255, 255, 0.9);
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            /* Set a fixed width for both boxes to make them identical */
+            box-sizing: border-box;
+            margin: 20px;
+            /* height: 70%; */
+            /* min-height: 300px; */
+            /* overflow-y: scroll; */
+            width: 40%;
+            min-width: 450px;
+            max-width: 550px;
+            height: 60%;
+            min-height: 500px;
+
+
+        }
+
+        .buttonred {
+            width: 100%;
+            text-align: center;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .logo img {
+            width: 300px;
+            border-radius: 10%;
+        }
+
+
+        h2 {
+            margin-bottom: 10px;
+            color: #333333;
+        }
+
+        .subtitle {
+            margin-bottom: 20px;
+            color: #555555;
+            font-size: 0.9em;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            /* padding: 0 10px; */
+            /* Add horizontal padding for equal spacing inside the box */
+            width: 100%;
+        }
+
+        .input-group label {
+            margin-bottom: 5px;
+            color: #333333;
+            display: block;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            width: 100%;
+            /* padding: 12px; */
+            border: none;
+            border-bottom: 2px solid #cccccc;
+            background: transparent;
+            font-size: 1em;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        /* .input-group input:focus,
+        .input-group textarea:focus {
+            border-bottom-color: #2e3a90;
+        } */
+
+        .input-group input:focus+.input-underline,
+        .input-group textarea:focus+.input-underline {
+            width: 100%;
+        }
+
+        .input-underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background-color: #2e3a90;
+            transition: width 0.3s;
+            width: 100%;
+        }
+
+        .inputgrouptop {
+            width: 100%;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+        }
+
+        .inputgroupbottom {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+
+        }
+
+        .inputgroupbottom input {
+            width: 240px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 38px;
+            cursor: pointer;
+            color: #2e3a90;
+            font-size: 0.9em;
+        }
+
+        .btn {
+            width: 60%;
+            padding: 15px;
+            background-color: #e46262;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #cf1b1b;
+        }
+
+        .btn:after {
+            background-color: #e46262;
+        }
+
+        .or {
+            text-align: center;
+            margin: 15px 0;
+            color: #888888;
+        }
+
+        .social-login {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-login button {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            color: #ffffff;
+            font-size: 1.5em;
+            transition: transform 0.3s;
+        }
+
+        .signup-text {
+            text-align: center;
+            margin-top: 20px;
+            color: #555555;
+        }
+
+        .signup-text a {
+            color: #2e3a90;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signup-text a:hover {
+            text-decoration: underline;
+        }
+
+        /* Mascot Style */
+        /* .mascot-container {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 300px;
+            pointer-events: none;
+        } */
+
+        /* Responsive Design
+        @media (max-width: 900px) {
+            .signup-container {
+                flex-direction: column;
+            }
+
+            .signup-box,
+            .signup-box2 {
+                width: 100%;
+                max-width: 500px;
+                margin: 20px auto;
+                display: flex;
+                justify-content: center;
+            }
+
+            .mascot-container {
+                display: none;
+            }
+        } */
+
+        /* Toast Notification Styles */
+        #customToast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #333333;
+            color: #ffffff;
+            padding: 15px 20px;
+            border-radius: 5px;
+            opacity: 0;
+            transition: opacity 0.5s, transform 0.5s;
+            transform: translateY(20px);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        #customToast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #customToast.success {
+            background-color: #28a745;
+        }
+
+        #customToast.error {
+            background-color: #dc3545;
+        }
+
+        #customToast .close-toast {
+            margin-left: 15px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body class="signup-page">
+    <div class="background">
+        <div id="particles-js"> </div>
+        <div class="signup-container">
+            <div class="signup-box">
+                <div class="logo">
+                    <img src="SMOOTutor.png" alt="SMOOTutor Logo">
+                </div>
+                <h2>Create Your Account</h2>
+                <p class="subtitle">Personal Information</p>
+                <form id="signup-form">
+                    <div class="input-group">
+                        <label for="signup-name">Name</label>
+                        <input type="text" id="signup-name" placeholder="Enter your full name" required>
+                        <div class="input-underline"></div>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" placeholder="Enter your email" required>
+                        <div class="input-underline"></div>
+                    </div>
+                    <div class="input-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" placeholder="Create a password" required>
+                        <span class="toggle-password" data-toggle="#signup-password"><i class="fas fa-eye"></i></span>
+                        <div class="input-underline"></div>
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-password">Confirm Password</label>
+                        <input type="password" id="confirm-password" placeholder="Confirm your password" required>
+                        <span class="toggle-password" data-toggle="#confirm-password"><i class="fas fa-eye"></i></span>
+                        <div class="input-underline"></div>
+                    </div>
+            </div>
+            <div class="signup-box2">
+                <h2>Personalise Your Account</h2>
+                <p class="subtitle">Additional Information</p>
+                <div class="input-group">
+                    <label for="about">About</label>
+                    <textarea id="about" rows="4" placeholder="Tell us about yourself" required></textarea>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <div class="inputgrouptop">
+                        <label for="image-upload">Upload Image</label>
+                    </div>
+                    <div class="inputgroupbottom">
+                        <input type="file" id="image-upload" accept="image/*" required>
+                    </div>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group">
+                    <div class="inputgrouptop">
+                        <label for="video-upload">Upload Video</label>
+                    </div>
+                    <div class="inputgroupbottom">
+                        <input type="file" id="video-upload" accept="video/*" required>
+                    </div>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="input-group" id="lesson-desc-group" style="display: none;">
+                    <label for="lesson-desc">Lesson Description</label>
+                    <textarea id="lesson-desc" rows="3" placeholder="Describe your teaching style"></textarea>
+                    <div class="input-underline"></div>
+                </div>
+                <div class="buttonred"><button type="submit" class="btn">Sign Up</button></div>
+                </form>
+                <p class="signup-text">Already have an account? <a href="login.html">Log In</a></p>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- Firebase Initialization and Signup Script -->
+    <script>
+        // Your web app's Firebase configuration
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+            authDomain: "smootutor-ed94a.firebaseapp.com",
+            projectId: "smootutor-ed94a",
+            storageBucket: "smootutor-ed94a.appspot.com",
+            messagingSenderId: "289686522861",
+            appId: "1:289686522861:web:5811385ced42106d78b5e4",
+            measurementId: "G-46QED8ZFKJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        // const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        // Signup Functionality
+        document.getElementById('signup-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                return;
+            }
+
+            auth.createUserWithEmailAndPassword(email, password)
+                .then(userCredential => {
+                    const user = userCredential.user;
+
+                    // Get the current user count to determine the next userId
+                    db.collection("Particulars").get().then(snapshot => {
+                        const userId = snapshot.size + 1; // 8 if 7 users already exist
+
+                        // Add the new user to the "Particulars" collection
+                        db.collection("Particulars").add({
+                            UserID: userId,
+                            email: email
+                        }).then(() => {
+                            console.log("User particulars added successfully.");
+                            // Redirect or display success message
+                            window.location.href = '../tuteehomepage.html';
+                        }).catch(error => {
+                            console.error("Error adding user particulars:", error.message);
+                            alert("Error creating account: " + error.message);
+                        });
+                    }).catch(error => {
+                        console.error("Error retrieving user count:", error.message);
+                        alert("Error retrieving user count: " + error.message);
+                    });
+                })
+                .catch(error => {
+                    console.error('Signup Error:', error.message);
+                    alert('Error creating account: ' + error.message);
+                });
+        });
+        // Show/Hide Password
+        document.querySelectorAll('.toggle-password').forEach(function (toggle) {
+            toggle.addEventListener('click', function () {
+                const passwordInput = document.querySelector(toggle.getAttribute('data-toggle'));
+                const icon = toggle.querySelector('i');
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    icon.classList.remove('fa-eye');
+                    icon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    icon.classList.remove('fa-eye-slash');
+                    icon.classList.add('fa-eye');
+                }
+            });
+        });
+        particlesJS('particles-js',
+            {
+                "particles": {
+                    "number": {
+                        "value": 60,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5
+                    },
+                    "size": {
+                        "value": 3
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 4
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        }
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 200
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        }
+                    }
+                },
+                "retina_detect": true
+            }
+        );
+    </script>
+</body>
+
+</html>
