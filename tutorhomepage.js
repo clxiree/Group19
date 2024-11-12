@@ -26,7 +26,7 @@ firebase.auth().onAuthStateChanged((user) => {
     } else {
         console.log("No user is logged in.");
         // Redirect to login page if needed
-        window.location.href = 'login.html';
+        window.location.href = 'home/login.html';
     }
 });
 

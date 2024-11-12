@@ -188,6 +188,7 @@ function displayFilteredBookings(status) {
 
         const price = document.createElement('p');
         price.classList.add('price');
+        price.textContent = `$${bookingData.fee}`;
         price.textContent = `$${bookingData.fee * 2}`;
 
         categoryPriceDiv.appendChild(category);
@@ -336,6 +337,7 @@ function fetchBookings(userId) {
         .catch(error => {
             console.error("Error fetching bookings:", error);
         });
+}})
 }});
 
 
@@ -344,6 +346,7 @@ function fetchBookings(userId) {
 
   </script>
   <style>
+    
 
 .course-item {
     width: 400px;           /* Set a fixed width for the card */
