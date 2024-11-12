@@ -1984,6 +1984,7 @@ section,
   transition: all 0.3s ease-in-out;
 }
 
+
 .events .card-body {
   z-index: 10;
   background: var(--surface-color);
