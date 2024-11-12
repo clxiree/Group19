@@ -47,20 +47,22 @@
   <style>
 
     .card {
-      border-radius: 15px; /* Match this with the card's corner radius */
-      overflow: hidden; /* Ensures the image respects the card's rounded corners */
-      cursor: default; /* Ensures cursor does not change on hover */
-      transition: transform 0.3s ease; /* Add transition for smooth scaling effect */
+    border-radius: 15px; /* Match this with the card's corner radius /
+    overflow: hidden; / Ensures the image respects the card's rounded corners /
+    cursor: default; / Ensures cursor does not change on hover /
+    transition: transform 0.3s ease; / Add transition for smooth scaling effect */
+    width: 300px;
+    }
+    .card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Makes sure the image covers the entire area /
+    border-radius: inherit; / Inherit the card's rounded corners /
+    object-position: center;
+    cursor: default; / Ensures cursor does not change on hover */
     }
 
-    .card-img-top {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* Makes sure the image covers the entire area */
-      border-radius: inherit; /* Inherit the card's rounded corners */
-      object-position: center;
-      cursor: default; /* Ensures cursor does not change on hover */
-    }
+
 
     .card:hover {
       transform: scale(1.05); /* Increase the scale of the card on hover */
@@ -88,6 +90,67 @@
       gap: 110px;
       /* Increased gap for better spacing */
     }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      overflow: hidden;
+      padding: 0;
+    }
+
+
+    .h2 {
+      color: #fff;
+    }
+
+    /* Background Video Container */
+    .background-vid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 80%;
+      overflow: hidden;
+      z-index: -1;
+      padding: 0
+    }
+
+    .background-video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Green Overlay Content */
+    .heading-overlay {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff; /* Text color */
+    text-align: center;
+    width: 100%;
+    height: 100%;
+}
+
+.heading-overlay h2 {
+    font-size: 4rem; /* Increased font size for the heading */
+    font-weight: bold; /* Make the heading bold */
+    margin: 0; /* Remove default margin */
+    color: #132b18; /* Change text color to blue */
+}
+.heading-overlay p {
+    font-size: 1.5rem; /* Increased font size for the paragraph */
+    font-weight: bold; /* Make the paragraph bold */
+    margin: 10px 0; /* Add margin for spacing */
+    color: #fff; /* Ensure the text is white */
+}
 
     .box {
       font-size: 20px;
@@ -171,7 +234,7 @@
         <img src="assets/img/smootutor-logo.jpg">
       </a>
 
-      <h4 class="login-message">Please login for us to serve you better <span style="font-size: 20px;">➛</span>
+      <h4 class="login-message">Please login for us to serve you better <span style="font-size: 20px;">⇨</span>
         <a class="btn-getstarted" href="home/login.html">Login</a>
       </h4>
 
@@ -183,19 +246,36 @@
   </header>
 
   <!-- Hero Section -->
-  <section id="hero" class="hero section dark-background">
-
-    <img src="assets/img/trainers/zen2.jpg" alt="" data-aos="fade-in">
-
-    <div class="container">
-      <h2 data-aos="fade-up" data-aos-delay="100">Tutee Today,<br>Tutor Tomorrow</h2>
-      <p data-aos="fade-up" data-aos-delay="200">We can help to alleviate your study difficulties</p>
-      <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-        <a href="home/login.html" class="btn-get-started">Get Started</a>
-      </div>
+  <main class="main">
+    <div class="hero" data-aos="fade">
+        <!-- Video Background Container -->
+        <div id="background-vid" class="background-vid">
+            <video autoplay loop muted playsinline class="background-video"></video>
+            
+            <!-- Overlay to display text above the video -->
+            <div class="heading-overlay">
+                <div class="container">
+                    <div class="row d-flex justify-content-center text-center">
+                        <div class="col-lg-8">
+                            <h2 class="heading-text">Our Tutors</h2>
+                            <p class="heading-subtext mb-0">Find the SMOO tutor that you like BEST</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Additional Overlay Content -->
+        <div class="container heading-overlay">
+            <h2 data-aos="fade-up" data-aos-delay="100">Tutee Today,<br>Tutor Tomorrow</h2>
+            <p data-aos="fade-up" data-aos-delay="200">We can help to alleviate your study difficulties</p>
+            <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+                <a href="home/login.html" class="btn-get-started">Get Started</a>
+            </div>
+        </div>
     </div>
-
-  </section><!-- /Hero Section -->
+</main>
+  
 
   <!-- About Section -->
   <section id="about" class="about section">
@@ -454,6 +534,50 @@
         }, 3000);
     }
 });
+
+    
+function fetchVideo() {
+  const videoContainer = document.getElementById("background-vid");
+  videoContainer.innerText = ''; // Clear any previous content
+
+  // Create loading indicator
+  const loadingIndicator = document.createElement("div");
+  loadingIndicator.innerText = "Loading video...";
+  loadingIndicator.className = "loading-indicator";
+  videoContainer.appendChild(loadingIndicator); // Append loading indicator to container
+
+  // Create the video element
+  const video = document.createElement("video");
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.playsInline = true;
+  video.className = "background-video";
+
+  // Firebase storage reference
+  const storage = firebase.storage();
+  const videoStorageRef = storage.ref('videos/smoo.mp4');
+
+  // Fetch the video URL and set it as the video source
+  videoStorageRef.getDownloadURL()
+    .then(url => {
+      video.src = url;
+      videoContainer.appendChild(video); // Append video to container
+
+      // Remove loading indicator when video is ready to play
+      video.addEventListener('loadeddata', () => {
+        loadingIndicator.style.display = 'none';
+      });
+    })
+    .catch(error => {
+      console.error("Error loading video:", error);
+      loadingIndicator.innerText = "Video failed to load";
+    });
+}
+
+
+        // Call fetchVideo when the DOM is loaded
+        document.addEventListener("DOMContentLoaded", fetchVideo);
 
     document.addEventListener("DOMContentLoaded", function () {
       const topTutors = [

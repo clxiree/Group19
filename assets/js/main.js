@@ -136,96 +136,6 @@
 })();
 
 
-// tutor videos
-  // Add event listeners for each tutor video and mute button
-  const tutorVideos = [
-    {video: document.getElementById('tutorVideo1'), muteButton: document.getElementById('muteButton1')},
-    {video: document.getElementById('tutorVideo2'), muteButton: document.getElementById('muteButton2')},
-    {video: document.getElementById('tutorVideo3'), muteButton: document.getElementById('muteButton3')},
-    {video: document.getElementById('tutorVideo4'), muteButton: document.getElementById('muteButton4')},
-    {video: document.getElementById('tutorVideo5'), muteButton: document.getElementById('muteButton5')},
-    {video: document.getElementById('tutorVideo6'), muteButton: document.getElementById('muteButton6')},
-    // Add additional tutor videos and buttons here
-  ];
-
-  tutorVideos.forEach(item => {
-    const { video, muteButton } = item;
-
-    // Show mute icon when the video is hovered over
-    video.addEventListener('mouseenter', function() {
-      video.currentTime = 0; // Reset the video to the start
-      video.muted = true; // Ensure video is always muted by default
-      muteButton.style.display = 'block'; // Show mute button
-      video.play(); // Autoplay the video
-    });
-
-    // Toggle mute/unmute on video click
-    video.addEventListener('click', function() {
-      if (video.muted) {
-        video.muted = false;
-        muteButton.style.display = 'none'; // Hide mute icon when unmuted
-      } else {
-        video.muted = true;
-        muteButton.style.display = 'block'; // Show mute icon when muted
-      }
-    });
-
-    // Hide the video and stop playing when the mouse leaves
-    video.addEventListener('mouseleave', function() {
-      video.pause(); // Stop the video when the mouse leaves
-      muteButton.style.display = 'none'; // Hide the mute icon when not hovered
-    });
-  });
-
-
-
-// tutor modal videos
-  // Add event listeners for each tutor video and mute button
-  const tutorModalVideos = [
-    {Modalimage: document.getElementById('tutorModalImage1'), Modalvideo: document.getElementById('tutorModalVideo1'), ModalmuteButton: document.getElementById('muteModalButton1')},
-    {Modalimage: document.getElementById('tutorModalImage2'), Modalvideo: document.getElementById('tutorModalVideo2'), ModalmuteButton: document.getElementById('muteModalButton2')},
-    {Modalimage: document.getElementById('tutorModalImage3'), Modalvideo: document.getElementById('tutorModalVideo3'), ModalmuteButton: document.getElementById('muteModalButton3')},
-    {Modalimage: document.getElementById('tutorModalImage4'), Modalvideo: document.getElementById('tutorModalVideo4'), ModalmuteButton: document.getElementById('muteModalButton4')},
-    {Modalimage: document.getElementById('tutorModalImage5'), Modalvideo: document.getElementById('tutorModalVideo5'), ModalmuteButton: document.getElementById('muteModalButton5')},
-    {Modalimage: document.getElementById('tutorModalImage6'), Modalvideo: document.getElementById('tutorModalVideo6'), ModalmuteButton: document.getElementById('muteModalButton6')},
-    // Add additional tutor videos and buttons here
-  ];
-
-
-  tutorModalVideos.forEach(item => {
-    const { Modalimage, Modalvideo, ModalmuteButton } = item;
-
-    // Show mute icon when the video is hovered over
-    Modalimage.addEventListener('mouseenter', function() {
-      Modalimage.style.display = 'none'; // Hide the image
-      Modalvideo.style.display = 'block'; // Show the video
-      Modalvideo.currentTime = 0; // Reset the video to the start
-      Modalvideo.muted = true; // Ensure video is always muted by default
-      ModalmuteButton.style.display = 'block'; // Show mute button
-      Modalvideo.play(); // Autoplay the video
-    });
-
-    // Toggle mute/unmute on video click
-    Modalvideo.addEventListener('click', function() {
-      if (Modalvideo.muted) {
-        Modalvideo.muted = false;
-        ModalmuteButton.style.display = 'none'; // Hide mute icon when unmuted
-      } else {
-        Modalvideo.muted = true;
-        ModalmuteButton.style.display = 'block'; // Show mute icon when muted
-      }
-    });
-
-    // Hide the video and stop playing when the mouse leaves
-    Modalvideo.addEventListener('mouseleave', function() {
-      Modalimage.style.display = 'block'; // Hide the image
-      Modalvideo.style.display = 'none'; // Show the video
-      Modalvideo.pause(); // Stop the video when the mouse leaves
-      ModalmuteButton.style.display = 'none'; // Hide the mute icon when not hovered
-    });
-  });
-
-
   initMarquee(190, 27)
 
   function initMarquee(boxWidth, time) {
@@ -257,7 +167,7 @@
   
   }
 
-  ddocument.addEventListener("DOMContentLoaded", () => {
+  document.addEventListener("DOMContentLoaded", () => {
     /**
      * Mobile nav toggle
      */

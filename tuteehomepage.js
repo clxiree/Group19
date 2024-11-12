@@ -46,6 +46,7 @@ function fetchCourses() {
             courseItem.setAttribute("data-aos", "zoom-in");
             courseItem.setAttribute("data-aos-delay", "100");
 
+            
             // Create the course item container
             const courseInner = document.createElement("div");
             courseInner.classList.add("course-item");

@@ -208,8 +208,8 @@ function fetchTeamCards() {
             const img = document.createElement("img");
             img.classList.add("card-img-top", "img-fluid");
             img.alt = data.Name || "No Name";
+            img.style.width= "300px";
             img.style.height = "300px"; // Fixed height for image
-            img.style.objectFit = "scale-down"; // Scale image to fit area
 
             // Set the default image from Firebase Storage while the actual image is loading
             img.src = defaultImageURL || "assets/img/team/default.jpg"; // Local fallback if defaultImageURL isn't available
