@@ -169,9 +169,9 @@
       display: flex;
       align-items: center;
       padding: 15px;
-      background-color: #ffffff;
-      color: #212529;
-      border-bottom: 1px solid #dee2e6;
+      background-color: #3e3e3e;
+      color: #ffffff;
+      /* border-bottom: 1px solid #dee2e6; */
     }
 
     .chat-header-info {
@@ -197,7 +197,7 @@
       background: none;
       border: none;
       margin-left: 10px;
-      color: #212529;
+      color: #ffffff;
       cursor: pointer;
       transition: color 0.3s;
     }
@@ -291,8 +291,8 @@
     /* Message Input */
     .message-input-container {
       padding: 15px;
-      background-color: #ffffff;
-      border-top: 1px solid #dee2e6;
+      background-color: #3e3e3e;
+      /*this */
       display: flex;
       align-items: center;
     }
@@ -318,7 +318,7 @@
       background: none;
       border: none;
       font-size: 1.5em;
-      color: #212529;
+      color: #ffffff;
       cursor: pointer;
       transition: color 0.3s;
     }
@@ -471,66 +471,64 @@
         <p class="mb-0">Chat with our helpful tutors today.</p>
       </div>
     </div>
-  </main>
 
-    <div class="chat-container">
-      <!-- Chat List -->
-      <div class="chat-list" id="chat-list">
-        <!-- Chat List Header -->
-        <div class="chat-list-header">
-          <h4>All Chats</h4>
-          <button id="new-chat-button" title="Start a new chat"><i class="fas fa-plus"></i></button>
-        </div>
-        <!-- Chat items will be added here dynamically -->
+  <div class="chat-container">
+    <!-- Chat List -->
+    <div class="chat-list" id="chat-list">
+      <!-- Chat List Header -->
+      <div class="chat-list-header">
+        <h4>All Chats</h4>
+        <button id="new-chat-button" title="Start a new chat"><i class="fas fa-plus"></i></button>
       </div>
-
-      <!-- Chat Window -->
-      <div class="chat-window">
-
-
-        <!-- Chat Header -->
-        <div class="chat-header" id="chat-header" style="display: none;">
-          <div class="chat-header-info">
-            <img src="assets/img/default-avatar.png" alt="Chat Avatar" id="chat-avatar">
-            <div>
-              <span id="chat-name">Select a chat</span><br>
-              <span class="chat-status" id="chat-status">Online</span>
-            </div>
-          </div>
-          <div class="chat-header-actions">
-            <button id="delete-chat-button" title="Delete Chat"><i class="fas fa-trash-alt"></i></button>
-            <button title="Search in Chat"><i class="fas fa-search"></i></button>
-            <button title="More Options"><i class="fas fa-ellipsis-v"></i></button>
-          </div>
-        </div>
-
-
-        <!-- Placeholder for picture when no chat is selected -->
-        <div class="no-chat-selected" id="no-chat-selected">
-          <img src="assets/img/no-chat-selected.png" alt="No Chat Selected">
-          <p>Select a chat to start messaging.</p>
-        </div>
-
-        <!-- Message List -->
-        <div class="message-list" id="message-list"
-          style="background-image: url('assets/img/background_chat.jpg'); background-size: cover; background-position: center;">
-          <!-- Messages will appear here -->
-        </div>
-
-        <!-- Message Input -->
-        <div class="message-input-container" id="message-input-container" style="display: none;">
-          <button id="emoji-button" class="message-input-actions" title="Add Emoji"><i
-              class="far fa-smile"></i></button>
-          <input type="text" id="message-text" class="message-input" placeholder="Type a message..." disabled />
-          <button id="attach-file-button" class="message-input-actions" title="Attach File"><i
-              class="fas fa-paperclip"></i></button>
-          <button id="send-message-button" class="message-input-actions" title="Send Message"><i
-              class="fas fa-paper-plane"></i></button>
-          <input type="file" id="attach-file-input" style="display: none;">
-        </div>
-        <div class="typing-indicator" id="typing-indicator" style="display: none;">Typing...</div>
-      </div>
+      <!-- Chat items will be added here dynamically -->
     </div>
+
+    <!-- Chat Window -->
+    <div class="chat-window">
+
+
+      <!-- Chat Header -->
+      <div class="chat-header" id="chat-header" style="display: none;">
+        <div class="chat-header-info">
+          <img src="assets/img/default-avatar.png" alt="Chat Avatar" id="chat-avatar">
+          <div>
+            <span id="chat-name">Select a chat</span><br>
+            <span class="chat-status" id="chat-status">Online</span>
+          </div>
+        </div>
+        <div class="chat-header-actions">
+          <button id="delete-chat-button" title="Delete Chat"><i class="fas fa-trash-alt"></i></button>
+          <button title="Search in Chat"><i class="fas fa-search"></i></button>
+          <button title="More Options"><i class="fas fa-ellipsis-v"></i></button>
+        </div>
+      </div>
+
+
+      <!-- Placeholder for picture when no chat is selected -->
+      <div class="no-chat-selected" id="no-chat-selected">
+        <img src="assets/img/no-chat-selected.png" alt="No Chat Selected">
+        <p>Select a chat to start messaging.</p>
+      </div>
+
+      <!-- Message List -->
+      <div class="message-list" id="message-list"
+        style="background-image: url('assets/img/background_chat.jpg'); background-size: cover; background-position: center;">
+        <!-- Messages will appear here -->
+      </div>
+
+      <!-- Message Input -->
+      <div class="message-input-container" id="message-input-container" style="display: none;">
+        <button id="emoji-button" class="message-input-actions" title="Add Emoji"><i class="far fa-smile"></i></button>
+        <input type="text" id="message-text" class="message-input" placeholder="Type a message..." disabled />
+        <button id="attach-file-button" class="message-input-actions" title="Attach File"><i
+            class="fas fa-paperclip"></i></button>
+        <button id="send-message-button" class="message-input-actions" title="Send Message"><i
+            class="fas fa-paper-plane"></i></button>
+        <input type="file" id="attach-file-input" style="display: none;">
+      </div>
+      <div class="typing-indicator" id="typing-indicator" style="display: none;">Typing...</div>
+    </div>
+  </div>
   </main>
 
   <!-- Vendor JS Files -->
@@ -546,422 +544,450 @@
   <script src="https://cdn.jsdelivr.net/npm/@joeattardi/emoji-button@4.6.4/dist/index.min.js"></script>
 
   <!-- Firebase Initialization and Chat Logic -->
-  <script>
-    // Initialize Firebase
-    var firebaseConfig = {
-      // Your Firebase config here
-      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-      authDomain: "smootutor-ed94a.firebaseapp.com",
-      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
-      projectId: "smootutor-ed94a",
-      storageBucket: "smootutor-ed94a.appspot.com",
-      messagingSenderId: "289686522861",
-      appId: "1:289686522861:web:5811385ced42106d78b5e4",
-      measurementId: "G-46QED8ZFKJ"
-    };
-    firebase.initializeApp(firebaseConfig);
+<script>
+  // Initialize Firebase
+  var firebaseConfig = {
+    // Your Firebase config here
+    apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+    authDomain: "smootutor-ed94a.firebaseapp.com",
+    databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "smootutor-ed94a",
+    storageBucket: "smootutor-ed94a.appspot.com",
+    messagingSenderId: "289686522861",
+    appId: "1:289686522861:web:5811385ced42106d78b5e4",
+    measurementId: "G-46QED8ZFKJ"
+  };
+  firebase.initializeApp(firebaseConfig);
 
-    const db = firebase.firestore();
-    const auth = firebase.auth();
-    const storage = firebase.storage();
+  const db = firebase.firestore();
+  const auth = firebase.auth();
+  const storage = firebase.storage();
 
-    let currentUser = null;
-    let selectedChatId = null;
-    let messagesListener = null;
+  let currentUser = null;
+  let selectedChatId = null;
+  let messagesListener = null;
 
-    // Authenticate and fetch chats
-    firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
+  // **New Variable to Track if Chats Listener is Attached**
+  let chatsListener = null;
+
+  // **Map to Track Chat Items by chatId**
+  const chatItemsMap = {};
+
+  // Cache DOM Elements for Optimization
+  const messageTextInput = document.getElementById("message-text");
+  const sendMessageButton = document.getElementById("send-message-button");
+  const attachFileButton = document.getElementById("attach-file-button");
+  const attachFileInput = document.getElementById("attach-file-input");
+  const deleteChatButton = document.getElementById("delete-chat-button");
+  const newChatButton = document.getElementById("new-chat-button");
+  const emojiButton = document.getElementById("emoji-button");
+  const messageList = document.getElementById("message-list");
+  const chatList = document.getElementById("chat-list");
+  const chatHeader = document.getElementById("chat-header");
+  const messageInputContainer = document.getElementById("message-input-container");
+  const noChatSelected = document.getElementById("no-chat-selected");
+  const chatNameElement = document.getElementById("chat-name");
+  const chatAvatarElement = document.getElementById("chat-avatar");
+  const typingIndicator = document.getElementById("typing-indicator");
+  const myEmailElement = document.getElementById("my-email");
+
+  // Authenticate and fetch chats
+  firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+      if (currentUser !== user) { // Prevent re-initialization for the same user
         currentUser = user; // Set the current user
         console.log("User is logged in with email:", user.email, "and UID:", user.uid);
-        document.getElementById("my-email").innerText = user.email;
-        fetchChats();
-        // You can use user.email to retrieve user-specific data
-      } else {
-        console.log("No user is logged in.");
-        // Redirect to login page if needed
-        window.location.href = 'login.html';
+        myEmailElement.textContent = user.email;
+        fetchChats(); // Attach the listener only once
       }
-    });
-
-    document.addEventListener("DOMContentLoaded", function() {
-    setBackgroundFromFirebaseStorage();
+      // You can use user.email to retrieve user-specific data
+    } else {
+      console.log("No user is logged in.");
+      // Detach chats listener if user logs out
+      if (chatsListener) {
+        chatsListener(); // Detach the listener
+        chatsListener = null;
+        // Clear the chat list map
+        for (let chatId in chatItemsMap) {
+          removeChatItem(chatId);
+        }
+        // Reset UI
+        chatHeader.style.display = "none";
+        messageInputContainer.style.display = "none";
+        noChatSelected.style.display = "flex";
+        messageList.innerHTML = "";
+      }
+      // Redirect to login page if needed
+      window.location.href = 'login.html';
+    }
   });
 
-    // Function to set the background image from Firebase Storage
-    function setBackgroundFromFirebaseStorage() {
-      const backgroundPath = 'chats/chat_background.png'; // Replace with your image path in Firebase Storage
-      const storage = firebase.storage();
+  document.addEventListener("DOMContentLoaded", function () {
+    setBackgroundFromFirebaseStorage();
+    initializeEventListeners(); // Initialize event listeners once
+  });
 
-      // Get the download URL from Firebase Storage
-      storage.ref(backgroundPath).getDownloadURL()
+  // Function to set the background image from Firebase Storage
+  function setBackgroundFromFirebaseStorage() {
+    const backgroundPath = 'chats/chat_background.png'; // Replace with your image path in Firebase Storage
+    const storageRef = storage.ref();
+
+    // Get the download URL from Firebase Storage
+    storageRef.child(backgroundPath).getDownloadURL()
       .then((url) => {
-      // Set the background image of the message-list div
-      const messageList = document.getElementById("message-list");
-      messageList.style.backgroundImage = `url('${url}')`;
+        // Set the background image of the message-list div
+        messageList.style.backgroundImage = `url('${url}')`;
       })
       .catch((error) => {
         console.error("Error fetching background image from storage:", error);
-        });
-    }
-
-    function fetchChats() {
-  db.collection("Chats")
-    .where("members", "array-contains", currentUser.email) // Filter chats where currentUser's email is a member
-    .onSnapshot(snapshot => {
-      const chatList = document.getElementById("chat-list");
-      // Remove existing chat items except header
-      chatList.querySelectorAll('.chat-item').forEach(item => item.remove());
-
-      snapshot.forEach(doc => {
-        const chatData = doc.data();
-        const chatItem = document.createElement("div");
-        chatItem.classList.add("chat-item", "d-flex", "align-items-center");
-        chatItem.setAttribute('data-chat-id', doc.id); // Optional: for easier selection
-
-        // Determine the recipient's email and fetch their avatar if not already stored
-        const recipientEmail = chatData.members.find(email => email !== currentUser.email);
-        let recipientName = "Chat"; // Default name
-        let recipientAvatar = "assets/img/default-avatar.png"; // Default avatar
-
-        // Fetch the recipient's details from the Users collection
-        db.collection("Particulars").where("email", "==", recipientEmail).get()
-          .then(userSnapshot => {
-            if (!userSnapshot.empty) {
-              const userData = userSnapshot.docs[0].data();
-              recipientName = userData.Name || "Chat"; // Update with actual name
-              const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
-
-              // Get the download URL for the avatar image from Firebase Storage
-              storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
-                .then(url => {
-                  // Set the chat item's inner HTML with the dynamically fetched URL and recipient name
-                  // Create the main chat item container
-                  const chatItem = document.createElement("div");
-                  chatItem.classList.add("chat-item", "d-flex", "align-items-center");
-
-                  // Create and configure the avatar image
-                  const img = document.createElement("img");
-                  img.src = url; // Set the dynamic URL for the avatar
-                  img.alt = "Avatar";
-                  img.classList.add("rounded-circle", "me-2");
-                  img.width = 50;
-                  img.height = 50;
-
-                  // Create the container for chat information
-                  const chatInfoDiv = document.createElement("div");
-                  chatInfoDiv.classList.add("chat-item-info");
-
-                  // Create and set the chat name
-                  const chatNameDiv = document.createElement("div");
-                  chatNameDiv.classList.add("chat-item-name");
-                  chatNameDiv.textContent = recipientName;
-
-                  // Create and set the last message preview
-                  const chatLastMessageDiv = document.createElement("div");
-                  chatLastMessageDiv.classList.add("chat-item-last-message");
-                  chatLastMessageDiv.textContent = chatData.last_message 
-                    ? (chatData.last_message.type === 'text' 
-                      ? truncateText(chatData.last_message.content, 30) 
-                      : '📎 Attachment')
-                    : '';
-
-                  // Append the name and last message elements to the chat info container
-                  chatInfoDiv.appendChild(chatNameDiv);
-                  chatInfoDiv.appendChild(chatLastMessageDiv);
-
-                  // Append the avatar image and chat info container to the main chat item container
-                  chatItem.appendChild(img);
-                  chatItem.appendChild(chatInfoDiv);
-
-                  // Attach a click event listener to the chat item
-                  chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
-
-                  // Append the complete chat item to the chat list
-                  chatList.appendChild(chatItem);
-
-                })
-                .catch(error => {
-                  console.error("Error fetching avatar URL:", error);
-                  // Use default avatar if there's an error retrieving the image
-                  // Create the main chat item container
-                  const chatItem = document.createElement("div");
-                  chatItem.classList.add("chat-item", "d-flex", "align-items-center");
-
-                  // Create and configure the avatar image
-                  const img = document.createElement("img");
-                  img.src = "assets/img/default-avatar.png";
-                  img.alt = "Avatar";
-                  img.classList.add("rounded-circle", "me-2");
-                  img.width = 50;
-                  img.height = 50;
-
-                  // Create the container for chat information
-                  const chatInfoDiv = document.createElement("div");
-                  chatInfoDiv.classList.add("chat-item-info");
-
-                  // Create and set the chat name
-                  const chatNameDiv = document.createElement("div");
-                  chatNameDiv.classList.add("chat-item-name");
-                  chatNameDiv.textContent = recipientName;
-
-                  // Create and set the last message preview
-                  const chatLastMessageDiv = document.createElement("div");
-                  chatLastMessageDiv.classList.add("chat-item-last-message");
-                  chatLastMessageDiv.textContent = chatData.last_message 
-                    ? (chatData.last_message.type === 'text' 
-                      ? truncateText(chatData.last_message.content, 30) 
-                      : '📎 Attachment')
-                    : '';
-
-                  // Append the name and last message elements to the chat info container
-                  chatInfoDiv.appendChild(chatNameDiv);
-                  chatInfoDiv.appendChild(chatLastMessageDiv);
-
-                  // Append the avatar image and chat info container to the main chat item container
-                  chatItem.appendChild(img);
-                  chatItem.appendChild(chatInfoDiv);
-
-                  // Attach a click event listener to the chat item
-                  chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
-
-                  // Append the complete chat item to the chat list
-                  chatList.appendChild(chatItem);
-
-                });
-            } else {
-              // If no user data found, display default values
-              const img = document.createElement("img");
-              img.src = "assets/img/default-avatar.png";
-              img.alt = "Avatar";
-              img.classList.add("rounded-circle", "me-2");
-              img.width = 50;
-              img.height = 50;
-
-              const chatInfoDiv = document.createElement("div");
-              chatInfoDiv.classList.add("chat-item-info");
-
-              const chatNameDiv = document.createElement("div");
-              chatNameDiv.classList.add("chat-item-name");
-              chatNameDiv.textContent = recipientName;
-
-              const chatLastMessageDiv = document.createElement("div");
-              chatLastMessageDiv.classList.add("chat-item-last-message");
-
-              if (chatData.last_message) {
-                chatLastMessageDiv.textContent = chatData.last_message.type === 'text'
-                  ? truncateText(chatData.last_message.content, 30)
-                  : '📎 Attachment';
-              }
-
-              chatInfoDiv.appendChild(chatNameDiv);
-              chatInfoDiv.appendChild(chatLastMessageDiv);
-              chatItem.appendChild(img);
-              chatItem.appendChild(chatInfoDiv);
-
-              // Attach click event listener to chat item
-              chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
-
-              // Append the chat item to the chat list
-chatList.appendChild(chatItem);
-
-            }
-
-            // Attach click event to open the chat when clicked
-            chatItem.addEventListener("click", () => selectChat(doc.id, chatItem, chatData));
-          })
-          .catch(error => {
-            console.error("Error fetching user details:", error);
-          });
       });
-    }, error => {
-      console.error("Error fetching chats:", error);
-    });
-}
+  }
 
-
-    // Utility function to truncate text
-    function truncateText(text, maxLength) {
-      return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  function fetchChats() {
+    if (chatsListener) {
+      console.log("Chats listener already attached.");
+      return; // Prevent attaching multiple listeners
     }
-    function selectChat(chatId, chatItem, chatData) {
-  selectedChatId = chatId;
-  document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
-  chatItem.classList.add('active');
 
-  // Determine the recipient's email
-  const recipientEmail = chatData.members.find(email => email !== currentUser.email);
+    console.log("Attaching chats listener.");
+    chatsListener = db.collection("Chats")
+      .where("members", "array-contains", currentUser.email) // Filter chats where currentUser's email is a member
+      .onSnapshot(snapshot => {
+        console.log(`Received snapshot with ${snapshot.size} chats.`);
 
-  // Fetch recipient's details from Users collection
-  db.collection("Particulars").where("email", "==", recipientEmail).get()
-    .then(userSnapshot => {
-      if (!userSnapshot.empty) {
-        const userData = userSnapshot.docs[0].data();
-        const recipientName = userData.Name || "Chat";
-        const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
+        snapshot.docChanges().forEach(change => {
+          const chatId = change.doc.id;
+          const chatData = change.doc.data();
 
-        // Get the download URL for the avatar image from Firebase Storage
-        storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
-          .then(url => {
-            // Update the chat header with recipient's name and avatar URL
-            document.getElementById("chat-name").textContent = recipientName;
-            document.getElementById("chat-avatar").src = url;
-            console.log("Avatar URL:", url);
-          })
-          .catch(error => {
-            console.error("Error fetching avatar URL:", error);
-            // Fallback to default avatar if there's an error
-            document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
-          });
-      } else {
-        // Fallback if no user data is found
-        document.getElementById("chat-name").textContent = "Chat";
-        document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
-      }
-
-      // Show chat header and message input
-      document.getElementById("chat-header").style.display = "flex";
-      document.getElementById("message-input-container").style.display = "flex";
-
-      // Load chat messages
-      loadChat(chatId);
-      document.getElementById("message-text").disabled = false;
-      document.getElementById("message-text").focus({ preventScroll: true });
-
-      // Smooth scroll to the chat container
-      const chatContainer = document.querySelector('.chat-container');
-      const yOffset = -2000; // Adjust this value as needed
-      const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: yPosition, behavior: 'smooth' });
-    })
-    .catch(error => {
-      console.error("Error fetching recipient's details:", error);
-
-      // Fallback in case of error
-      document.getElementById("chat-name").textContent = "Chat";
-      document.getElementById("chat-avatar").src = "assets/img/default-avatar.png";
-
-      // Show chat header and message input
-      document.getElementById("chat-header").style.display = "flex";
-      document.getElementById("message-input-container").style.display = "flex";
-
-      // Load chat messages
-      loadChat(chatId);
-      document.getElementById("message-text").disabled = false;
-      document.getElementById("message-text").focus({ preventScroll: true });
-
-      // Smooth scroll to the chat container
-      const chatContainer = document.querySelector('.chat-container');
-      const yOffset = -120; // Adjust this value as needed
-      const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
-      window.scrollTo({ top: yPosition, behavior: 'smooth' });
-    });
-}
-
-
-
-    // Load messages for the selected chat
-    function loadChat(chatId) {
-      if (messagesListener) {
-        messagesListener(); // Detach previous listener
-      }
-      messagesListener = db.collection("Chats").doc(chatId).collection("messages")
-        .orderBy("sent_at")
-        .onSnapshot(snapshot => {
-          const messageList = document.getElementById("message-list");
-          messageList.innerHTML = ""; // Clear to prevent duplication
-          snapshot.forEach(doc => {
-            const messageData = doc.data();
-            renderMessage(messageData, doc.id);
-          });
-          messageList.scrollTop = messageList.scrollHeight;
-        }, error => {
-          console.error("Error loading messages:", error);
+          if (change.type === "added") {
+            console.log(`Chat added: ${chatId}`);
+            createChatItem(chatId, chatData);
+          }
+          if (change.type === "modified") {
+            console.log(`Chat modified: ${chatId}`);
+            updateChatItem(chatId, chatData);
+          }
+          if (change.type === "removed") {
+            console.log(`Chat removed: ${chatId}`);
+            removeChatItem(chatId);
+          }
         });
+      }, error => {
+        console.error("Error fetching chats:", error);
+        alert("Failed to load chats. Please try again later.");
+      });
+  }
+
+  // Function to create and append a chat item
+  function createChatItem(chatId, chatData) {
+    // Prevent duplicate creation if chat already exists in the map
+    if (chatItemsMap[chatId]) {
+      console.warn(`Chat item for ${chatId} already exists.`);
+      return;
     }
 
-    // Render a single message
-    function renderMessage(messageData, messageId) {
-      const messageList = document.getElementById("message-list");
-      const messageDiv = document.createElement("div");
-      messageDiv.classList.add("message");
-      messageDiv.classList.add(messageData.sender_email === currentUser.email ? "sent" : "received");
+    const chatItem = document.createElement("div");
+    chatItem.classList.add("chat-item", "d-flex", "align-items-center");
+    chatItem.setAttribute('data-chat-id', chatId); // For easier selection
 
-      let messageContent = '';
+    // Determine the recipient's email
+    const recipientEmail = chatData.members.find(email => email !== currentUser.email);
+    let recipientName = "Chat"; // Default name
+    let recipientAvatar = "assets/img/default-avatar.png"; // Default avatar
 
-      if (messageData.type === "text") {
-        messageContent = escapeHTML(messageData.content);
-      } else if (messageData.type === "file") {
-        messageContent = `<a href="${messageData.content}" target="_blank">📎 File Attachment</a>`;
+    // Fetch the recipient's details from the Particulars collection
+    db.collection("Particulars").where("email", "==", recipientEmail).get()
+      .then(userSnapshot => {
+        if (!userSnapshot.empty) {
+          const userData = userSnapshot.docs[0].data();
+          recipientName = userData.Name || "Chat"; // Update with actual name
+          const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
+
+          // Get the download URL for the avatar image from Firebase Storage
+          storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
+            .then(url => {
+              appendChatItem(chatItem, url, recipientName, chatData);
+            })
+            .catch(error => {
+              console.error("Error fetching avatar URL:", error);
+              appendChatItem(chatItem, recipientAvatar, recipientName, chatData);
+            });
+        } else {
+          // If no user data found, use default values
+          appendChatItem(chatItem, recipientAvatar, recipientName, chatData);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching user details:", error);
+        appendChatItem(chatItem, recipientAvatar, recipientName, chatData);
+      });
+  }
+
+  // Function to append chat item to the chat list
+  function appendChatItem(chatItem, avatarURL, recipientName, chatData) {
+    // Create and configure the avatar image
+    const img = document.createElement("img");
+    img.src = avatarURL; // Set the dynamic URL for the avatar
+    img.alt = "Avatar";
+    img.classList.add("rounded-circle", "me-2");
+    img.width = 50;
+    img.height = 50;
+
+    // Create the container for chat information
+    const chatInfoDiv = document.createElement("div");
+    chatInfoDiv.classList.add("chat-item-info");
+
+    // Create and set the chat name
+    const chatNameDiv = document.createElement("div");
+    chatNameDiv.classList.add("chat-item-name");
+    chatNameDiv.textContent = recipientName;
+
+    // Create and set the last message preview
+    const chatLastMessageDiv = document.createElement("div");
+    chatLastMessageDiv.classList.add("chat-item-last-message");
+    chatLastMessageDiv.textContent = chatData.last_message
+      ? (chatData.last_message.type === 'text'
+        ? truncateText(chatData.last_message.content, 30)
+        : '📎 Attachment')
+      : '';
+
+    // Append the name and last message elements to the chat info container
+    chatInfoDiv.appendChild(chatNameDiv);
+    chatInfoDiv.appendChild(chatLastMessageDiv);
+
+    // Append the avatar image and chat info container to the main chat item container
+    chatItem.appendChild(img);
+    chatItem.appendChild(chatInfoDiv);
+
+    // Attach a click event listener to the chat item
+    chatItem.addEventListener("click", () => selectChat(chatItem.getAttribute('data-chat-id'), chatItem, chatData));
+
+    // Append the complete chat item to the chat list
+    chatList.appendChild(chatItem);
+
+    // **Add to chatItemsMap**
+    chatItemsMap[chatItem.getAttribute('data-chat-id')] = chatItem;
+  }
+
+  // Function to update a chat item (e.g., when last_message changes)
+  function updateChatItem(chatId, chatData) {
+    const chatItem = chatItemsMap[chatId];
+    if (!chatItem) {
+      console.warn(`Chat item for ${chatId} does not exist. Creating a new one.`);
+      createChatItem(chatId, chatData);
+      return;
+    }
+
+    // Update the last message preview
+    const chatLastMessageDiv = chatItem.querySelector(".chat-item-last-message");
+    if (chatLastMessageDiv) {
+      chatLastMessageDiv.textContent = chatData.last_message
+        ? (chatData.last_message.type === 'text'
+          ? truncateText(chatData.last_message.content, 30)
+          : '📎 Attachment')
+        : '';
+    }
+
+    // Optionally, you can reorder the chat items based on last_message.sent_at
+    // For simplicity, we'll skip reordering in this example
+  }
+
+  // Function to remove a chat item
+  function removeChatItem(chatId) {
+    const chatItem = chatItemsMap[chatId];
+    if (chatItem) {
+      chatList.removeChild(chatItem);
+      delete chatItemsMap[chatId];
+      console.log(`Chat item for ${chatId} removed.`);
+    } else {
+      console.warn(`Chat item for ${chatId} does not exist.`);
+    }
+  }
+
+  // Utility function to truncate text
+  function truncateText(text, maxLength) {
+    return text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  }
+
+  function selectChat(chatId, chatItem, chatData) {
+    selectedChatId = chatId;
+    document.querySelectorAll('.chat-item').forEach(item => item.classList.remove('active'));
+    chatItem.classList.add('active');
+
+    // Determine the recipient's email
+    const recipientEmail = chatData.members.find(email => email !== currentUser.email);
+
+    // Fetch recipient's details from Particulars collection
+    db.collection("Particulars").where("email", "==", recipientEmail).get()
+      .then(userSnapshot => {
+        if (!userSnapshot.empty) {
+          const userData = userSnapshot.docs[0].data();
+          const recipientName = userData.Name || "Chat";
+          const avatarFileName = userData.Image || "default.jpg"; // Image filename from Firestore
+
+          // Get the download URL for the avatar image from Firebase Storage
+          storage.ref(`images/team/${avatarFileName}`).getDownloadURL()
+            .then(url => {
+              // Update the chat header with recipient's name and avatar URL
+              chatNameElement.textContent = recipientName;
+              chatAvatarElement.src = url;
+              console.log("Avatar URL:", url);
+            })
+            .catch(error => {
+              console.error("Error fetching avatar URL:", error);
+              // Fallback to default avatar if there's an error
+              chatAvatarElement.src = "assets/img/default-avatar.png";
+            });
+        } else {
+          // Fallback if no user data is found
+          chatNameElement.textContent = "Chat";
+          chatAvatarElement.src = "assets/img/default-avatar.png";
+        }
+
+        // Show chat header and message input
+        chatHeader.style.display = "flex";
+        messageInputContainer.style.display = "flex";
+        noChatSelected.style.display = "none";
+
+        // Load chat messages
+        loadChat(chatId);
+        messageTextInput.disabled = false;
+        messageTextInput.focus({ preventScroll: true });
+
+        // Smooth scroll to the chat container
+        const chatContainer = document.querySelector('.chat-container');
+        const yOffset = -200; // Adjusted value for better scrolling
+        const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: yPosition, behavior: 'smooth' });
+      })
+      .catch(error => {
+        console.error("Error fetching recipient's details:", error);
+
+        // Fallback in case of error
+        chatNameElement.textContent = "Chat";
+        chatAvatarElement.src = "assets/img/default-avatar.png";
+
+        // Show chat header and message input
+        chatHeader.style.display = "flex";
+        messageInputContainer.style.display = "flex";
+        noChatSelected.style.display = "none";
+
+        // Load chat messages
+        loadChat(chatId);
+        messageTextInput.disabled = false;
+        messageTextInput.focus({ preventScroll: true });
+
+        // Smooth scroll to the chat container
+        const chatContainer = document.querySelector('.chat-container');
+        const yOffset = -120; // Adjusted value as needed
+        const yPosition = chatContainer.getBoundingClientRect().top + window.pageYOffset + yOffset;
+        window.scrollTo({ top: yPosition, behavior: 'smooth' });
+      });
+  }
+
+  // Load messages for the selected chat
+  function loadChat(chatId) {
+    if (messagesListener) {
+      messagesListener(); // Detach previous listener
+    }
+    messagesListener = db.collection("Chats").doc(chatId).collection("messages")
+      .orderBy("sent_at")
+      .onSnapshot(snapshot => {
+        messageList.innerHTML = ""; // Clear to prevent duplication
+        snapshot.forEach(doc => {
+          const messageData = doc.data();
+          renderMessage(messageData, doc.id);
+        });
+        messageList.scrollTop = messageList.scrollHeight;
+      }, error => {
+        console.error("Error loading messages:", error);
+        alert("Failed to load messages. Please try again later.");
+      });
+  }
+
+  // Render a single message
+  function renderMessage(messageData, messageId) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("message");
+    messageDiv.classList.add(messageData.sender_email === currentUser.email ? "sent" : "received");
+
+    // Create message content element
+    let messageContentElement;
+
+    if (messageData.type === "text") {
+      messageContentElement = document.createElement('span');
+      messageContentElement.textContent = escapeHTML(messageData.content);
+    } else if (messageData.type === "file") {
+      messageContentElement = document.createElement('a');
+      messageContentElement.href = messageData.content;
+      messageContentElement.target = "_blank";
+      messageContentElement.textContent = "📎 File Attachment";
+    }
+
+    // Create timestamp element
+    const timestampDiv = document.createElement('div');
+    timestampDiv.classList.add('timestamp');
+    timestampDiv.textContent = formatTimestamp(messageData.sent_at);
+
+    // Add read receipt icon if sender is current user
+    if (messageData.sender_email === currentUser.email) {
+      const readIcon = document.createElement('i');
+      readIcon.classList.add('fas');
+      if (messageData.read_by_receiver) {
+        readIcon.classList.add('fa-check-double');
+      } else {
+        readIcon.classList.add('fa-check');
       }
-
-      messageDiv.innerHTML = `
-        ${messageContent}
-        <div class="timestamp">${formatTimestamp(messageData.sent_at)} ${messageData.sender_email === currentUser.email ? (messageData.read_by_receiver ? '<i class="fas fa-check-double"></i>' : '<i class="fas fa-check"></i>') : ''}</div>
-        <button class="delete-message" onclick="deleteMessage('${selectedChatId}', '${messageId}')"><i class="fas fa-trash-alt"></i></button>
-      `;
-
-      messageList.appendChild(messageDiv);
+      timestampDiv.appendChild(readIcon);
     }
 
-    // Escape HTML to prevent XSS
-    function escapeHTML(str) {
-      const div = document.createElement('div');
-      div.textContent = str;
-      return div.innerHTML;
-    }
+    // Create delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.classList.add('delete-message');
+    deleteButton.addEventListener('click', () => deleteMessage(selectedChatId, messageId));
+    const deleteIcon = document.createElement('i');
+    deleteIcon.classList.add('fas', 'fa-trash-alt');
+    deleteButton.appendChild(deleteIcon);
 
-    // Format timestamp
-    function formatTimestamp(timestamp) {
-      if (!timestamp) return '';
-      const date = timestamp.toDate();
-      return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    }
+    // Assemble message components
+    messageDiv.appendChild(messageContentElement);
+    messageDiv.appendChild(timestampDiv);
+    messageDiv.appendChild(deleteButton);
 
+    messageList.appendChild(messageDiv);
+  }
+
+  // Escape HTML to prevent XSS
+  function escapeHTML(str) {
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  // Format timestamp
+  function formatTimestamp(timestamp) {
+    if (!timestamp) return '';
+    const date = timestamp.toDate();
+    return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // Initialize Event Listeners Once to Prevent Multiple Attachments
+  function initializeEventListeners() {
     // Send a message
-    document.getElementById("send-message-button").addEventListener("click", sendMessage);
-    document.getElementById("message-text").addEventListener("keypress", event => {
+    sendMessageButton.addEventListener("click", sendMessage);
+    messageTextInput.addEventListener("keypress", event => {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         sendMessage();
       }
     });
 
-    function sendMessage() {
-      const messageText = document.getElementById("message-text").value.trim();
-      if (messageText && selectedChatId) {
-        const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
-        const messageData = {
-          message_id: messageRef.id,
-          content: messageText,
-          sender_email: currentUser.email, // Use email instead of UID
-          sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-          type: "text",
-          read_by_receiver: false
-        };
-
-        messageRef.set(messageData).then(() => {
-          document.getElementById("message-text").value = "";
-
-          // Update last message in chat document
-          db.collection("Chats").doc(selectedChatId).update({
-            last_message: {
-              ...messageData,
-              sent_at: firebase.firestore.FieldValue.serverTimestamp()
-            }
-          });
-        }).catch(error => {
-          console.error("Error sending message:", error);
-        });
-      }
-    }
-
     // Send a file
-    document.getElementById("attach-file-button").addEventListener("click", () => {
-      document.getElementById("attach-file-input").click();
+    attachFileButton.addEventListener("click", () => {
+      attachFileInput.click();
     });
 
-    document.getElementById("attach-file-input").addEventListener("change", event => {
+    attachFileInput.addEventListener("change", event => {
       const file = event.target.files[0];
       if (file && selectedChatId) {
         const fileRef = storage.ref().child("chat_files/" + selectedChatId + "/" + file.name); // Organize files by chat
@@ -973,6 +999,7 @@ chatList.appendChild(chatItem);
           },
           function (error) {
             console.error("Error uploading file:", error);
+            alert("Failed to upload file. Please try again.");
           },
           function () {
             uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
@@ -983,63 +1010,28 @@ chatList.appendChild(chatItem);
       }
     });
 
-    function sendFileMessage(fileURL) {
-      const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
-      const messageData = {
-        message_id: messageRef.id,
-        content: fileURL,
-        sender_email: currentUser.email, // Use email instead of UID
-        sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-        type: "file",
-        read_by_receiver: false
-      };
-
-      messageRef.set(messageData).then(() => {
-        // Update last message in chat document
-        db.collection("Chats").doc(selectedChatId).update({
-          last_message: {
-            ...messageData,
-            sent_at: firebase.firestore.FieldValue.serverTimestamp()
-          }
-        });
-      }).catch(error => {
-        console.error("Error sending file message:", error);
-      });
-    }
-
-    // Delete a message
-    function deleteMessage(chatId, messageId) {
-      if (confirm("Are you sure you want to delete this message?")) {
-        db.collection("Chats").doc(chatId).collection("messages").doc(messageId).delete()
-          .then(() => {
-            console.log("Message deleted successfully.");
-          })
-          .catch(error => {
-            console.error("Error deleting message:", error);
-          });
-      }
-    }
-
     // Delete a chat
-    document.getElementById("delete-chat-button").addEventListener("click", () => {
+    deleteChatButton.addEventListener("click", () => {
       if (selectedChatId && confirm("Are you sure you want to delete this chat?")) {
         db.collection("Chats").doc(selectedChatId).delete()
           .then(() => {
             console.log("Chat deleted successfully.");
+            alert("Chat deleted successfully.");
             selectedChatId = null;
-            document.getElementById("chat-header").style.display = "none";
-            document.getElementById("message-input-container").style.display = "none";
-            document.getElementById("no-chat-selected").style.display = "none";
-            document.getElementById("message-list").innerHTML = "";
+            chatHeader.style.display = "none";
+            messageInputContainer.style.display = "none";
+            noChatSelected.style.display = "flex"; // Show no chat selected placeholder
+            messageList.innerHTML = "";
           })
           .catch(error => {
             console.error("Error deleting chat:", error);
+            alert("Failed to delete chat. Please try again.");
           });
       }
     });
 
     // New Chat
-    document.getElementById("new-chat-button").addEventListener("click", () => {
+    newChatButton.addEventListener("click", () => {
       const recipientEmail = prompt("Enter the email of the recipient:");
       if (recipientEmail) {
         if (recipientEmail === currentUser.email) {
@@ -1047,20 +1039,20 @@ chatList.appendChild(chatItem);
           return;
         }
 
-        // Optional: Validate email format
+        // Validate email format
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailPattern.test(recipientEmail)) {
           alert("Please enter a valid email address.");
           return;
         }
 
-        // Check if recipient exists in Users collection
+        // Check if recipient exists in Particulars collection
         db.collection("Particulars").where("email", "==", recipientEmail).get()
           .then(querySnapshot => {
             if (!querySnapshot.empty) {
               const recipientDoc = querySnapshot.docs[0];
-              const recipientName = recipientDoc.data().name || "Chat";
-              const recipientAvatar = recipientDoc.data().avatar || "assets/img/default-avatar.png";
+              const recipientName = recipientDoc.data().Name || "Chat";
+              const avatarFileName = recipientDoc.data().Image || "default.jpg";
 
               // Check if chat already exists between the two users
               db.collection("Chats")
@@ -1073,8 +1065,8 @@ chatList.appendChild(chatItem);
                     if (chatData.members.includes(recipientEmail)) {
                       chatExists = true;
                       alert("Chat with this user already exists.");
-                      // Optionally, select the existing chat
-                      const existingChatItem = document.querySelector(`[data-chat-id="${chatDoc.id}"]`);
+                      // Select the existing chat
+                      const existingChatItem = chatItemsMap[chatDoc.id];
                       if (existingChatItem) {
                         selectChat(chatDoc.id, existingChatItem, chatData);
                       }
@@ -1087,21 +1079,24 @@ chatList.appendChild(chatItem);
                     const chatData = {
                       chat_id: chatRef.id,
                       chat_name: recipientName,
-                      chat_avatar: recipientAvatar, // Set to recipient's avatar
+                      chat_avatar: `images/team/${avatarFileName}`, // Store the path to the avatar
                       members: [currentUser.email, recipientEmail], // Include both emails in the members array
                       last_message: null
                     };
                     chatRef.set(chatData).then(() => {
                       console.log("New chat created.");
-                      // Optionally, select the newly created chat
-                      selectChat(chatRef.id, null, chatData); // Adjust if necessary
+                      alert("New chat created successfully.");
+                      // Select the newly created chat
+                      selectChat(chatRef.id, null, chatData);
                     }).catch(error => {
                       console.error("Error creating new chat:", error);
+                      alert("Failed to create a new chat. Please try again.");
                     });
                   }
                 })
                 .catch(error => {
                   console.error("Error checking existing chats:", error);
+                  alert("Failed to verify existing chats. Please try again.");
                 });
             } else {
               alert("No user found with that email.");
@@ -1109,6 +1104,7 @@ chatList.appendChild(chatItem);
           })
           .catch(error => {
             console.error("Error fetching user:", error);
+            alert("Failed to fetch user details. Please try again.");
           });
       }
     });
@@ -1118,52 +1114,157 @@ chatList.appendChild(chatItem);
       position: 'top-start'
     });
 
-    const trigger = document.getElementById('emoji-button');
-    const messageInput = document.getElementById('message-text');
-
     picker.on('emoji', emoji => {
-      messageInput.value += emoji;
-      messageInput.focus();
+      messageTextInput.value += emoji;
+      messageTextInput.focus();
     });
 
-    trigger.addEventListener('click', () => {
-      picker.togglePicker(trigger);
+    emojiButton.addEventListener('click', () => {
+      picker.togglePicker(emojiButton);
     });
-  </script>
+  }
 
-<footer id="footer" class="footer position-relative light-background">
-  <div class="container footer-top">
-    <div class="row gy-4">
-      
-      <!-- About Section with Social Links -->
-      <div class="col-lg-3 md-6 sm-6 footer-about">
-        <a href="index.html" class="logo d-flex align-items-center">
-          <span class="sitename">SMOOTutor</span>
-        </a>
-        <div class="footer-contact pt-3">
-          <p>SMU</p>
-          <p>81 Victoria St, Singapore 188065</p>
-          <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
-          <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
+  // Send a message
+  function sendMessage() {
+    const messageText = messageTextInput.value.trim();
+
+    // Input Validation: Check for non-empty and reasonable length
+    if (!messageText) {
+      alert("Cannot send an empty message.");
+      return;
+    }
+    if (messageText.length > 1000) { // Example: limit to 1000 characters
+      alert("Message is too long. Please limit to 1000 characters.");
+      return;
+    }
+
+    if (selectedChatId) {
+      const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
+      const messageData = {
+        message_id: messageRef.id,
+        content: messageText,
+        sender_email: currentUser.email, // Use email instead of UID
+        sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+        type: "text",
+        read_by_receiver: false
+      };
+
+      messageRef.set(messageData).then(() => {
+        // Clear the input box after sending the message
+        messageTextInput.value = "";
+
+        // Update last message in chat document
+        db.collection("Chats").doc(selectedChatId).update({
+          last_message: {
+            ...messageData,
+            sent_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
+        }).then(() => {
+          console.log("Last message updated.");
+        }).catch(error => {
+          console.error("Error updating last message:", error);
+          alert("Failed to update chat. Please try again.");
+        });
+      }).catch(error => {
+        console.error("Error sending message:", error);
+        alert("Failed to send the message. Please try again.");
+      });
+    } else {
+      alert("No chat selected.");
+    }
+  }
+
+  // Send a file
+  function sendFileMessage(fileURL) {
+    if (!selectedChatId) {
+      alert("No chat selected.");
+      return;
+    }
+
+    const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
+    const messageData = {
+      message_id: messageRef.id,
+      content: fileURL,
+      sender_email: currentUser.email, // Use email instead of UID
+      sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+      type: "file",
+      read_by_receiver: false
+    };
+
+    messageRef.set(messageData).then(() => {
+      // Update last message in chat document
+      db.collection("Chats").doc(selectedChatId).update({
+        last_message: {
+          ...messageData,
+          sent_at: firebase.firestore.FieldValue.serverTimestamp()
+        }
+      }).then(() => {
+        console.log("Last message updated with file.");
+        alert("File sent successfully.");
+      }).catch(error => {
+        console.error("Error updating last message with file:", error);
+        alert("Failed to update chat with file. Please try again.");
+      });
+    }).catch(error => {
+      console.error("Error sending file message:", error);
+      alert("Failed to send the file. Please try again.");
+    });
+  }
+
+  // Delete a message
+  function deleteMessage(chatId, messageId) {
+    if (confirm("Are you sure you want to delete this message?")) {
+      db.collection("Chats").doc(chatId).collection("messages").doc(messageId).delete()
+        .then(() => {
+          console.log("Message deleted successfully.");
+          alert("Message deleted successfully.");
+        })
+        .catch(error => {
+          console.error("Error deleting message:", error);
+          alert("Failed to delete the message. Please try again.");
+        });
+    }
+  }
+</script>
+
+
+
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container footer-top">
+      <div class="row gy-4">
+
+        <!-- About Section with Social Links -->
+        <div class="col-lg-3 md-6 sm-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">SMOOTutor</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>SMU</p>
+            <p>81 Victoria St, Singapore 188065</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+            <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+            <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+          </div>
+
         </div>
-        <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
-          <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
-          <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
-          <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
-          <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+
+        <!-- Google Maps Section -->
+        <div class="col-lg-9 md-6 sm-6">
+          <iframe style="border:0; width: 100%; height: 350px;"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street"
+            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-     
+
+
       </div>
-
-      <!-- Google Maps Section -->
-      <div class="col-lg-9 md-6 sm-6">
-        <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-      </div>
-
-
     </div>
-  </div>
-</footer>
+  </footer>
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i

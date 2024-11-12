@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>SMOOTutor</title>
+  <title>SMOOTutor Tutee Home</title>
+
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -295,7 +296,27 @@
     color: red;
 }
 
+.card {
+    border-radius: 15px; /* Match this with the card's corner radius /
+    overflow: hidden; / Ensures the image respects the card's rounded corners /
+    cursor: default; / Ensures cursor does not change on hover /
+    transition: transform 0.3s ease; / Add transition for smooth scaling effect */
+    width: 300px;
+    }
+    .card-img-top {
+    width: 100%;
+    height: auto;
+    object-fit: cover; /* Makes sure the image covers the entire area /
+    border-radius: inherit; / Inherit the card's rounded corners /
+    object-position: center;
+    cursor: default; / Ensures cursor does not change on hover */
+    }
 
+
+
+    .card:hover {
+      transform: scale(1.05); /* Increase the scale of the card on hover */
+    }
 
 
 
@@ -462,14 +483,7 @@
           </div>
 
           <!-- Controls for navigating the carousel -->
-          <!-- <button class="carousel-control-prev" type="button" data-bs-target="#teamCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#teamCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button> -->
+  
         </div>
 
 
@@ -481,149 +495,21 @@
   </section><!-- /Trainers Index Section -->
 
   <!-- Testimonials Section -->
-  <section id="testimonials" class="testimonials section">
-
-    <!-- Section Title -->
+  <section id="testimonials" class="testimonials section" data-aos="fade-up">
     <div class="container section-title" data-aos="fade-up">
-      <h2>Testimonials</h2>
-      <p>What are our students saying</p>
-    </div><!-- End Section Title -->
-
-    <div class="container" data-aos="fade-up" data-aos-delay="100">
-
-      <div class="swiper init-swiper">
-        <script type="application/json" class="swiper-config">
-                {
-                  "loop": true,
-                  "speed": 600,
-                  "autoplay": {
-                    "delay": 5000
-                  },
-                  "slidesPerView": "auto",
-                  "pagination": {
-                    "el": ".swiper-pagination",
-                    "type": "bullets",
-                    "clickable": true
-                  },
-                  "breakpoints": {
-                    "320": {
-                      "slidesPerView": 1,
-                      "spaceBetween": 40
-                    },
-                    "1200": {
-                      "slidesPerView": 2,
-                      "spaceBetween": 20
-                    }
-                  }
-                }
-              </script>
-        <div class="swiper-wrapper">
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-1.jpg" class="testimonial-img" alt="">
-                <h3>Saul Goodman</h3>
-                <h4>Student of Zenny</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Amazing tutoring provided at such a flexible arrangement. Highly recommended to everyone</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-2.jpg" class="testimonial-img" alt="">
-                <h3>Sara Wilsson</h3>
-                <h4>Student of Chrispy Choo</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Very patient and understanding. Always ready for our online lessons.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-3.jpg" class="testimonial-img" alt="">
-                <h3>Jena Karlis</h3>
-                <h4>Student of Cloudy Ng</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Her methods of teaching are unique and allows me to understand so much easier!</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-4.jpg" class="testimonial-img" alt="">
-                <h3>Matt</h3>
-                <h4>Student of Yichy Nose</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Super patient and understanding. He always makes extra time for me if I have any additional
-                    questions.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-          <div class="swiper-slide">
-            <div class="testimonial-wrap">
-              <div class="testimonial-item">
-                <img src="assets/img/testimonials/testimonials-5.jpg" class="testimonial-img" alt="">
-                <h3>John Larson</h3>
-                <h4>Student of Zenny</h4>
-                <div class="stars">
-                  <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
-                    class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                </div>
-                <p>
-                  <i class="bi bi-quote quote-icon-left"></i>
-                  <span>Unique ways of teaching. Keeps every lesson interesting and engaging. It was a joy to be his
-                    student.</span>
-                  <i class="bi bi-quote quote-icon-right"></i>
-                </p>
-              </div>
-            </div>
-          </div><!-- End testimonial item -->
-
-        </div>
-        <div class="swiper-pagination"></div>
-      </div>
-
+        <h2>Testimonials</h2>
+        <p>What are our students saying</p>
     </div>
 
-  </section><!-- /Testimonials Section -->
-
+    <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <div class="swiper init-swiper">
+            <div class="swiper-wrapper" id="testimonials-container">
+                <!-- Testimonial cards will be dynamically populated here by JavaScript -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
   </main>
 
   <footer id="footer" class="footer position-relative light-background">

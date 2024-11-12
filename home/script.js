@@ -158,3 +158,35 @@ particlesJS('particles-js',
         "retina_detect": true
     }
 );
+
+document.querySelectorAll('.toggle-password').forEach(function (toggle) {
+    toggle.addEventListener('click', function () {
+        const passwordInput = document.querySelector(toggle.getAttribute('data-toggle'));
+        const icon = toggle.querySelector('i');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.remove('fa-eye');
+            icon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+});
+
+// Input Field Animation
+const inputGroups = document.querySelectorAll('.input-group input, .input-group textarea');
+inputGroups.forEach((input) => {
+    input.addEventListener('focus', () => {
+        const underline = input.nextElementSibling;
+        gsap.to(underline, { width: '100%', duration: 0.5, ease: 'power2.out' });
+    });
+    input.addEventListener('blur', () => {
+        if (input.value === '') {
+            const underline = input.nextElementSibling;
+            gsap.to(underline, { width: '0%', duration: 0.5, ease: 'power2.out' });
+        }
+    });
+});
+
