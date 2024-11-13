@@ -164,6 +164,23 @@
         z-index: 2; /* Ensure text appears above overlay */
         color: #333; /* Darker text color for contrast */
     }
+    /* Styling for course code label */
+.course-code {
+  display: inline-block;
+  padding: 5px 10px; /* Keep original padding for height */
+  background-color: #337ab7;
+  color: #ffffff; /* Set text color to white */
+  font-weight: bold;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  width: 100px; /* Set a specific width to control the length */
+  text-align: center; /* Center-align the text within the element */
+}
+
+/* Other note container text styling */
+
+
 .overlay {
     position: absolute;
     top: 0;
@@ -173,7 +190,6 @@
     background-color: rgba(255, 255, 255, 0.8); /* 20% transparency */
     z-index: 1;
 }
-
 
 
 
@@ -327,6 +343,8 @@
 firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
+   
+
 
     // Array of image paths in Firebase Storage to be used as backgrounds
     const imagePaths = [
@@ -344,35 +362,66 @@ firebase.initializeApp(firebaseConfig);
     ];
 
     // Function to fetch and display notes
-    function fetchNotes() {
-        db.collection("BrowseNotes").get().then(async (snapshot) => {
+    function fetchNotes(userEmail) {
+            fetchBrowseNotes();
+            fetchSavedNotes(userEmail);
+        }
+
+        // Function to fetch and display Browse Notes (isSaved = false)
+        function fetchNotes(userEmail) {
+        fetchBrowseNotes();
+        fetchSavedNotes(userEmail);
+      }
+
+      function fetchBrowseNotes() {
+        db.collection("BrowseNotes").where("isSaved", "==", false)
+          .get()
+          .then(async (snapshot) => {
             const notes = [];
-
-            // Fetch each note document
             for (const doc of snapshot.docs) {
-                const note = { id: doc.id, ...doc.data() };
-
-                // Select a random image from the array
-                const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-
-                try {
-                    // Fetch the URL of the random image from Firebase Storage
-                    const url = await storage.ref(randomImagePath).getDownloadURL();
-                    note.img = url; // Set the image URL for this note
-                } catch (error) {
-                    console.error("Error fetching image URL:", error);
-                    note.img = ""; // Use an empty string or a placeholder image URL
-                }
-
-                notes.push(note);
+              const note = { id: doc.id, ...doc.data() };
+              const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+              try {
+                const url = await storage.ref(randomImagePath).getDownloadURL();
+                note.img = url;
+              } catch (error) {
+                note.img = ""; // Placeholder if image fetch fails
+              }
+              notes.push(note);
             }
-
-            // Render notes after all images are fetched
             renderNotes("browse-notes-container", notes);
-        }).catch((error) => {
-            console.error("Error fetching notes:", error);
-        });
-    }
+          })
+          .catch((error) => {
+            console.error("Error fetching browse notes:", error);
+          });
+      }
+
+      function fetchSavedNotes(userEmail) {
+        db.collection("SavedNotes")
+          .where("isSaved", "==", true)
+          .where("email", "array-contains", userEmail)
+          .get()
+          .then(async (snapshot) => {
+            const notes = [];
+            for (const doc of snapshot.docs) {
+              const note = { id: doc.id, ...doc.data() };
+              const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+              try {
+                const url = await storage.ref(randomImagePath).getDownloadURL();
+                note.img = url;
+              } catch (error) {
+                note.img = ""; // Placeholder if image fetch fails
+              }
+              notes.push(note);
+            }
+            renderNotes("saved-notes-container", notes);
+          })
+          .catch((error) => {
+            console.error("Error fetching saved notes:", error);
+          });
+      }
+
+
 
     // Function to render notes in the specified container
     function renderNotes(containerId, notes) {
@@ -429,254 +478,7 @@ firebase.initializeApp(firebaseConfig);
     fetchNotes();
 });
 
-//       // Initialize Firebase
-//       firebase.initializeApp(firebaseConfig);
-//       const db = firebase.firestore();
-//       // Array of image paths in Firebase Storage to be used as backgrounds
-// const imagePaths = [
-//     'images/notes/istockphoto-1041740040-612x612.jpg',
-//     'images/notes/istockphoto-1132123971-612x612.jpg',
-//     'images/notes/istockphoto-1166978137-612x612.jpg',
-//     'images/notes/istockphoto-1309080507-612x612.jpg',
-//     'images/notes/istockphoto-1312139041-612x612.jpg',
-//     'images/notes/istockphoto-1366428092-612x612.jpg',
-//     'images/notes/istockphoto-1371160686-612x612.jpg',
-//     'images/notes/istockphoto-1385520247-612x612.jpg',
-//     'images/notes/istockphoto-1408304018-612x612.jpg',
-//     'images/notes/istockphoto-1410568357-640x640.jpg',
-//     'images/notes/istockphoto-1480095869-612x612.jpg'
-// ];
 
-// // Function to fetch and display notes
-// function fetchNotes() {
-//     const storage = firebase.storage();
-//     db.collection("BrowseNotes").get().then((snapshot) => {
-//         const notes = [];
-//         snapshot.forEach((doc) => {
-//             const note = { id: doc.id, ...doc.data() };
-
-//             // Select a random image from the array
-//             const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-            
-//             // Fetch the URL of the random image from Firebase Storage
-//             storage.ref(randomImagePath).getDownloadURL().then(url => {
-//                 note.img = url; // Set the image URL for this note
-//                 notes.push(note);
-                
-//                 // Render notes once all image URLs are set
-//                 renderNotes("browse-notes-container", notes);
-//             }).catch((error) => {
-//                 console.error("Error fetching image URL:", error);
-//             });
-//         });
-//     }).catch((error) => {
-//         console.error("Error fetching notes:", error);
-//     });
-// }
-
-// Function to render notes in the specified container
-// function renderNotes(containerId, notes) {
-//     const container = document.getElementById(containerId);
-//     container.textContent = ""; // Clear the container before adding new items
-
-//     notes.forEach(note => {
-//         const noteContainer = document.createElement("div");
-//         noteContainer.className = "note-container";
-
-//         // Apply the random background image
-//         if (note.img) {
-//             noteContainer.style.backgroundImage = `url('${note.img}')`;
-//         } else {
-//             console.warn("Missing image URL for note:", note);
-//         }
-
-//         const courseCode = document.createElement("span");
-//         courseCode.className = "course-code";
-//         courseCode.textContent = note.courseId || "No Title";
-
-//         const courseName = document.createElement("h3");
-//         courseName.textContent = note.courseName || "Untitled";
-
-//         const professor = document.createElement("p");
-//         professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
-
-//         const owner = document.createElement("p");
-//         owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
-
-//         const price = document.createElement("p");
-//         price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
-
-//         // Lock icon with link to preview.html
-//         const previewLink = document.createElement("a");
-//         previewLink.href = `preview.html?notesId=${note.id}`; // Ensure notesId is passed in the URL
-//         previewLink.target = "_blank";
-//         previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
-
-//         // Append elements to the note container
-//         noteContainer.appendChild(courseCode);
-//         noteContainer.appendChild(courseName);
-//         noteContainer.appendChild(professor);
-//         noteContainer.appendChild(owner);
-//         noteContainer.appendChild(price);
-//         noteContainer.appendChild(previewLink);
-
-//         // Append noteContainer to the main container
-//         container.appendChild(noteContainer);
-//     });
-// }
-
-
-
-      // const auth = firebase.auth();
-    //   firebase.auth().onAuthStateChanged((user) => {
-    //     if (user) {
-    //         console.log("User is logged in with email:", user.email);
-    //         document.getElementById("my-email").innerText = user.email;
-    //         // fetchAllTutors()
-    //         // You can use user.email to retrieve user-specific data
-    //     } else {
-    //         console.log("No user is logged in.");
-    //         // Redirect to login page if needed
-    //         window.location.href = 'login.html';
-    //     }
-    // });
-//     firebase.auth().onAuthStateChanged((user) => {
-//     if (user) {
-//         console.log("User is logged in with email:", user.email);
-        
-//         const emailDiv = document.getElementById("my-email");
-//         const authButton = document.getElementById("auth-button");
-
-//         // Display the user's email by default
-//         emailDiv.innerText = user.email;
-
-//         // Add a click event to handle changing to logout and then logging out
-//         authButton.addEventListener("click", function() {
-//             if (emailDiv.innerText === user.email) {
-//                 // Change to "LOGOUT" and apply red style
-//                 emailDiv.innerText = "LOGOUT";
-//                 emailDiv.classList.add("logout-button");
-//             } else if (emailDiv.innerText === "LOGOUT") {
-//                 // Sign out and redirect
-//                 firebase.auth().signOut().then(() => {
-//                     console.log("User has logged out.");
-//                     window.location.href = 'index.html'; // Redirect to home page
-//                 }).catch((error) => {
-//                     console.error("Error logging out:", error);
-//                 });
-//             }
-//         });
-//     } else {
-//         console.log("No user is logged in.");
-//         window.location.href = 'login.html';
-//     }
-// });
-
-
-
-      
-
-
-// Function to render notes in the specified container (Browse or Saved)
-// function renderNotes(containerId, notes) {
-//     const container = document.getElementById(containerId);
-//     container.textContent = ""; // Clear the container before adding new items
-
-//     notes.forEach(note => {
-//         const noteContainer = document.createElement("div");
-//         noteContainer.className = "note-container";
-
-//         if (note.img) {
-//             noteContainer.style.backgroundImage = `url('${note.img}')`;
-//         } else {
-//             console.warn("Missing image URL for note:", note);
-//         }
-
-//         const courseCode = document.createElement("span");
-//         courseCode.className = "course-code";
-//         courseCode.textContent = note.courseId || "No Title";
-
-//         const courseName = document.createElement("h3");
-//         courseName.textContent = note.courseName || "Untitled";
-
-//         const professor = document.createElement("p");
-//         professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
-
-//         const owner = document.createElement("p");
-//         owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
-
-//         const price = document.createElement("p");
-//         price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
-
-//         // Lock icon with link to preview.html
-//         const previewLink = document.createElement("a");
-//         previewLink.href = `preview.html?notesId=${note.notesId || ""}`; // Ensure notesId is passed in the URL
-//         previewLink.target = "_blank";
-//         previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
-
-//         // Append elements to the note container
-//         noteContainer.appendChild(courseCode);
-//         noteContainer.appendChild(courseName);
-//         noteContainer.appendChild(professor);
-//         noteContainer.appendChild(owner);
-//         noteContainer.appendChild(price);
-//         noteContainer.appendChild(previewLink);
-
-//         // Append noteContainer to the main container
-//         container.appendChild(noteContainer);
-//     });
-// }
-
-
-
-
-  // Toggle between Browse and Saved notes sections
-  // function showSection(section) {
-  //   const browseSection = document.getElementById("browse-notes-section");
-  //   const savedSection = document.getElementById("saved-notes-section");
-  //   const pageTitle = document.querySelector(".page-title h1");
-
-  //   if (section === "browse") {
-  //     browseSection.style.display = "block";
-  //     savedSection.style.display = "none";
-  //     pageTitle.textContent = "Browse Notes";
-  //   } else if (section === "saved") {
-  //     browseSection.style.display = "none";
-  //     savedSection.style.display = "block";
-  //     pageTitle.textContent = "Saved Notes";
-  //   }
-  // }
-
-  // // Attach event listeners to dropdown items
-  // document.querySelector("a[href='notes.html?section=browse']").addEventListener("click", function (e) {
-  //   e.preventDefault();
-  //   showSection("browse");
-  // });
-
-  // document.querySelector("a[href='notes.html?section=saved']").addEventListener("click", function (e) {
-  //   e.preventDefault();
-  //   showSection("saved");
-  // });
-
-  // Initial load
-  // function fetchNotes() {
-  //       db.collection("BrowseNotes").get().then((snapshot) => {
-  //         const notes = [];
-  //         snapshot.forEach((doc) => {
-  //           notes.push(doc.data());
-  //         });
-  //         renderNotes("browse-notes-container", notes);
-  //       }).catch((error) => {
-  //         console.error("Error fetching notes:", error);
-  //       });
-  //     }
-
-  //     fetchNotes(); // Fetch notes on page load
-  //   });
-//   showSection("browse"); // Default to browse section on load
-// });
-    
-    // Initialize AOS (Animate on Scroll)
     
   </script>
 
