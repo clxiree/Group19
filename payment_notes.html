@@ -534,6 +534,12 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
             showToast("Failed to save note information. Please try again.", "error");
         }
     });
+    document.getElementById("continue-btn").addEventListener("click", function() {
+    // Add a delay of 2 seconds before redirecting
+    setTimeout(function() {
+      window.location.href = "notes.html?section=saved";
+    }, 2000); // 2000 milliseconds = 2 seconds
+  });
 
     // Function to display note details above the payment summary
     async function displayNoteDetails(notesId) {
