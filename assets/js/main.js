@@ -119,17 +119,17 @@
    */
   function initSwiper() {
     document.querySelectorAll(".init-swiper").forEach(function(swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
+        let config = JSON.parse(
+            swiperElement.querySelector(".swiper-config").getAttribute("data-config").trim()
+        );
 
-      if (swiperElement.classList.contains("swiper-tab")) {
-        initSwiperWithCustomPagination(swiperElement, config);
-      } else {
-        new Swiper(swiperElement, config);
-      }
+        if (swiperElement.classList.contains("swiper-tab")) {
+            initSwiperWithCustomPagination(swiperElement, config);
+        } else {
+            new Swiper(swiperElement, config);
+        }
     });
-  }
+}
 
   window.addEventListener("load", initSwiper);
 

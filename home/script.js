@@ -176,17 +176,17 @@ document.querySelectorAll('.toggle-password').forEach(function (toggle) {
 });
 
 // Input Field Animation
-const inputGroups = document.querySelectorAll('.input-group input, .input-group textarea');
-inputGroups.forEach((input) => {
-    input.addEventListener('focus', () => {
-        const underline = input.nextElementSibling;
-        gsap.to(underline, { width: '100%', duration: 0.5, ease: 'power2.out' });
-    });
-    input.addEventListener('blur', () => {
-        if (input.value === '') {
-            const underline = input.nextElementSibling;
-            gsap.to(underline, { width: '0%', duration: 0.5, ease: 'power2.out' });
-        }
-    });
-});
+// const inputGroups = document.querySelectorAll('.input-group input, .input-group textarea');
+// inputGroups.forEach((input) => {
+//     input.addEventListener('focus', () => {
+//         const underline = input.nextElementSibling;
+//         gsap.to(underline, { width: '100%', duration: 0.5, ease: 'power2.out' });
+//     });
+//     input.addEventListener('blur', () => {
+//         if (input.value === '') {
+//             const underline = input.nextElementSibling;
+//             gsap.to(underline, { width: '0%', duration: 0.5, ease: 'power2.out' });
+//         }
+//     });
+// });
 
