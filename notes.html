@@ -33,7 +33,8 @@
   <!-- Favicons -->
   <!-- <link href="assets/img/stlogo.png" rel="icon"> -->
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
+  <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -61,37 +62,44 @@
     }
 
     /* Grid container for notes */
-    
+
     .note-grid-container {
       margin-top: 30px;
     }
 
     /* Styling for each note container */
     .note-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid layout */
-    gap: 20px;
-    margin-top: 30px; /* Combined the margin to reduce CSS repetition */
-}
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      /* Responsive grid layout */
+      gap: 20px;
+      margin-top: 30px;
+      /* Combined the margin to reduce CSS repetition */
+    }
 
-.note-container {
-    border: none; /* Removed the solid border to avoid the unwanted white border effect */
-    border-radius: 15px;
-    padding: 20px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth scaling and shadow change */
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 350px;
-    overflow: hidden; /* Clips inner content to avoid overflow beyond border-radius */
-}
+    .note-container {
+      border: none;
+      /* Removed the solid border to avoid the unwanted white border effect */
+      border-radius: 15px;
+      padding: 20px;
+      background-color: #ffffff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      /* Smooth scaling and shadow change */
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 350px;
+      overflow: hidden;
+      /* Clips inner content to avoid overflow beyond border-radius */
+    }
 
-.note-container:hover {
-    transform: scale(1.03); /* Slight zoom effect on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
-}
+    .note-container:hover {
+      transform: scale(1.03);
+      /* Slight zoom effect on hover */
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+      /* Enhanced shadow on hover */
+    }
 
 
     .course-content {
@@ -105,17 +113,20 @@
 
     /* Styling for course code label */
     .course-code {
-    display: inline-block;
-    padding: 5px 10px; /* Keep original padding for height */
-    background-color: #337ab7;
-    color: #ffffff;
-    font-weight: bold;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    font-size: 0.9rem;
-    width: 100px; /* Set a specific width to control the length */
-    text-align: center; /* Center-align the text within the element */
-}
+      display: inline-block;
+      padding: 5px 10px;
+      /* Keep original padding for height */
+      background-color: #337ab7;
+      color: #ffffff;
+      font-weight: bold;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      width: 100px;
+      /* Set a specific width to control the length */
+      text-align: center;
+      /* Center-align the text within the element */
+    }
 
     /* Align Professor and Owner in the same row with reduced spacing */
     .info-row {
@@ -129,158 +140,181 @@
       margin: 0;
       /* Remove default paragraph margin */
     }
+
     .upload-button-wrapper {
-  display: flex;
-  justify-content: flex-end; /* Aligns the button to the right */
-  margin-bottom: 20px; /* Adjust as needed to add space below */
-}
+      display: flex;
+      justify-content: flex-end;
+      /* Aligns the button to the right */
+      margin-bottom: 20px;
+      /* Adjust as needed to add space below */
+    }
 
-.upload-button-wrapper .btn {
-  display: inline-flex;
-  align-items: center;
-}
+    .upload-button-wrapper .btn {
+      display: inline-flex;
+      align-items: center;
+    }
 
-.upload-button-wrapper .btn i {
-  margin-right: 5px; /* Adds space between the icon and the text */
-}
-.note-container {
-        position: relative;
-        background-size: cover;
-        background-position: center;
+    .upload-button-wrapper .btn i {
+      margin-right: 5px;
+      /* Adds space between the icon and the text */
+    }
+
+    .note-container {
+      position: relative;
+      background-size: cover;
+      background-position: center;
     }
 
     /* Add overlay to fade the background image */
     .note-container::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background-color: rgba(255, 255, 255, 0.7); /* Lighten overlay */
-        z-index: 1;
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.7);
+      /* Lighten overlay */
+      z-index: 1;
     }
 
-    .course-content, .course-code, h3, p, a {
-        position: relative;
-        z-index: 2; /* Ensure text appears above overlay */
-        color: #333; /* Darker text color for contrast */
+    .course-content,
+    .course-code,
+    h3,
+    p,
+    a {
+      position: relative;
+      z-index: 2;
+      /* Ensure text appears above overlay */
+      color: #333;
+      /* Darker text color for contrast */
     }
+
     /* Styling for course code label */
-.course-code {
-  display: inline-block;
-  padding: 5px 10px; /* Keep original padding for height */
-  background-color: #337ab7;
-  color: #ffffff; /* Set text color to white */
-  font-weight: bold;
-  border-radius: 8px;
-  margin-bottom: 15px;
-  font-size: 0.9rem;
-  width: 100px; /* Set a specific width to control the length */
-  text-align: center; /* Center-align the text within the element */
-}
+    .course-code {
+      display: inline-block;
+      padding: 5px 10px;
+      /* Keep original padding for height */
+      background-color: #337ab7;
+      color: #ffffff;
+      /* Set text color to white */
+      font-weight: bold;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+      width: 100px;
+      /* Set a specific width to control the length */
+      text-align: center;
+      /* Center-align the text within the element */
+    }
 
-/* Other note container text styling */
-
-
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(255, 255, 255, 0.8); /* 20% transparency */
-    z-index: 1;
-}
-/* Container styling */
-/* Default styling to show the email display */
-#my-email-container {
-    position: relative;
-    display: inline-block;
-    display: flex; /* Display email button normally on larger screens */
-    align-items: center;
-    margin-right: 10px; /* Space between email button and hamburger */
-}
+    /* Other note container text styling */
 
 
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(255, 255, 255, 0.8);
+      /* 20% transparency */
+      z-index: 1;
+    }
 
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
-}
+    /* Container styling */
+    /* Default styling to show the email display */
+    #my-email-container {
+      position: relative;
+      display: inline-block;
+      display: flex;
+      /* Display email button normally on larger screens */
+      align-items: center;
+      margin-right: 10px;
+      /* Space between email button and hamburger */
+    }
 
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    min-width: 150px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
-}
 
-/* Show dropdown on hover */
-/* Container styling */
-#my-email-container {
-    position: relative;
-    display: inline-block;
-}
 
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
-    text-align: left;
-}
+    /* Email Button styling */
+    #my-email {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: #333;
+      padding: 8px;
+      font-size: 14px;
+    }
 
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
-    min-width: 100%; /* Match width to parent */
-}
+    /* Dropdown content styling */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #fff;
+      min-width: 150px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 8px 0;
+      z-index: 1;
+    }
 
-/* Show dropdown on hover */
-#my-email-container:hover .dropdown-content {
-    display: block;
-}
+    /* Show dropdown on hover */
+    /* Container styling */
+    #my-email-container {
+      position: relative;
+      display: inline-block;
+    }
 
-/* Dropdown button styling */
-#logout-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px 20px;
-    text-align: left;
-    width: 100%; /* Match width to dropdown */
-    font-size: 14px;
-}
+    /* Email Button styling */
+    #my-email {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: #333;
+      padding: 8px;
+      font-size: 14px;
+      text-align: left;
+    }
 
-#logout-button:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
+    /* Dropdown content styling */
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      background-color: #fff;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      border-radius: 8px;
+      padding: 8px 0;
+      z-index: 1;
+      min-width: 100%;
+      /* Match width to parent */
+    }
+
+    /* Show dropdown on hover */
+    #my-email-container:hover .dropdown-content {
+      display: block;
+    }
+
+    /* Dropdown button styling */
+    #logout-button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: #333;
+      padding: 10px 20px;
+      text-align: left;
+      width: 100%;
+      /* Match width to dropdown */
+      font-size: 14px;
+    }
+
+    #logout-button:hover {
+      background-color: #f1f1f1;
+      color: red;
+    }
 
 
 
@@ -289,86 +323,653 @@
       .note-grid {
         grid-template-columns: 1fr;
       }
-#logout-button-small {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-}
 
-#logout-button-small:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
+      #logout-button-small {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        color: #333;
+        padding: 10px;
+        font-size: 16px;
+        text-align: center;
+        width: 100%;
       }
 
-      #footer {
-    margin-top: 0;
-    padding-top: 20px; /* Optional: adjust if you want some padding */
-  }
-    
+      #logout-button-small:hover {
+        background-color: #f1f1f1;
+        color: red;
+      }
+    }
+
+    #footer {
+      margin-top: 0;
+      padding-top: 20px;
+      /* Optional: adjust if you want some padding */
+    }
   </style>
 </head>
 
 <body class="course-details-page">
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <img src="assets/img/smootutor-logo.jpg">
-        </a>
+  <!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="tuteehomepage.html">Home</a></li>
-                <li><a href="bookings.html">Bookings</a></li>
-                <li class="dropdown">
-                    <a href="trainers.html" id="notesDropdown">Tutors <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-                        <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-                    </ul>
-                </li>
-                <li><a href="chats.html">Chats</a></li>
-                <li class="dropdown">
-                    <a href="notes.html" id="notesDropdown">Notes <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-                        <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-                    </ul>
-                </li>
-                <!-- Logout Button for Smaller Viewports -->
-                <li id="logout-container" style="display: none;"><button id="logout-button-small">Logout</button></li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+    <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
+    <button class="mobile-nav-toggle d-xl-none btn btn-primary ms-3">
+      <i class="bi bi-list"></i>
+    </button>
 
-        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+    <!-- Logo (Visible on screens >= 1200px) -->
+    <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
+      <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
+    </a>
 
-            </ul>
-         
-        </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      <!-- <a class="btn-getstarted">
-        <div id="my-email"></div>
-    </a> -->
-    <!-- Email Button with Dropdown -->
-<div id="my-email-container">
-  <button id="my-email"></button>
-  <div id="dropdown-menu" class="dropdown-content">
-      <button id="logout-button">Logout</button>
-  </div>
-</div> 
+    <!-- Navigation Menu (Visible on screens >= 1200px) -->
+    <nav id="navmenu" class="navmenu d-none d-xl-flex">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="tuteehomepage.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="bookings.html" class="nav-link">Bookings</a>
+        </li>
 
+        <!-- Tutors Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
+              class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
+            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="chats.html" class="nav-link">Chats</a>
+        </li>
+
+        <!-- Notes Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Email Display -->
+    <div id="my-email-container" class="ms-auto position-relative">
+      <button id="my-email" class="btn btn-secondary">
+        user@example.com <i class="bi bi-chevron-down"></i>
+      </button>
+      <div id="dropdown-menu" class="dropdown-content">
+        <button id="logout-button" class="dropdown-item">Sign Out</button>
+      </div>
     </div>
+
+  </div>
 </header>
+
+<!-- Mobile Menu Modal -->
+<div id="mobile-menu-mmodal" class="mmodal">
+  <div class="mmodal-content">
+    <span class="close-button">&times;</span>
+    <ul class="mobile-nav-list">
+      <li>
+        <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
+      </li>
+      <li>
+        <a href="bookings.html" class="mobile-nav-link">Bookings</a>
+      </li>
+
+      <!-- Tutors Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+          <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="chats.html" class="mobile-nav-link">Chats</a>
+      </li>
+
+      <!-- Notes Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+          <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+        </ul>
+      </li>
+
+      <!-- Logout Button -->
+      <li class="mobile-nav-item">
+        <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<!-- Bootstrap JS (Optional, for additional functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your Custom JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Dropdown Toggle Functionality for Desktop
+    const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
+
+    dropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        const dropdownMenu = this.nextElementSibling;
+        dropdownMenu.classList.toggle('show');
+      });
+    });
+
+    // Hamburger Menu Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
+    const closeButton = document.querySelector('.close-button');
+
+    mobileNavToggle.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'none';
+    });
+
+    // Close Mobile Menu When Clicking Outside
+    window.addEventListener('click', function (event) {
+      if (event.target == mobileMenuMModal) {
+        mobileMenuMModal.style.display = 'none';
+      }
+    });
+
+    // Mobile Dropdown Toggle
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+
+    mobileDropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        const mobileDropdownMenu = this.nextElementSibling;
+        mobileDropdownMenu.classList.toggle('show');
+        // Rotate the chevron icon
+        const icon = this.querySelector('i');
+        if (mobileDropdownMenu.classList.contains('show')) {
+          icon.classList.remove('bi-chevron-down');
+          icon.classList.add('bi-chevron-up');
+        } else {
+          icon.classList.remove('bi-chevron-up');
+          icon.classList.add('bi-chevron-down');
+        }
+      });
+    });
+
+    // Email Dropdown Toggle (Visible on screens <1200px)
+    const myEmailButton = document.getElementById('my-email');
+    const emailDropdown = document.getElementById('dropdown-menu');
+
+    myEmailButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      emailDropdown.classList.toggle('show');
+    });
+
+    // Close Email Dropdown When Clicking Outside
+    document.addEventListener('click', function (event) {
+      if (!myEmailButton.contains(event.target)) {
+        emailDropdown.classList.remove('show');
+      }
+    });
+
+    // Logout Button Functionality
+    const logoutButton = document.getElementById('logout-button');
+    const logoutButtonMobile = document.getElementById('logout-button-mobile');
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    if (logoutButtonMobile) {
+      logoutButtonMobile.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    // Handle Responsive Logo and Email Display
+    const logo = document.querySelector('.logo');
+    const myEmailContainer = document.getElementById('my-email-container');
+
+    function handleResize() {
+      if (window.innerWidth < 1200) {
+        logo.classList.add('d-none');
+      } else {
+        logo.classList.remove('d-none');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on page load
+  });
+</script>
+
+<style>
+  /* Header Container */
+  #header {
+    background-color: #ffffff;
+    /* Header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    padding: 10px 0;
+    /* Vertical padding */
+    position: relative;
+    z-index: 1000;
+    /* Ensure it stays on top */
+  }
+
+  /* Logo Styling */
+  #header .logo img {
+    height: 50px;
+    /* Adjust logo height as needed */
+    width: auto;
+  }
+
+  /* Navigation Menu */
+  #header #navmenu {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar List */
+  #header .navbar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    /* Arrange items horizontally */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Navbar Items */
+  #header .nav-item {
+    position: relative;
+    /* For dropdown positioning */
+  }
+
+  /* Navbar Links */
+  #header .nav-link {
+    color: #333333;
+    /* Link color */
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar Link Hover Effect */
+  #header .nav-link:hover {
+    color: #007bff;
+    /* Hover color */
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Optional background on hover */
+    border-radius: 4px;
+    /* Rounded corners on hover */
+  }
+
+  /* Dropdown Menu Styling */
+  #header .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 200px;
+    z-index: 1000;
+  }
+
+  /* Show Dropdown Menu */
+  #header .dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items */
+  #header .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect */
+  #header .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Mobile Navigation Toggle Button */
+  #header .mobile-nav-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333333;
+    margin-left: auto;
+    /* Push the toggle to the right */
+  }
+
+  /* Email Display Container */
+  #header #my-email-container {
+    position: relative;
+  }
+
+  /* Email Button Styling */
+  #header #my-email {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Email Dropdown Menu */
+  #header #dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 150px;
+    z-index: 1000;
+  }
+
+  /* Show Email Dropdown Menu */
+  #header #dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items in Email Dropdown */
+  #header #dropdown-menu .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect in Email Dropdown */
+  #header #dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Logout Button Styling */
+  #header .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Logout Button Hover Effect */
+  #header .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+    border-color: #dc3545;
+  }
+
+  /* Responsive Styles */
+
+  /* For screens less than 1200px */
+  @media (max-width: 1199.98px) {
+
+    /* Hide Logo */
+    #header .logo {
+      display: none;
+    }
+
+    /* Show Email Container */
+    #header #my-email-container {
+      display: block;
+    }
+
+    /* Show Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: block;
+    }
+
+    /* Hide Navmenu Initially */
+    #header #navmenu {
+      display: none;
+    }
+  }
+
+  /* For screens 1200px and above */
+  @media (min-width: 1200px) {
+
+    /* Show Logo */
+    #header .logo {
+      display: flex;
+    }
+
+    /* Show Navmenu */
+    #header #navmenu {
+      display: flex;
+    }
+
+    /* Hide Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: none;
+    }
+
+    #header #my-email-container {
+      display: block;
+    }
+  }
+
+  /* Mobile Menu Modal Styles */
+  .mmodal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1050;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+  }
+
+  .mmodal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-list li {
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav-link {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-toggle {
+    color: #333333;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-menu {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+  }
+
+  .mobile-dropdown-menu.show {
+    display: block;
+  }
+
+  .mobile-dropdown-menu .dropdown-item {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-menu .dropdown-item:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Logout Button Styling in Mobile Menu */
+  #logout-button-mobile {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: transparent;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+
+  /* ==============================
+   Hover Animations for Navigation
+=============================== */
+
+  /* Hover Animation for Desktop Navigation Links */
+  #navmenu .nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  #navmenu .nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  /* Hover Animation for Dropdown Items */
+  #navmenu .dropdown-item {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  #navmenu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Hover Animation for Mobile Navigation Links */
+  .mobile-nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Mobile Dropdown Toggle */
+  .mobile-dropdown-toggle {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Logout Button in Mobile Menu */
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+</style>
 
   <main class="main">
 
@@ -385,7 +986,7 @@
           </div>
         </div>
       </div>
-      
+
     </div><!-- End Page Title -->
     <!-- Browse Notes Section -->
     <section id="browse-notes-section" class="notes-section">
@@ -395,7 +996,7 @@
           <a class="btn btn-primary" href="uploadnotes.html">
             <i class="fas fa-upload"></i> Upload Your Notes
           </a>
-        </div>        
+        </div>
       </div>
       <div class="container note-grid" id="browse-notes-container"></div>
     </section>
@@ -414,7 +1015,7 @@
   <footer id="footer" class="footer position-relative light-background">
     <div class="container footer-top">
       <div class="row gy-4">
-        
+
         <!-- About Section with Social Links -->
         <div class="col-lg-3 md-6 sm-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
@@ -432,15 +1033,17 @@
             <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
             <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
           </div>
-       
+
         </div>
-  
+
         <!-- Google Maps Section -->
         <div class="col-lg-9 md-6 sm-6">
-          <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe style="border:0; width: 100%; height: 350px;"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street"
+            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-  
-  
+
+
       </div>
     </div>
   </footer>
@@ -464,48 +1067,48 @@
         appId: "1:289686522861:web:5811385ced42106d78b5e4",
         measurementId: "G-46QED8ZFKJ"
       };
-firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-    const storage = firebase.storage();
-    const urlParams = new URLSearchParams(window.location.search);
-    const section = urlParams.get("section");
-    
-    function loadNotesSection(userEmail) {
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
+      const storage = firebase.storage();
+      const urlParams = new URLSearchParams(window.location.search);
+      const section = urlParams.get("section");
+
+      function loadNotesSection(userEmail) {
         if (section === "saved") {
-            console.log("Loading Saved Notes"); // Debugging output
-            document.title = "Saved Notes";
-            document.querySelector("h2").innerText = "Saved Notes";
-            document.getElementById("browse-notes-section").style.display = "none";
-            document.getElementById("saved-notes-section").style.display = "block";
-            fetchSavedNotes(userEmail); // Fetch from SavedNotes collection
+          console.log("Loading Saved Notes"); // Debugging output
+          document.title = "Saved Notes";
+          document.querySelector("h2").innerText = "Saved Notes";
+          document.getElementById("browse-notes-section").style.display = "none";
+          document.getElementById("saved-notes-section").style.display = "block";
+          fetchSavedNotes(userEmail); // Fetch from SavedNotes collection
         } else {
-            console.log("Loading Browse Notes"); // Debugging output
-            document.title = "Browse Notes";
-            document.querySelector("h2").innerText = "Browse Notes";
-            document.getElementById("browse-notes-section").style.display = "block";
-            document.getElementById("saved-notes-section").style.display = "none";
-            fetchBrowseNotes(); // Fetch from BrowseNotes collection
+          console.log("Loading Browse Notes"); // Debugging output
+          document.title = "Browse Notes";
+          document.querySelector("h2").innerText = "Browse Notes";
+          document.getElementById("browse-notes-section").style.display = "block";
+          document.getElementById("saved-notes-section").style.display = "none";
+          fetchBrowseNotes(); // Fetch from BrowseNotes collection
         }
-    }
+      }
 
-    // Check user authentication and load the respective section
-    firebase.auth().onAuthStateChanged((user) => {
+      // Check user authentication and load the respective section
+      firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            console.log("User logged in:", user.email); // Debugging output
-            document.getElementById("my-email").innerText = user.email;
-            loadNotesSection(user.email); // Pass email to load the right notes section
+          console.log("User logged in:", user.email); // Debugging output
+          document.getElementById("my-email").innerText = user.email;
+          loadNotesSection(user.email); // Pass email to load the right notes section
         } else {
-            console.log("No user logged in, redirecting to login page."); // Debugging output
-            window.location.href = 'home/login.html';
+          console.log("No user logged in, redirecting to login page."); // Debugging output
+          window.location.href = 'home/login.html';
         }
-    });
+      });
 
 
-   
 
 
-    // Array of image paths in Firebase Storage to be used as backgrounds
-    const imagePaths = [
+
+      // Array of image paths in Firebase Storage to be used as backgrounds
+      const imagePaths = [
         'images/notes/istockphoto-1041740040-612x612.jpg',
         'images/notes/istockphoto-1132123971-612x612.jpg',
         'images/notes/istockphoto-1166978137-612x612.jpg',
@@ -517,174 +1120,174 @@ firebase.initializeApp(firebaseConfig);
         'images/notes/istockphoto-1408304018-612x612.jpg',
         'images/notes/istockphoto-1410568357-640x640.jpg',
         'images/notes/istockphoto-1480095869-612x612.jpg'
-    ];
+      ];
 
 
-    // Function to fetch and display notes
-    function fetchBrowseNotes() {
-    db.collection("BrowseNotes").where("isSaved", "==", false)
-      .get()
-      .then(async (snapshot) => {
-        const notes = [];
-        for (const doc of snapshot.docs) {
-          const note = { id: doc.id, ...doc.data() };
+      // Function to fetch and display notes
+      function fetchBrowseNotes() {
+        db.collection("BrowseNotes").where("isSaved", "==", false)
+          .get()
+          .then(async (snapshot) => {
+            const notes = [];
+            for (const doc of snapshot.docs) {
+              const note = { id: doc.id, ...doc.data() };
 
-          // Assign a random background image to each note
-          const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-          try {
-              // Get download URL from Firebase Storage
-              const url = await storage.ref(randomImagePath).getDownloadURL();
-              note.img = url;
-          } catch (error) {
-              console.error("Error fetching image from Firebase Storage:", error);
-              note.img = ""; // Fallback if image fetch fails
-          }
-          
-          notes.push(note);
-        }
-        renderNotes("browse-notes-container", notes);
-      })
-      .catch((error) => {
-        console.error("Error fetching browse notes:", error);
-      });
-}
+              // Assign a random background image to each note
+              const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+              try {
+                // Get download URL from Firebase Storage
+                const url = await storage.ref(randomImagePath).getDownloadURL();
+                note.img = url;
+              } catch (error) {
+                console.error("Error fetching image from Firebase Storage:", error);
+                note.img = ""; // Fallback if image fetch fails
+              }
 
-// Function to fetch and display saved notes
-function fetchSavedNotes(userEmail) {
-    db.collection("SavedNotes")
-      .where("isSaved", "==", true)
-      .where("email", "array-contains", userEmail)
-      .get()
-      .then(async (snapshot) => {
-        const notes = [];
-        for (const doc of snapshot.docs) {
-          const note = { id: doc.id, ...doc.data() };
-
-          // Assign a random background image to each note
-          const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-          try {
-              // Get download URL from Firebase Storage
-              const url = await storage.ref(randomImagePath).getDownloadURL();
-              note.img = url;
-          } catch (error) {
-              console.error("Error fetching image from Firebase Storage:", error);
-              note.img = ""; // Fallback if image fetch fails
-          }
-          
-          notes.push(note);
-        }
-        renderNotes("saved-notes-container", notes);
-      })
-      .catch((error) => {
-        console.error("Error fetching saved notes:", error);
-      });
-}
-
-
-      
-function saveNoteAfterPayment(notesId, userEmail) {
-    const db = firebase.firestore();
-
-    // Get the note from BrowseNotes by notesId
-    db.collection("BrowseNotes").doc(notesId).get()
-        .then(doc => {
-            if (doc.exists) {
-                // Prepare the data for the new SavedNotes document
-                const noteData = doc.data();
-                noteData.isSaved = true; // Set isSaved to true
-                noteData.email = firebase.firestore.FieldValue.arrayUnion(userEmail); // Append user email to array
-
-                // Add the note to SavedNotes with the new data
-                db.collection("SavedNotes").doc(notesId).set(noteData)
-                    .then(() => {
-                        console.log("Note saved to SavedNotes with isSaved = true.");
-                        // Dynamically update the saved notes section without reloading
-                        fetchSavedNotes(userEmail); // Fetch saved notes to refresh the display
-                    })
-                    .catch(error => {
-                        console.error("Error saving note to SavedNotes:", error);
-                    });
-            } else {
-                console.error("No document found in BrowseNotes with the provided notesId.");
+              notes.push(note);
             }
-        })
-        .catch(error => {
+            renderNotes("browse-notes-container", notes);
+          })
+          .catch((error) => {
+            console.error("Error fetching browse notes:", error);
+          });
+      }
+
+      // Function to fetch and display saved notes
+      function fetchSavedNotes(userEmail) {
+        db.collection("SavedNotes")
+          .where("isSaved", "==", true)
+          .where("email", "array-contains", userEmail)
+          .get()
+          .then(async (snapshot) => {
+            const notes = [];
+            for (const doc of snapshot.docs) {
+              const note = { id: doc.id, ...doc.data() };
+
+              // Assign a random background image to each note
+              const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+              try {
+                // Get download URL from Firebase Storage
+                const url = await storage.ref(randomImagePath).getDownloadURL();
+                note.img = url;
+              } catch (error) {
+                console.error("Error fetching image from Firebase Storage:", error);
+                note.img = ""; // Fallback if image fetch fails
+              }
+
+              notes.push(note);
+            }
+            renderNotes("saved-notes-container", notes);
+          })
+          .catch((error) => {
+            console.error("Error fetching saved notes:", error);
+          });
+      }
+
+
+
+      function saveNoteAfterPayment(notesId, userEmail) {
+        const db = firebase.firestore();
+
+        // Get the note from BrowseNotes by notesId
+        db.collection("BrowseNotes").doc(notesId).get()
+          .then(doc => {
+            if (doc.exists) {
+              // Prepare the data for the new SavedNotes document
+              const noteData = doc.data();
+              noteData.isSaved = true; // Set isSaved to true
+              noteData.email = firebase.firestore.FieldValue.arrayUnion(userEmail); // Append user email to array
+
+              // Add the note to SavedNotes with the new data
+              db.collection("SavedNotes").doc(notesId).set(noteData)
+                .then(() => {
+                  console.log("Note saved to SavedNotes with isSaved = true.");
+                  // Dynamically update the saved notes section without reloading
+                  fetchSavedNotes(userEmail); // Fetch saved notes to refresh the display
+                })
+                .catch(error => {
+                  console.error("Error saving note to SavedNotes:", error);
+                });
+            } else {
+              console.error("No document found in BrowseNotes with the provided notesId.");
+            }
+          })
+          .catch(error => {
             console.error("Error fetching note details from BrowseNotes:", error);
-        });
-}
+          });
+      }
 
-// Assume this function is called once payment is confirmed
-function onPaymentSuccess(notesId) {
-    const userEmail = firebase.auth().currentUser.email; // Get the logged-in user's email
-    saveNoteAfterPayment(notesId, userEmail); // Call the function to save the note in SavedNotes
-}
+      // Assume this function is called once payment is confirmed
+      function onPaymentSuccess(notesId) {
+        const userEmail = firebase.auth().currentUser.email; // Get the logged-in user's email
+        saveNoteAfterPayment(notesId, userEmail); // Call the function to save the note in SavedNotes
+      }
 
 
 
-    // Function to render notes in the specified container
-    function renderNotes(containerId, notes) {
+      // Function to render notes in the specified container
+      function renderNotes(containerId, notes) {
         const container = document.getElementById(containerId);
         container.textContent = ""; // Clear the container before adding new items
 
         notes.forEach(note => {
-            const noteContainer = document.createElement("div");
-            noteContainer.className = "note-container";
+          const noteContainer = document.createElement("div");
+          noteContainer.className = "note-container";
 
-            // Apply the background image if available
-            if (note.img) {
-                noteContainer.style.backgroundImage = `url('${note.img}')`;
-            } else {
-                noteContainer.style.backgroundColor = "#f0f0f0"; // Fallback background color if no image
-            }
+          // Apply the background image if available
+          if (note.img) {
+            noteContainer.style.backgroundImage = `url('${note.img}')`;
+          } else {
+            noteContainer.style.backgroundColor = "#f0f0f0"; // Fallback background color if no image
+          }
 
-            const courseCode = document.createElement("span");
-            courseCode.className = "course-code";
-            courseCode.textContent = note.courseId || "No Title";
+          const courseCode = document.createElement("span");
+          courseCode.className = "course-code";
+          courseCode.textContent = note.courseId || "No Title";
 
-            const courseName = document.createElement("h3");
-            courseName.textContent = note.courseName || "Untitled";
+          const courseName = document.createElement("h3");
+          courseName.textContent = note.courseName || "Untitled";
 
-            const professor = document.createElement("p");
-            professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
+          const professor = document.createElement("p");
+          professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
 
-            const owner = document.createElement("p");
-            owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
+          const owner = document.createElement("p");
+          owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
 
-            const price = document.createElement("p");
-            price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
+          const price = document.createElement("p");
+          price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
 
-            // Lock icon with link to preview.html
-            const linkElement = document.createElement("a");
-        if (section === "saved") {
+          // Lock icon with link to preview.html
+          const linkElement = document.createElement("a");
+          if (section === "saved") {
             // For saved notes: use unlocked icon and link to courseLink
             linkElement.href = note.courseLink || "#";
             linkElement.target = "_blank"; // Opens in a new tab
             linkElement.innerHTML = `<i class="fas fa-unlock"></i> Open Note`;
-        } else {
+          } else {
             // For browse notes: use locked icon and link to preview.html
             linkElement.href = `preview.html?notesId=${note.id}`;
             linkElement.target = "_blank";
             linkElement.innerHTML = `<i class="fas fa-lock"></i> Preview Note`;
-        }
+          }
 
-        // Append elements to the note container
-        noteContainer.appendChild(courseCode);
-        noteContainer.appendChild(courseName);
-        noteContainer.appendChild(professor);
-        noteContainer.appendChild(owner);
-        noteContainer.appendChild(price);
-        noteContainer.appendChild(linkElement);
-            // Append noteContainer to the main container
-            container.appendChild(noteContainer);
+          // Append elements to the note container
+          noteContainer.appendChild(courseCode);
+          noteContainer.appendChild(courseName);
+          noteContainer.appendChild(professor);
+          noteContainer.appendChild(owner);
+          noteContainer.appendChild(price);
+          noteContainer.appendChild(linkElement);
+          // Append noteContainer to the main container
+          container.appendChild(noteContainer);
         });
-    }
+      }
 
-    // Fetch notes on page load
-    fetchNotes();
-});
+      // Fetch notes on page load
+      fetchNotes();
+    });
 
 
-    
+
   </script>
 
   <!-- Vendor JS Files -->
