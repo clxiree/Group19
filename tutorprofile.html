@@ -362,7 +362,7 @@
 
         // Populate Subjects
         const subjectsContainer = document.getElementById("subjectsContainer");
-        subjectsContainer.innerHTML = "";
+        subjectsContainer.innerText = "";
         if (data.Subjects) {
           data.Subjects.forEach(subject => {
             const span = document.createElement("span");
@@ -374,19 +374,36 @@
           subjectsContainer.textContent = "Subjects not available.";
         }
 
-        // Populate Lesson Descriptions
-        const lessonDescriptions = document.getElementById("lessonDescriptions");
-        lessonDescriptions.innerHTML = "";
-        if (data.LessonDesc) {
-          data.LessonDesc.forEach(desc => {
-            const li = document.createElement("li");
-            li.className = "mb-2";
-            li.innerHTML = `<i class="bi bi-check-circle" style="font-size: 18px"></i> <span style="font-size: 14px">${desc}</span>`;
-            lessonDescriptions.appendChild(li);
-          });
-        } else {
-          lessonDescriptions.textContent = "No lesson descriptions available.";
-        }
+// Populate Lesson Descriptions
+const lessonDescriptions = document.getElementById("lessonDescriptions");
+lessonDescriptions.textContent = ""; // Clear previous content
+if (data.LessonDesc) {
+    data.LessonDesc.forEach(desc => {
+        const li = document.createElement("li");
+        li.className = "mb-2";
+
+        // Create icon element
+        const icon = document.createElement("i");
+        icon.classList.add("bi", "bi-check-circle");
+        icon.style.fontSize = "18px";
+
+        // Create text span element
+        const span = document.createElement("span");
+        span.style.fontSize = "14px";
+        span.textContent = desc;
+
+        // Append icon and text to the list item
+        li.appendChild(icon);
+        li.appendChild(document.createTextNode(" ")); // Add space between icon and text
+        li.appendChild(span);
+
+        // Append the list item to lessonDescriptions
+        lessonDescriptions.appendChild(li);
+    });
+} else {
+    lessonDescriptions.textContent = "No lesson descriptions available.";
+}
+
 
         // Populate Qualifications
         const qualificationsContainer = document.getElementById("qualifications");

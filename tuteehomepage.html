@@ -600,94 +600,93 @@ document.addEventListener("DOMContentLoaded", function () {
 });});
   
     
-    document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function () {
     const topTutors = [
-      
-      'LIMITED TIME ONLY⏰ USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
-      'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
-      'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
+        'LIMITED TIME ONLY⏰',
+        'USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
+        'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
+        'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
     ];
 
     const marqueeContent = document.querySelector('.boxes-inner');
     const marqueeWrapper = document.querySelector('.boxes');
-    
 
-    // Generate the boxes
+    // Generate the original set of boxes
     topTutors.forEach((tutor) => {
-      const box = document.createElement('div');
-      box.classList.add('box');
-      box.textContent = tutor;
-      marqueeContent.appendChild(box);
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.textContent = tutor;
+        marqueeContent.appendChild(box);
     });
 
     // Duplicate the content for seamless scrolling
-    // marqueeContent.innerHTML += marqueeContent.innerHTML;
+    marqueeContent.innerHTML += marqueeContent.innerHTML;
 
     let contentWidth = marqueeContent.offsetWidth / 2;
     let direction = -1;
 
     // Set up the GSAP animation
     let marqueeTween = gsap.to(".boxes-inner", {
-      x: direction * contentWidth,
-      duration: 30,
-      ease: "linear",
-      repeat: -1,
-      modifiers: {
-        x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-      }
+        x: direction * contentWidth,
+        duration: 30,
+        ease: "linear",
+        repeat: -1,
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+        }
     });
 
     // Pause and interactivity on hover
     const boxes = document.querySelectorAll('.box');
     boxes.forEach(box => {
-      box.addEventListener('mouseenter', function () {
-        marqueeTween.pause();
-        this.style.color = '#ffcc00';
-        this.style.transform = 'scale(1.1)';
-      });
-      box.addEventListener('mouseleave', function () {
-        marqueeTween.play();
-        this.style.color = '#fff';
-        this.style.transform = 'scale(1)';
-      });
+        box.addEventListener('mouseenter', function () {
+            marqueeTween.pause();
+            this.style.color = '#ffcc00';
+            this.style.transform = 'scale(1.1)';
+        });
+        box.addEventListener('mouseleave', function () {
+            marqueeTween.play();
+            this.style.color = '#fff';
+            this.style.transform = 'scale(1)';
+        });
     });
 
     // Background color and direction change on hover
     marqueeWrapper.addEventListener('mouseenter', function () {
-      marqueeWrapper.style.backgroundColor = '#333';
+        marqueeWrapper.style.backgroundColor = '#333';
     });
 
     marqueeWrapper.addEventListener('mouseleave', function () {
-      marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
-      direction *= -1;
-      marqueeTween.kill();
-      marqueeTween = gsap.to(".boxes-inner", {
-        x: direction * contentWidth,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-        }
-      });
+        marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
+        direction *= -1;
+        marqueeTween.kill();
+        marqueeTween = gsap.to(".boxes-inner", {
+            x: direction * contentWidth,
+            duration: 30,
+            ease: "linear",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+            }
+        });
     });
 
     // Adjust marquee on window resize
     window.addEventListener('resize', function () {
-      contentWidth = marqueeContent.offsetWidth / 2;
-      marqueeTween.kill();
-      marqueeTween = gsap.to(".boxes-inner", {
-        x: direction * contentWidth,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-        modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-        }
-      });
+        contentWidth = marqueeContent.offsetWidth / 2;
+        marqueeTween.kill();
+        marqueeTween = gsap.to(".boxes-inner", {
+            x: direction * contentWidth,
+            duration: 30,
+            ease: "linear",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+            }
+        });
     });
-    
-  });
+});
+
   
   function fetchVideo() {
       const videoContainer = document.getElementById("background-vid");

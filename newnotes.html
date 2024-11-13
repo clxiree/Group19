@@ -230,48 +230,103 @@
       const db = firebase.firestore();
       
 
-      function renderNotes(containerId, notes) {
-        const container = document.getElementById(containerId);
-        container.textContent = ""; // Clear the container before adding new items
+      document.addEventListener("DOMContentLoaded", function () {
+    const topTutors = [
+        'LIMITED TIME ONLY⏰ USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
+        'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
+        'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
+    ];
 
-        notes.forEach(note => {
-          const noteContainer = document.createElement("div");
-          noteContainer.className = "note-container";
-          noteContainer.style.backgroundImage = `url('${note.img}')`;
+    const marqueeContent = document.querySelector('.boxes-inner');
+    const marqueeWrapper = document.querySelector('.boxes');
+    const closeButton = document.querySelector('.close-marquee');
 
-          const courseCode = document.createElement("span");
-          courseCode.className = "course-code";
-          courseCode.textContent = note.courseId || "No Title";
+    // Generate the boxes
+    topTutors.forEach((tutor) => {
+        const box = document.createElement('div');
+        box.classList.add('box');
+        box.textContent = tutor;
+        marqueeContent.appendChild(box);
+    });
 
-          const courseName = document.createElement("h3");
-          courseName.textContent = note.courseName || "Untitled";
+    // Duplicate each box for seamless scrolling
+    topTutors.forEach((tutor) => {
+        const boxDuplicate = document.createElement('div');
+        boxDuplicate.classList.add('box');
+        boxDuplicate.textContent = tutor;
+        marqueeContent.appendChild(boxDuplicate);
+    });
 
-          const professor = document.createElement("p");
-          professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
+    let contentWidth = marqueeContent.offsetWidth / 2;
+    let direction = -1;
 
-          const owner = document.createElement("p");
-          owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
+    // Set up the GSAP animation
+    let marqueeTween = gsap.to(".boxes-inner", {
+        x: direction * contentWidth,
+        duration: 30,
+        ease: "linear",
+        repeat: -1,
+        modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+        }
+    });
 
-          const price = document.createElement("p");
-          price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
-
-          const previewLink = document.createElement("a");
-          previewLink.href = note.courseLink || "#";
-          previewLink.target = "_blank";
-          previewLink.innerHTML = `<i class="fas fa-link"></i> View Notes`;
-
-          // Append elements to the note container
-          noteContainer.appendChild(courseCode);
-          noteContainer.appendChild(courseName);
-          noteContainer.appendChild(professor);
-          noteContainer.appendChild(owner);
-          noteContainer.appendChild(price);
-          noteContainer.appendChild(previewLink);
-
-          // Append noteContainer to the main container
-          container.appendChild(noteContainer);
+    // Pause and interactivity on hover
+    const boxes = document.querySelectorAll('.box');
+    boxes.forEach(box => {
+        box.addEventListener('mouseenter', function () {
+            marqueeTween.pause();
+            this.style.color = '#ffcc00';
+            this.style.transform = 'scale(1.1)';
         });
-      }
+        box.addEventListener('mouseleave', function () {
+            marqueeTween.play();
+            this.style.color = '#fff';
+            this.style.transform = 'scale(1)';
+        });
+    });
+
+    // Background color and direction change on hover
+    marqueeWrapper.addEventListener('mouseenter', function () {
+        marqueeWrapper.style.backgroundColor = '#333';
+    });
+
+    marqueeWrapper.addEventListener('mouseleave', function () {
+        marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
+        direction *= -1;
+        marqueeTween.kill();
+        marqueeTween = gsap.to(".boxes-inner", {
+            x: direction * contentWidth,
+            duration: 30,
+            ease: "linear",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+            }
+        });
+    });
+
+    // Adjust marquee on window resize
+    window.addEventListener('resize', function () {
+        contentWidth = marqueeContent.offsetWidth / 2;
+        marqueeTween.kill();
+        marqueeTween = gsap.to(".boxes-inner", {
+            x: direction * contentWidth,
+            duration: 30,
+            ease: "linear",
+            repeat: -1,
+            modifiers: {
+                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+            }
+        });
+    });
+
+    // Close button functionality
+    closeButton.addEventListener('click', function () {
+        marqueeWrapper.style.display = 'none';
+    });
+});
+
       function showSection(section) {
         const browseSection = document.getElementById("browse-notes-section");
         const savedSection = document.getElementById("saved-notes-section");

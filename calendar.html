@@ -438,7 +438,7 @@
 
         async function populateTutors() {
     const tutorSelect = document.getElementById("tutor");
-    tutorSelect.innerHTML = ""; // Clear existing options
+    tutorSelect.innerText = ""; // Clear existing options
     const urlTutorId = getUrlParameter(); // Get UserID from URL
 
     try {
@@ -504,7 +504,7 @@ async function fetchTutorAvailability() {
         // Function to populate subjects dynamically based on selected tutor
         function populateSubjects() {
             const subjectSelect = document.getElementById("subject");
-            subjectSelect.innerHTML = ""; // Clear existing options
+            subjectSelect.innerText = ""; // Clear existing options
             subjectsTaught.forEach(subject => {
                 const option = document.createElement("option");
                 option.value = subject;
@@ -576,7 +576,7 @@ function selectDate(date) {
     const confirmBtn = document.getElementById("confirm-btn");
 
     // Clear previous timeslot selection and calendar date selection
-    timeslotContainer.innerHTML = "";
+    timeslotContainer.innerText = "";
     selectedTimeslot = null; // Reset selected timeslot
     confirmBtn.classList.remove("enabled");
     confirmBtn.disabled = true; // Disable confirm button initially
@@ -655,7 +655,6 @@ function selectDate(date) {
             window.location.href = "bookings.html";
         }
 
-        // Populate month and year selectors with current values
         function populateSelectors() {
             const monthSelect = document.getElementById("calendar-month");
             const yearSelect = document.getElementById("calendar-year");
@@ -664,15 +663,45 @@ function selectDate(date) {
             const currentYear = new Date().getFullYear();
 
             const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-            monthSelect.innerHTML = monthNames.map((month, i) => `<option value="${i}">${month}</option>`).join("");
-            yearSelect.innerHTML = `<option>${currentYear - 1}</option><option selected>${currentYear}</option><option>${currentYear + 1}</option>`;
 
+            // Clear any existing options (optional)
+            monthSelect.innerText = '';
+            yearSelect.innerText = '';
+
+            // Populate months
+            monthNames.forEach((month, i) => {
+                const option = document.createElement("option");
+                option.value = i;
+                option.textContent = month;
+                monthSelect.appendChild(option);
+            });
+
+            // Populate years
+            const previousYearOption = document.createElement("option");
+            previousYearOption.value = currentYear - 1;
+            previousYearOption.textContent = currentYear - 1;
+            yearSelect.appendChild(previousYearOption);
+
+            const currentYearOption = document.createElement("option");
+            currentYearOption.value = currentYear;
+            currentYearOption.textContent = currentYear;
+            currentYearOption.selected = true;
+            yearSelect.appendChild(currentYearOption);
+
+            const nextYearOption = document.createElement("option");
+            nextYearOption.value = currentYear + 1;
+            nextYearOption.textContent = currentYear + 1;
+            yearSelect.appendChild(nextYearOption);
+
+            // Set the default selected values
             monthSelect.value = currentMonth;
             yearSelect.value = currentYear;
 
+            // Attach event listeners
             monthSelect.addEventListener("change", updateCalendar);
             yearSelect.addEventListener("change", updateCalendar);
         }
+
 
 
         // Initialize everything when DOM is loaded
