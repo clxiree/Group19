@@ -88,13 +88,26 @@
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <!-- Email Button with Dropdown for Larger Viewports -->
-        <div id="my-email-container">
-            <button id="my-email"></button>
-            <div id="dropdown-menu" class="dropdown-content">
-                <button id="logout-button">Logout</button>
-            </div>
-        </div>
+        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+            </ul>
+         
+        </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <!-- <a class="btn-getstarted">
+        <div id="my-email"></div>
+    </a> -->
+    <!-- Email Button with Dropdown -->
+<div id="my-email-container">
+  <button id="my-email"></button>
+  <div id="dropdown-menu" class="dropdown-content">
+      <button id="logout-button">Logout</button>
+  </div>
+</div> 
+
     </div>
 </header>
 
@@ -190,8 +203,11 @@
 
 
 
+/* Container styling */
 /* Default styling to show the email display */
 #my-email-container {
+    position: relative;
+    display: inline-block;
     display: flex; /* Display email button normally on larger screens */
     align-items: center;
     margin-right: 10px; /* Space between email button and hamburger */
@@ -350,7 +366,9 @@
       <div class="row gy-4">
 
         <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-
+          <video id="welcome-video" autoplay muted loop style="width: 100%; height: auto;">
+            Hi
+          </video>
         </div>
 
         <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
