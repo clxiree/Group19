@@ -508,32 +508,68 @@ document.getElementById("apply-btn").addEventListener("click", applyDiscount);
     }
 
     // Event listener for the "Continue" button
-    const continueBtn = document.getElementById("continue-btn");
-    continueBtn.addEventListener("click", async () => {
-        // Retrieve and parse totalAmount from the displayed HTML element
-        let totalAmount = 0;
-        const totalAmountElement = document.querySelector(".total-amount");
-        if (totalAmountElement) {
-            totalAmount = parseFloat(totalAmountElement.textContent.replace("SGD ", "").trim());
+    async function saveNoteAfterPayment(notesId, userEmail) {
+    try {
+        // Retrieve the note data from BrowseNotes
+        const noteDoc = await db.collection("BrowseNotes").doc(notesId).get();
+        if (noteDoc.exists) {
+            const noteData = noteDoc.data();
+            
+            // Modify the data for SavedNotes
+            noteData.isSaved = true; // Set isSaved to true
+            noteData.email = firebase.firestore.FieldValue.arrayUnion(userEmail); // Add user email to the email array
+
+            // Save the modified note data in SavedNotes collection
+            await db.collection("SavedNotes").doc(notesId).set(noteData);
+
+            console.log("Note saved to SavedNotes with isSaved = true.");
+            
+            // Show success toast notification
+            showToast("Payment successful! Note saved to your account.", "success");
+
+            // Redirect to the Saved Notes page after a short delay
+            setTimeout(() => {
+                window.location.href = "notes.html?section=saved";
+            }, 2000); // Delay for 2 seconds before redirecting
         } else {
-            console.error("Total amount element not found.");
-            return;
+            console.error("No document found in BrowseNotes with the provided notesId.");
+            showToast("Error: Note not found.", "error");
         }
+    } catch (error) {
+        console.error("Error saving note to SavedNotes:", error);
+        showToast("Failed to save note. Please try again.", "error");
+    }
+}
 
-        try {
-            // After successful payment, update the isSaved status to true in the BrowseNotes collection
-            await db.collection("BrowseNotes").doc(notesId).update({
-                isSaved: true
-            });
+// Main function triggered after payment confirmation
+const continueBtn = document.getElementById("continue-btn");
+continueBtn.addEventListener("click", async () => {
+    const notesId = getUrlParameter("notesId"); // Get the notesId from the URL or the context
+    const user = firebase.auth().currentUser;
 
-            // Show success toast
-            showToast("Payment is successful! Note saved.", "success");
-        } catch (error) {
-            console.error("Error saving payment information:", error);
-            // Show error toast
-            showToast("Failed to save note information. Please try again.", "error");
-        }
-    });
+    if (!user) {
+        console.error("User not logged in.");
+        showToast("Error: User not authenticated.", "error");
+        return;
+    }
+
+    const userEmail = user.email; // Retrieve the logged-in user's email
+
+    try {
+        // Update isSaved status in BrowseNotes
+        await db.collection("BrowseNotes").doc(notesId).update({
+            isSaved: true
+        });
+
+        // Save the note in SavedNotes collection
+        await saveNoteAfterPayment(notesId, userEmail);
+
+    } catch (error) {
+        console.error("Error saving payment information:", error);
+        // Show error toast
+        showToast("Failed to save note information. Please try again.", "error");
+    }
+});
     document.getElementById("continue-btn").addEventListener("click", function() {
     // Add a delay of 2 seconds before redirecting
     setTimeout(function() {
