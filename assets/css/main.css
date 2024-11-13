@@ -1027,8 +1027,8 @@ section,
 }
 
 #userImage {
-  width: 500px;  /* Set your desired width */
-  height: 500px; /* Set your desired height */
+  width: 550px;  /* Set your desired width */
+  height: 550px; /* Set your desired height */
   object-fit: cover; /* Crop image to fill the container */
 
 }
