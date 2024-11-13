@@ -136,6 +136,7 @@ async function fetchTestimonials() {
 
       const testimonialPromises = snapshot.docs.map(async (doc) => {
           const testimonialData = doc.data();
+          console.log(testimonialData)
           const { name, studentOf, review, stars, img } = testimonialData;
 
           // Ensure `img` is a valid string before using it
@@ -160,7 +161,7 @@ async function fetchTestimonials() {
           profileImage.alt = `${name}'s picture`;
 
           // Fetch the image from Firebase Storage
-          const imageRef = storage.ref(`testimonials/${img}`);
+          const imageRef = storage.ref(`images/reviews/${img}`);
           try {
               const url = await imageRef.getDownloadURL();
               profileImage.src = url;
@@ -176,14 +177,8 @@ async function fetchTestimonials() {
           const tutorElement = document.createElement("h4");
           tutorElement.textContent = `Student of ${studentOf}`;
 
-          // Star rating
-          const starsContainer = document.createElement("div");
-          starsContainer.classList.add("stars");
-          for (let i = 0; i < stars; i++) {
-              const star = document.createElement("i");
-              star.classList.add("bi", "bi-star-fill");
-              starsContainer.appendChild(star);
-          }
+          const starsContainer = populateStarReviewRating(stars);
+          testimonialItem.appendChild(starsContainer);
 
 
           // Review text
@@ -243,6 +238,32 @@ async function fetchTestimonials() {
   } catch (error) {
       console.error("Error fetching testimonials:", error);
   }
+}
+
+
+function populateStarReviewRating(rating) {
+  const starsContainer = document.createElement("div");
+  starsContainer.classList.add("stars");
+
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement("i");
+    star.style.color = "#FFD700"; // Gold color
+
+    if (i <= Math.floor(rating)) {
+      // Full star
+      star.className = "bi bi-star-fill";
+    } else if (i === Math.floor(rating) + 1 && rating % 1 >= 0.5) {
+      // Half star
+      star.className = "bi bi-star-half";
+    } else {
+      // Empty star
+      star.className = "bi bi-star";
+    }
+
+    starsContainer.appendChild(star);
+  }
+
+  return starsContainer; // Return the populated stars container
 }
 
 
