@@ -437,3 +437,40 @@
     new PureCounter();
 }
 
+document.addEventListener("DOMContentLoaded", function () {
+  const myEmailButton = document.getElementById("my-email");
+  const logoutButton = document.getElementById("logout-button");
+  const logoutButtonSmall = document.getElementById("logout-button-small");
+  const myEmailContainer = document.getElementById("my-email-container");
+  const logoutContainer = document.getElementById("logout-container");
+
+
+  // Handle logout for both buttons
+  function handleLogout() {
+      firebase.auth().signOut().then(() => {
+          localStorage.setItem("logoutSuccess", "true");
+          window.location.href = 'index.html';
+      }).catch((error) => {
+          console.error("Error logging out:", error);
+      });
+  }
+
+  // Attach logout function to both buttons
+  logoutButton.addEventListener("click", handleLogout);
+  logoutButtonSmall.addEventListener("click", handleLogout);
+
+  // Toggle visibility based on viewport size
+  function toggleVisibility() {
+      if (window.innerWidth <= 1068) {
+          myEmailContainer.style.display = "none";
+          logoutContainer.style.display = "block";
+      } else {
+          myEmailContainer.style.display = "flex";
+          logoutContainer.style.display = "none";
+      }
+  }
+
+  // Initial check and event listener for resizing
+  toggleVisibility();
+  window.addEventListener("resize", toggleVisibility);
+});
