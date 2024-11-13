@@ -1027,8 +1027,8 @@ section,
 }
 
 #userImage {
-  width: 500px;  /* Set your desired width */
-  height: 500px; /* Set your desired height */
+  width: 550px;  /* Set your desired width */
+  height: 550px; /* Set your desired height */
   object-fit: cover; /* Crop image to fill the container */
 
 }
@@ -2449,31 +2449,24 @@ nav.breadcrumbs {
 }
 /* Hide email display and show only logout button on smaller screens */
 @media (max-width: 768px) {
-  #teamCardsContainer .col-lg-4 {
-        display: flex;
-        justify-content: center;
-        width: 100%;
+  #logout-container {
+      display: block; /* Show the logout button in smaller viewports */
   }
-    
-    
-    #logout-container {
-        display: block; /* Show the logout button in smaller viewports */
-    }
-    /* Style for logout button in smaller viewports */
-#logout-button-small {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-}
+  /* Style for logout button in smaller viewports */
+  #logout-button-small {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      color: #333;
+      padding: 10px;
+      font-size: 16px;
+      text-align: center;
+      width: 100%;
+  }
 
-#logout-button-small:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
+  #logout-button-small:hover {
+      background-color: #f1f1f1;
+      color: red;
+  }
 }
 

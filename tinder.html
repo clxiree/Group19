@@ -251,6 +251,7 @@
 
 
 .fa-remove {
+  
   color: #CDD6DD;
 }
 /* Make sure the tinder buttons are responsive */
@@ -279,15 +280,8 @@
     
   }
 
-  /* Ensure container has no padding */
-  .container {
-    padding: 0 !important;
-    margin: 0 auto; /* Optional: center the container */
-  }
 
-  .profile-details{
-    /* padding: 3px; */
-  }
+
 
   /* Adjust footer padding and margin if necessary */
   footer {
@@ -296,6 +290,8 @@
   }
  
 }
+
+
 
 
 
@@ -339,21 +335,71 @@
     //     console.error("Authentication error:", error);
     //   });
     // });
+    const myEmailButton = document.getElementById("my-email");
+    const logoutButton = document.getElementById("logout-button");
+    const logoutButtonSmall = document.getElementById("logout-button-small");
+    const myEmailContainer = document.getElementById("my-email-container");
+    const logoutContainer = document.getElementById("logout-container");
 
     firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            console.log("User is logged in with email:", user.email);
-            document.getElementById("my-email").innerText = user.email;
-            fetchParticulars();
-            // You can use user.email to retrieve user-specific data
-        } else {
-            console.log("No user is logged in.");
-            // Redirect to login page if needed
-            window.location.href = 'login.html';
-        }
-    });
-  })
-    
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        document.getElementById("my-email").innerText = user.email;
+
+        // Reference to the Firestore database
+        const db = firebase.firestore();
+
+        // Query Firestore for the document in 'Particulars' collection where email matches the logged-in user's email
+        db.collection("Particulars")
+            .where("Tutor", "==", true)
+            .get()
+            .then((querySnapshot) => {
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        // Assign userId from Firestore document
+                        userId = doc.data().UserID;
+                        console.log("UserID:", userId);
+
+                        // Now you can call other functions that depend on userId
+                        fetchParticulars();
+                    });
+                    
+                } else {
+                    console.log("No matching user found with this email.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error retrieving user ID:", error);
+            });
+    } else {
+        console.log("No user is logged in.");
+        // Redirect to login page if needed
+        window.location.href = 'login.html';
+    }
+});
+function handleLogout() {
+        firebase.auth().signOut().then(() => {
+            localStorage.setItem("logoutSuccess", "true");
+            window.location.href = 'index.html';
+        }).catch((error) => {
+            console.error("Error logging out:", error);
+        });
+    }
+    logoutButton.addEventListener("click", handleLogout);
+    logoutButtonSmall.addEventListener("click", handleLogout);
+function toggleVisibility() {
+    if (window.innerWidth <= 1068) {
+        myEmailContainer.style.display = "none";
+        logoutContainer.style.display = "block";
+    } else {
+        myEmailContainer.style.display = "flex";
+        logoutContainer.style.display = "none";
+    }
+}
+toggleVisibility();
+window.addEventListener("resize", toggleVisibility);});
+
+
     </script>
 </head>
 

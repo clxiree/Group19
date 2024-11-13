@@ -31,6 +31,7 @@
 
   <!-- Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+  
 
 
   <!-- Vue CDN (Production Build) -->
@@ -55,205 +56,12 @@
 
 </head>
 <style>
-  .logo img {
-  max-width: 150px; /* Set this to the desired width */
-  height: auto; /* Keeps the aspect ratio */
-}
-
-.header {
-  padding: 13px 0; /* Reduces the vertical padding inside the header */
-}
-
-/* Adjust the logo size to reduce overall navbar height */
-.header .logo img {
-  max-height: 40px; /* Set a max height for the logo */
-  height: auto;
-  width: auto;
-}
-
-/* Reduce the vertical padding of nav links */
-.header .navmenu ul li a {
-  padding: 8px 15px; /* Adjust as needed */
-  font-size: 0.9rem; /* Optionally, reduce font size */
-}
-
-/* Align the "Login" button with reduced height */
-.header .btn-getstarted {
-  padding: 6px 12px; /* Reduce padding for a smaller button */
-  font-size: 0.9rem; /* Optionally reduce font size */
-}
-
-
-/* Optional: adjust the font size if you want a more compact title */
-.page-title h1 {
-  font-size: 2rem; /* Adjust the title font size as needed */
-  margin-bottom: 5px; /* Reduce space under the title */
-}
-
-.page-title p {
-  margin-bottom: 60px; /* Remove extra margin */
-}
-
-/* Breadcrumbs section height adjustment */
-.page-title .heading h2 {
-    font-weight: bold;
-    font-size: 1.8rem;  /* Adjust font size for a smaller look */
-    margin-bottom: 10px; /* Optional: add some spacing below */
-  
-}
-
-/* Style for the subtitle */
-.page-title .heading p.mb-0 {
-    font-size: 1rem;  /* Smaller than the heading */
-    color: #ffffff; /* Optional: set a lighter color for distinction */
-    margin-top: 5px; /* Optional: add a little space above */
-}
-.page-title .heading {
-    padding-top: 30px; /* Reduce padding from the top */
-    padding-bottom: 30px; /* Reduce padding from the bottom */
-}
-
-/* Optional: adjust the breadcrumbs section padding */
-.page-title .breadcrumbs {
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-/* Adjust the breadcrumbs section */
-nav.breadcrumbs {
-    padding: 15px 0;  /* reduce padding to make it shorter */
-    font-size: 0.9rem;  /* optional: reduce font size slightly */
-}
-
-/* Trainers section compact layout */
-.section.trainers {
-  padding-top: 50px; /* Slightly reduce top padding */
-  padding-bottom: 15px; /* Slightly reduce bottom padding */
-}
-.heading {
-  padding-top: 5px; /* Reduce top padding */
-  padding-bottom: 5px; 
-}
-/* Default styling to show the email display */
-#my-email-container {
-    display: flex; /* Display email button normally on larger screens */
-    align-items: center;
-    margin-right: 10px; /* Space between email button and hamburger */
-}
-
-
-
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
-}
-
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    min-width: 150px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
-}
-
-/* Show dropdown on hover */
-/* Container styling */
-#my-email-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
-    text-align: left;
-}
-
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
-    min-width: 100%; /* Match width to parent */
-}
-
-/* Show dropdown on hover */
-#my-email-container:hover .dropdown-content {
-    display: block;
-}
-
-/* Dropdown button styling */
-#logout-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px 20px;
-    text-align: left;
-    width: 100%; /* Match width to dropdown */
-    font-size: 14px;
-}
-
-#logout-button:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
-/* Hide email display and show only logout button on smaller screens */
-@media (max-width: 768px) {
-  #teamCardsContainer .col-lg-4 {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-  }}
-    
-    
-
-
-
-
-/* Style for logout button in smaller viewports */
-#logout-button-small {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-}
-
-#logout-button-small:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
 
 </style>
 
 <body class="trainers-page">
 
+  
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
         <a href="index.html" class="logo d-flex align-items-center me-auto">
@@ -285,13 +93,22 @@ nav.breadcrumbs {
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <!-- Email Button with Dropdown for Larger Viewports -->
-        <div id="my-email-container">
-            <button id="my-email"></button>
-            <div id="dropdown-menu" class="dropdown-content">
-                <button id="logout-button">Logout</button>
-            </div>
-        </div>
+        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+            </ul>
+         
+        </ul>
+          
+      </nav>
+<div id="my-email-container">
+  <button id="my-email"></button>
+  <div id="dropdown-menu" class="dropdown-content">
+      <button id="logout-button">Logout</button>
+  </div>
+</div> 
+
     </div>
 </header>
 
@@ -380,7 +197,13 @@ nav.breadcrumbs {
         const db = firebase.firestore();
         const auth = firebase.auth();
         const storage = firebase.storage();
-        
+
+        const myEmailButton = document.getElementById("my-email");
+        const logoutButton = document.getElementById("logout-button");
+        const logoutButtonSmall = document.getElementById("logout-button-small");
+        const myEmailContainer = document.getElementById("my-email-container");
+        const logoutContainer = document.getElementById("logout-container");
+                
 
         firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -394,6 +217,28 @@ nav.breadcrumbs {
             window.location.href = 'login.html';
         }
     });
+    function handleLogout() {
+        firebase.auth().signOut().then(() => {
+            localStorage.setItem("logoutSuccess", "true");
+            window.location.href = 'index.html';
+        }).catch((error) => {
+            console.error("Error logging out:", error);
+        });
+    }
+    logoutButton.addEventListener("click", handleLogout);
+    logoutButtonSmall.addEventListener("click", handleLogout);
+function toggleVisibility() {
+    if (window.innerWidth <= 1068) {
+        myEmailContainer.style.display = "none";
+        logoutContainer.style.display = "block";
+    } else {
+        myEmailContainer.style.display = "flex";
+        logoutContainer.style.display = "none";
+    }
+}
+toggleVisibility();
+window.addEventListener("resize", toggleVisibility);
+
 
 
 
