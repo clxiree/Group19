@@ -48,38 +48,43 @@
     /* Chat List */
     .chat-list {
       width: 25%;
-      background-color: #ffffff;
-      border-right: 1px solid #dee2e6;
+      background-color: #3e3e3e;
+      border-right: 1px solid #000000;
       overflow-y: auto;
       position: relative;
     }
 
     .chat-list-header {
       padding: 15px;
-      background-color: #ffffff;
+      background-color: #3e3e3e;
       color: #212529;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      border-bottom: 1px solid #dee2e6;
+      border-bottom: 1px solid #000000;
     }
 
     .chat-list-header h4 {
       margin: 0;
       font-weight: 600;
       font-size: 1.1em;
+      color: #ffffff;
+      margin-left: 20px;
     }
 
     .chat-list-header button {
       background: none;
       border: none;
-      color: #212529;
+      color: #ffffff;
       font-size: 1.5em;
       cursor: pointer;
     }
 
     .chat-list-header button:hover {
-      color: #007bff;
+      color: #539be8;
+    }
+    .chat-list-header :hover {
+      color: #539be8;
     }
 
     .chat-item {
@@ -91,18 +96,19 @@
     }
 
     .chat-item:hover {
-      background-color: #e9ecef;
-      box-shadow: inset 5px 0 0 #007bff;
+      background-color: #797a7b;
+      box-shadow: inset 5px 0 0 #007bffa7;
     }
 
     .chat-item.active {
-      background-color: #e9ecef;
-      box-shadow: inset 5px 0 0 #007bff;
+      background-color: #d0d0d062;
+      box-shadow: inset 20px 0 0 #007bff;
     }
 
     .chat-item img {
       border-radius: 50%;
-      margin-right: 15px;
+      margin-right: 20px;
+      margin-left: 15px;
       width: 50px;
       height: 50px;
       object-fit: cover;
@@ -116,12 +122,12 @@
 
     .chat-item-name {
       font-weight: 600;
-      color: #212529;
+      color: #ffffffdb;
     }
 
     .chat-item-last-message {
       font-size: 0.9em;
-      color: #6c757d;
+      color: #b3bcc4;
       margin-top: 3px;
       white-space: nowrap;
       overflow: hidden;
@@ -139,34 +145,25 @@
 
     /* No Chat Selected Placeholder */
     .no-chat-selected {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: #f8f9fa;
-      text-align: center;
-      padding: 20px;
+      display: none;
     }
 
     .no-chat-selected img {
-      max-width: 60%;
-      height: auto;
+      display: none;
     }
 
     .no-chat-selected p {
-      margin-top: 20px;
-      color: #6c757d;
-      font-size: 1.2em;
+      display: none;
     }
 
     /* Chat Header */
     .chat-header {
       display: flex;
       align-items: center;
-      padding: 15px;
+      padding: 16.7px;
       background-color: #3e3e3e;
       color: #ffffff;
+      border-bottom: 1px solid #000000;
     }
 
     .chat-header-info {
@@ -180,6 +177,7 @@
       height: 40px;
       border-radius: 50%;
       margin-right: 10px;
+      margin-left: 10px;
       object-fit: cover;
     }
 
@@ -366,10 +364,42 @@
       }
     }
 
-    /* Highlighted message */
-    .message.highlighted {
-      background-color: #ffffcc !important;
-      border: 1px solid #ffeb3b !important;
+    @media (max-width: 576px) {
+
+      /* Stack chat list and chat window vertically */
+      .chat-container {
+        flex-direction: column;
+        height: auto;
+      }
+
+      .chat-header {
+        background-color: rgb(243, 243, 243);
+      }
+
+      .fas {
+        color: black;
+      }
+
+      /* Full width for chat list and chat window */
+      .chat-list,
+      .chat-window {
+        width: 100%;
+        height: auto;
+      }
+
+      /* Adjust chat header font sizes */
+      .chat-list-header h4 {
+        font-size: 1em;
+      }
+
+      /* Chat item text size and spacing adjustments */
+      .chat-item-name {
+        font-size: 0.95em;
+      }
+
+      .chat-item-last-message {
+        font-size: 0.85em;
+      }
     }
 
     /* Toast Container Positioning */
@@ -398,6 +428,48 @@
 
     .toast.show {
       opacity: 1;
+    }
+
+    /* Reduce avatar size */
+    .chat-item img {
+      width: 40px;
+      height: 40px;
+    }
+
+    .chat-header img {
+      width: 35px;
+      height: 35px;
+    }
+
+    /* Adjust message list padding for better spacing */
+    .message-list {
+      padding: 10px;
+    }
+
+    /* Full width for message input container */
+    .message-input-container {
+      padding: 10px;
+      justify-content: center;
+    }
+
+    /* Adjust the input field and button sizes */
+    .message-input {
+      padding: 8px;
+      font-size: 0.9em;
+    }
+
+    .message-input-actions {
+      font-size: 1.3em;
+    }
+
+    /* Adjust footer and social link spacing */
+    .footer-contact p,
+    .footer-about .sitename {
+      font-size: 0.9em;
+    }
+
+    .social-links a {
+      font-size: 1.3em;
     }
   </style>
 
@@ -459,7 +531,7 @@
       <div class="chat-list" id="chat-list">
         <!-- Chat List Header -->
         <div class="chat-list-header">
-          <h4>All Chats</h4>
+          <a href="chats.html"><h4>ALL CHATS</h4></a>
           <button id="new-chat-button" class="btn btn-primary" title="Start a new chat" data-bs-toggle="modal"
             data-bs-target="#newChatModal">
             <i class="fas fa-plus"></i>
@@ -674,7 +746,6 @@
       chatItemsMap[chatId] = chatItem;
     }
 
-
     // Authenticate and fetch chats
     firebase.auth().onAuthStateChanged((user) => {
       if (user) {
@@ -761,7 +832,6 @@
         });
     }
 
-
     // Function to create and append a chat item
     function createChatItem(chatId, chatData) {
       if (chatItemsMap[chatId]) {
@@ -807,7 +877,6 @@
         });
     }
 
-
     function appendChatItemDetails(chatItem, avatarURL, recipientName, chatData) {
       const img = document.createElement("img");
       img.src = avatarURL;
@@ -825,11 +894,16 @@
 
       const chatLastMessageDiv = document.createElement("div");
       chatLastMessageDiv.classList.add("chat-item-last-message");
-      chatLastMessageDiv.textContent = chatData && chatData.last_message
-        ? (chatData.last_message.type === 'text'
-          ? truncateText(chatData.last_message.content, 30)
-          : '📎 Attachment')
-        : '';
+
+      if (chatData && chatData.last_message) {
+        if (chatData.last_message.type === 'text' || chatData.last_message.type === 'system') {
+          chatLastMessageDiv.textContent = truncateText(chatData.last_message.content, 30);
+        } else {
+          chatLastMessageDiv.textContent = '📎 Attachment';
+        }
+      } else {
+        chatLastMessageDiv.textContent = '';
+      }
 
       chatInfoDiv.appendChild(chatNameDiv);
       chatInfoDiv.appendChild(chatLastMessageDiv);
@@ -845,11 +919,15 @@
       }
       const chatLastMessageDiv = chatItem.querySelector(".chat-item-last-message");
       if (chatLastMessageDiv) {
-        chatLastMessageDiv.textContent = chatData.last_message
-          ? (chatData.last_message.type === 'text' || chatData.last_message.type === 'system'
-            ? truncateText(chatData.last_message.content, 30)
-            : '📎 Attachment')
-          : '';
+        if (chatData.last_message) {
+          if (chatData.last_message.type === 'text' || chatData.last_message.type === 'system') {
+            chatLastMessageDiv.textContent = truncateText(chatData.last_message.content, 30);
+          } else {
+            chatLastMessageDiv.textContent = '📎 Attachment';
+          }
+        } else {
+          chatLastMessageDiv.textContent = '';
+        }
       }
     }
 
@@ -954,7 +1032,7 @@
 
       let messageContentElement;
 
-      if (messageData.type === "text") {
+      if (messageData.type === "text" || messageData.type === "system") {
         messageContentElement = document.createElement('span');
         messageContentElement.textContent = escapeHTML(messageData.content);
         messageContentElement.classList.add("me-2");
@@ -1206,19 +1284,10 @@
                   if (chatData.members.includes(recipientEmail)) {
                     chatExists = true;
                     showToast("Chat with this user already exists.", "info");
-                    const existingChatItem = chatItemsMap[chatDoc.id];
-                    if (existingChatItem) {
-                      selectChat(chatDoc.id, existingChatItem, chatData);
-                    } else {
-                      setTimeout(() => {
-                        const newChatItem = chatItemsMap[chatDoc.id];
-                        selectChat(chatDoc.id, newChatItem, chatData);
-                      }, 500);
-                    }
+                    // Let the snapshot listener handle the chat item creation
                   }
                 });
 
-                // Inside createNewChat function
                 if (!chatExists) {
                   const chatRef = db.collection("Chats").doc();
                   const chatData = {
@@ -1226,21 +1295,15 @@
                     chat_name: recipientName,
                     chat_avatar: `images/team/${avatarFileName}`,
                     members: [currentUser.email, recipientEmail],
-                    last_message: {
-                      content: 'Chat started',
-                      sender_email: currentUser.email,
-                      sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-                      type: 'text', // You can define a new type for system messages
-                      read_by_receiver: false
-                    }
+                    last_message: null
                   };
                   chatRef.set(chatData).then(() => {
                     console.log("New chat created.");
                     showToast("New chat created successfully.", "success");
-                    setTimeout(() => {
-                      const newChatItem = chatItemsMap[chatRef.id];
-                      selectChat(chatRef.id, newChatItem, chatData);
-                    }, 500);
+
+                    // Send "CHAT STARTED" system message
+                    sendSystemMessage(chatRef.id, "Chat started.");
+
                   }).catch(error => {
                     console.error("Error creating new chat:", error);
                     showToast("Failed to create a new chat. Please try again.", "danger");
@@ -1262,21 +1325,53 @@
         });
     }
 
+    function sendSystemMessage(chatId, content) {
+      const messageRef = db.collection("Chats").doc(chatId).collection("messages").doc();
+      const messageData = {
+        message_id: messageRef.id,
+        content: content,
+        sender_email: currentUser.email,
+        sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+        type: "system",
+        read_by_receiver: false
+      };
+
+      messageRef.set(messageData).then(() => {
+        // Update last_message in chat document
+        db.collection("Chats").doc(chatId).update({
+          last_message: {
+            ...messageData,
+            sent_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
+        }).then(() => {
+          console.log("System message sent and last message updated.");
+        }).catch(error => {
+          console.error("Error updating last message after system message:", error);
+          showToast("Failed to update chat. Please try again.", "danger");
+        });
+      }).catch(error => {
+        console.error("Error sending system message:", error);
+        showToast("Failed to send system message. Please try again.", "danger");
+      });
+    }
+
+
+
     function performChatSearch(searchTerm) {
       if (!selectedChatId) {
         showToast("No chat selected to search.", "warning");
         return;
       }
 
+      // Fetch all messages and filter in code
       db.collection("Chats").doc(selectedChatId).collection("messages")
-        .where("type", "==", "text")
         .orderBy("sent_at")
         .get()
         .then(querySnapshot => {
           const matchingMessages = [];
           querySnapshot.forEach(doc => {
             const messageData = doc.data();
-            if (messageData.content.toLowerCase().includes(searchTerm.toLowerCase())) {
+            if (messageData.type === "text" && messageData.content.toLowerCase().includes(searchTerm.toLowerCase())) {
               matchingMessages.push({ message_id: doc.id, ...messageData });
             }
           });
@@ -1293,7 +1388,6 @@
           showToast("Failed to perform search. Please try again.", "danger");
         });
     }
-
 
     function highlightMessages(messages) {
       const allMessages = messageList.querySelectorAll(".message");
@@ -1443,13 +1537,7 @@
                           });
                         } else {
                           chatRef.update({
-                            last_message: {
-                              content: '',
-                              sender_email: '',
-                              sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-                              type: 'text',
-                              read_by_receiver: false
-                            }
+                            last_message: null
                           }).then(() => {
                             console.log("Last message cleared as no messages remain.");
                           }).catch(error => {
@@ -1478,51 +1566,11 @@
         showToast("Failed to delete the message. Please try again.", "danger");
       });
     }
-
-
-    chatLastMessageDiv.textContent = chatData && chatData.last_message
-      ? (chatData.last_message.type === 'text'
-        ? truncateText(chatData.last_message.content, 30)
-        : '📎 Attachment')
-      : '';
-
-
   </script>
 
   <!-- Footer -->
   <footer id="footer" class="footer position-relative light-background">
-    <div class="container footer-top">
-      <div class="row gy-4">
-
-        <!-- About Section with Social Links -->
-        <div class="col-lg-3 md-6 sm-6 footer-about">
-          <a href="index.html" class="logo d-flex align-items-center">
-            <span class="sitename">SMOOTutor</span>
-          </a>
-          <div class="footer-contact pt-3">
-            <p>SMU</p>
-            <p>81 Victoria St, Singapore 188065</p>
-            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
-            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
-          </div>
-          <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
-            <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
-            <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
-            <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
-            <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
-          </div>
-
-        </div>
-
-        <!-- Google Maps Section -->
-        <div class="col-lg-9 md-6 sm-6">
-          <iframe style="border:0; width: 100%; height: 350px;"
-            src="https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=81+Victoria+Street"
-            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-
-      </div>
-    </div>
+    <!-- Footer content -->
   </footer>
 
   <!-- Scroll Top -->
