@@ -366,118 +366,112 @@
       }
     }
 
-@media (max-width: 576px) {
-  /* Stack chat list and chat window vertically */
-  .chat-container {
-    flex-direction: column;
-    height: auto;
-  }
-  .chat-header{
-    background-color: rgb(243, 243, 243);
-  }
-  .fas{
-    color: black;
-  }
+    @media (max-width: 576px) {
 
-  /* Full width for chat list and chat window */
-  .chat-list,
-  .chat-window {
-    width: 100%;
-    height: auto;
-  }
+      /* Stack chat list and chat window vertically */
+      .chat-container {
+        flex-direction: column;
+        height: auto;
+      }
 
-  /* Adjust chat header font sizes */
-  .chat-list-header h4 {
-    font-size: 1em;
-  }
+      .chat-header {
+        background-color: rgb(243, 243, 243);
+      }
 
-  /* Chat item text size and spacing adjustments */
-  .chat-item-name {
-    font-size: 0.95em;
-  }
+      .fas {
+        color: black;
+      }
 
-  .chat-item-last-message {
-    font-size: 0.85em;
-  }
+      /* Full width for chat list and chat window */
+      .chat-list,
+      .chat-window {
+        width: 100%;
+        height: auto;
+      }
 
-<<<<<<< HEAD
-    /* Highlighted message */
-    .message.highlighted {
-      background-color: #ffffcc !important;
-      border: 1px solid #ffeb3b !important;
-    }
+      /* Adjust chat header font sizes */
+      .chat-list-header h4 {
+        font-size: 1em;
+      }
 
-    /* Toast Container Positioning */
-    #toast-container {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1055;
-    }
+      /* Chat item text size and spacing adjustments */
+      .chat-item-name {
+        font-size: 0.95em;
+      }
 
-    /* Modal Enhancements */
-    .modal-header {
-      background-color: #3e3e3e;
-      color: #ffffff;
-    }
+      .chat-item-last-message {
+        font-size: 0.85em;
+      }
 
-    .modal-footer {
-      background-color: #f8f9fa;
-    }
+      /* Toast Container Positioning */
+      #toast-container {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        z-index: 1055;
+      }
 
-    /* Animation for Toasts */
-    .toast {
-      opacity: 0;
-      transition: opacity 0.5s ease-in-out;
-    }
+      /* Modal Enhancements */
+      .modal-header {
+        background-color: #3e3e3e;
+        color: #ffffff;
+      }
 
-    .toast.show {
-      opacity: 1;
-    }
-=======
-  /* Reduce avatar size */
-  .chat-item img {
-    width: 40px;
-    height: 40px;
-  }
+      .modal-footer {
+        background-color: #f8f9fa;
+      }
 
-  .chat-header img {
-    width: 35px;
-    height: 35px;
-  }
+      /* Animation for Toasts */
+      .toast {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
 
-  /* Adjust message list padding for better spacing */
-  .message-list {
-    padding: 10px;
-  }
+      .toast.show {
+        opacity: 1;
+      }
 
-  /* Full width for message input container */
-  .message-input-container {
-    padding: 10px;
-    justify-content: center;
-  }
+      /* Reduce avatar size */
+      .chat-item img {
+        width: 40px;
+        height: 40px;
+      }
 
-  /* Adjust the input field and button sizes */
-  .message-input {
-    padding: 8px;
-    font-size: 0.9em;
-  }
+      .chat-header img {
+        width: 35px;
+        height: 35px;
+      }
 
-  .message-input-actions {
-    font-size: 1.3em;
-  }
+      /* Adjust message list padding for better spacing */
+      .message-list {
+        padding: 10px;
+      }
 
-  /* Adjust footer and social link spacing */
-  .footer-contact p,
-  .footer-about .sitename {
-    font-size: 0.9em;
-  }
+      /* Full width for message input container */
+      .message-input-container {
+        padding: 10px;
+        justify-content: center;
+      }
 
-  .social-links a {
-    font-size: 1.3em;
-  }
-}
->>>>>>> 58845230b091499fc99cb1db8aafb33bc28608b1
+      /* Adjust the input field and button sizes */
+      .message-input {
+        padding: 8px;
+        font-size: 0.9em;
+      }
+
+      .message-input-actions {
+        font-size: 1.3em;
+      }
+
+      /* Adjust footer and social link spacing */
+      .footer-contact p,
+      .footer-about .sitename {
+        font-size: 0.9em;
+      }
+
+      .social-links a {
+        font-size: 1.3em;
+      }
   </style>
 
 </head>
