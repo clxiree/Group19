@@ -385,6 +385,17 @@
         // Update booking ID
         elements.bookingId.textContent = `#${bookingData.bookingId}`;
         elements.status.textContent = bookingData.status;
+        if (bookingData.status === "Cancelled") {
+        elements.status.style.color = "red";
+        elements.status.style.fontWeight = "bold"; // Optional: make it bold
+    } else if (bookingData.status === "Pending") {
+        elements.status.style.color = "#f5c022"; // Reset color if not cancelled
+        elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
+    }else{
+      elements.status.style.color = "green"; // Reset color if not cancelled
+        elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
+    }
+
         if (elements.courseCode) {
         elements.courseCode.textContent = bookingData.courseCode;
     }
