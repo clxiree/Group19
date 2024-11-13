@@ -136,36 +136,36 @@
 })();
 
 
-  initMarquee(190, 27)
+  // initMarquee(190, 27)
 
-  function initMarquee(boxWidth, time) {
-      const boxElement = $('.box');
-      const boxLength = boxElement.length;
-      const wrapperWidth = boxWidth * boxLength;
-      const windowWidth = $(window).width();
+  // function initMarquee(boxWidth, time) {
+  //     const boxElement = $('.box');
+  //     const boxLength = boxElement.length;
+  //     const wrapperWidth = boxWidth * boxLength;
+  //     const windowWidth = $(window).width();
   
-      boxElement.parent().css('left', '-' + boxWidth + 'px');
-      boxElement.css('width', boxWidth + 'px');
+  //     boxElement.parent().css('left', '-' + boxWidth + 'px');
+  //     boxElement.css('width', boxWidth + 'px');
   
-      gsap.set(".box", {
-          x: (i) => i * boxWidth
-      });
+  //     gsap.set(".box", {
+  //         x: (i) => i * boxWidth
+  //     });
   
-      gsap.to(".box", {
-          duration: time,
-          ease: "none",
-          x: "-=" + wrapperWidth,
-          modifiers: {
-              x: gsap.utils.unitize(
-                  function (x) {
-                      return parseFloat(x + windowWidth + boxWidth) % wrapperWidth
-                  }
-              )
-          },
-          repeat: -1
-      });
+  //     gsap.to(".box", {
+  //         duration: time,
+  //         ease: "none",
+  //         x: "-=" + wrapperWidth,
+  //         modifiers: {
+  //             x: gsap.utils.unitize(
+  //                 function (x) {
+  //                     return parseFloat(x + windowWidth + boxWidth) % wrapperWidth
+  //                 }
+  //             )
+  //         },
+  //         repeat: -1
+  //     });
   
-  }
+  // }
 
 //   document.addEventListener("DOMContentLoaded", () => {
 //     /**
