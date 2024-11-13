@@ -11,11 +11,14 @@
   <!-- Favicons -->
   <!-- <link href="assets/img/favicon.png" rel="icon"> -->
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
+  <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
   <!-- <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'> -->
 
   <!-- Vendor CSS Files -->
@@ -41,261 +44,272 @@
   <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css'>
 
   <style>
-
     .tinder {
-  /* width: 100vw; */
-  height: auto;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  opacity: 0;
-  transition: opacity 0.1s ease-in-out;
-  margin-top: 20px;
-}
+      /* width: 100vw; */
+      height: auto;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      opacity: 0;
+      transition: opacity 0.1s ease-in-out;
+      margin-top: 20px;
+    }
 
-.loaded.tinder {
-  opacity: 1;
-}
+    .loaded.tinder {
+      opacity: 1;
+    }
 
-.tinder--status {
-  position: absolute;
-  top: 50%;
-  margin-top: -30px;
-  z-index: 2;
-  width: 100%;
-  text-align: center;
-  pointer-events: none;
-}
+    .tinder--status {
+      position: absolute;
+      top: 50%;
+      margin-top: -30px;
+      z-index: 2;
+      width: 100%;
+      text-align: center;
+      pointer-events: none;
+    }
 
-.tinder--status i {
-  font-size: 100px;
-  opacity: 0;
-  transform: scale(1);
-  transition: all 0.2s ease-in-out;
-  position: absolute;
-  width: 100px;
-  margin-left: -50px;
-}
+    .tinder--status i {
+      font-size: 100px;
+      opacity: 0;
+      transform: scale(1);
+      transition: all 0.2s ease-in-out;
+      position: absolute;
+      width: 100px;
+      margin-left: -50px;
+    }
 
-.tinder_love .fa-heart {
-  opacity: 1;
-  transform: scale(6);
-  color: red;
-}
+    .tinder_love .fa-heart {
+      opacity: 1;
+      transform: scale(6);
+      color: red;
+    }
 
-.tinder_nope .fa-remove {
-  opacity: 1;
-  transform: scale(6);
-  color: black;
-}
+    .tinder_nope .fa-remove {
+      opacity: 1;
+      transform: scale(6);
+      color: black;
+    }
 
-.tinder--cards {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start; /* Aligns the cards closer to the top */
-  margin-top: 10px; /* Adjust this as needed for more spacing */
-  min-height: 70vh; /* Limits height so it doesn’t occupy the full viewport */
-  padding-bottom: 20px;
-}
+    .tinder--cards {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      /* Aligns the cards closer to the top */
+      margin-top: 10px;
+      /* Adjust this as needed for more spacing */
+      min-height: 70vh;
+      /* Limits height so it doesn’t occupy the full viewport */
+      padding-bottom: 20px;
+    }
 
-.card-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
+    .card-content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
 
-.tinder--card {
-  position: absolute;
-  width: 80%; /* Adjusted width to make the card narrower */
-  max-width: 500px; /* Reduced max-width for smaller screens */
-  padding: 15px; /* Reduced padding for a more compact look */
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s ease, opacity 0.3s ease;
-  cursor: grab;
-  border: 1px solid black;
-  min-height: 500px; /* Reduced min-height to make the card shorter */
-  height: auto;
-  max-height: 70vh; /* Adjusted max-height to fit within the viewport */
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-/* Remove background and padding for the overlay */
-.card-overlay {
-  background-color: transparent; /* Make the overlay transparent */
-  padding: 0;
-}
+    .tinder--card {
+      position: absolute;
+      width: 80%;
+      /* Adjusted width to make the card narrower */
+      max-width: 500px;
+      /* Reduced max-width for smaller screens */
+      padding: 15px;
+      /* Reduced padding for a more compact look */
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      cursor: grab;
+      border: 1px solid black;
+      min-height: 500px;
+      /* Reduced min-height to make the card shorter */
+      height: auto;
+      max-height: 70vh;
+      /* Adjusted max-height to fit within the viewport */
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
 
-/* Style for profile details positioned at the bottom left */
-.profile-details {
-  position: absolute;
-  /* left: 20px; */
-  text-align: left;
-  color: white;
-}
+    /* Remove background and padding for the overlay */
+    .card-overlay {
+      background-color: transparent;
+      /* Make the overlay transparent */
+      padding: 0;
+    }
 
-/* Style for name and joined date */
-.profile-details h2 {
-  font-size: 30px;
-  margin: 0;
-  color: white;
-  text-shadow: 2px 2px black;
-}
+    /* Style for profile details positioned at the bottom left */
+    .profile-details {
+      position: absolute;
+      /* left: 20px; */
+      text-align: left;
+      color: white;
+    }
 
-.profile-details p {
-  font-size: 14px;
-  /* margin-top: 4px; */
-  text-shadow: 2px 2px black;
-}
+    /* Style for name and joined date */
+    .profile-details h2 {
+      font-size: 30px;
+      margin: 0;
+      color: white;
+      text-shadow: 2px 2px black;
+    }
 
-/* Badge container positioned on the right side */
-.badge-container {
-  position: absolute;
-  bottom: 20px;
-  right: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 10px;
-}
+    .profile-details p {
+      font-size: 14px;
+      /* margin-top: 4px; */
+      text-shadow: 2px 2px black;
+    }
 
-/* Rate badge on its own row */
-.rate-row {
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
+    /* Badge container positioned on the right side */
+    .badge-container {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
 
-.rate-badge {
-  background-color: #FFD700; /* Yellow color */
-  color: black;
-  border-radius: 12px;
-  padding: 8px 16px;
-  font-size: 25px;
-  font-weight: bold;
-}
+    /* Rate badge on its own row */
+    .rate-row {
+      display: flex;
+      justify-content: flex-end;
+      width: 100%;
+    }
 
-/* Subjects in a separate row and aligned horizontally */
-.subjects-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap; /* Allows wrapping if there are many subjects */
-}
+    .rate-badge {
+      background-color: #FFD700;
+      /* Yellow color */
+      color: black;
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 25px;
+      font-weight: bold;
+    }
 
-.subject-badge {
-  background-color: #5a9bd4; /* Blue color */
-  color: white;
-  border-radius: 12px;
-  padding: 8px 16px;
-  font-size: 16px;
-  font-weight: bold;
-  display: inline-block;
-}
+    /* Subjects in a separate row and aligned horizontally */
+    .subjects-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      /* Allows wrapping if there are many subjects */
+    }
 
-.tinder--card h3 {
-  margin-top: 8px;
-  font-size: 24px;
-}
+    .subject-badge {
+      background-color: #5a9bd4;
+      /* Blue color */
+      color: white;
+      border-radius: 12px;
+      padding: 8px 16px;
+      font-size: 16px;
+      font-weight: bold;
+      display: inline-block;
+    }
 
-.tinder--card p {
-  margin-top: 4px;
-  font-size: 16px;
-}
+    .tinder--card h3 {
+      margin-top: 8px;
+      font-size: 24px;
+    }
 
-.tinder--card img {
-  max-width: 100%;
-  border-radius: 10px;
-  pointer-events: none;
-}
+    .tinder--card p {
+      margin-top: 4px;
+      font-size: 16px;
+    }
 
-.tinder--buttons {
-  display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
+    .tinder--card img {
+      max-width: 100%;
+      border-radius: 10px;
+      pointer-events: none;
+    }
 
-.tinder--buttons button {
-  border-radius: 50%;
-  line-height: 60px;
-  width: 60px;
-  border: 0;
-  background: #FFFFFF;
-  display: inline-block;
-  margin: 0 8px;
-  cursor: pointer;
-}
+    .tinder--buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
 
-.tinder--buttons button:focus {
-  outline: 0;
-}
+    .tinder--buttons button {
+      border-radius: 50%;
+      line-height: 60px;
+      width: 60px;
+      border: 0;
+      background: #FFFFFF;
+      display: inline-block;
+      margin: 0 8px;
+      cursor: pointer;
+    }
 
-.tinder--buttons i {
-  font-size: 32px;
-  vertical-align: middle;
-}
+    .tinder--buttons button:focus {
+      outline: 0;
+    }
 
-/* Default style for the heart icon */
-.fa-heart {
-  color: #FFACE4;
-  transition: transform 0.2s ease, color 0.2s ease;
- 
-}
+    .tinder--buttons i {
+      font-size: 32px;
+      vertical-align: middle;
+    }
 
+    /* Default style for the heart icon */
+    .fa-heart {
+      color: #FFACE4;
+      transition: transform 0.2s ease, color 0.2s ease;
 
-
-
-.fa-remove {
-  
-  color: #CDD6DD;
-}
-/* Make sure the tinder buttons are responsive */
-@media (max-width: 768px) {
-  /* Remove any height constraint and padding from .tinder */
-  .tinder {
-    height: auto;
-    margin: 0;
-    padding: 20px;
-  }
-
-  .tinder--buttons {
-    display: none;
-  }
-
-  /* Adjust .tinder--cards to remove extra spacing */
-  .tinder--cards {
-    
-    margin-bottom: 500px;
-    padding: 0;
-    min-height: auto; /* Remove min-height to avoid extra space */
-    height: auto; /* Set height to auto to reduce space */
-  }
-  .tinder--card{
-    margin-top: 20px;
-    
-  }
+    }
 
 
 
 
-  /* Adjust footer padding and margin if necessary */
-  footer {
-    margin-top: 0;
-    padding-top: 0;
-  }
- 
-}
+    .fa-remove {
+
+      color: #CDD6DD;
+    }
+
+    /* Make sure the tinder buttons are responsive */
+    @media (max-width: 768px) {
+
+      /* Remove any height constraint and padding from .tinder */
+      .tinder {
+        height: auto;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .tinder--buttons {
+        display: none;
+      }
+
+      /* Adjust .tinder--cards to remove extra spacing */
+      .tinder--cards {
+
+        margin-bottom: 500px;
+        padding: 0;
+        min-height: auto;
+        /* Remove min-height to avoid extra space */
+        height: auto;
+        /* Set height to auto to reduce space */
+      }
+
+      .tinder--card {
+        margin-top: 20px;
+
+      }
 
 
 
 
+      /* Adjust footer padding and margin if necessary */
+      footer {
+        margin-top: 0;
+        padding-top: 0;
+      }
 
-    
+    }
   </style>
   <!-- Firebase JS SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
@@ -318,146 +332,713 @@
         appId: "1:289686522861:web:5811385ced42106d78b5e4",
         measurementId: "G-46QED8ZFKJ"
       };
-      
+
       // Initialize Firebase if not already initialized
       if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
       }
-      
+
       const db = firebase.firestore();
       const auth = firebase.auth();
-    
+
       // Authenticate and fetch data only if Firebase is initialized
-    //   auth.signInAnonymously().then(() => {
-    //     console.log("User authenticated successfully.");
-    //     fetchParticulars(); // Call fetchParticulars after successful authentication
-    //   }).catch(error => {
-    //     console.error("Authentication error:", error);
-    //   });
-    // });
-    const myEmailButton = document.getElementById("my-email");
-    const logoutButton = document.getElementById("logout-button");
-    const logoutButtonSmall = document.getElementById("logout-button-small");
-    const myEmailContainer = document.getElementById("my-email-container");
-    const logoutContainer = document.getElementById("logout-container");
+      //   auth.signInAnonymously().then(() => {
+      //     console.log("User authenticated successfully.");
+      //     fetchParticulars(); // Call fetchParticulars after successful authentication
+      //   }).catch(error => {
+      //     console.error("Authentication error:", error);
+      //   });
+      // });
+      const myEmailButton = document.getElementById("my-email");
+      const logoutButton = document.getElementById("logout-button");
+      const logoutButtonSmall = document.getElementById("logout-button-small");
+      const myEmailContainer = document.getElementById("my-email-container");
+      const logoutContainer = document.getElementById("logout-container");
 
-    firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        console.log("User is logged in with email:", user.email);
-        document.getElementById("my-email").innerText = user.email;
+      firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+          console.log("User is logged in with email:", user.email);
+          document.getElementById("my-email").innerText = user.email;
 
-        // Reference to the Firestore database
-        const db = firebase.firestore();
+          // Reference to the Firestore database
+          const db = firebase.firestore();
 
-        // Query Firestore for the document in 'Particulars' collection where email matches the logged-in user's email
-        db.collection("Particulars")
+          // Query Firestore for the document in 'Particulars' collection where email matches the logged-in user's email
+          db.collection("Particulars")
             .where("Tutor", "==", true)
             .get()
             .then((querySnapshot) => {
-                if (!querySnapshot.empty) {
-                    querySnapshot.forEach((doc) => {
-                        // Assign userId from Firestore document
-                        userId = doc.data().UserID;
-                        console.log("UserID:", userId);
+              if (!querySnapshot.empty) {
+                querySnapshot.forEach((doc) => {
+                  // Assign userId from Firestore document
+                  userId = doc.data().UserID;
+                  console.log("UserID:", userId);
 
-                        // Now you can call other functions that depend on userId
-                        fetchParticulars();
-                    });
-                    
-                } else {
-                    console.log("No matching user found with this email.");
-                }
+                  // Now you can call other functions that depend on userId
+                  fetchParticulars();
+                });
+
+              } else {
+                console.log("No matching user found with this email.");
+              }
             })
             .catch((error) => {
-                console.error("Error retrieving user ID:", error);
+              console.error("Error retrieving user ID:", error);
             });
-    } else {
-        console.log("No user is logged in.");
-        // Redirect to login page if needed
-        window.location.href = 'login.html';
-    }
-});
-function handleLogout() {
+        } else {
+          console.log("No user is logged in.");
+          // Redirect to login page if needed
+          window.location.href = 'login.html';
+        }
+      });
+      function handleLogout() {
         firebase.auth().signOut().then(() => {
-            localStorage.setItem("logoutSuccess", "true");
-            window.location.href = 'index.html';
+          localStorage.setItem("logoutSuccess", "true");
+          window.location.href = 'index.html';
         }).catch((error) => {
-            console.error("Error logging out:", error);
+          console.error("Error logging out:", error);
         });
-    }
-    logoutButton.addEventListener("click", handleLogout);
-    logoutButtonSmall.addEventListener("click", handleLogout);
-function toggleVisibility() {
-    if (window.innerWidth <= 1068) {
-        myEmailContainer.style.display = "none";
-        logoutContainer.style.display = "block";
-    } else {
-        myEmailContainer.style.display = "flex";
-        logoutContainer.style.display = "none";
-    }
-}
-toggleVisibility();
-window.addEventListener("resize", toggleVisibility);});
+      }
+      logoutButton.addEventListener("click", handleLogout);
+      logoutButtonSmall.addEventListener("click", handleLogout);
+      function toggleVisibility() {
+        if (window.innerWidth <= 1068) {
+          myEmailContainer.style.display = "none";
+          logoutContainer.style.display = "block";
+        } else {
+          myEmailContainer.style.display = "flex";
+          logoutContainer.style.display = "none";
+        }
+      }
+      toggleVisibility();
+      window.addEventListener("resize", toggleVisibility);
+    });
 
 
-    </script>
+  </script>
 </head>
 
 <body class="courses-page">
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <img src="assets/img/smootutor-logo.jpg">
-        </a>
+  <!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="tuteehomepage.html">Home</a></li>
-                <li><a href="bookings.html">Bookings</a></li>
-                <li class="dropdown">
-                    <a href="trainers.html" id="notesDropdown">Tutors <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-                        <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-                    </ul>
-                </li>
-                <li><a href="chats.html">Chats</a></li>
-                <li class="dropdown">
-                    <a href="notes.html" id="notesDropdown">Notes <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-                        <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-                    </ul>
-                </li>
-                <!-- Logout Button for Smaller Viewports -->
-                <li id="logout-container" style="display: none;"><button id="logout-button-small">Logout</button></li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+    <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
+    <button class="mobile-nav-toggle d-xl-none btn btn-primary ms-3">
+      <i class="bi bi-list"></i>
+    </button>
 
-        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+    <!-- Logo (Visible on screens >= 1200px) -->
+    <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
+      <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
+    </a>
 
-            </ul>
-         
-        </ul>
-          
-      </nav>
-      <!-- <a class="btn-getstarted">
-        <div id="my-email"></div>
-    </a> -->
-    <!-- Email Button with Dropdown -->
-<div id="my-email-container">
-  <button id="my-email"></button>
-  <div id="dropdown-menu" class="dropdown-content">
-      <button id="logout-button">Logout</button>
-  </div>
-</div> 
+    <!-- Navigation Menu (Visible on screens >= 1200px) -->
+    <nav id="navmenu" class="navmenu d-none d-xl-flex">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="tuteehomepage.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="bookings.html" class="nav-link">Bookings</a>
+        </li>
 
+        <!-- Tutors Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
+              class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
+            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="chats.html" class="nav-link">Chats</a>
+        </li>
+
+        <!-- Notes Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Email Display -->
+    <div id="my-email-container" class="ms-auto position-relative">
+      <button id="my-email" class="btn btn-secondary">
+        user@example.com <i class="bi bi-chevron-down"></i>
+      </button>
+      <div id="dropdown-menu" class="dropdown-content">
+        <button id="logout-button" class="dropdown-item">Sign Out</button>
+      </div>
     </div>
+
+  </div>
 </header>
+
+<!-- Mobile Menu Modal -->
+<div id="mobile-menu-mmodal" class="mmodal">
+  <div class="mmodal-content">
+    <span class="close-button">&times;</span>
+    <ul class="mobile-nav-list">
+      <li>
+        <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
+      </li>
+      <li>
+        <a href="bookings.html" class="mobile-nav-link">Bookings</a>
+      </li>
+
+      <!-- Tutors Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+          <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="chats.html" class="mobile-nav-link">Chats</a>
+      </li>
+
+      <!-- Notes Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+          <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+        </ul>
+      </li>
+
+      <!-- Logout Button -->
+      <li class="mobile-nav-item">
+        <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<!-- Bootstrap JS (Optional, for additional functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your Custom JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Dropdown Toggle Functionality for Desktop
+    const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
+
+    dropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        const dropdownMenu = this.nextElementSibling;
+        dropdownMenu.classList.toggle('show');
+      });
+    });
+
+    // Hamburger Menu Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
+    const closeButton = document.querySelector('.close-button');
+
+    mobileNavToggle.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'none';
+    });
+
+    // Close Mobile Menu When Clicking Outside
+    window.addEventListener('click', function (event) {
+      if (event.target == mobileMenuMModal) {
+        mobileMenuMModal.style.display = 'none';
+      }
+    });
+
+    // Mobile Dropdown Toggle
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+
+    mobileDropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        const mobileDropdownMenu = this.nextElementSibling;
+        mobileDropdownMenu.classList.toggle('show');
+        // Rotate the chevron icon
+        const icon = this.querySelector('i');
+        if (mobileDropdownMenu.classList.contains('show')) {
+          icon.classList.remove('bi-chevron-down');
+          icon.classList.add('bi-chevron-up');
+        } else {
+          icon.classList.remove('bi-chevron-up');
+          icon.classList.add('bi-chevron-down');
+        }
+      });
+    });
+
+    // Email Dropdown Toggle (Visible on screens <1200px)
+    const myEmailButton = document.getElementById('my-email');
+    const emailDropdown = document.getElementById('dropdown-menu');
+
+    myEmailButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      emailDropdown.classList.toggle('show');
+    });
+
+    // Close Email Dropdown When Clicking Outside
+    document.addEventListener('click', function (event) {
+      if (!myEmailButton.contains(event.target)) {
+        emailDropdown.classList.remove('show');
+      }
+    });
+
+    // Logout Button Functionality
+    const logoutButton = document.getElementById('logout-button');
+    const logoutButtonMobile = document.getElementById('logout-button-mobile');
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    if (logoutButtonMobile) {
+      logoutButtonMobile.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    // Handle Responsive Logo and Email Display
+    const logo = document.querySelector('.logo');
+    const myEmailContainer = document.getElementById('my-email-container');
+
+    function handleResize() {
+      if (window.innerWidth < 1200) {
+        logo.classList.add('d-none');
+      } else {
+        logo.classList.remove('d-none');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on page load
+  });
+</script>
+
+<style>
+  /* Header Container */
+  #header {
+    background-color: #ffffff;
+    /* Header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    padding: 10px 0;
+    /* Vertical padding */
+    position: relative;
+    z-index: 1000;
+    /* Ensure it stays on top */
+  }
+
+  /* Logo Styling */
+  #header .logo img {
+    height: 50px;
+    /* Adjust logo height as needed */
+    width: auto;
+  }
+
+  /* Navigation Menu */
+  #header #navmenu {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar List */
+  #header .navbar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    /* Arrange items horizontally */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Navbar Items */
+  #header .nav-item {
+    position: relative;
+    /* For dropdown positioning */
+  }
+
+  /* Navbar Links */
+  #header .nav-link {
+    color: #333333;
+    /* Link color */
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar Link Hover Effect */
+  #header .nav-link:hover {
+    color: #007bff;
+    /* Hover color */
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Optional background on hover */
+    border-radius: 4px;
+    /* Rounded corners on hover */
+  }
+
+  /* Dropdown Menu Styling */
+  #header .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 200px;
+    z-index: 1000;
+  }
+
+  /* Show Dropdown Menu */
+  #header .dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items */
+  #header .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect */
+  #header .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Mobile Navigation Toggle Button */
+  #header .mobile-nav-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333333;
+    margin-left: auto;
+    /* Push the toggle to the right */
+  }
+
+  /* Email Display Container */
+  #header #my-email-container {
+    position: relative;
+  }
+
+  /* Email Button Styling */
+  #header #my-email {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Email Dropdown Menu */
+  #header #dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 150px;
+    z-index: 1000;
+  }
+
+  /* Show Email Dropdown Menu */
+  #header #dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items in Email Dropdown */
+  #header #dropdown-menu .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect in Email Dropdown */
+  #header #dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Logout Button Styling */
+  #header .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Logout Button Hover Effect */
+  #header .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+    border-color: #dc3545;
+  }
+
+  /* Responsive Styles */
+
+  /* For screens less than 1200px */
+  @media (max-width: 1199.98px) {
+
+    /* Hide Logo */
+    #header .logo {
+      display: none;
+    }
+
+    /* Show Email Container */
+    #header #my-email-container {
+      display: block;
+    }
+
+    /* Show Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: block;
+    }
+
+    /* Hide Navmenu Initially */
+    #header #navmenu {
+      display: none;
+    }
+  }
+
+  /* For screens 1200px and above */
+  @media (min-width: 1200px) {
+
+    /* Show Logo */
+    #header .logo {
+      display: flex;
+    }
+
+    /* Show Navmenu */
+    #header #navmenu {
+      display: flex;
+    }
+
+    /* Hide Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: none;
+    }
+
+    #header #my-email-container {
+      display: block;
+    }
+  }
+
+  /* Mobile Menu Modal Styles */
+  .mmodal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1050;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+  }
+
+  .mmodal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-list li {
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav-link {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-toggle {
+    color: #333333;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-menu {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+  }
+
+  .mobile-dropdown-menu.show {
+    display: block;
+  }
+
+  .mobile-dropdown-menu .dropdown-item {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-menu .dropdown-item:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Logout Button Styling in Mobile Menu */
+  #logout-button-mobile {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: transparent;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+
+  /* ==============================
+   Hover Animations for Navigation
+=============================== */
+
+  /* Hover Animation for Desktop Navigation Links */
+  #navmenu .nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  #navmenu .nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  /* Hover Animation for Dropdown Items */
+  #navmenu .dropdown-item {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  #navmenu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Hover Animation for Mobile Navigation Links */
+  .mobile-nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Mobile Dropdown Toggle */
+  .mobile-dropdown-toggle {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Logout Button in Mobile Menu */
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+</style>
   <main class="main">
 
     <!-- Page Title -->
@@ -468,11 +1049,11 @@ window.addEventListener("resize", toggleVisibility);});
             <div class="col-lg-8">
               <div style="text-align: center; font-family: Arial, sans-serif;">
                 <h2>Find Your Tutor!</h2>
-                <p class= "mb-0">✨Tap or Swipe!🫸🏻</p>
+                <p class="mb-0">✨Tap or Swipe!🫸🏻</p>
                 <p class="mb-0"> 👈🏻 = Not Interested | 👉🏻 = Interested</p>
                 <p class="mb-0">🔥Top assignments first — apply fast!</p>
-              
-                 
+
+
               </div>
             </div>
           </div>
@@ -482,7 +1063,7 @@ window.addEventListener("resize", toggleVisibility);});
     </div><!-- End Page Title -->
   </main>
 
-  
+
   <!-- Tinder-like Cards -->
   <div class="tinder">
     <div class="tinder--status">
@@ -502,16 +1083,16 @@ window.addEventListener("resize", toggleVisibility);});
         <!-- Cards Column -->
         <div class="col-lg-8 col-md-6 col-sm-4">
           <div class="tinder--cards" id="my-cards">
-            
+
           </div>
         </div>
 
-        
+
 
         <!-- Like Button Column -->
         <div class="col-lg-2 col-md-1 col-sm-1 text-center">
           <div class="tinder--buttons">
-            <button id="love"  onclick="swipeCard(true)">
+            <button id="love" onclick="swipeCard(true)">
               <i class="fa fa-heart"></i>
             </button>
           </div>
@@ -519,45 +1100,48 @@ window.addEventListener("resize", toggleVisibility);});
       </div>
     </div>
   </div>
-      
-    </div>
-  
 
-    <footer id="footer" class="footer position-relative light-background">
-      <div class="container footer-top">
-        <div class="row gy-4">
-          
-          <!-- About Section with Social Links -->
-          <div class="col-lg-3 md-6 sm-6 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">SMOOTutor</span>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>SMU</p>
-              <p>81 Victoria St, Singapore 188065</p>
-              <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
-              <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
-            </div>
-            <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
-              <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
-              <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
-              <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
-              <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
-            </div>
-         
+  </div>
+
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container footer-top">
+      <div class="row gy-4">
+
+        <!-- About Section with Social Links -->
+        <div class="col-lg-3 md-6 sm-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">SMOOTutor</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>SMU</p>
+            <p>81 Victoria St, Singapore 188065</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
           </div>
-    
-          <!-- Google Maps Section -->
-          <div class="col-lg-9 md-6 sm-6">
-            <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+            <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+            <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
           </div>
-    
-    
+
         </div>
+
+        <!-- Google Maps Section -->
+        <div class="col-lg-9 md-6 sm-6">
+          <iframe style="border:0; width: 100%; height: 350px;"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street"
+            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+
       </div>
-    </footer>
+    </div>
+  </footer>
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -589,104 +1173,104 @@ window.addEventListener("resize", toggleVisibility);});
 
 
   <script>
-    
+
     document.addEventListener("DOMContentLoaded", function () {
-    const topTutors = [
+      const topTutors = [
         'LIMITED TIME ONLY⏰',
         'USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
         'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
         'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
-    ];
+      ];
 
-    const marqueeContent = document.querySelector('.boxes-inner');
-    const marqueeWrapper = document.querySelector('.boxes');
+      const marqueeContent = document.querySelector('.boxes-inner');
+      const marqueeWrapper = document.querySelector('.boxes');
 
-    // Generate the original set of boxes
-    topTutors.forEach((tutor) => {
+      // Generate the original set of boxes
+      topTutors.forEach((tutor) => {
         const box = document.createElement('div');
         box.classList.add('box');
         box.textContent = tutor;
         marqueeContent.appendChild(box);
-    });
+      });
 
-    // Duplicate each box for seamless scrolling
-    topTutors.forEach((tutor) => {
+      // Duplicate each box for seamless scrolling
+      topTutors.forEach((tutor) => {
         const boxDuplicate = document.createElement('div');
         boxDuplicate.classList.add('box');
         boxDuplicate.textContent = tutor;
         marqueeContent.appendChild(boxDuplicate);
-    });
+      });
 
-    let contentWidth = marqueeContent.offsetWidth / 2;
-    let direction = -1;
+      let contentWidth = marqueeContent.offsetWidth / 2;
+      let direction = -1;
 
-    // Set up the GSAP animation
-    let marqueeTween = gsap.to(".boxes-inner", {
+      // Set up the GSAP animation
+      let marqueeTween = gsap.to(".boxes-inner", {
         x: direction * contentWidth,
         duration: 30,
         ease: "linear",
         repeat: -1,
         modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
         }
-    });
+      });
 
-    // Pause and interactivity on hover
-    const boxes = document.querySelectorAll('.box');
-    boxes.forEach(box => {
+      // Pause and interactivity on hover
+      const boxes = document.querySelectorAll('.box');
+      boxes.forEach(box => {
         box.addEventListener('mouseenter', function () {
-            marqueeTween.pause();
-            this.style.color = '#ffcc00';
-            this.style.transform = 'scale(1.1)';
+          marqueeTween.pause();
+          this.style.color = '#ffcc00';
+          this.style.transform = 'scale(1.1)';
         });
         box.addEventListener('mouseleave', function () {
-            marqueeTween.play();
-            this.style.color = '#fff';
-            this.style.transform = 'scale(1)';
+          marqueeTween.play();
+          this.style.color = '#fff';
+          this.style.transform = 'scale(1)';
         });
-    });
+      });
 
-    // Background color and direction change on hover
-    marqueeWrapper.addEventListener('mouseenter', function () {
+      // Background color and direction change on hover
+      marqueeWrapper.addEventListener('mouseenter', function () {
         marqueeWrapper.style.backgroundColor = '#333';
-    });
+      });
 
-    marqueeWrapper.addEventListener('mouseleave', function () {
+      marqueeWrapper.addEventListener('mouseleave', function () {
         marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
         direction *= -1;
         marqueeTween.kill();
         marqueeTween = gsap.to(".boxes-inner", {
-            x: direction * contentWidth,
-            duration: 30,
-            ease: "linear",
-            repeat: -1,
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-            }
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
         });
-    });
+      });
 
-    // Adjust marquee on window resize
-    window.addEventListener('resize', function () {
+      // Adjust marquee on window resize
+      window.addEventListener('resize', function () {
         contentWidth = marqueeContent.offsetWidth / 2;
         marqueeTween.kill();
         marqueeTween = gsap.to(".boxes-inner", {
-            x: direction * contentWidth,
-            duration: 30,
-            ease: "linear",
-            repeat: -1,
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-            }
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
         });
+      });
     });
-});
 
   </script>
 
 
-  
-  
+
+
 
 </body>
 
