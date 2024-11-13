@@ -40,6 +40,7 @@ async function fetchTestimonials() {
   
         const testimonialPromises = snapshot.docs.map(async (doc) => {
             const testimonialData = doc.data();
+            console.log(testimonialData)
             const { name, studentOf, review, stars, img } = testimonialData;
   
             // Ensure `img` is a valid string before using it
@@ -51,6 +52,7 @@ async function fetchTestimonials() {
             // Create Swiper slide elements
             const swiperSlide = document.createElement("div");
             swiperSlide.classList.add("swiper-slide");
+            swiperSlide.setAttribute("data-aos", "fade-up"); // Apply fade-up here
   
             const testimonialWrap = document.createElement("div");
             testimonialWrap.classList.add("testimonial-wrap");
@@ -80,17 +82,9 @@ async function fetchTestimonials() {
             const tutorElement = document.createElement("h4");
             tutorElement.textContent = `Student of ${studentOf}`;
   
-            // Star rating
-            const starsContainer = document.createElement("div");
-            starsContainer.classList.add("stars");
-            for (let i = 0; i < stars; i++) {
-                const star = document.createElement("i");
-                star.classList.add("bi", "bi-star-fill");
-                starsContainer.appendChild(star);
-            }
+            const starsContainer = populateStarReviewRating(stars);
+            testimonialItem.appendChild(starsContainer);
   
-  
-   
   
             // Review text
             const reviewText = document.createElement("p");
@@ -151,9 +145,46 @@ async function fetchTestimonials() {
     }
   }
 
+  
+  function populateStarReviewRating(rating) {
+    const starsContainer = document.createElement("div");
+    starsContainer.classList.add("stars");
+  
+    for (let i = 1; i <= 5; i++) {
+      const star = document.createElement("i");
+      star.style.color = "#FFD700"; // Gold color
+  
+      if (i <= Math.floor(rating)) {
+        // Full star
+        star.className = "bi bi-star-fill";
+      } else if (i === Math.floor(rating) + 1 && rating % 1 >= 0.5) {
+        // Half star
+        star.className = "bi bi-star-half";
+      } else {
+        // Empty star
+        star.className = "bi bi-star";
+      }
+  
+      starsContainer.appendChild(star);
+    }
+  
+    return starsContainer; // Return the populated stars container
+  }
+
 document.addEventListener("DOMContentLoaded", () => {
     
     //fetchTeamCards();
     //fetchCourses();
     fetchTestimonials();
+
+    const welcomeVideo = document.getElementById("welcome-video");
+
+    if (welcomeVideo) {
+        const videoRef = storage.ref("videos/welcome-page.mp4");
+        videoRef.getDownloadURL().then((url) => {
+            welcomeVideo.src = url;
+        }).catch((error) => {
+            console.error("Error fetching welcome video:", error);
+        });
+    }
 });
