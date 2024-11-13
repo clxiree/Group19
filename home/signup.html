@@ -357,15 +357,20 @@
             measurementId: "G-46QED8ZFKJ"
         };
         firebase.initializeApp(firebaseConfig);
-        // const auth = firebase.auth();
+        const auth = firebase.auth();
         const db = firebase.firestore();
+        const storage = firebase.storage();
 
-        // Signup Functionality
+        // Signup Functionality with File Upload
         document.getElementById('signup-form').addEventListener('submit', function (e) {
             e.preventDefault();
             const email = document.getElementById('signup-email').value;
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
+            const name = document.getElementById('signup-name').value;
+            const about = document.getElementById('about').value;
+            const imageFile = document.getElementById('image-upload').files[0];
+            const videoFile = document.getElementById('video-upload').files[0];
 
             if (password !== confirmPassword) {
                 alert('Passwords do not match.');
@@ -380,18 +385,36 @@
                     db.collection("Particulars").get().then(snapshot => {
                         const userId = snapshot.size + 1; // 8 if 7 users already exist
 
-                        // Add the new user to the "Particulars" collection
-                        db.collection("Particulars").add({
-                            UserID: userId,
-                            email: email
-                        }).then(() => {
-                            console.log("User particulars added successfully.");
-                            // Redirect or display success message
-                            window.location.href = '../tuteehomepage.html';
-                        }).catch(error => {
-                            console.error("Error adding user particulars:", error.message);
-                            alert("Error creating account: " + error.message);
-                        });
+                        // Define promises for uploading image and video
+                        const imageUploadPromise = storage.ref(`images/team/${imageFile.name}`).put(imageFile);
+                        const videoUploadPromise = storage.ref(`videos/${videoFile.name}`).put(videoFile);
+
+                        // Wait for both files to be uploaded and get their URLs
+                        Promise.all([imageUploadPromise, videoUploadPromise])
+                            .then(async ([imageSnapshot, videoSnapshot]) => {
+                                const imageUrl = await imageSnapshot.ref.getDownloadURL();
+                                const videoUrl = await videoSnapshot.ref.getDownloadURL();
+
+                                // Add user data, including URLs, to Firestore
+                                db.collection("Particulars").add({
+                                    UserID: userId,
+                                    email: email,
+                                    Name: name,          // Store the Name field
+                                    About: about,        // Store the About field
+                                    Image: imageUrl,  // Store image URL
+                                    Video: videoUrl   // Store video URL
+                                }).then(() => {
+                                    console.log("User particulars added successfully.");
+                                    window.location.href = '../tuteehomepage.html';
+                                }).catch(error => {
+                                    console.error("Error adding user particulars:", error.message);
+                                    alert("Error creating account: " + error.message);
+                                });
+                            })
+                            .catch(error => {
+                                console.error("Error uploading files:", error.message);
+                                alert("Error uploading files: " + error.message);
+                            });
                     }).catch(error => {
                         console.error("Error retrieving user count:", error.message);
                         alert("Error retrieving user count: " + error.message);
@@ -402,6 +425,7 @@
                     alert('Error creating account: ' + error.message);
                 });
         });
+
         // Initialize Particles.js
         particlesJS('particles-js',
             {
