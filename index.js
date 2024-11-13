@@ -186,8 +186,6 @@ async function fetchTestimonials() {
           }
 
 
- 
-
           // Review text
           const reviewText = document.createElement("p");
           const quoteLeft = document.createElement("i");
@@ -248,13 +246,10 @@ async function fetchTestimonials() {
 }
 
 
-// >>>>>>> 2e3f3b73642b4c5068018e6c8a1dfd42aaced811
+
 document.addEventListener("DOMContentLoaded", () => {
     
     fetchTeamCards();
-    //fetchCourses();
-// <<<<<<< HEAD
-// =======
     fetchTestimonials();
 
     // Fetch and set the logo image from Firebase Storage
