@@ -460,17 +460,40 @@
 firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
-    firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-        console.log("User is logged in with email:", user.email);
-        document.getElementById("my-email").innerText = user.email;
-        // You can use `user.email` to retrieve user-specific data
-    } else {
-        console.log("No user is logged in.");
-        // Redirect to login page if needed
-        window.location.href = 'home/login.html';
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get("section");
+    
+    function loadNotesSection(userEmail) {
+        if (section === "saved") {
+            console.log("Loading Saved Notes"); // Debugging output
+            document.title = "Saved Notes";
+            document.querySelector("h2").innerText = "Saved Notes";
+            document.getElementById("browse-notes-section").style.display = "none";
+            document.getElementById("saved-notes-section").style.display = "block";
+            fetchSavedNotes(userEmail); // Fetch from SavedNotes collection
+        } else {
+            console.log("Loading Browse Notes"); // Debugging output
+            document.title = "Browse Notes";
+            document.querySelector("h2").innerText = "Browse Notes";
+            document.getElementById("browse-notes-section").style.display = "block";
+            document.getElementById("saved-notes-section").style.display = "none";
+            fetchBrowseNotes(); // Fetch from BrowseNotes collection
+        }
     }
-});
+
+    // Check user authentication and load the respective section
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User logged in:", user.email); // Debugging output
+            document.getElementById("my-email").innerText = user.email;
+            loadNotesSection(user.email); // Pass email to load the right notes section
+        } else {
+            console.log("No user logged in, redirecting to login page."); // Debugging output
+            window.location.href = 'home/login.html';
+        }
+    });
+
+
    
 
 
@@ -491,64 +514,103 @@ firebase.initializeApp(firebaseConfig);
 
 
     // Function to fetch and display notes
-    function fetchNotes(userEmail) {
-            fetchBrowseNotes();
-            fetchSavedNotes(userEmail);
+    function fetchBrowseNotes() {
+    db.collection("BrowseNotes").where("isSaved", "==", false)
+      .get()
+      .then(async (snapshot) => {
+        const notes = [];
+        for (const doc of snapshot.docs) {
+          const note = { id: doc.id, ...doc.data() };
+
+          // Assign a random background image to each note
+          const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+          try {
+              // Get download URL from Firebase Storage
+              const url = await storage.ref(randomImagePath).getDownloadURL();
+              note.img = url;
+          } catch (error) {
+              console.error("Error fetching image from Firebase Storage:", error);
+              note.img = ""; // Fallback if image fetch fails
+          }
+          
+          notes.push(note);
         }
+        renderNotes("browse-notes-container", notes);
+      })
+      .catch((error) => {
+        console.error("Error fetching browse notes:", error);
+      });
+}
 
-        // Function to fetch and display Browse Notes (isSaved = false)
-        function fetchNotes(userEmail) {
-        fetchBrowseNotes();
-        fetchSavedNotes(userEmail);
-      }
+// Function to fetch and display saved notes
+function fetchSavedNotes(userEmail) {
+    db.collection("SavedNotes")
+      .where("isSaved", "==", true)
+      .where("email", "array-contains", userEmail)
+      .get()
+      .then(async (snapshot) => {
+        const notes = [];
+        for (const doc of snapshot.docs) {
+          const note = { id: doc.id, ...doc.data() };
 
-      function fetchBrowseNotes() {
-        db.collection("BrowseNotes").where("isSaved", "==", false)
-          .get()
-          .then(async (snapshot) => {
-            const notes = [];
-            for (const doc of snapshot.docs) {
-              const note = { id: doc.id, ...doc.data() };
-              const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-              try {
-                const url = await storage.ref(randomImagePath).getDownloadURL();
-                note.img = url;
-              } catch (error) {
-                note.img = ""; // Placeholder if image fetch fails
-              }
-              notes.push(note);
+          // Assign a random background image to each note
+          const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+          try {
+              // Get download URL from Firebase Storage
+              const url = await storage.ref(randomImagePath).getDownloadURL();
+              note.img = url;
+          } catch (error) {
+              console.error("Error fetching image from Firebase Storage:", error);
+              note.img = ""; // Fallback if image fetch fails
+          }
+          
+          notes.push(note);
+        }
+        renderNotes("saved-notes-container", notes);
+      })
+      .catch((error) => {
+        console.error("Error fetching saved notes:", error);
+      });
+}
+
+
+      
+      function saveNoteAfterPayment(notesId, userEmail) {
+    const db = firebase.firestore();
+
+    // Get the note from BrowseNotes by notesId
+    db.collection("BrowseNotes").doc(notesId).get()
+        .then(doc => {
+            if (doc.exists) {
+                // Prepare the data for the new SavedNotes document
+                const noteData = doc.data();
+                noteData.isSaved = true; // Set isSaved to true
+                noteData.email = firebase.firestore.FieldValue.arrayUnion(userEmail); // Append user email to array
+
+                // Add the note to SavedNotes with the new data
+                db.collection("SavedNotes").doc(notesId).set(noteData)
+                    .then(() => {
+                        console.log("Note saved to SavedNotes with isSaved = true.");
+                        // Optionally, you could delete it from BrowseNotes if you no longer need it there
+                        // db.collection("BrowseNotes").doc(notesId).delete();
+                    })
+                    .catch(error => {
+                        console.error("Error saving note to SavedNotes:", error);
+                    });
+            } else {
+                console.error("No document found in BrowseNotes with the provided notesId.");
             }
-            renderNotes("browse-notes-container", notes);
-          })
-          .catch((error) => {
-            console.error("Error fetching browse notes:", error);
-          });
-      }
+        })
+        .catch(error => {
+            console.error("Error fetching note details from BrowseNotes:", error);
+        });
+}
+// Assume this function is called once payment is confirmed
+function onPaymentSuccess(notesId) {
+    const userEmail = firebase.auth().currentUser.email; // Get the logged-in user's email
+    saveNoteAfterPayment(notesId, userEmail); // Call the function to save the note in SavedNotes
+}
 
-      function fetchSavedNotes(userEmail) {
-        db.collection("SavedNotes")
-          .where("isSaved", "==", true)
-          .where("email", "array-contains", userEmail)
-          .get()
-          .then(async (snapshot) => {
-            const notes = [];
-            for (const doc of snapshot.docs) {
-              const note = { id: doc.id, ...doc.data() };
-              const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-              try {
-                const url = await storage.ref(randomImagePath).getDownloadURL();
-                note.img = url;
-              } catch (error) {
-                note.img = ""; // Placeholder if image fetch fails
-              }
-              notes.push(note);
-            }
-            renderNotes("saved-notes-container", notes);
-          })
-          .catch((error) => {
-            console.error("Error fetching saved notes:", error);
-          });
-      }
 
 
 
