@@ -275,41 +275,41 @@
 
         const lessonDescriptions = document.getElementById("lessonDescContainer");
 
-    // Clear existing content by removing all child elements
-    while (lessonDescriptions.firstChild) {
-      lessonDescriptions.removeChild(lessonDescriptions.firstChild);
-    }
+        // Clear existing content by removing all child elements
+        while (lessonDescriptions.firstChild) {
+          lessonDescriptions.removeChild(lessonDescriptions.firstChild);
+        }
 
-    // Check if LessonDesc data exists and is an array
-    if (data.LessonDesc && Array.isArray(data.LessonDesc)) {
-      data.LessonDesc.forEach(desc => {
-        const li = document.createElement("li");
-        li.className = "mb-2";
+        // Check if LessonDesc data exists and is an array
+        if (data.LessonDesc && Array.isArray(data.LessonDesc)) {
+          data.LessonDesc.forEach(desc => {
+            const li = document.createElement("li");
+            li.className = "mb-2";
 
-        // Create icon element
-        const icon = document.createElement("i");
-        icon.className = "bi bi-check-circle";
-        icon.style.fontSize = "18px";
+            // Create icon element
+            const icon = document.createElement("i");
+            icon.className = "bi bi-check-circle";
+            icon.style.fontSize = "18px";
 
-        // Create text span element
-        const span = document.createElement("span");
-        span.style.fontSize = "14px";
-        span.textContent = desc;
+            // Create text span element
+            const span = document.createElement("span");
+            span.style.fontSize = "14px";
+            span.textContent = desc;
 
-        // Append icon and text to the list item
-        li.appendChild(icon);
-        li.appendChild(document.createTextNode(" ")); // Add space between icon and text
-        li.appendChild(span);
+            // Append icon and text to the list item
+            li.appendChild(icon);
+            li.appendChild(document.createTextNode(" ")); // Add space between icon and text
+            li.appendChild(span);
 
-        // Append the list item to lessonDescriptions
-        lessonDescriptions.appendChild(li);
-      });
-    } else {
-      // Display message if no lesson descriptions are available
-      const li = document.createElement("li");
-      li.textContent = "No lesson descriptions available.";
-      lessonDescriptions.appendChild(li);
-    }
+            // Append the list item to lessonDescriptions
+            lessonDescriptions.appendChild(li);
+          });
+        } else {
+          // Display message if no lesson descriptions are available
+          const li = document.createElement("li");
+          li.textContent = "No lesson descriptions available.";
+          lessonDescriptions.appendChild(li);
+        }
 
 
 
