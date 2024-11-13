@@ -11,6 +11,7 @@
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -113,6 +114,16 @@
       border-top: 1px solid #ddd;
       text-align: right;
     }
+    #courses-course-details .row {
+  display: flex;
+}
+
+#courses-course-details .img-fluid {
+  width: 100%;
+  height: 100%; /* Make the image take up the full height of the parent container */
+  object-fit: cover; /* Maintain aspect ratio, covering the space */
+}
+
   </style>
 
   <!-- Firebase JS SDK -->
@@ -193,60 +204,49 @@
 
     <!-- Courses Course Details Section -->
     <section id="courses-course-details" class="courses-course-details section">
-
       <div class="container" data-aos="fade-up">
-
-        <div class="row">
-          <div class="col-lg-8">
-            <img src="assets/img/course-details.jpg" class="img-fluid" alt="">
+        <div class="row align-items-stretch">
+          <div class="col-lg-8 d-flex">
+            <img src="assets/img/course-details.jpg" class="img-fluid align-self-stretch" alt="">
           </div>
-          <div class="col-lg-4">
-
+          <div class="col-lg-4 d-flex flex-column">
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Booking ID</h5>
               <p></p>
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Status</h5>
               <p></p>
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Trainer</h5>
+              <h5>Course Code</h5>
+              <p></p>
+            </div>
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Tutor</h5>
               <p><a href="#"></a></p>
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Fee</h5>
               <p></p>
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Schedule</h5>
-
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Time</h5>
               <p></p>
-
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Mode</h5>
               <p></p>
-
             </div>
-
-            <button class="btn btn-danger">Cancel Lesson</button>
-
+            <button class="btn btn-danger mt-3">Cancel Lesson</button>
           </div>
         </div>
-
       </div>
-
     </section>
+    
     <!-- /Courses Course Details Section -->
 
   </main>
@@ -370,14 +370,15 @@
       }
 
       function updateUIElements(bookingData) {
-    const elements = {
+      const elements = {
         bookingId: document.querySelector('.course-info:nth-child(1) p'),
         status: document.querySelector('.course-info:nth-child(2) p'),
-        trainer: document.querySelector('.course-info:nth-child(3) p a'),
-        courseFee: document.querySelector('.course-info:nth-child(4) p'),
-        schedule: document.querySelector('.course-info:nth-child(5)'),
-        time: document.querySelector('.course-info:nth-child(6) p'),
-        mode: document.querySelector('.course-info:nth-child(7) p'),
+        courseCode: document.querySelector('.course-info:nth-child(3) p'),
+        trainer: document.querySelector('.course-info:nth-child(4) p a'),
+        courseFee: document.querySelector('.course-info:nth-child(5) p'),
+        schedule: document.querySelector('.course-info:nth-child(6)'),
+        time: document.querySelector('.course-info:nth-child(7) p'),
+        mode: document.querySelector('.course-info:nth-child(8) p'),
         courseImage: document.querySelector('.img-fluid')
     };
 
@@ -395,6 +396,10 @@
     }else{
       elements.status.style.color = "green"; // Reset color if not cancelled
         elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
+    }
+
+    if (elements.courseCode) {
+        elements.courseCode.textContent = bookingData.courseCode;
     }
 
     // Update trainer name
