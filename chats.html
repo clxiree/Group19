@@ -402,76 +402,77 @@
       .chat-item-last-message {
         font-size: 0.85em;
       }
+    }
 
-      /* Toast Container Positioning */
-      #toast-container {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        z-index: 1055;
-      }
+    /* Toast Container Positioning */
+    #toast-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1055;
+    }
 
-      /* Modal Enhancements */
-      .modal-header {
-        background-color: #3e3e3e;
-        color: #ffffff;
-      }
+    /* Modal Enhancements */
+    .modal-header {
+      background-color: #3e3e3e;
+      color: #ffffff;
+    }
 
-      .modal-footer {
-        background-color: #f8f9fa;
-      }
+    .modal-footer {
+      background-color: #f8f9fa;
+    }
 
-      /* Animation for Toasts */
-      .toast {
-        opacity: 0;
-        transition: opacity 0.5s ease-in-out;
-      }
+    /* Animation for Toasts */
+    .toast {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+    }
 
-      .toast.show {
-        opacity: 1;
-      }
+    .toast.show {
+      opacity: 1;
+    }
 
-      /* Reduce avatar size */
-      .chat-item img {
-        width: 40px;
-        height: 40px;
-      }
+    /* Reduce avatar size */
+    .chat-item img {
+      width: 40px;
+      height: 40px;
+    }
 
-      .chat-header img {
-        width: 35px;
-        height: 35px;
-      }
+    .chat-header img {
+      width: 35px;
+      height: 35px;
+    }
 
-      /* Adjust message list padding for better spacing */
-      .message-list {
-        padding: 10px;
-      }
+    /* Adjust message list padding for better spacing */
+    .message-list {
+      padding: 10px;
+    }
 
-      /* Full width for message input container */
-      .message-input-container {
-        padding: 10px;
-        justify-content: center;
-      }
+    /* Full width for message input container */
+    .message-input-container {
+      padding: 10px;
+      justify-content: center;
+    }
 
-      /* Adjust the input field and button sizes */
-      .message-input {
-        padding: 8px;
-        font-size: 0.9em;
-      }
+    /* Adjust the input field and button sizes */
+    .message-input {
+      padding: 8px;
+      font-size: 0.9em;
+    }
 
-      .message-input-actions {
-        font-size: 1.3em;
-      }
+    .message-input-actions {
+      font-size: 1.3em;
+    }
 
-      /* Adjust footer and social link spacing */
-      .footer-contact p,
-      .footer-about .sitename {
-        font-size: 0.9em;
-      }
+    /* Adjust footer and social link spacing */
+    .footer-contact p,
+    .footer-about .sitename {
+      font-size: 0.9em;
+    }
 
-      .social-links a {
-        font-size: 1.3em;
-      }
+    .social-links a {
+      font-size: 1.3em;
+    }
   </style>
 
 </head>
@@ -1289,10 +1290,10 @@
                     if (existingChatItem) {
                       selectChat(chatDoc.id, existingChatItem, chatData);
                     } else {
-                      setTimeout(() => {
-                        const newChatItem = chatItemsMap[chatDoc.id];
-                        selectChat(chatDoc.id, newChatItem, chatData);
-                      }, 500);
+                      // If the chat item doesn't exist yet, create it
+                      createChatItem(chatDoc.id, chatData);
+                      const newChatItem = chatItemsMap[chatDoc.id];
+                      selectChat(chatDoc.id, newChatItem, chatData);
                     }
                   }
                 });
@@ -1309,10 +1310,11 @@
                   chatRef.set(chatData).then(() => {
                     console.log("New chat created.");
                     showToast("New chat created successfully.", "success");
-                    setTimeout(() => {
-                      const newChatItem = chatItemsMap[chatRef.id];
-                      selectChat(chatRef.id, newChatItem, chatData);
-                    }, 500);
+                    // Create the chat item immediately
+                    createChatItem(chatRef.id, chatData);
+                    // Now select the chat
+                    const newChatItem = chatItemsMap[chatRef.id];
+                    selectChat(chatRef.id, newChatItem, chatData);
                   }).catch(error => {
                     console.error("Error creating new chat:", error);
                     showToast("Failed to create a new chat. Please try again.", "danger");
@@ -1333,6 +1335,7 @@
           showToast("Failed to fetch user details. Please try again.", "danger");
         });
     }
+
 
     function performChatSearch(searchTerm) {
       if (!selectedChatId) {
