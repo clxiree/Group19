@@ -1286,15 +1286,7 @@
                   if (chatData.members.includes(recipientEmail)) {
                     chatExists = true;
                     showToast("Chat with this user already exists.", "info");
-                    const existingChatItem = chatItemsMap[chatDoc.id];
-                    if (existingChatItem) {
-                      selectChat(chatDoc.id, existingChatItem, chatData);
-                    } else {
-                      // If the chat item doesn't exist yet, create it
-                      createChatItem(chatDoc.id, chatData);
-                      const newChatItem = chatItemsMap[chatDoc.id];
-                      selectChat(chatDoc.id, newChatItem, chatData);
-                    }
+                    // Let the snapshot listener handle the chat item creation
                   }
                 });
 
@@ -1310,11 +1302,10 @@
                   chatRef.set(chatData).then(() => {
                     console.log("New chat created.");
                     showToast("New chat created successfully.", "success");
-                    // Create the chat item immediately
-                    createChatItem(chatRef.id, chatData);
-                    // Now select the chat
-                    const newChatItem = chatItemsMap[chatRef.id];
-                    selectChat(chatRef.id, newChatItem, chatData);
+
+                    // Send "CHAT STARTED" system message
+                    sendSystemMessage(chatRef.id, "Chat started.");
+
                   }).catch(error => {
                     console.error("Error creating new chat:", error);
                     showToast("Failed to create a new chat. Please try again.", "danger");
@@ -1336,6 +1327,37 @@
         });
     }
 
+    function sendSystemMessage(chatId, content) {
+      const messageRef = db.collection("Chats").doc(chatId).collection("messages").doc();
+      const messageData = {
+        message_id: messageRef.id,
+        content: content,
+        sender_email: currentUser.email,
+        sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+        type: "system",
+        read_by_receiver: false
+      };
+
+      messageRef.set(messageData).then(() => {
+        // Update last_message in chat document
+        db.collection("Chats").doc(chatId).update({
+          last_message: {
+            ...messageData,
+            sent_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
+        }).then(() => {
+          console.log("System message sent and last message updated.");
+        }).catch(error => {
+          console.error("Error updating last message after system message:", error);
+          showToast("Failed to update chat. Please try again.", "danger");
+        });
+      }).catch(error => {
+        console.error("Error sending system message:", error);
+        showToast("Failed to send system message. Please try again.", "danger");
+      });
+    }
+
+
 
     function performChatSearch(searchTerm) {
       if (!selectedChatId) {
@@ -1343,15 +1365,15 @@
         return;
       }
 
+      // Fetch all messages and filter in code
       db.collection("Chats").doc(selectedChatId).collection("messages")
-        .where("type", "==", "text")
         .orderBy("sent_at")
         .get()
         .then(querySnapshot => {
           const matchingMessages = [];
           querySnapshot.forEach(doc => {
             const messageData = doc.data();
-            if (messageData.content.toLowerCase().includes(searchTerm.toLowerCase())) {
+            if (messageData.type === "text" && messageData.content.toLowerCase().includes(searchTerm.toLowerCase())) {
               matchingMessages.push({ message_id: doc.id, ...messageData });
             }
           });
