@@ -347,76 +347,83 @@
     }
 
     /* Responsive Design */
-    @media (max-width: 767px) {
-      .chat-container {
-        flex-direction: column;
-      }
 
-      .chat-list {
-        width: 100%;
-        border-right: none;
-        border-bottom: 1px solid #dee2e6;
-      }
+@media (max-width: 576px) {
+  /* Stack chat list and chat window vertically */
+  .chat-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .chat-header{
+    background-color: rgb(243, 243, 243);
+  }
+  .fas{
+    color: black;
+  }
 
-      .chat-window {
-        width: 100%;
-      }
+  /* Full width for chat list and chat window */
+  .chat-list,
+  .chat-window {
+    width: 100%;
+    height: auto;
+  }
 
-      .chat-list-header h4 {
-        font-size: 1em;
-      }
+  /* Adjust chat header font sizes */
+  .chat-list-header h4 {
+    font-size: 1em;
+  }
 
-      .chat-item-name {
-        font-size: 1em;
-      }
+  /* Chat item text size and spacing adjustments */
+  .chat-item-name {
+    font-size: 0.95em;
+  }
 
-      .chat-item-last-message {
-        font-size: 0.85em;
-      }
-    }
+  .chat-item-last-message {
+    font-size: 0.85em;
+  }
 
-    .wrapper {
-      position: fixed;
-      bottom: 0;
-      width: 100%;
-      overflow: hidden;
-      background: #2e3a90;
-      /* padding: 10px 0; */
-      z-index: 9999;
-      transition: background-color 0.3s;
-    }
+  /* Reduce avatar size */
+  .chat-item img {
+    width: 40px;
+    height: 40px;
+  }
 
-    .boxes {
-      overflow: hidden;
-      background: #2e3a90;
-    }
+  .chat-header img {
+    width: 35px;
+    height: 35px;
+  }
 
-    .boxes-inner {
-      display: flex;
-      gap: 40px;
-      /* Increased gap for better spacing */
-    }
+  /* Adjust message list padding for better spacing */
+  .message-list {
+    padding: 10px;
+  }
 
-    .box {
-      font-size: 20px;
-      line-height: 50px;
-      color: #fff;
-      text-transform: uppercase;
-      transition: color 0.3s, transform 0.3s;
-      white-space: nowrap;
-      cursor: pointer;
-      /* Change cursor to pointer on hover */
-    }
+  /* Full width for message input container */
+  .message-input-container {
+    padding: 10px;
+    justify-content: center;
+  }
 
-    .box:hover {
-      color: #ffcc00;
-      transform: scale(1.15);
-    }
+  /* Adjust the input field and button sizes */
+  .message-input {
+    padding: 8px;
+    font-size: 0.9em;
+  }
 
-    .wrapper:hover {
-      background-color: #2e3a90;
-      /* Change background color on hover */
-    }
+  .message-input-actions {
+    font-size: 1.3em;
+  }
+
+  /* Adjust footer and social link spacing */
+  .footer-contact p,
+  .footer-about .sitename {
+    font-size: 0.9em;
+  }
+
+  .social-links a {
+    font-size: 1.3em;
+  }
+}
   </style>
 </head>
 

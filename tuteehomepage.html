@@ -317,6 +317,19 @@
     .card:hover {
       transform: scale(1.05); /* Increase the scale of the card on hover */
     }
+    #teamCardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media (max-width: 576px) {
+    #teamCardsContainer .col-lg-4 {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
 
 
 
