@@ -331,7 +331,7 @@
 
         // Populate Subjects
         const subjectsContainer = document.getElementById("subjectsContainer");
-        subjectsContainer.innerHTML = '';  // Clear any existing content
+        subjectsContainer.innerText = '';  // Clear any existing content
 
         if (data.SubjectsTaught && Array.isArray(data.SubjectsTaught)) {
           data.SubjectsTaught.forEach(subject => {
