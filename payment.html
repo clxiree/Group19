@@ -584,6 +584,12 @@ async function getTuteeId(userEmail) {
               showToast("Failed to save payment information. Please try again.", "error");
           }
       });
+      document.getElementById("continue-btn").addEventListener("click", function() {
+    // Add a delay of 2 seconds before redirecting
+    setTimeout(function() {
+      window.location.href = "bookings.html";
+    }, 2000); // 2000 milliseconds = 2 seconds
+  });
 
       // Function to retrieve URL parameters
       function getUrlParameter(name) {
