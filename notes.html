@@ -303,6 +303,11 @@
     color: red;
 }
       }
+
+      #footer {
+    margin-top: 0;
+    padding-top: 20px; /* Optional: adjust if you want some padding */
+  }
     
   </style>
 </head>
@@ -647,19 +652,26 @@ function onPaymentSuccess(notesId) {
             price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
 
             // Lock icon with link to preview.html
-            const previewLink = document.createElement("a");
-            previewLink.href = `preview.html?notesId=${note.id}`; // Ensure notesId is passed in the URL
-            previewLink.target = "_blank";
-            previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
+            const linkElement = document.createElement("a");
+        if (section === "saved") {
+            // For saved notes: use unlocked icon and link to courseLink
+            linkElement.href = note.courseLink || "#";
+            linkElement.target = "_blank"; // Opens in a new tab
+            linkElement.innerHTML = `<i class="fas fa-unlock"></i> Open Note`;
+        } else {
+            // For browse notes: use locked icon and link to preview.html
+            linkElement.href = `preview.html?notesId=${note.id}`;
+            linkElement.target = "_blank";
+            linkElement.innerHTML = `<i class="fas fa-lock"></i> Preview Note`;
+        }
 
-            // Append elements to the note container
-            noteContainer.appendChild(courseCode);
-            noteContainer.appendChild(courseName);
-            noteContainer.appendChild(professor);
-            noteContainer.appendChild(owner);
-            noteContainer.appendChild(price);
-            noteContainer.appendChild(previewLink);
-
+        // Append elements to the note container
+        noteContainer.appendChild(courseCode);
+        noteContainer.appendChild(courseName);
+        noteContainer.appendChild(professor);
+        noteContainer.appendChild(owner);
+        noteContainer.appendChild(price);
+        noteContainer.appendChild(linkElement);
             // Append noteContainer to the main container
             container.appendChild(noteContainer);
         });
