@@ -17,92 +17,92 @@ const db = firebase.firestore();
 const storage = firebase.storage();
 
 function fetchTeamCards() {
-    const teamCardsContainer = document.querySelector("#teamCardsContainer");
-    teamCardsContainer.innerText = ""; // Clear existing items
+  const teamCardsContainer = document.querySelector("#teamCardsContainer");
+  teamCardsContainer.innerText = ""; // Clear existing items
 
-    // Set up a default image URL from Firebase Storage
-    const defaultImageRef = storage.ref('images/team/default.jpg');
-    let defaultImageURL = ""; // Variable to store the default image URL
-    
-    // Retrieve the URL for the default image from Firebase Storage
-    defaultImageRef.getDownloadURL().then((url) => {
-        defaultImageURL = url; // Set the URL to the default image
-    }).catch((error) => {
-        console.error("Error fetching default image:", error);
-    });
+  // Set up a default image URL from Firebase Storage
+  const defaultImageRef = storage.ref('images/team/default.jpg');
+  let defaultImageURL = ""; // Variable to store the default image URL
+  
+  // Retrieve the URL for the default image from Firebase Storage
+  defaultImageRef.getDownloadURL().then((url) => {
+      defaultImageURL = url; // Set the URL to the default image
+  }).catch((error) => {
+      console.error("Error fetching default image:", error);
+  });
 
-    // Query the "Particulars" collection where Tutor is true
-    db.collection("Particulars").where("Tutor", "==", true).get().then((snapshot) => {
-        snapshot.forEach((doc) => {
-            const data = doc.data();
-            console.log("Team Member Data:", data); // Log each data item to check content
+  // Query the "Particulars" collection where Tutor is true
+  db.collection("Particulars").where("Tutor", "==", true).get().then((snapshot) => {
+      snapshot.forEach((doc) => {
+          const data = doc.data();
+          console.log("Team Member Data:", data); // Log each data item to check content
 
-            // Create a column for each tutor card
-            const colDiv = document.createElement("div");
-            colDiv.classList.add("col-lg-4", "col-md-6", "d-flex", "align-items-stretch");
+          // Create a column for each tutor card
+          const colDiv = document.createElement("div");
+          colDiv.classList.add("col-lg-4", "col-md-6", "d-flex", "align-items-stretch");
 
-            // Create the card container
-            const cardDiv = document.createElement("div");
-            cardDiv.classList.add("card", "member", "mb-4");
+          // Create the card container
+          const cardDiv = document.createElement("div");
+          cardDiv.classList.add("card", "member", "mb-4");
 
-            const img = document.createElement("img");
-            img.classList.add("card-img-top", "img-fluid");
-            img.alt = data.Name || "No Name";
-            img.style.width= "300px";
-            img.style.height = "300px"; // Fixed height for image
+          const img = document.createElement("img");
+          img.classList.add("card-img-top", "img-fluid");
+          img.alt = data.Name || "No Name";
+          img.style.width= "300px";
+          img.style.height = "300px"; // Fixed height for image
 
-            // Set the default image from Firebase Storage while the actual image is loading
-            img.src = defaultImageURL || "assets/img/team/default.jpg"; // Local fallback if defaultImageURL isn't available
+          // Set the default image from Firebase Storage while the actual image is loading
+          img.src = defaultImageURL || "assets/img/team/default.jpg"; // Local fallback if defaultImageURL isn't available
 
-            // Retrieve image from Firebase Storage if provided
-            if (data.Image) {
-                const imageRef = storage.ref(`images/team/${data.Image}`);
-                imageRef.getDownloadURL().then((url) => {
-                    img.src = url; // Set the retrieved URL as the src of the img element
-                }).catch((error) => {
-                    console.error("Error fetching image:", error);
-                    img.src = defaultImageURL; // Use Firebase Storage default image as fallback
-                });
-            }
+          // Retrieve image from Firebase Storage if provided
+          if (data.Image) {
+              const imageRef = storage.ref(`images/team/${data.Image}`);
+              imageRef.getDownloadURL().then((url) => {
+                  img.src = url; // Set the retrieved URL as the src of the img element
+              }).catch((error) => {
+                  console.error("Error fetching image:", error);
+                  img.src = defaultImageURL; // Use Firebase Storage default image as fallback
+              });
+          }
 
-            // Card body content
-            const cardBody = document.createElement("div");
-            cardBody.classList.add("card-body");
-            cardBody.style.display = "flex";
-            cardBody.style.flexDirection = "column";
-            cardBody.style.justifyContent = "space-between"; // Space elements evenly within card body
-            cardBody.style.flexGrow = "1"; // Allow card body to expand within card
+          // Card body content
+          const cardBody = document.createElement("div");
+          cardBody.classList.add("card-body");
+          cardBody.style.display = "flex";
+          cardBody.style.flexDirection = "column";
+          cardBody.style.justifyContent = "space-between"; // Space elements evenly within card body
+          cardBody.style.flexGrow = "1"; // Allow card body to expand within card
 
-            const name = document.createElement("h5");
-            name.classList.add("card-title");
-            name.textContent = data.Name || "No Name";
+          const name = document.createElement("h5");
+          name.classList.add("card-title");
+          name.textContent = data.Name || "No Name";
 
-            const about = document.createElement("p");
-            about.classList.add("card-text");
-            about.textContent = data.About || "No about information";
+          const about = document.createElement("p");
+          about.classList.add("card-text");
+          about.textContent = data.About || "No about information";
 
-            const rating = document.createElement("p");
-            rating.classList.add("card-text");
-            rating.id = "tutorRating"; // Add an id to the paragraph element
-    
-            // Pass the rating element directly to the populateStarRating function
-            populateStarRating(rating, data.Rating);
-           
-            console.log(data.Rating)
+          const rating = document.createElement("p");
+          rating.classList.add("card-text");
+          rating.id = "tutorRating"; // Add an id to the paragraph element
 
-            // Append all elements in the right order
-            cardBody.appendChild(name);
-            cardBody.appendChild(about);
-            cardBody.appendChild(rating);
+          // Pass the rating element directly to the populateStarRating function
+          populateStarRating(rating, data.Rating);
+         
+          console.log(data.Rating)
 
-            cardDiv.appendChild(img);
-            cardDiv.appendChild(cardBody);
-            colDiv.appendChild(cardDiv);
-            teamCardsContainer.appendChild(colDiv);
-        });
-    }).catch((error) => {
-        console.error("Error fetching team members:", error);
-    });
+          // Append all elements in the right order
+          cardBody.appendChild(name);
+          cardBody.appendChild(about);
+          cardBody.appendChild(rating);
+
+          cardDiv.appendChild(img);
+          cardDiv.appendChild(cardBody);
+          colDiv.appendChild(cardDiv);
+          teamCardsContainer.appendChild(colDiv);
+      });
+  }).catch((error) => {
+      console.error("Error fetching team members:", error);
+  });
 }
 
 function populateStarRating(ratingElement, rating) {

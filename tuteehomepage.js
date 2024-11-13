@@ -108,7 +108,7 @@ firebase.auth().onAuthStateChanged((user) => {
                 const rating = document.createElement("p");
                 rating.classList.add("card-text");
                 rating.id = "tutorRating"; // Add an id to the paragraph element
-        
+    
                 // Pass the rating element directly to the populateStarRating function
                 populateStarRating(rating, data.Rating);
                

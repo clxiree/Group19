@@ -366,6 +366,41 @@
       }
     }
 
+@media (max-width: 576px) {
+  /* Stack chat list and chat window vertically */
+  .chat-container {
+    flex-direction: column;
+    height: auto;
+  }
+  .chat-header{
+    background-color: rgb(243, 243, 243);
+  }
+  .fas{
+    color: black;
+  }
+
+  /* Full width for chat list and chat window */
+  .chat-list,
+  .chat-window {
+    width: 100%;
+    height: auto;
+  }
+
+  /* Adjust chat header font sizes */
+  .chat-list-header h4 {
+    font-size: 1em;
+  }
+
+  /* Chat item text size and spacing adjustments */
+  .chat-item-name {
+    font-size: 0.95em;
+  }
+
+  .chat-item-last-message {
+    font-size: 0.85em;
+  }
+
+<<<<<<< HEAD
     /* Highlighted message */
     .message.highlighted {
       background-color: #ffffcc !important;
@@ -399,6 +434,50 @@
     .toast.show {
       opacity: 1;
     }
+=======
+  /* Reduce avatar size */
+  .chat-item img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .chat-header img {
+    width: 35px;
+    height: 35px;
+  }
+
+  /* Adjust message list padding for better spacing */
+  .message-list {
+    padding: 10px;
+  }
+
+  /* Full width for message input container */
+  .message-input-container {
+    padding: 10px;
+    justify-content: center;
+  }
+
+  /* Adjust the input field and button sizes */
+  .message-input {
+    padding: 8px;
+    font-size: 0.9em;
+  }
+
+  .message-input-actions {
+    font-size: 1.3em;
+  }
+
+  /* Adjust footer and social link spacing */
+  .footer-contact p,
+  .footer-about .sitename {
+    font-size: 0.9em;
+  }
+
+  .social-links a {
+    font-size: 1.3em;
+  }
+}
+>>>>>>> 58845230b091499fc99cb1db8aafb33bc28608b1
   </style>
 
 </head>

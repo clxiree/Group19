@@ -145,73 +145,65 @@
   
   
   <style>
-    /* Full viewport height and width for hero section */
-    /* Hero Section Styling */
-    .hero {
-      position: relative;
-      width: 100%;
-      height: 100vh;
-      overflow: hidden;
-      padding: 0;
-    }
 
-
-    .h2 {
-      color: #fff;
-    }
-
-    /* Background Video Container */
-    .background-vid {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 80%;
-      overflow: hidden;
-      z-index: -1;
-      padding: 0
-    }
-
-    .background-video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    /* Green Overlay Content */
-    .heading-overlay {
+.hero {
     position: relative;
+    width: 100%;
+    height: 100vh; /* Full viewport height */
+    overflow: hidden;
+}
+
+/* Video Background Styling */
+.background-vid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Green Overlay Content */
+.heading-overlay {
+    position: absolute; /* Overlay on top of video */
+    top: 0;
+    left: 0;
     z-index: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    color: #fff; /* Text color */
     text-align: center;
     width: 100%;
-    height: 100%;
+    height: 100%; /* Full height of viewport */
+    color: #fff; /* Text color */
+    padding: 0;
+    margin: 0;
 }
 
 .heading-overlay h2 {
     font-size: 4rem; /* Increased font size for the heading */
-    font-weight: bold; /* Make the heading bold */
-    margin: 0; /* Remove default margin */
-    color: #132b18; /* Change text color to blue */
-}
-.heading-overlay p {
-    font-size: 1.5rem; /* Increased font size for the paragraph */
-    font-weight: bold; /* Make the paragraph bold */
-    margin: 10px 0; /* Add margin for spacing */
-    color: #fff; /* Ensure the text is white */
+    font-weight: bold;
+    color: #132b18;
+    margin: 0; /* Remove margin to prevent whitespace */
 }
 
-.btn-get-started {
-    position: relative;
-    cursor: pointer;
+.heading-overlay p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+    color: #fff;
 }
+
+
+
 /* Container styling */
 #my-email-container {
     position: relative;
@@ -317,6 +309,19 @@
     .card:hover {
       transform: scale(1.05); /* Increase the scale of the card on hover */
     }
+    #teamCardsContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+@media (max-width: 576px) {
+    #teamCardsContainer .col-lg-4 {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+    }
+}
 
 
 
