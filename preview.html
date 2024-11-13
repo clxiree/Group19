@@ -76,6 +76,26 @@
   height: 100%;
   object-fit: cover; /* Ensures the image covers the container without stretching */
 }
+.btn-light-blue {
+  background-color: #3db9e3; /* Light blue */
+  color: white;
+}
+
+.btn-light-blue:hover {
+  background-color: #0daceb; /* Slightly darker blue for hover effect */
+  color: white;
+}
+
+.bold-text {
+    font-weight: 600; /* Slightly thicker than normal but not full bold */
+    color: #4A4A4A; /* Adjust color if needed for contrast */
+  }
+
+  .course-info {
+    padding: 8px 0; /* Add some vertical padding between rows */
+    background-color: #f7f7f7; /* Light background for the row */
+    border-radius: 4px; /* Rounded corners for each row */
+  }
 
   </style>
   
@@ -223,12 +243,18 @@
     <!-- Courses Course Details Section -->
     <section id="courses-course-details" class="courses-course-details section">
       <div class="container" data-aos="fade-up">
+        <!-- Back Button -->
+        <div class="row mb-3">
+          <div class="col-12 text-start">
+            <a href="notes.html" class="btn btn-sm btn-light-blue">&larr; Back to Notes</a>
+          </div>
+        </div>        
+        
+        <!-- Rest of your existing content -->
         <div class="row">
-          <!-- Image Column -->
           <div class="col-lg-8 position-relative">
             <div class="image-container">
               <img id="previewImage" class="img-fluid locked-image" alt="Preview Course">
-              <!-- Overlay with Lock Message and Payment Button -->
               <div class="image-overlay d-flex justify-content-center align-items-center">
                 <div class="text-center">
                   <p class="lock-message">This content is locked. Please make a payment to unlock.</p>
@@ -240,25 +266,25 @@
           <!-- Course Details Column -->
           <div class="col-lg-4">
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Course Code:</h5>
-              <span id="courseCode"></span>
+              <h5>Course Code</h5>
+              <span id="courseCode" class="bold-text"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Course Name:</h5>
-              <span id="courseName"></span>
+              <h5>Course Name</h5>
+              <span id="courseName" class="bold-text"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Professor:</h5>
-              <span id="courseProf"></span>
+              <h5>Professor</h5>
+              <span id="courseProf" class="bold-text"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Owner:</h5>
-              <span id="courseOwner"></span>
+              <h5>Owner</h5>
+              <span id="courseOwner" class="bold-text"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Price:</h5>
-              <span id="coursePrice"></span>
-            </div>
+              <h5>Price</h5>
+              <span id="coursePrice" class="bold-text"></span>
+            </div>            
             <div class="text-center mt-3"> <!-- Center-align the button and add some spacing -->
               <a id="buy-notes-btn" class="btn btn-primary" href="#">Buy Notes</a>
             </div>            
