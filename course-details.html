@@ -343,6 +343,7 @@
 
       const db = firebase.firestore();
       const auth = firebase.auth();
+      const storage = firebase.storage(); // Initialize Firebase Storage
 
       // Get bookingId from URL and convert to number
       const urlParams = new URLSearchParams(window.location.search);
@@ -425,9 +426,14 @@
         elements.time.textContent = bookingData.time;
     }
 
-    // Update course image
+    // Update course image from Firebase Storage
     if (bookingData.img) {
-        elements.courseImage.src = `assets/img/bookings/${bookingData.img}`;
+        const imageRef = storage.ref(`images/courses/${bookingData.img}`);
+        imageRef.getDownloadURL().then((url) => {
+            elements.courseImage.src = url;
+        }).catch((error) => {
+            console.error("Error fetching course image:", error);
+        });
     }
 }
 
