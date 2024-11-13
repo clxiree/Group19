@@ -11,6 +11,7 @@
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -174,60 +175,55 @@
 
     <!-- Courses Course Details Section -->
     <section id="courses-course-details" class="courses-course-details section">
-
       <div class="container" data-aos="fade-up">
-
-        <div class="row">
-          <div class="col-lg-8">
-            <img src="assets/img/course-details.jpg" class="img-fluid" alt="">
+        <div class="row align-items-stretch">
+          <div class="col-lg-8 d-flex">
+            <img src="assets/img/course-details.jpg" class="img-fluid align-self-stretch" alt="">
           </div>
-          <div class="col-lg-4">
-
+          <div class="col-lg-4 d-flex flex-column">
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Booking ID</h5>
               <p></p>
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Status</h5>
               <p></p>
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
-              <h5>Trainer</h5>
-              <p><a href="#"></a></p>
+              <h5>Course Code</h5>
+              <p></p>
             </div>
-
+            <div class="course-info d-flex justify-content-between align-items-center">
+              <h5>Tutor</h5>
+              <p></p>
+            </div>
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Fee</h5>
               <p></p>
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Schedule</h5>
-
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Time</h5>
               <p></p>
-
             </div>
-
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Mode</h5>
               <p></p>
-
             </div>
-            <button class="btn btn-success mx-5">Accept Lesson</button>
-            <button class="btn btn-danger">Cancel Lesson</button>
-
+            
+            <!-- Button container with spacing -->
+            <div class="d-flex mt-3">
+              <button class="btn btn-success me-2 flex-grow-1">Accept Lesson</button>
+              <button class="btn btn-danger flex-grow-1">Cancel Lesson</button>
+            </div>
+            
           </div>
         </div>
-
       </div>
-
     </section>
+    
     <!-- /Courses Course Details Section -->
 
   </main>
@@ -344,6 +340,7 @@
 
       const db = firebase.firestore();
       const auth = firebase.auth();
+      const storage = firebase.storage(); // Initialize Firebase Storage
 
       // Get bookingId from URL and convert to number
       const urlParams = new URLSearchParams(window.location.search);
@@ -372,20 +369,36 @@
 
       // Function to update UI elements
       function updateUIElements(bookingData) {
-        const elements = {
-          bookingId: document.querySelector('.course-info:nth-child(1) p'),
-          status: document.querySelector('.course-info:nth-child(2) p'),
-          trainer: document.querySelector('.course-info:nth-child(3) p a'),
-          courseFee: document.querySelector('.course-info:nth-child(4) p'),
-          schedule: document.querySelector('.course-info:nth-child(5) '),
-          time: document.querySelector('.course-info:nth-child(6) p'),
-          mode: document.querySelector('.course-info:nth-child(7) p'),
-          courseImage: document.querySelector('.img-fluid')
-        };
+      const elements = {
+        bookingId: document.querySelector('.course-info:nth-child(1) p'),
+        status: document.querySelector('.course-info:nth-child(2) p'),
+        courseCode: document.querySelector('.course-info:nth-child(3) p'),
+        trainer: document.querySelector('.course-info:nth-child(4) p'),
+        courseFee: document.querySelector('.course-info:nth-child(5) p'),
+        schedule: document.querySelector('.course-info:nth-child(6)'),
+        time: document.querySelector('.course-info:nth-child(7) p'),
+        mode: document.querySelector('.course-info:nth-child(8) p'),
+        courseImage: document.querySelector('.img-fluid')
+    };
+
 
         // Update booking ID
         elements.bookingId.textContent = `#${bookingData.bookingId}`;
         elements.status.textContent = bookingData.status;
+         if (bookingData.status === "Cancelled") {
+        elements.status.style.color = "red";
+        elements.status.style.fontWeight = "bold"; // Optional: make it bold
+    } else if (bookingData.status === "Pending") {
+        elements.status.style.color = "#f5c022"; // Reset color if not cancelled
+        elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
+    }else{
+      elements.status.style.color = "green"; // Reset color if not cancelled
+        elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
+    }
+
+        if (elements.courseCode) {
+        elements.courseCode.textContent = bookingData.courseCode;
+    }
         if (elements.trainer) {
           elements.trainer.textContent = bookingData.tutorName;
         }
@@ -407,9 +420,14 @@
           elements.time.textContent = bookingData.time;
         }
 
-        // Update course image
+        // Update course image from Firebase Storage
         if (bookingData.img) {
-          elements.courseImage.src = `assets/img/bookings/${bookingData.img}`;
+            const imageRef = storage.ref(`images/courses/${bookingData.img}`);
+            imageRef.getDownloadURL().then((url) => {
+                elements.courseImage.src = url;
+            }).catch((error) => {
+                console.error("Error fetching course image:", error);
+            });
         }
       }
 
