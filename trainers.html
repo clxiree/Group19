@@ -62,55 +62,625 @@
 <body class="trainers-page">
 
   
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <img src="assets/img/smootutor-logo.jpg">
-        </a>
+  <!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="tuteehomepage.html">Home</a></li>
-                <li><a href="bookings.html">Bookings</a></li>
-                <li class="dropdown">
-                    <a href="trainers.html" id="notesDropdown">Tutors <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-                        <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-                    </ul>
-                </li>
-                <li><a href="chats.html">Chats</a></li>
-                <li class="dropdown">
-                    <a href="notes.html" id="notesDropdown">Notes <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-                        <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-                    </ul>
-                </li>
-                <!-- Logout Button for Smaller Viewports -->
-                <li id="logout-container" style="display: none;"><button id="logout-button-small">Logout</button></li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+    <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
+    <button class="mobile-nav-toggle d-xl-none btn btn-primary ms-3">
+      <i class="bi bi-list"></i>
+    </button>
 
-        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+    <!-- Logo (Visible on screens >= 1200px) -->
+    <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
+      <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
+    </a>
 
-            </ul>
-         
-        </ul>
-          
-      </nav>
-<div id="my-email-container">
-  <button id="my-email"></button>
-  <div id="dropdown-menu" class="dropdown-content">
-      <button id="logout-button">Logout</button>
-  </div>
-</div> 
+    <!-- Navigation Menu (Visible on screens >= 1200px) -->
+    <nav id="navmenu" class="navmenu d-none d-xl-flex">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="tuteehomepage.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="bookings.html" class="nav-link">Bookings</a>
+        </li>
 
+        <!-- Tutors Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
+              class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
+            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="chats.html" class="nav-link">Chats</a>
+        </li>
+
+        <!-- Notes Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Email Display -->
+    <div id="my-email-container" class="ms-auto position-relative">
+      <button id="my-email" class="btn btn-secondary">
+        user@example.com <i class="bi bi-chevron-down"></i>
+      </button>
+      <div id="dropdown-menu" class="dropdown-content">
+        <button id="logout-button" class="dropdown-item">Sign Out</button>
+      </div>
     </div>
+
+  </div>
 </header>
+
+<!-- Mobile Menu Modal -->
+<div id="mobile-menu-mmodal" class="mmodal">
+  <div class="mmodal-content">
+    <span class="close-button">&times;</span>
+    <ul class="mobile-nav-list">
+      <li>
+        <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
+      </li>
+      <li>
+        <a href="bookings.html" class="mobile-nav-link">Bookings</a>
+      </li>
+
+      <!-- Tutors Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+          <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="chats.html" class="mobile-nav-link">Chats</a>
+      </li>
+
+      <!-- Notes Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+          <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+        </ul>
+      </li>
+
+      <!-- Logout Button -->
+      <li class="mobile-nav-item">
+        <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<!-- Bootstrap JS (Optional, for additional functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your Custom JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Dropdown Toggle Functionality for Desktop
+    const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
+
+    dropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        const dropdownMenu = this.nextElementSibling;
+        dropdownMenu.classList.toggle('show');
+      });
+    });
+
+    // Hamburger Menu Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
+    const closeButton = document.querySelector('.close-button');
+
+    mobileNavToggle.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'none';
+    });
+
+    // Close Mobile Menu When Clicking Outside
+    window.addEventListener('click', function (event) {
+      if (event.target == mobileMenuMModal) {
+        mobileMenuMModal.style.display = 'none';
+      }
+    });
+
+    // Mobile Dropdown Toggle
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+
+    mobileDropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        const mobileDropdownMenu = this.nextElementSibling;
+        mobileDropdownMenu.classList.toggle('show');
+        // Rotate the chevron icon
+        const icon = this.querySelector('i');
+        if (mobileDropdownMenu.classList.contains('show')) {
+          icon.classList.remove('bi-chevron-down');
+          icon.classList.add('bi-chevron-up');
+        } else {
+          icon.classList.remove('bi-chevron-up');
+          icon.classList.add('bi-chevron-down');
+        }
+      });
+    });
+
+    // Email Dropdown Toggle (Visible on screens <1200px)
+    const myEmailButton = document.getElementById('my-email');
+    const emailDropdown = document.getElementById('dropdown-menu');
+
+    myEmailButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      emailDropdown.classList.toggle('show');
+    });
+
+    // Close Email Dropdown When Clicking Outside
+    document.addEventListener('click', function (event) {
+      if (!myEmailButton.contains(event.target)) {
+        emailDropdown.classList.remove('show');
+      }
+    });
+
+    // Logout Button Functionality
+    const logoutButton = document.getElementById('logout-button');
+    const logoutButtonMobile = document.getElementById('logout-button-mobile');
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    if (logoutButtonMobile) {
+      logoutButtonMobile.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    // Handle Responsive Logo and Email Display
+    const logo = document.querySelector('.logo');
+    const myEmailContainer = document.getElementById('my-email-container');
+
+    function handleResize() {
+      if (window.innerWidth < 1200) {
+        logo.classList.add('d-none');
+      } else {
+        logo.classList.remove('d-none');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on page load
+  });
+</script>
+
+<style>
+  /* Header Container */
+  #header {
+    background-color: #ffffff;
+    /* Header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    padding: 10px 0;
+    /* Vertical padding */
+    position: relative;
+    z-index: 1000;
+    /* Ensure it stays on top */
+  }
+
+  /* Logo Styling */
+  #header .logo img {
+    height: 50px;
+    /* Adjust logo height as needed */
+    width: auto;
+  }
+
+  /* Navigation Menu */
+  #header #navmenu {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar List */
+  #header .navbar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    /* Arrange items horizontally */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Navbar Items */
+  #header .nav-item {
+    position: relative;
+    /* For dropdown positioning */
+  }
+
+  /* Navbar Links */
+  #header .nav-link {
+    color: #333333;
+    /* Link color */
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar Link Hover Effect */
+  #header .nav-link:hover {
+    color: #007bff;
+    /* Hover color */
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Optional background on hover */
+    border-radius: 4px;
+    /* Rounded corners on hover */
+  }
+
+  /* Dropdown Menu Styling */
+  #header .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 200px;
+    z-index: 1000;
+  }
+
+  /* Show Dropdown Menu */
+  #header .dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items */
+  #header .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect */
+  #header .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Mobile Navigation Toggle Button */
+  #header .mobile-nav-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333333;
+    margin-left: auto;
+    /* Push the toggle to the right */
+  }
+
+  /* Email Display Container */
+  #header #my-email-container {
+    position: relative;
+  }
+
+  /* Email Button Styling */
+  #header #my-email {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Email Dropdown Menu */
+  #header #dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 150px;
+    z-index: 1000;
+  }
+
+  /* Show Email Dropdown Menu */
+  #header #dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items in Email Dropdown */
+  #header #dropdown-menu .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect in Email Dropdown */
+  #header #dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Logout Button Styling */
+  #header .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Logout Button Hover Effect */
+  #header .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+    border-color: #dc3545;
+  }
+
+  /* Responsive Styles */
+
+  /* For screens less than 1200px */
+  @media (max-width: 1199.98px) {
+
+    /* Hide Logo */
+    #header .logo {
+      display: none;
+    }
+
+    /* Show Email Container */
+    #header #my-email-container {
+      display: block;
+    }
+
+    /* Show Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: block;
+    }
+
+    /* Hide Navmenu Initially */
+    #header #navmenu {
+      display: none;
+    }
+  }
+
+  /* For screens 1200px and above */
+  @media (min-width: 1200px) {
+
+    /* Show Logo */
+    #header .logo {
+      display: flex;
+    }
+
+    /* Show Navmenu */
+    #header #navmenu {
+      display: flex;
+    }
+
+    /* Hide Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: none;
+    }
+
+    #header #my-email-container {
+      display: block;
+    }
+  }
+
+  /* Mobile Menu Modal Styles */
+  .mmodal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1050;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+  }
+
+  .mmodal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-list li {
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav-link {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-toggle {
+    color: #333333;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-menu {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+  }
+
+  .mobile-dropdown-menu.show {
+    display: block;
+  }
+
+  .mobile-dropdown-menu .dropdown-item {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-menu .dropdown-item:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Logout Button Styling in Mobile Menu */
+  #logout-button-mobile {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: transparent;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+
+  /* ==============================
+   Hover Animations for Navigation
+=============================== */
+
+  /* Hover Animation for Desktop Navigation Links */
+  #navmenu .nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  #navmenu .nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  /* Hover Animation for Dropdown Items */
+  #navmenu .dropdown-item {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  #navmenu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Hover Animation for Mobile Navigation Links */
+  .mobile-nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Mobile Dropdown Toggle */
+  .mobile-dropdown-toggle {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Logout Button in Mobile Menu */
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+</style>
 
 
   <main class="main">
