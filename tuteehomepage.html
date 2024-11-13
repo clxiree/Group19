@@ -486,6 +486,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     // Display user's email on load
+    const myEmailButton = document.getElementById("my-email");
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
             myEmailButton.textContent = user.email;
