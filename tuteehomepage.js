@@ -294,4 +294,14 @@ document.addEventListener("DOMContentLoaded", () => {
     
     fetchTeamCards();
     fetchTestimonials();
+    const welcomeVideo = document.getElementById("welcome-video");
+
+    if (welcomeVideo) {
+        const videoRef = storage.ref("videos/welcome-page.mp4");
+        videoRef.getDownloadURL().then((url) => {
+            welcomeVideo.src = url;
+        }).catch((error) => {
+            console.error("Error fetching welcome video:", error);
+        });
+    }
 });
