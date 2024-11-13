@@ -460,17 +460,18 @@ document.addEventListener("DOMContentLoaded", function () {
   logoutButtonSmall.addEventListener("click", handleLogout);
 
   // Toggle visibility based on viewport size
-  function toggleVisibility() {
-      if (window.innerWidth <= 1068) {
-          myEmailContainer.style.display = "none";
-          logoutContainer.style.display = "block";
-      } else {
-          myEmailContainer.style.display = "flex";
-          logoutContainer.style.display = "none";
-      }
+function toggleVisibility() {
+  if (window.innerWidth <= 768) { // Match CSS breakpoint
+      myEmailContainer.style.display = "none";
+      logoutContainer.style.display = "block";
+  } else {
+      myEmailContainer.style.display = "flex";
+      logoutContainer.style.display = "none";
   }
+}
 
-  // Initial check and event listener for resizing
-  toggleVisibility();
-  window.addEventListener("resize", toggleVisibility);
+// Initial check and event listener for resizing
+toggleVisibility();
+window.addEventListener("resize", toggleVisibility);
 });
+
