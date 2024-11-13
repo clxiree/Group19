@@ -61,6 +61,11 @@
     box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.course-item:hover {
+  transform: scale(1.06);
+  transition: 0.5s;
+}
+
 .card-img-top {
     width: 100%;            /* Image takes full width of the card */
     height: 200px;          /* Fixed height for the image */
@@ -392,13 +397,19 @@ function displayFilteredBookings(status) {
         col.setAttribute('data-aos', 'zoom-in');
         col.setAttribute('data-aos-delay', '100');
 
+        // Wrap the entire card in an anchor tag
+        const linkWrapper = document.createElement('a');
+        linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
+        linkWrapper.style.textDecoration = 'none';
+        linkWrapper.style.color = 'inherit';
+
         const courseItem = document.createElement('div');
         courseItem.classList.add('course-item');
 
         if (bookingData.status === 'Cancelled') {
             courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)';
             courseItem.style.position = 'relative';
-            
+
             const overlay = document.createElement('div');
             overlay.style.position = 'absolute';
             overlay.style.top = '0';
@@ -417,7 +428,7 @@ function displayFilteredBookings(status) {
         // Fetch image URL from Firebase Storage
         firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
             .then(url => {
-                img.src = url;  // Set the src to the retrieved URL
+                img.src = url;
             })
             .catch(error => {
                 console.error("Error fetching image:", error);
@@ -436,17 +447,15 @@ function displayFilteredBookings(status) {
 
         const price = document.createElement('p');
         price.classList.add('price');
-        price.textContent = `$${bookingData.fee}`;
         price.textContent = `$${bookingData.fee * 2}`;
 
         categoryPriceDiv.appendChild(category);
         categoryPriceDiv.appendChild(price);
 
         const titleContainer = document.createElement('h3');
-        const titleLink = document.createElement('a');
-        titleLink.href = `course-details.html?bookingId=${bookingData.bookingId}`;
-        titleLink.textContent = bookingData.courseName;
-        titleContainer.appendChild(titleLink);
+        const titleText = document.createElement('span');
+        titleText.textContent = bookingData.courseName;
+        titleContainer.appendChild(titleText);
 
         // Status
         const status = document.createElement('p');
@@ -485,7 +494,7 @@ function displayFilteredBookings(status) {
         // Fetch trainer image URL from Firebase Storage
         firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
             .then(url => {
-                trainerImg.src = url;  // Set src to the retrieved URL
+                trainerImg.src = url;
             })
             .catch(error => {
                 console.error("Error fetching trainer image:", error);
@@ -542,12 +551,15 @@ function displayFilteredBookings(status) {
         courseItem.appendChild(img);
         courseItem.appendChild(courseContent);
 
-        col.appendChild(courseItem);
+        // Append the course item to the link wrapper
+        linkWrapper.appendChild(courseItem);
+        col.appendChild(linkWrapper);
         row.appendChild(col);
     });
 
     bookingList.appendChild(row);
 }
+
 
 
 function fetchBookings(userId) {
