@@ -15,7 +15,9 @@
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -32,7 +34,7 @@
 
   <!-- Axios CDN -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
- 
+
   <!-- Firebase JS SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
@@ -40,7 +42,7 @@
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
 
 
- 
+
 
   <!-- =======================================================
   * Template Name: Mentor
@@ -53,46 +55,625 @@
 
 <body class="about-page">
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg">
-      </a>
+  <!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="index.html">Home<br></a></li>
-          <li><a href="bookings.html">Bookings</a></li>
+    <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
+    <button class="mobile-nav-toggle d-xl-none btn btn-primary ms-3">
+      <i class="bi bi-list"></i>
+    </button>
 
-          <li class="dropdown">
-            <a href="trainers.html" id="notesDropdown" aria-expanded="false">
-              Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+    <!-- Logo (Visible on screens >= 1200px) -->
+    <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
+      <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
+    </a>
 
-              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+    <!-- Navigation Menu (Visible on screens >= 1200px) -->
+    <nav id="navmenu" class="navmenu d-none d-xl-flex">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="tuteehomepage.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="bookings.html" class="nav-link">Bookings</a>
+        </li>
 
-            </ul>
-          </li>
-          <li><a href="chats.html">Chats</a></li>
-          <li class="dropdown">
-            <a href="notes.html" id="notesDropdown" aria-expanded="false">
-              Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+        <!-- Tutors Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
+              class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
+            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+          </ul>
+        </li>
 
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+        <li class="nav-item">
+          <a href="chats.html" class="nav-link">Chats</a>
+        </li>
 
-            </ul>
-         
-        </ul>
-          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-      </nav>
-      <a class="btn-getstarted"><div id="my-email"></div></a>
+        <!-- Notes Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Email Display -->
+    <div id="my-email-container" class="ms-auto position-relative">
+      <button id="my-email" class="btn btn-secondary">
+        user@example.com <i class="bi bi-chevron-down"></i>
+      </button>
+      <div id="dropdown-menu" class="dropdown-content">
+        <button id="logout-button" class="dropdown-item">Sign Out</button>
+      </div>
     </div>
-  </header>
+
+  </div>
+</header>
+
+<!-- Mobile Menu Modal -->
+<div id="mobile-menu-mmodal" class="mmodal">
+  <div class="mmodal-content">
+    <span class="close-button">&times;</span>
+    <ul class="mobile-nav-list">
+      <li>
+        <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
+      </li>
+      <li>
+        <a href="bookings.html" class="mobile-nav-link">Bookings</a>
+      </li>
+
+      <!-- Tutors Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+          <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="chats.html" class="mobile-nav-link">Chats</a>
+      </li>
+
+      <!-- Notes Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+          <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+        </ul>
+      </li>
+
+      <!-- Logout Button -->
+      <li class="mobile-nav-item">
+        <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<!-- Bootstrap JS (Optional, for additional functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your Custom JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Dropdown Toggle Functionality for Desktop
+    const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
+
+    dropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        const dropdownMenu = this.nextElementSibling;
+        dropdownMenu.classList.toggle('show');
+      });
+    });
+
+    // Hamburger Menu Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
+    const closeButton = document.querySelector('.close-button');
+
+    mobileNavToggle.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'none';
+    });
+
+    // Close Mobile Menu When Clicking Outside
+    window.addEventListener('click', function (event) {
+      if (event.target == mobileMenuMModal) {
+        mobileMenuMModal.style.display = 'none';
+      }
+    });
+
+    // Mobile Dropdown Toggle
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+
+    mobileDropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        const mobileDropdownMenu = this.nextElementSibling;
+        mobileDropdownMenu.classList.toggle('show');
+        // Rotate the chevron icon
+        const icon = this.querySelector('i');
+        if (mobileDropdownMenu.classList.contains('show')) {
+          icon.classList.remove('bi-chevron-down');
+          icon.classList.add('bi-chevron-up');
+        } else {
+          icon.classList.remove('bi-chevron-up');
+          icon.classList.add('bi-chevron-down');
+        }
+      });
+    });
+
+    // Email Dropdown Toggle (Visible on screens <1200px)
+    const myEmailButton = document.getElementById('my-email');
+    const emailDropdown = document.getElementById('dropdown-menu');
+
+    myEmailButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      emailDropdown.classList.toggle('show');
+    });
+
+    // Close Email Dropdown When Clicking Outside
+    document.addEventListener('click', function (event) {
+      if (!myEmailButton.contains(event.target)) {
+        emailDropdown.classList.remove('show');
+      }
+    });
+
+    // Logout Button Functionality
+    const logoutButton = document.getElementById('logout-button');
+    const logoutButtonMobile = document.getElementById('logout-button-mobile');
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    if (logoutButtonMobile) {
+      logoutButtonMobile.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    // Handle Responsive Logo and Email Display
+    const logo = document.querySelector('.logo');
+    const myEmailContainer = document.getElementById('my-email-container');
+
+    function handleResize() {
+      if (window.innerWidth < 1200) {
+        logo.classList.add('d-none');
+      } else {
+        logo.classList.remove('d-none');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on page load
+  });
+</script>
+
+<style>
+  /* Header Container */
+  #header {
+    background-color: #ffffff;
+    /* Header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    padding: 10px 0;
+    /* Vertical padding */
+    position: relative;
+    z-index: 1000;
+    /* Ensure it stays on top */
+  }
+
+  /* Logo Styling */
+  #header .logo img {
+    height: 50px;
+    /* Adjust logo height as needed */
+    width: auto;
+  }
+
+  /* Navigation Menu */
+  #header #navmenu {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar List */
+  #header .navbar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    /* Arrange items horizontally */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Navbar Items */
+  #header .nav-item {
+    position: relative;
+    /* For dropdown positioning */
+  }
+
+  /* Navbar Links */
+  #header .nav-link {
+    color: #333333;
+    /* Link color */
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar Link Hover Effect */
+  #header .nav-link:hover {
+    color: #007bff;
+    /* Hover color */
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Optional background on hover */
+    border-radius: 4px;
+    /* Rounded corners on hover */
+  }
+
+  /* Dropdown Menu Styling */
+  #header .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 200px;
+    z-index: 1000;
+  }
+
+  /* Show Dropdown Menu */
+  #header .dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items */
+  #header .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect */
+  #header .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Mobile Navigation Toggle Button */
+  #header .mobile-nav-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333333;
+    margin-left: auto;
+    /* Push the toggle to the right */
+  }
+
+  /* Email Display Container */
+  #header #my-email-container {
+    position: relative;
+  }
+
+  /* Email Button Styling */
+  #header #my-email {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Email Dropdown Menu */
+  #header #dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 150px;
+    z-index: 1000;
+  }
+
+  /* Show Email Dropdown Menu */
+  #header #dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items in Email Dropdown */
+  #header #dropdown-menu .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect in Email Dropdown */
+  #header #dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Logout Button Styling */
+  #header .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Logout Button Hover Effect */
+  #header .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+    border-color: #dc3545;
+  }
+
+  /* Responsive Styles */
+
+  /* For screens less than 1200px */
+  @media (max-width: 1199.98px) {
+
+    /* Hide Logo */
+    #header .logo {
+      display: none;
+    }
+
+    /* Show Email Container */
+    #header #my-email-container {
+      display: block;
+    }
+
+    /* Show Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: block;
+    }
+
+    /* Hide Navmenu Initially */
+    #header #navmenu {
+      display: none;
+    }
+  }
+
+  /* For screens 1200px and above */
+  @media (min-width: 1200px) {
+
+    /* Show Logo */
+    #header .logo {
+      display: flex;
+    }
+
+    /* Show Navmenu */
+    #header #navmenu {
+      display: flex;
+    }
+
+    /* Hide Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: none;
+    }
+
+    #header #my-email-container {
+      display: block;
+    }
+  }
+
+  /* Mobile Menu Modal Styles */
+  .mmodal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1050;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+  }
+
+  .mmodal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-list li {
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav-link {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-toggle {
+    color: #333333;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-menu {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+  }
+
+  .mobile-dropdown-menu.show {
+    display: block;
+  }
+
+  .mobile-dropdown-menu .dropdown-item {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-menu .dropdown-item:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Logout Button Styling in Mobile Menu */
+  #logout-button-mobile {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: transparent;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+
+  /* ==============================
+   Hover Animations for Navigation
+=============================== */
+
+  /* Hover Animation for Desktop Navigation Links */
+  #navmenu .nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  #navmenu .nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  /* Hover Animation for Dropdown Items */
+  #navmenu .dropdown-item {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  #navmenu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Hover Animation for Mobile Navigation Links */
+  .mobile-nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Mobile Dropdown Toggle */
+  .mobile-dropdown-toggle {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Logout Button in Mobile Menu */
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+</style>
 
   <main class="main">
 
@@ -107,30 +688,30 @@
 
               <!-- Subject Bubbles Below the One-liner -->
               <div id="subjectsContainer" class="d-flex flex-wrap justify-content-center gap-2 mt-3">
-              <!-- Sample Bubbles -->
-              <span class="subject-bubble">Math</span>
-              <span class="subject-bubble">Physics</span>
-              <span class="subject-bubble">Chemistry</span>
-              <!-- Additional bubbles can be added here dynamically -->
+                <!-- Sample Bubbles -->
+                <span class="subject-bubble">Math</span>
+                <span class="subject-bubble">Physics</span>
+                <span class="subject-bubble">Chemistry</span>
+                <!-- Additional bubbles can be added here dynamically -->
               </div>
-              
+
             </div>
           </div>
         </div>
       </div>
-      
+
     </div><!-- End Page Title -->
 
     <section id="about-us" class="section about-us">
       <div class="container">
         <!-- Row to align content horizontally -->
         <div class="row gy-4 d-flex align-items-center">
-          
+
           <!-- Image Container on the Left -->
           <div class="col-lg-6 col-md-12 text-center" data-aos="fade-up" data-aos-delay="100">
             <img src="assets/img/team/zenny.jpg" class="img-fluid mb-4" alt="Zenny Potato">
           </div>
-          
+
           <!-- Text Container on the Right with Padding -->
           <div class="col-lg-6 col-md-12 ps-lg-5" data-aos="fade-up" data-aos-delay="200">
             <div class="content">
@@ -140,7 +721,7 @@
               <p style="font-size: 14px; margin-bottom: 30px;" id="about">
                 This is my about.
               </p>
-    
+
               <p class="fst-italic fw-bold mt-4" style="font-size: 18px;">
                 Below are my lesson descriptions:
               </p>
@@ -155,10 +736,12 @@
                 </li>
                 <li class="mb-2">
                   <i class="bi bi-check-circle" style="font-size: 18px"></i>
-                  <span style="font-size: 14px">Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</span>
+                  <span style="font-size: 14px">Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+                    dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla
+                    pariatur.</span>
                 </li>
               </ul>
-    
+
               <p class="fst-italic fw-bold" style="font-size: 18px;">
                 Ratings:
               </p>
@@ -178,23 +761,23 @@
               </p>
               <p>
                 <!-- Subject Bubbles Below the One-liner -->
-                <div id="subjectsContainer">
+              <div id="subjectsContainer">
                 <!-- Sample Bubbles -->
                 <span class="subject-bubble">Math</span>
                 <span class="subject-bubble">Physics</span>
                 <span class="subject-bubble">Chemistry</span>
                 <!-- Additional bubbles can be added here dynamically -->
-                </div>
+              </div>
               </p>
+            </div>
+
           </div>
-    
-        </div>
-        
+
         </div>
       </div>
     </section>
-    
-    
+
+
     <!-- Testimonials Section -->
     <section id="testimonials" class="testimonials section">
 
@@ -241,11 +824,13 @@
                   <h3>Saul Goodman</h3>
                   <h4>Ceo &amp; Founder</h4>
                   <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                   </div>
                   <p>
                     <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
+                    <span>Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus.
+                      Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.</span>
                     <i class="bi bi-quote quote-icon-right"></i>
                   </p>
                 </div>
@@ -259,11 +844,13 @@
                   <h3>Sara Wilsson</h3>
                   <h4>Designer</h4>
                   <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                   </div>
                   <p>
                     <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
+                    <span>Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram
+                      malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.</span>
                     <i class="bi bi-quote quote-icon-right"></i>
                   </p>
                 </div>
@@ -277,11 +864,13 @@
                   <h3>Jena Karlis</h3>
                   <h4>Store Owner</h4>
                   <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                   </div>
                   <p>
                     <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
+                    <span>Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis
+                      minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.</span>
                     <i class="bi bi-quote quote-icon-right"></i>
                   </p>
                 </div>
@@ -295,11 +884,14 @@
                   <h3>Matt Brandon</h3>
                   <h4>Freelancer</h4>
                   <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                   </div>
                   <p>
                     <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.</span>
+                    <span>Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim
+                      velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum
+                      veniam.</span>
                     <i class="bi bi-quote quote-icon-right"></i>
                   </p>
                 </div>
@@ -313,11 +905,14 @@
                   <h3>John Larson</h3>
                   <h4>Entrepreneur</h4>
                   <div class="stars">
-                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                    <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i
+                      class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
                   </div>
                   <p>
                     <i class="bi bi-quote quote-icon-left"></i>
-                    <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.</span>
+                    <span>Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam
+                      enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi
+                      cillum quid.</span>
                     <i class="bi bi-quote quote-icon-right"></i>
                   </p>
                 </div>
@@ -400,7 +995,8 @@
   </footer>
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -416,59 +1012,59 @@
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
 
-<script>
+  <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-  firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+      firebase.initializeApp(firebaseConfig);
+      const db = firebase.firestore();
 
-    // Function to get UserID from URL
-    function getUserIdFromURL() {
-      const urlParams = new URLSearchParams(window.location.search);
-      return urlParams.get('UserID');
-    }
+      // Function to get UserID from URL
+      function getUserIdFromURL() {
+        const urlParams = new URLSearchParams(window.location.search);
+        return urlParams.get('UserID');
+      }
 
-    // Fetch User Data from Firestore
-    function fetchUserData(userId) {
-      db.collection("Particulars").doc(userId).get()
-        .then((doc) => {
-          if (doc.exists) {
-            const userData = doc.data();
-            populateUserData(userData);
-          } else {
-            console.log("No user data found for UserID:", userId);
-          }
-        })
-        .catch((error) => {
-          console.error("Error fetching user data:", error);
-        });
-    }
+      // Fetch User Data from Firestore
+      function fetchUserData(userId) {
+        db.collection("Particulars").doc(userId).get()
+          .then((doc) => {
+            if (doc.exists) {
+              const userData = doc.data();
+              populateUserData(userData);
+            } else {
+              console.log("No user data found for UserID:", userId);
+            }
+          })
+          .catch((error) => {
+            console.error("Error fetching user data:", error);
+          });
+      }
 
-    // Populate User Data on the Page
-    function populateUserData(data) {
-      const userNameHeading = document.getElementById("userNameHeading");
-      userNameHeading.textContent = userData.Name|| ""; // Replace the <h1> content with Name
-      document.getElementById("userName").textContent = data.Name || "Unknown";
-      document.getElementById("userSubjects").textContent = data.SubjectsTaught.join(", ") || "N/A";
-      document.getElementById("userReviews").textContent = data.Reviews ? `See ${data.Reviews} reviews` : "No reviews available";
-      document.getElementById("userImage").src = data.ImageUrl || "assets/img/default-user.png";
-      document.getElementById("userVideo").src = data.VideoUrl || "assets/videos/default-video.mp4";
-      // Populate additional particulars as needed
-    }
+      // Populate User Data on the Page
+      function populateUserData(data) {
+        const userNameHeading = document.getElementById("userNameHeading");
+        userNameHeading.textContent = userData.Name || ""; // Replace the <h1> content with Name
+        document.getElementById("userName").textContent = data.Name || "Unknown";
+        document.getElementById("userSubjects").textContent = data.SubjectsTaught.join(", ") || "N/A";
+        document.getElementById("userReviews").textContent = data.Reviews ? `See ${data.Reviews} reviews` : "No reviews available";
+        document.getElementById("userImage").src = data.ImageUrl || "assets/img/default-user.png";
+        document.getElementById("userVideo").src = data.VideoUrl || "assets/videos/default-video.mp4";
+        // Populate additional particulars as needed
+      }
 
-    // Run on page load
-    const userId = getUserIdFromURL();
-    if (userId) {
-      fetchUserData(userId);
-    } else {
-      console.log("UserID not found in the URL.");
-    }
+      // Run on page load
+      const userId = getUserIdFromURL();
+      if (userId) {
+        fetchUserData(userId);
+      } else {
+        console.log("UserID not found in the URL.");
+      }
 
 
 
-})
-</script>
+    })
+  </script>
 </body>
 
-</html> 
+</html>

@@ -12,7 +12,8 @@
   <!-- Favicons -->
   <!-- <link href="assets/img/favicon.png" rel="icon"> -->
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
+  <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -50,170 +51,742 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 
-
-
-
 </head>
 
 <body class="index-page">
 
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
-            <img src="assets/img/smootutor-logo.jpg">
-        </a>
+  <!-- Header -->
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
 
-        <nav id="navmenu" class="navmenu">
-            <ul>
-                <li><a href="tuteehomepage.html">Home</a></li>
-                <li><a href="bookings.html">Bookings</a></li>
-                <li class="dropdown">
-                    <a href="trainers.html" id="notesDropdown">Tutors <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-                        <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-                    </ul>
-                </li>
-                <li><a href="chats.html">Chats</a></li>
-                <li class="dropdown">
-                    <a href="notes.html" id="notesDropdown">Notes <i class="bi bi-chevron-down toggle-dropdown"></i></a>
-                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-                        <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-                        <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-                    </ul>
-                </li>
-                <!-- Logout Button for Smaller Viewports -->
-                <li id="logout-container" style="display: none;"><button id="logout-button-small">Logout</button></li>
-            </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
+    <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
+    <button class="mobile-nav-toggle d-xl-none btn btn-primary ms-3">
+      <i class="bi bi-list"></i>
+    </button>
 
-        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+    <!-- Logo (Visible on screens >= 1200px) -->
+    <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
+      <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
+    </a>
 
-            </ul>
-        </ul>
-          
-      </nav>
-      <!-- <a class="btn-getstarted">
-        <div id="my-email"></div>
-    </a> -->
-    <!-- Email Button with Dropdown -->
-<div id="my-email-container">
-  <button id="my-email"></button>
-  <div id="dropdown-menu" class="dropdown-content">
-      <button id="logout-button">Logout</button>
-  </div>
-</div> 
+    <!-- Navigation Menu (Visible on screens >= 1200px) -->
+    <nav id="navmenu" class="navmenu d-none d-xl-flex">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="tuteehomepage.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="bookings.html" class="nav-link">Bookings</a>
+        </li>
 
+        <!-- Tutors Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
+              class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
+            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="chats.html" class="nav-link">Chats</a>
+        </li>
+
+        <!-- Notes Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class="bi bi-chevron-down"></i></a>
+          <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Email Display -->
+    <div id="my-email-container" class="ms-auto position-relative">
+      <button id="my-email" class="btn btn-secondary">
+        user@example.com <i class="bi bi-chevron-down"></i>
+      </button>
+      <div id="dropdown-menu" class="dropdown-content">
+        <button id="logout-button" class="dropdown-item">Sign Out</button>
+      </div>
     </div>
+
+  </div>
 </header>
+
+<!-- Mobile Menu Modal -->
+<div id="mobile-menu-mmodal" class="mmodal">
+  <div class="mmodal-content">
+    <span class="close-button">&times;</span>
+    <ul class="mobile-nav-list">
+      <li>
+        <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
+      </li>
+      <li>
+        <a href="bookings.html" class="mobile-nav-link">Bookings</a>
+      </li>
+
+      <!-- Tutors Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+          <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+        </ul>
+      </li>
+
+      <li>
+        <a href="chats.html" class="mobile-nav-link">Chats</a>
+      </li>
+
+      <!-- Notes Dropdown -->
+      <li class="mobile-nav-item dropdown">
+        <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
+        <ul class="mobile-dropdown-menu">
+          <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+          <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+        </ul>
+      </li>
+
+      <!-- Logout Button -->
+      <li class="mobile-nav-item">
+        <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- JavaScript -->
+<!-- Bootstrap JS (Optional, for additional functionality) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Your Custom JavaScript -->
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    // Dropdown Toggle Functionality for Desktop
+    const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
+
+    dropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function (event) {
+        event.preventDefault();
+        const dropdownMenu = this.nextElementSibling;
+        dropdownMenu.classList.toggle('show');
+      });
+    });
+
+    // Hamburger Menu Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
+    const closeButton = document.querySelector('.close-button');
+
+    mobileNavToggle.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'block';
+    });
+
+    closeButton.addEventListener('click', function () {
+      mobileMenuMModal.style.display = 'none';
+    });
+
+    // Close Mobile Menu When Clicking Outside
+    window.addEventListener('click', function (event) {
+      if (event.target == mobileMenuMModal) {
+        mobileMenuMModal.style.display = 'none';
+      }
+    });
+
+    // Mobile Dropdown Toggle
+    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
+
+    mobileDropdownToggles.forEach(function (toggle) {
+      toggle.addEventListener('click', function () {
+        const mobileDropdownMenu = this.nextElementSibling;
+        mobileDropdownMenu.classList.toggle('show');
+        // Rotate the chevron icon
+        const icon = this.querySelector('i');
+        if (mobileDropdownMenu.classList.contains('show')) {
+          icon.classList.remove('bi-chevron-down');
+          icon.classList.add('bi-chevron-up');
+        } else {
+          icon.classList.remove('bi-chevron-up');
+          icon.classList.add('bi-chevron-down');
+        }
+      });
+    });
+
+    // Email Dropdown Toggle (Visible on screens <1200px)
+    const myEmailButton = document.getElementById('my-email');
+    const emailDropdown = document.getElementById('dropdown-menu');
+
+    myEmailButton.addEventListener('click', function (event) {
+      event.stopPropagation();
+      emailDropdown.classList.toggle('show');
+    });
+
+    // Close Email Dropdown When Clicking Outside
+    document.addEventListener('click', function (event) {
+      if (!myEmailButton.contains(event.target)) {
+        emailDropdown.classList.remove('show');
+      }
+    });
+
+    // Logout Button Functionality
+    const logoutButton = document.getElementById('logout-button');
+    const logoutButtonMobile = document.getElementById('logout-button-mobile');
+
+    if (logoutButton) {
+      logoutButton.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    if (logoutButtonMobile) {
+      logoutButtonMobile.addEventListener('click', function () {
+        window.location.href = 'index.html';
+      });
+    }
+
+    // Handle Responsive Logo and Email Display
+    const logo = document.querySelector('.logo');
+    const myEmailContainer = document.getElementById('my-email-container');
+
+    function handleResize() {
+      if (window.innerWidth < 1200) {
+        logo.classList.add('d-none');
+      } else {
+        logo.classList.remove('d-none');
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check on page load
+  });
+</script>
+
+<style>
+  /* Header Container */
+  #header {
+    background-color: #ffffff;
+    /* Header background */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    padding: 10px 0;
+    /* Vertical padding */
+    position: relative;
+    z-index: 1000;
+    /* Ensure it stays on top */
+  }
+
+  /* Logo Styling */
+  #header .logo img {
+    height: 50px;
+    /* Adjust logo height as needed */
+    width: auto;
+  }
+
+  /* Navigation Menu */
+  #header #navmenu {
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar List */
+  #header .navbar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    /* Arrange items horizontally */
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Navbar Items */
+  #header .nav-item {
+    position: relative;
+    /* For dropdown positioning */
+  }
+
+  /* Navbar Links */
+  #header .nav-link {
+    color: #333333;
+    /* Link color */
+    padding: 10px 15px;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Navbar Link Hover Effect */
+  #header .nav-link:hover {
+    color: #007bff;
+    /* Hover color */
+    background-color: rgba(0, 123, 255, 0.1);
+    /* Optional background on hover */
+    border-radius: 4px;
+    /* Rounded corners on hover */
+  }
+
+  /* Dropdown Menu Styling */
+  #header .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 200px;
+    z-index: 1000;
+  }
+
+  /* Show Dropdown Menu */
+  #header .dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items */
+  #header .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect */
+  #header .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Mobile Navigation Toggle Button */
+  #header .mobile-nav-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #333333;
+    margin-left: auto;
+    /* Push the toggle to the right */
+  }
+
+  /* Email Display Container */
+  #header #my-email-container {
+    position: relative;
+  }
+
+  /* Email Button Styling */
+  #header #my-email {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1em;
+    color: #333333;
+    display: flex;
+    align-items: center;
+  }
+
+  /* Email Dropdown Menu */
+  #header #dropdown-menu {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    background-color: #ffffff;
+    border: 1px solid #dee2e6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    display: none;
+    /* Hidden by default */
+    min-width: 150px;
+    z-index: 1000;
+  }
+
+  /* Show Email Dropdown Menu */
+  #header #dropdown-menu.show {
+    display: block;
+  }
+
+  /* Dropdown Items in Email Dropdown */
+  #header #dropdown-menu .dropdown-item {
+    padding: 10px 15px;
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Dropdown Item Hover Effect in Email Dropdown */
+  #header #dropdown-menu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Logout Button Styling */
+  #header .btn-outline-danger {
+    color: #dc3545;
+    border-color: #dc3545;
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  /* Logout Button Hover Effect */
+  #header .btn-outline-danger:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+    border-color: #dc3545;
+  }
+
+  /* Responsive Styles */
+
+  /* For screens less than 1200px */
+  @media (max-width: 1199.98px) {
+
+    /* Hide Logo */
+    #header .logo {
+      display: none;
+    }
+
+    /* Show Email Container */
+    #header #my-email-container {
+      display: block;
+    }
+
+    /* Show Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: block;
+    }
+
+    /* Hide Navmenu Initially */
+    #header #navmenu {
+      display: none;
+    }
+  }
+
+  /* For screens 1200px and above */
+  @media (min-width: 1200px) {
+
+    /* Show Logo */
+    #header .logo {
+      display: flex;
+    }
+
+    /* Show Navmenu */
+    #header #navmenu {
+      display: flex;
+    }
+
+    /* Hide Mobile Nav Toggle Button */
+    #header .mobile-nav-toggle {
+      display: none;
+    }
+
+    #header #my-email-container {
+      display: block;
+    }
+  }
+
+  /* Mobile Menu Modal Styles */
+  .mmodal {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1050;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Black w/ opacity */
+  }
+
+  .mmodal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    /* 10% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+    max-width: 400px;
+    border-radius: 8px;
+    position: relative;
+  }
+
+  .close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+  }
+
+  .close-button:hover,
+  .close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .mobile-nav-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .mobile-nav-list li {
+    margin-bottom: 10px;
+  }
+
+  .mobile-nav-link {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-toggle {
+    color: #333333;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 1em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  .mobile-dropdown-menu {
+    list-style: none;
+    padding-left: 15px;
+    display: none;
+  }
+
+  .mobile-dropdown-menu.show {
+    display: block;
+  }
+
+  .mobile-dropdown-menu .dropdown-item {
+    color: #333333;
+    text-decoration: none;
+    display: block;
+    padding: 8px 15px;
+    border-radius: 4px;
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-menu .dropdown-item:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Logout Button Styling in Mobile Menu */
+  #logout-button-mobile {
+    color: #dc3545;
+    border-color: #dc3545;
+    background-color: transparent;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+
+  /* ==============================
+   Hover Animations for Navigation
+=============================== */
+
+  /* Hover Animation for Desktop Navigation Links */
+  #navmenu .nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  #navmenu .nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+    border-radius: 4px;
+  }
+
+  /* Hover Animation for Dropdown Items */
+  #navmenu .dropdown-item {
+    transition: background-color 0.3s, color 0.3s;
+  }
+
+  #navmenu .dropdown-item:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+  }
+
+  /* Hover Animation for Mobile Navigation Links */
+  .mobile-nav-link {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-nav-link:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Mobile Dropdown Toggle */
+  .mobile-dropdown-toggle {
+    transition: color 0.3s, background-color 0.3s;
+  }
+
+  .mobile-dropdown-toggle:hover {
+    color: #007bff;
+    background-color: rgba(0, 123, 255, 0.1);
+  }
+
+  /* Hover Animation for Logout Button in Mobile Menu */
+  #logout-button-mobile:hover {
+    background-color: #dc3545;
+    color: #ffffff;
+  }
+</style>
 
   <!-- Hero Section -->
   <main class="main">
     <div class="hero" data-aos="fade">
-        <!-- Video Background Container -->
-        <div id="background-vid" class="background-vid">
-            <video autoplay loop muted playsinline class="background-video"></video>
-            
-            <!-- Overlay to display text above the video -->
-            <div class="heading-overlay">
-                <div class="container">
-                    <div class="row d-flex justify-content-center text-center">
-                        <div class="col-lg-8">
-                            <h2 class="heading-text">Our Tutors</h2>
-                            <p class="heading-subtext mb-0">Find the SMOO tutor that you like BEST</p>
-                        </div>
-                    </div>
-                </div>
+      <!-- Video Background Container -->
+      <div id="background-vid" class="background-vid">
+        <video autoplay loop muted playsinline class="background-video"></video>
+
+        <!-- Overlay to display text above the video -->
+        <div class="heading-overlay">
+          <div class="container">
+            <div class="row d-flex justify-content-center text-center">
+              <div class="col-lg-8">
+                <h2 class="heading-text">Our Tutors</h2>
+                <p class="heading-subtext mb-0">Find the SMOO tutor that you like BEST</p>
+              </div>
             </div>
+          </div>
         </div>
-        
-        <!-- Additional Overlay Content -->
-        <div class="container heading-overlay">
-            <h2 data-aos="fade-up" data-aos-delay="100">Tutee Today,<br>Tutor Tomorrow</h2>
-            <p data-aos="fade-up" data-aos-delay="200">We can help to alleviate your study difficulties</p>
-            <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
-                <a href="trainers.html" class="btn-get-started">Get Started</a>
-            </div>
+      </div>
+
+      <!-- Additional Overlay Content -->
+      <div class="container heading-overlay">
+        <h2 data-aos="fade-up" data-aos-delay="100">Tutee Today,<br>Tutor Tomorrow</h2>
+        <p data-aos="fade-up" data-aos-delay="200">We can help to alleviate your study difficulties</p>
+        <div class="d-flex mt-4" data-aos="fade-up" data-aos-delay="300">
+          <a href="trainers.html" class="btn-get-started">Get Started</a>
         </div>
+      </div>
     </div>
-</main>
-  
-  
+  </main>
+
+
   <style>
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 100vh;
+      /* Full viewport height */
+      overflow: hidden;
+    }
 
-.hero {
-    position: relative;
-    width: 100%;
-    height: 100vh; /* Full viewport height */
-    overflow: hidden;
-}
+    /* Video Background Styling */
+    .background-vid {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      z-index: 0;
+    }
 
-/* Video Background Styling */
-.background-vid {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: 0;
-}
+    .background-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
-.background-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
+    /* Green Overlay Content */
+    .heading-overlay {
+      position: absolute;
+      /* Overlay on top of video */
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      /* Full height of viewport */
+      color: #fff;
+      /* Text color */
+      padding: 0;
+      margin: 0;
+    }
 
-/* Green Overlay Content */
-.heading-overlay {
-    position: absolute; /* Overlay on top of video */
-    top: 0;
-    left: 0;
-    z-index: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-    height: 100%; /* Full height of viewport */
-    color: #fff; /* Text color */
-    padding: 0;
-    margin: 0;
-}
+    .heading-overlay h2 {
+      font-size: 4rem;
+      /* Increased font size for the heading */
+      font-weight: bold;
+      color: #132b18;
+      margin: 0;
+      /* Remove margin to prevent whitespace */
+    }
 
-.heading-overlay h2 {
-    font-size: 4rem; /* Increased font size for the heading */
-    font-weight: bold;
-    color: #132b18;
-    margin: 0; /* Remove margin to prevent whitespace */
-}
-
-.heading-overlay p {
-    font-size: 1.5rem;
-    font-weight: bold;
-    margin: 10px 0;
-    color: #fff;
-}
+    .heading-overlay p {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin: 10px 0;
+      color: #fff;
+    }
 
 
 
 
-.card {
-    border-radius: 15px; /* Match this with the card's corner radius /
+    .card {
+      border-radius: 15px;
+      /* Match this with the card's corner radius /
     overflow: hidden; / Ensures the image respects the card's rounded corners /
     cursor: default; / Ensures cursor does not change on hover /
     transition: transform 0.3s ease; / Add transition for smooth scaling effect */
-    width: 300px;
+      width: 300px;
     }
+
     .card-img-top {
-    width: 100%;
-    height: auto;
-    object-fit: cover; /* Makes sure the image covers the entire area /
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      /* Makes sure the image covers the entire area /
     border-radius: inherit; / Inherit the card's rounded corners /
     object-position: center;
     cursor: default; / Ensures cursor does not change on hover */
@@ -222,14 +795,15 @@
 
 
     .card:hover {
-      transform: scale(1.05); /* Increase the scale of the card on hover */
+      transform: scale(1.05);
+      /* Increase the scale of the card on hover */
     }
-    #teamCardsContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
 
+    #teamCardsContainer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
   </style>
 
   <!-- About Section -->
@@ -379,7 +953,7 @@
   </section> -->
 
   <!-- Trainers Index Section -->
-  <section id="trainers-index" class="section trainers-index"  data-aos="fade-up" data-aos-delay="100">
+  <section id="trainers-index" class="section trainers-index" data-aos="fade-up" data-aos-delay="100">
 
     <div class="container">
       <!-- Section Title -->
@@ -390,12 +964,12 @@
       <div class="row">
 
         <div class="container">
-          <div id="teamCardsContainer" class="row"  data-aos="fade-up" data-aos-delay="100">
+          <div id="teamCardsContainer" class="row" data-aos="fade-up" data-aos-delay="100">
             <!-- Tutor cards will be dynamically populated here by JavaScript -->
           </div>
 
           <!-- Controls for navigating the carousel -->
-  
+
         </div>
 
 
@@ -409,19 +983,19 @@
   <!-- Testimonials Section -->
   <section id="testimonials" class="testimonials section" data-aos="fade-up" data-aos-delay="100">
     <div class="container section-title" data-aos="fade-up">
-        <h2>Testimonials</h2>
-        <p>What are our students saying</p>
+      <h2>Testimonials</h2>
+      <p>What are our students saying</p>
     </div>
 
     <div class="container" data-aos="fade-up" data-aos-delay="100">
-        <div class="swiper init-swiper">
-            <div class="swiper-wrapper" id="testimonials-container">
-                <!-- Testimonial cards will be dynamically populated here by JavaScript -->
-            </div>
-            <div class="swiper-pagination"></div>
+      <div class="swiper init-swiper">
+        <div class="swiper-wrapper" id="testimonials-container">
+          <!-- Testimonial cards will be dynamically populated here by JavaScript -->
         </div>
+        <div class="swiper-pagination"></div>
+      </div>
     </div>
-</section>
+  </section>
 
 
   </main>
@@ -429,7 +1003,7 @@
   <footer id="footer" class="footer position-relative light-background">
     <div class="container footer-top">
       <div class="row gy-4">
-        
+
         <!-- About Section with Social Links -->
         <div class="col-lg-3 md-6 sm-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
@@ -447,15 +1021,17 @@
             <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
             <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
           </div>
-       
+
         </div>
-  
+
         <!-- Google Maps Section -->
         <div class="col-lg-9 md-6 sm-6">
-          <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe style="border:0; width: 100%; height: 350px;"
+            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street"
+            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-  
-  
+
+
       </div>
     </div>
   </footer>
@@ -482,111 +1058,111 @@
 
   <script>
 
-document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function () {
 
-    // Display user's email on load
-    const myEmailButton = document.getElementById("my-email");
-    firebase.auth().onAuthStateChanged((user) => {
+      // Display user's email on load
+      const myEmailButton = document.getElementById("my-email");
+      firebase.auth().onAuthStateChanged((user) => {
         if (user) {
-            myEmailButton.textContent = user.email;
+          myEmailButton.textContent = user.email;
         } else {
-            window.location.href = 'index.html';
+          window.location.href = 'index.html';
         }
+      });
+
+
     });
 
-    
-});
-  
-    
-document.addEventListener("DOMContentLoaded", function () {
-    const topTutors = [
+
+    document.addEventListener("DOMContentLoaded", function () {
+      const topTutors = [
         'LIMITED TIME ONLY⏰',
         'USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
         'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
         'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
-    ];
+      ];
 
-    const marqueeContent = document.querySelector('.boxes-inner');
-    const marqueeWrapper = document.querySelector('.boxes');
+      const marqueeContent = document.querySelector('.boxes-inner');
+      const marqueeWrapper = document.querySelector('.boxes');
 
-    // Generate the original set of boxes
-    topTutors.forEach((tutor) => {
+      // Generate the original set of boxes
+      topTutors.forEach((tutor) => {
         const box = document.createElement('div');
         box.classList.add('box');
         box.textContent = tutor;
         marqueeContent.appendChild(box);
-    });
+      });
 
-    // Duplicate the content for seamless scrolling
-    marqueeContent.innerHTML += marqueeContent.innerHTML;
+      // Duplicate the content for seamless scrolling
+      marqueeContent.innerHTML += marqueeContent.innerHTML;
 
-    let contentWidth = marqueeContent.offsetWidth / 2;
-    let direction = -1;
+      let contentWidth = marqueeContent.offsetWidth / 2;
+      let direction = -1;
 
-    // Set up the GSAP animation
-    let marqueeTween = gsap.to(".boxes-inner", {
+      // Set up the GSAP animation
+      let marqueeTween = gsap.to(".boxes-inner", {
         x: direction * contentWidth,
         duration: 30,
         ease: "linear",
         repeat: -1,
         modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
         }
-    });
+      });
 
-    // Pause and interactivity on hover
-    const boxes = document.querySelectorAll('.box');
-    boxes.forEach(box => {
+      // Pause and interactivity on hover
+      const boxes = document.querySelectorAll('.box');
+      boxes.forEach(box => {
         box.addEventListener('mouseenter', function () {
-            marqueeTween.pause();
-            this.style.color = '#ffcc00';
-            this.style.transform = 'scale(1.1)';
+          marqueeTween.pause();
+          this.style.color = '#ffcc00';
+          this.style.transform = 'scale(1.1)';
         });
         box.addEventListener('mouseleave', function () {
-            marqueeTween.play();
-            this.style.color = '#fff';
-            this.style.transform = 'scale(1)';
+          marqueeTween.play();
+          this.style.color = '#fff';
+          this.style.transform = 'scale(1)';
         });
-    });
+      });
 
-    // Background color and direction change on hover
-    marqueeWrapper.addEventListener('mouseenter', function () {
+      // Background color and direction change on hover
+      marqueeWrapper.addEventListener('mouseenter', function () {
         marqueeWrapper.style.backgroundColor = '#333';
-    });
+      });
 
-    marqueeWrapper.addEventListener('mouseleave', function () {
+      marqueeWrapper.addEventListener('mouseleave', function () {
         marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
         direction *= -1;
         marqueeTween.kill();
         marqueeTween = gsap.to(".boxes-inner", {
-            x: direction * contentWidth,
-            duration: 30,
-            ease: "linear",
-            repeat: -1,
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-            }
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
         });
-    });
+      });
 
-    // Adjust marquee on window resize
-    window.addEventListener('resize', function () {
+      // Adjust marquee on window resize
+      window.addEventListener('resize', function () {
         contentWidth = marqueeContent.offsetWidth / 2;
         marqueeTween.kill();
         marqueeTween = gsap.to(".boxes-inner", {
-            x: direction * contentWidth,
-            duration: 30,
-            ease: "linear",
-            repeat: -1,
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-            }
+          x: direction * contentWidth,
+          duration: 30,
+          ease: "linear",
+          repeat: -1,
+          modifiers: {
+            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+          }
         });
+      });
     });
-});
 
-  
-  function fetchVideo() {
+
+    function fetchVideo() {
       const videoContainer = document.getElementById("background-vid");
       videoContainer.innerText = ''; // Clear any previous content
 
