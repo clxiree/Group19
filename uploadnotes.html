@@ -339,7 +339,8 @@
             owner: owner,
             price: parseFloat(price),
             courseLink: notesURL,
-            previewImage: previewURL
+            previewImage: previewURL,
+            isSaved: false
           }).then(() => {
             showToast("Note and preview image uploaded successfully!", "success");
             document.getElementById("uploadForm").reset();
