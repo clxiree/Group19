@@ -11,6 +11,13 @@
   <!-- Firebase JS SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ModifiersPlugin.min.js"></script>
 
   <!-- Fonts and Icons -->
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -20,10 +27,30 @@
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
   <link href="assets/css/main.css" rel="stylesheet">
+
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
+  <!-- Favicons -->
+  <!-- <link href="assets/img/stlogo.png" rel="icon"> -->
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
   <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+  <!-- Main CSS File -->
+  <link href="assets/css/main.css" rel="stylesheet">
 
   <style>
     /* Reduce unnecessary padding or margin for notes section */
@@ -37,9 +64,15 @@
     .note-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      /* 3 in a row if space allows */
       gap: 20px;
     }
 
+    .note-grid-container {
+      margin-top: 30px;
+    }
+
+    /* Styling for each note container */
     .note-container {
       border: 1px solid #ddd;
       padding: 20px;
@@ -51,39 +84,120 @@
       flex-direction: column;
       justify-content: space-between;
       min-height: 350px;
+      /* Set a fixed height to standardize */
     }
 
     .note-container:hover {
       transform: scale(1.02);
+      /* Slight zoom effect on hover */
     }
 
-    .course-code {
-      display: inline-block;
-      padding: 5px 10px;
-      background-color: #337ab7;
-      color: #ffffff;
-      font-weight: bold;
-      border-radius: 8px;
-      margin-bottom: 15px;
-      font-size: 0.9rem;
-      width: 100px;
-      text-align: center;
-    }
-
-    .upload-button-wrapper {
+    .course-content {
+      text-align: left;
+      flex: 1;
+      /* Ensures consistent spacing */
       display: flex;
-      justify-content: flex-end;
-      margin-bottom: 20px;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    .upload-button-wrapper .btn i {
-      margin-right: 5px;
+    /* Styling for course code label */
+    .course-code {
+    display: inline-block;
+    padding: 5px 10px; /* Keep original padding for height */
+    background-color: #337ab7;
+    color: #ffffff;
+    font-weight: bold;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 0.9rem;
+    width: 100px; /* Set a specific width to control the length */
+    text-align: center; /* Center-align the text within the element */
+}
+
+    /* Align Professor and Owner in the same row with reduced spacing */
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      /* Reduced space between items */
     }
 
-    /* Responsive layout */
+    .info-row p {
+      margin: 0;
+      /* Remove default paragraph margin */
+    }
+    .upload-button-wrapper {
+  display: flex;
+  justify-content: flex-end; /* Aligns the button to the right */
+  margin-bottom: 20px; /* Adjust as needed to add space below */
+}
+
+.upload-button-wrapper .btn {
+  display: inline-flex;
+  align-items: center;
+}
+
+.upload-button-wrapper .btn i {
+  margin-right: 5px; /* Adds space between the icon and the text */
+}
+.note-container {
+        position: relative;
+        background-size: cover;
+        background-position: center;
+    }
+
+    /* Add overlay to fade the background image */
+    .note-container::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(255, 255, 255, 0.7); /* Lighten overlay */
+        z-index: 1;
+    }
+
+    .course-content, .course-code, h3, p, a {
+        position: relative;
+        z-index: 2; /* Ensure text appears above overlay */
+        color: #333; /* Darker text color for contrast */
+    }
+    /* Styling for course code label */
+.course-code {
+  display: inline-block;
+  padding: 5px 10px; /* Keep original padding for height */
+  background-color: #337ab7;
+  color: #ffffff; /* Set text color to white */
+  font-weight: bold;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  width: 100px; /* Set a specific width to control the length */
+  text-align: center; /* Center-align the text within the element */
+}
+
+/* Other note container text styling */
+
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.8); /* 20% transparency */
+    z-index: 1;
+}
+
+
+
+    /* Ensures layout responsiveness */
     @media (max-width: 768px) {
       .note-grid {
         grid-template-columns: 1fr;
+        /* Single column on smaller screens */
       }
     }
   </style>
@@ -91,128 +205,129 @@
 
 <body class="course-details-page">
 
-    <header id="header" class="header d-flex align-items-center sticky-top">
-      <div class="container-fluid container-xl position-relative d-flex align-items-center">
-        <a href="index.html" class="logo d-flex align-items-center me-auto">
-          <img src="assets/img/smootutor-logo.jpg">
-        </a>
-  
-        <nav id="navmenu" class="navmenu">
-          <ul>
-            <li><a href="tuteehomepage.html">Home<br></a></li>
-            <li><a href="bookings.html">Bookings</a></li>
-  
-            <li class="dropdown">
-              <a href="trainers.html" id="notesDropdown" aria-expanded="false">
-                Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-  
-                <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-                <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-  
-              </ul>
-            </li>
-            <li><a href="chats.html">Chats</a></li>
-            <li class="dropdown">
-              <a href="newnotes.html" id="notesDropdown" aria-expanded="false">
-                Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-  
-                <li><a href="newnotes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-                <li><a href="newnotes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-  
-              </ul>
-           
-          </ul>
-            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
-        </nav>
-        <a class="btn-getstarted" id="auth-button"><div id="my-email"></div></a>
-      </div>
-    </header>
-  
-    <main class="main">
-  
-      <!-- Page Title -->
-      <div class="page-title" data-aos="fade">
-        <div class="heading">
-          <div class="container">
-            <div class="row d-flex justify-content-center text-center">
-              <div class="col-lg-8">
-                <h1>Notes</h1>
-                <p class="mb-0">Upload your notes</p>
-  
-              </div>
-            </div>
-          </div>
-        </div>
-        
-      </div><!-- End Page Title -->
-      <!-- Browse Notes Section -->
-      <section id="browse-notes-section" class="notes-section">
-        <div class="container d-flex justify-content-between align-items-center">
-          <h2>Browse Notes</h2>
-          <div class="upload-button-wrapper">
-            <a class="btn btn-primary" href="uploadnotes.html">
-              <i class="fas fa-upload"></i> Upload Your Notes
-            </a>
-          </div>        
-        </div>
-        <div class="container note-grid" id="browse-notes-container"></div>
-      </section>
-      <section id="saved-notes-section" class="notes-section" style="display: none;">
-        <div class="container">
-          <h2>Saved Notes</h2>
-          <div class="container note-grid" id="saved-notes-container"></div>
-        </div>
-      </section>
-  
-  
-  
-  
-    </main>
-  
-    <footer id="footer" class="footer position-relative light-background">
-      <div class="container footer-top">
-        <div class="row gy-4">
-          
-          <!-- About Section with Social Links -->
-          <div class="col-lg-3 md-6 sm-6 footer-about">
-            <a href="index.html" class="logo d-flex align-items-center">
-              <span class="sitename">SMOOTutor</span>
-            </a>
-            <div class="footer-contact pt-3">
-              <p>SMU</p>
-              <p>81 Victoria St, Singapore 188065</p>
-              <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
-              <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
-            </div>
-            <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
-              <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
-              <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
-              <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
-              <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
-            </div>
-         
-          </div>
-    
-          <!-- Google Maps Section -->
-          <div class="col-lg-9 md-6 sm-6">
-            <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-          </div>
-    
-    
-        </div>
-      </div>
-    </footer>
-    <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-        class="bi bi-arrow-up-short"></i></a>
-  
-    <!-- Preloader -->
-    <div id="preloader"></div>
+  <header id="header" class="header d-flex align-items-center sticky-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center">
+      <a href="index.html" class="logo d-flex align-items-center me-auto">
+        <img src="assets/img/smootutor-logo.jpg">
+      </a>
 
-  <!-- Firebase Initialization and JavaScript to Fetch Notes -->
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li><a href="tuteehomepage.html">Home<br></a></li>
+          <li><a href="bookings.html">Bookings</a></li>
+
+          <li class="dropdown">
+            <a href="trainers.html" id="notesDropdown" aria-expanded="false">
+              Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
+              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+
+            </ul>
+          </li>
+          <li><a href="chats.html">Chats</a></li>
+          <li class="dropdown">
+            <a href="notes.html" id="notesDropdown" aria-expanded="false">
+              Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+            </ul>
+         
+        </ul>
+          <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+      </nav>
+      <a class="btn-getstarted" id="auth-button"><div id="my-email"></div></a>
+    </div>
+  </header>
+
+  <main class="main">
+
+    <!-- Page Title -->
+    <div class="page-title" data-aos="fade">
+      <div class="heading">
+        <div class="container">
+          <div class="row d-flex justify-content-center text-center">
+            <div class="col-lg-8">
+              <h1>Notes</h1>
+              <p class="mb-0">Upload your notes</p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div><!-- End Page Title -->
+    <!-- Browse Notes Section -->
+    <section id="browse-notes-section" class="notes-section">
+      <div class="container d-flex justify-content-between align-items-center">
+        <h2>Browse Notes</h2>
+        <div class="upload-button-wrapper">
+          <a class="btn btn-primary" href="uploadnotes.html">
+            <i class="fas fa-upload"></i> Upload Your Notes
+          </a>
+        </div>        
+      </div>
+      <div class="container note-grid" id="browse-notes-container"></div>
+    </section>
+    <section id="saved-notes-section" class="notes-section" style="display: none;">
+      <div class="container">
+        <h2>Saved Notes</h2>
+        <div class="container note-grid" id="saved-notes-container"></div>
+      </div>
+    </section>
+
+
+
+
+  </main>
+
+  <footer id="footer" class="footer position-relative light-background">
+    <div class="container footer-top">
+      <div class="row gy-4">
+        
+        <!-- About Section with Social Links -->
+        <div class="col-lg-3 md-6 sm-6 footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <span class="sitename">SMOOTutor</span>
+          </a>
+          <div class="footer-contact pt-3">
+            <p>SMU</p>
+            <p>81 Victoria St, Singapore 188065</p>
+            <p class="mt-3"><strong>Phone:</strong> <span>+65 8111 9222</span></p>
+            <p><strong>Email:</strong> <span>SMOOtutor@gmail.com</span></p>
+          </div>
+          <div class="social-links d-flex mt-4" style="gap: 10px; padding-top:40px">
+            <a href="https://x.com/?lang=en"><i class="bi bi-twitter-x"></i></a>
+            <a href="https://www.facebook.com/"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
+            <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
+          </div>
+       
+        </div>
+  
+        <!-- Google Maps Section -->
+        <div class="col-lg-9 md-6 sm-6">
+          <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+  
+  
+      </div>
+    </div>
+  </footer>
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Firebase Initialization and JavaScript Functions -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
       // Firebase configuration
@@ -222,146 +337,368 @@
         projectId: "smootutor-ed94a",
         storageBucket: "smootutor-ed94a.appspot.com",
         messagingSenderId: "289686522861",
-        appId: "1:289686522861:web:5811385ced42106d78b5e4"
+        appId: "1:289686522861:web:5811385ced42106d78b5e4",
+        measurementId: "G-46QED8ZFKJ"
       };
+firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const storage = firebase.storage();
 
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.firestore();
-      
-
-      document.addEventListener("DOMContentLoaded", function () {
-    const topTutors = [
-        'LIMITED TIME ONLY⏰ USE ILOVEKYONG FOR 10% OFF ALL BOOKINGS🔥🔥🔥',
-        'ZENNY POTATO AWARDED TOP TUTOR OF THE MONTH 🏆✨',
-        'ELLIPSIS 🍟WELFARE PACK🧃 COLLECTION THIS FRIDAY!'
+    // Array of image paths in Firebase Storage to be used as backgrounds
+    const imagePaths = [
+        'images/notes/istockphoto-1041740040-612x612.jpg',
+        'images/notes/istockphoto-1132123971-612x612.jpg',
+        'images/notes/istockphoto-1166978137-612x612.jpg',
+        'images/notes/istockphoto-1309080507-612x612.jpg',
+        'images/notes/istockphoto-1312139041-612x612.jpg',
+        'images/notes/istockphoto-1366428092-612x612.jpg',
+        'images/notes/istockphoto-1371160686-612x612.jpg',
+        'images/notes/istockphoto-1385520247-612x612.jpg',
+        'images/notes/istockphoto-1408304018-612x612.jpg',
+        'images/notes/istockphoto-1410568357-640x640.jpg',
+        'images/notes/istockphoto-1480095869-612x612.jpg'
     ];
 
-    const marqueeContent = document.querySelector('.boxes-inner');
-    const marqueeWrapper = document.querySelector('.boxes');
-    const closeButton = document.querySelector('.close-marquee');
+    // Function to fetch and display notes
+    function fetchNotes() {
+        db.collection("BrowseNotes").get().then(async (snapshot) => {
+            const notes = [];
 
-    // Generate the boxes
-    topTutors.forEach((tutor) => {
-        const box = document.createElement('div');
-        box.classList.add('box');
-        box.textContent = tutor;
-        marqueeContent.appendChild(box);
-    });
+            // Fetch each note document
+            for (const doc of snapshot.docs) {
+                const note = { id: doc.id, ...doc.data() };
 
-    // Duplicate each box for seamless scrolling
-    topTutors.forEach((tutor) => {
-        const boxDuplicate = document.createElement('div');
-        boxDuplicate.classList.add('box');
-        boxDuplicate.textContent = tutor;
-        marqueeContent.appendChild(boxDuplicate);
-    });
+                // Select a random image from the array
+                const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
 
-    let contentWidth = marqueeContent.offsetWidth / 2;
-    let direction = -1;
+                try {
+                    // Fetch the URL of the random image from Firebase Storage
+                    const url = await storage.ref(randomImagePath).getDownloadURL();
+                    note.img = url; // Set the image URL for this note
+                } catch (error) {
+                    console.error("Error fetching image URL:", error);
+                    note.img = ""; // Use an empty string or a placeholder image URL
+                }
 
-    // Set up the GSAP animation
-    let marqueeTween = gsap.to(".boxes-inner", {
-        x: direction * contentWidth,
-        duration: 30,
-        ease: "linear",
-        repeat: -1,
-        modifiers: {
-            x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
-        }
-    });
-
-    // Pause and interactivity on hover
-    const boxes = document.querySelectorAll('.box');
-    boxes.forEach(box => {
-        box.addEventListener('mouseenter', function () {
-            marqueeTween.pause();
-            this.style.color = '#ffcc00';
-            this.style.transform = 'scale(1.1)';
-        });
-        box.addEventListener('mouseleave', function () {
-            marqueeTween.play();
-            this.style.color = '#fff';
-            this.style.transform = 'scale(1)';
-        });
-    });
-
-    // Background color and direction change on hover
-    marqueeWrapper.addEventListener('mouseenter', function () {
-        marqueeWrapper.style.backgroundColor = '#333';
-    });
-
-    marqueeWrapper.addEventListener('mouseleave', function () {
-        marqueeWrapper.style.backgroundColor = 'rgba(46, 58, 144, 0.8)';
-        direction *= -1;
-        marqueeTween.kill();
-        marqueeTween = gsap.to(".boxes-inner", {
-            x: direction * contentWidth,
-            duration: 30,
-            ease: "linear",
-            repeat: -1,
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+                notes.push(note);
             }
-        });
-    });
 
-    // Adjust marquee on window resize
-    window.addEventListener('resize', function () {
-        contentWidth = marqueeContent.offsetWidth / 2;
-        marqueeTween.kill();
-        marqueeTween = gsap.to(".boxes-inner", {
-            x: direction * contentWidth,
-            duration: 30,
-            ease: "linear",
-            repeat: -1,
-            modifiers: {
-                x: gsap.utils.unitize(x => parseFloat(x) % contentWidth)
+            // Render notes after all images are fetched
+            renderNotes("browse-notes-container", notes);
+        }).catch((error) => {
+            console.error("Error fetching notes:", error);
+        });
+    }
+
+    // Function to render notes in the specified container
+    function renderNotes(containerId, notes) {
+        const container = document.getElementById(containerId);
+        container.textContent = ""; // Clear the container before adding new items
+
+        notes.forEach(note => {
+            const noteContainer = document.createElement("div");
+            noteContainer.className = "note-container";
+
+            // Apply the background image if available
+            if (note.img) {
+                noteContainer.style.backgroundImage = `url('${note.img}')`;
+            } else {
+                noteContainer.style.backgroundColor = "#f0f0f0"; // Fallback background color if no image
             }
-        });
-    });
 
-    // Close button functionality
-    closeButton.addEventListener('click', function () {
-        marqueeWrapper.style.display = 'none';
-    });
+            const courseCode = document.createElement("span");
+            courseCode.className = "course-code";
+            courseCode.textContent = note.courseId || "No Title";
+
+            const courseName = document.createElement("h3");
+            courseName.textContent = note.courseName || "Untitled";
+
+            const professor = document.createElement("p");
+            professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
+
+            const owner = document.createElement("p");
+            owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
+
+            const price = document.createElement("p");
+            price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
+
+            // Lock icon with link to preview.html
+            const previewLink = document.createElement("a");
+            previewLink.href = `preview.html?notesId=${note.id}`; // Ensure notesId is passed in the URL
+            previewLink.target = "_blank";
+            previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
+
+            // Append elements to the note container
+            noteContainer.appendChild(courseCode);
+            noteContainer.appendChild(courseName);
+            noteContainer.appendChild(professor);
+            noteContainer.appendChild(owner);
+            noteContainer.appendChild(price);
+            noteContainer.appendChild(previewLink);
+
+            // Append noteContainer to the main container
+            container.appendChild(noteContainer);
+        });
+    }
+
+    // Fetch notes on page load
+    fetchNotes();
 });
 
-      function showSection(section) {
-        const browseSection = document.getElementById("browse-notes-section");
-        const savedSection = document.getElementById("saved-notes-section");
-        const pageTitle = document.querySelector(".page-title h1");
+//       // Initialize Firebase
+//       firebase.initializeApp(firebaseConfig);
+//       const db = firebase.firestore();
+//       // Array of image paths in Firebase Storage to be used as backgrounds
+// const imagePaths = [
+//     'images/notes/istockphoto-1041740040-612x612.jpg',
+//     'images/notes/istockphoto-1132123971-612x612.jpg',
+//     'images/notes/istockphoto-1166978137-612x612.jpg',
+//     'images/notes/istockphoto-1309080507-612x612.jpg',
+//     'images/notes/istockphoto-1312139041-612x612.jpg',
+//     'images/notes/istockphoto-1366428092-612x612.jpg',
+//     'images/notes/istockphoto-1371160686-612x612.jpg',
+//     'images/notes/istockphoto-1385520247-612x612.jpg',
+//     'images/notes/istockphoto-1408304018-612x612.jpg',
+//     'images/notes/istockphoto-1410568357-640x640.jpg',
+//     'images/notes/istockphoto-1480095869-612x612.jpg'
+// ];
 
-        if (section === "browse") {
-        browseSection.style.display = "block";
-        savedSection.style.display = "none";
-        pageTitle.textContent = "Browse Notes";
-        } else if (section === "saved") {
-        browseSection.style.display = "none";
-        savedSection.style.display = "block";
-        pageTitle.textContent = "Saved Notes";
-        }
-  }
-  
+// // Function to fetch and display notes
+// function fetchNotes() {
+//     const storage = firebase.storage();
+//     db.collection("BrowseNotes").get().then((snapshot) => {
+//         const notes = [];
+//         snapshot.forEach((doc) => {
+//             const note = { id: doc.id, ...doc.data() };
 
-      function fetchNotes() {
-        db.collection("BrowseNotes").get().then((snapshot) => {
-          const notes = [];
-          snapshot.forEach((doc) => {
-            notes.push(doc.data());
-          });
-          renderNotes("browse-notes-container", notes);
-        }).catch((error) => {
-          console.error("Error fetching notes:", error);
-        });
-      }
+//             // Select a random image from the array
+//             const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+            
+//             // Fetch the URL of the random image from Firebase Storage
+//             storage.ref(randomImagePath).getDownloadURL().then(url => {
+//                 note.img = url; // Set the image URL for this note
+//                 notes.push(note);
+                
+//                 // Render notes once all image URLs are set
+//                 renderNotes("browse-notes-container", notes);
+//             }).catch((error) => {
+//                 console.error("Error fetching image URL:", error);
+//             });
+//         });
+//     }).catch((error) => {
+//         console.error("Error fetching notes:", error);
+//     });
+// }
 
-      fetchNotes(); // Fetch notes on page load
-    });
+// Function to render notes in the specified container
+// function renderNotes(containerId, notes) {
+//     const container = document.getElementById(containerId);
+//     container.textContent = ""; // Clear the container before adding new items
+
+//     notes.forEach(note => {
+//         const noteContainer = document.createElement("div");
+//         noteContainer.className = "note-container";
+
+//         // Apply the random background image
+//         if (note.img) {
+//             noteContainer.style.backgroundImage = `url('${note.img}')`;
+//         } else {
+//             console.warn("Missing image URL for note:", note);
+//         }
+
+//         const courseCode = document.createElement("span");
+//         courseCode.className = "course-code";
+//         courseCode.textContent = note.courseId || "No Title";
+
+//         const courseName = document.createElement("h3");
+//         courseName.textContent = note.courseName || "Untitled";
+
+//         const professor = document.createElement("p");
+//         professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
+
+//         const owner = document.createElement("p");
+//         owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
+
+//         const price = document.createElement("p");
+//         price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
+
+//         // Lock icon with link to preview.html
+//         const previewLink = document.createElement("a");
+//         previewLink.href = `preview.html?notesId=${note.id}`; // Ensure notesId is passed in the URL
+//         previewLink.target = "_blank";
+//         previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
+
+//         // Append elements to the note container
+//         noteContainer.appendChild(courseCode);
+//         noteContainer.appendChild(courseName);
+//         noteContainer.appendChild(professor);
+//         noteContainer.appendChild(owner);
+//         noteContainer.appendChild(price);
+//         noteContainer.appendChild(previewLink);
+
+//         // Append noteContainer to the main container
+//         container.appendChild(noteContainer);
+//     });
+// }
+
+
+
+      // const auth = firebase.auth();
+    //   firebase.auth().onAuthStateChanged((user) => {
+    //     if (user) {
+    //         console.log("User is logged in with email:", user.email);
+    //         document.getElementById("my-email").innerText = user.email;
+    //         // fetchAllTutors()
+    //         // You can use user.email to retrieve user-specific data
+    //     } else {
+    //         console.log("No user is logged in.");
+    //         // Redirect to login page if needed
+    //         window.location.href = 'login.html';
+    //     }
+    // });
+//     firebase.auth().onAuthStateChanged((user) => {
+//     if (user) {
+//         console.log("User is logged in with email:", user.email);
+        
+//         const emailDiv = document.getElementById("my-email");
+//         const authButton = document.getElementById("auth-button");
+
+//         // Display the user's email by default
+//         emailDiv.innerText = user.email;
+
+//         // Add a click event to handle changing to logout and then logging out
+//         authButton.addEventListener("click", function() {
+//             if (emailDiv.innerText === user.email) {
+//                 // Change to "LOGOUT" and apply red style
+//                 emailDiv.innerText = "LOGOUT";
+//                 emailDiv.classList.add("logout-button");
+//             } else if (emailDiv.innerText === "LOGOUT") {
+//                 // Sign out and redirect
+//                 firebase.auth().signOut().then(() => {
+//                     console.log("User has logged out.");
+//                     window.location.href = 'index.html'; // Redirect to home page
+//                 }).catch((error) => {
+//                     console.error("Error logging out:", error);
+//                 });
+//             }
+//         });
+//     } else {
+//         console.log("No user is logged in.");
+//         window.location.href = 'login.html';
+//     }
+// });
+
+
+
+      
+
+
+// Function to render notes in the specified container (Browse or Saved)
+// function renderNotes(containerId, notes) {
+//     const container = document.getElementById(containerId);
+//     container.textContent = ""; // Clear the container before adding new items
+
+//     notes.forEach(note => {
+//         const noteContainer = document.createElement("div");
+//         noteContainer.className = "note-container";
+
+//         if (note.img) {
+//             noteContainer.style.backgroundImage = `url('${note.img}')`;
+//         } else {
+//             console.warn("Missing image URL for note:", note);
+//         }
+
+//         const courseCode = document.createElement("span");
+//         courseCode.className = "course-code";
+//         courseCode.textContent = note.courseId || "No Title";
+
+//         const courseName = document.createElement("h3");
+//         courseName.textContent = note.courseName || "Untitled";
+
+//         const professor = document.createElement("p");
+//         professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
+
+//         const owner = document.createElement("p");
+//         owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
+
+//         const price = document.createElement("p");
+//         price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
+
+//         // Lock icon with link to preview.html
+//         const previewLink = document.createElement("a");
+//         previewLink.href = `preview.html?notesId=${note.notesId || ""}`; // Ensure notesId is passed in the URL
+//         previewLink.target = "_blank";
+//         previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
+
+//         // Append elements to the note container
+//         noteContainer.appendChild(courseCode);
+//         noteContainer.appendChild(courseName);
+//         noteContainer.appendChild(professor);
+//         noteContainer.appendChild(owner);
+//         noteContainer.appendChild(price);
+//         noteContainer.appendChild(previewLink);
+
+//         // Append noteContainer to the main container
+//         container.appendChild(noteContainer);
+//     });
+// }
+
+
+
+
+  // Toggle between Browse and Saved notes sections
+  // function showSection(section) {
+  //   const browseSection = document.getElementById("browse-notes-section");
+  //   const savedSection = document.getElementById("saved-notes-section");
+  //   const pageTitle = document.querySelector(".page-title h1");
+
+  //   if (section === "browse") {
+  //     browseSection.style.display = "block";
+  //     savedSection.style.display = "none";
+  //     pageTitle.textContent = "Browse Notes";
+  //   } else if (section === "saved") {
+  //     browseSection.style.display = "none";
+  //     savedSection.style.display = "block";
+  //     pageTitle.textContent = "Saved Notes";
+  //   }
+  // }
+
+  // // Attach event listeners to dropdown items
+  // document.querySelector("a[href='notes.html?section=browse']").addEventListener("click", function (e) {
+  //   e.preventDefault();
+  //   showSection("browse");
+  // });
+
+  // document.querySelector("a[href='notes.html?section=saved']").addEventListener("click", function (e) {
+  //   e.preventDefault();
+  //   showSection("saved");
+  // });
+
+  // Initial load
+  // function fetchNotes() {
+  //       db.collection("BrowseNotes").get().then((snapshot) => {
+  //         const notes = [];
+  //         snapshot.forEach((doc) => {
+  //           notes.push(doc.data());
+  //         });
+  //         renderNotes("browse-notes-container", notes);
+  //       }).catch((error) => {
+  //         console.error("Error fetching notes:", error);
+  //       });
+  //     }
+
+  //     fetchNotes(); // Fetch notes on page load
+  //   });
+//   showSection("browse"); // Default to browse section on load
+// });
+    
+    // Initialize AOS (Animate on Scroll)
+    
   </script>
 
   <!-- Vendor JS Files -->
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/php-email-form/validate.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
