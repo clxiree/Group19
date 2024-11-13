@@ -257,6 +257,7 @@
         userOneLiner.textContent = data.Oneliner || "No one-liner available.";
 
         const rating = data.Rating || 0;  // Use default 0 if rating is undefined
+        // console.log(rating)
         populateStarRating(rating);
 
         // Update the "Book Them Now" button link with the UserID
@@ -375,6 +376,31 @@
       }
     }
 
+    function populateStarReviewRating(rating) {
+  const starsContainer = document.createElement("div");
+  starsContainer.classList.add("stars");
+
+  for (let i = 1; i <= 5; i++) {
+    const star = document.createElement("i");
+    star.style.color = "#FFD700"; // Gold color
+
+    if (i <= Math.floor(rating)) {
+      // Full star
+      star.className = "bi bi-star-fill";
+    } else if (i === Math.floor(rating) + 1 && rating % 1 >= 0.5) {
+      // Half star
+      star.className = "bi bi-star-half";
+    } else {
+      // Empty star
+      star.className = "bi bi-star";
+    }
+
+    starsContainer.appendChild(star);
+  }
+
+  return starsContainer; // Return the populated stars container
+}
+
     async function fetchReviews(userId) {
     const testimonialsContainer = document.getElementById("testimonialsContainer");
     testimonialsContainer.innerText = ""; // Clear any existing content
@@ -413,13 +439,7 @@
         titleElement.textContent = "Tutee"; 
         testimonialItem.appendChild(titleElement);
 
-        const starsContainer = document.createElement("div");
-        starsContainer.classList.add("stars");
-        for (let i = 0; i < Rate; i++) {
-          const star = document.createElement("i");
-          star.classList.add("bi", "bi-star-fill");
-          starsContainer.appendChild(star);
-        }
+        const starsContainer = populateStarReviewRating(Rate);
         testimonialItem.appendChild(starsContainer);
 
         const commentParagraph = document.createElement("p");
