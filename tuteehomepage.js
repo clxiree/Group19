@@ -63,16 +63,17 @@ firebase.auth().onAuthStateChanged((user) => {
     
                 // Create a column for each tutor card
                 const colDiv = document.createElement("div");
-                colDiv.classList.add("col-lg-4", "col-md-6", "d-flex", "align-items-stretch");
+                colDiv.classList.add("col-lg-4", "col-md-6", "d-flex", "align-items-stretch", "justify-content-center");
     
                 // Create the card container
                 const cardDiv = document.createElement("div");
-                cardDiv.classList.add("card", "member", "mb-4");
+                cardDiv.classList.add("card", "member", "mb-4", "text-center");
+                cardDiv.style.width = "300px"; // Consistent width for all cards
     
                 const img = document.createElement("img");
                 img.classList.add("card-img-top", "img-fluid");
                 img.alt = data.Name || "No Name";
-                img.style.width= "300px";
+                img.style.width = "100%";
                 img.style.height = "300px"; // Fixed height for image
     
                 // Set the default image from Firebase Storage while the actual image is loading
@@ -91,11 +92,7 @@ firebase.auth().onAuthStateChanged((user) => {
     
                 // Card body content
                 const cardBody = document.createElement("div");
-                cardBody.classList.add("card-body");
-                cardBody.style.display = "flex";
-                cardBody.style.flexDirection = "column";
-                cardBody.style.justifyContent = "space-between"; // Space elements evenly within card body
-                cardBody.style.flexGrow = "1"; // Allow card body to expand within card
+                cardBody.classList.add("card-body", "d-flex", "flex-column", "justify-content-between");
     
                 const name = document.createElement("h5");
                 name.classList.add("card-title");
@@ -111,8 +108,8 @@ firebase.auth().onAuthStateChanged((user) => {
     
                 // Pass the rating element directly to the populateStarRating function
                 populateStarRating(rating, data.Rating);
-               
-                console.log(data.Rating)
+    
+                console.log(data.Rating);
     
                 // Append all elements in the right order
                 cardBody.appendChild(name);
@@ -128,6 +125,7 @@ firebase.auth().onAuthStateChanged((user) => {
             console.error("Error fetching team members:", error);
         });
     }
+    
     
     function populateStarRating(ratingElement, rating) {
       ratingElement.innerText = ""; // Clear previous content
