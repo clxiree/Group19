@@ -251,6 +251,7 @@
 
 
 .fa-remove {
+  
   color: #CDD6DD;
 }
 /* Make sure the tinder buttons are responsive */
@@ -279,15 +280,8 @@
     
   }
 
-  /* Ensure container has no padding */
-  .container {
-    padding: 0 !important;
-    margin: 0 auto; /* Optional: center the container */
-  }
 
-  .profile-details{
-    /* padding: 3px; */
-  }
+
 
   /* Adjust footer padding and margin if necessary */
   footer {
@@ -296,6 +290,8 @@
   }
  
 }
+
+
 
 
 
@@ -339,6 +335,11 @@
     //     console.error("Authentication error:", error);
     //   });
     // });
+    const myEmailButton = document.getElementById("my-email");
+    const logoutButton = document.getElementById("logout-button");
+    const logoutButtonSmall = document.getElementById("logout-button-small");
+    const myEmailContainer = document.getElementById("my-email-container");
+    const logoutContainer = document.getElementById("logout-container");
 
     firebase.auth().onAuthStateChanged((user) => {
     if (user) {
@@ -397,7 +398,8 @@ function toggleVisibility() {
 }
 toggleVisibility();
 window.addEventListener("resize", toggleVisibility);});
-    
+
+
     </script>
 </head>
 
