@@ -119,25 +119,23 @@
   box-shadow: 0 0 0 2px rgba(95, 207, 128, 0.2);
 }
 
-/* Ensure the booking list accommodates the filter */
+/* Grid layout for the courses section */
 #booking-list {
-  padding-top: 60px;  /* Add space for the filter at the top */
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Flexible grid layout */
+    gap: 15px; /* Adjust spacing between cards */
+    padding: 20px;
+    background-color: #f9f9f9; /* Optional background color for contrast */
 }
 
-/* Make the filter container responsive */
+/* Responsive adjustments for smaller screens */
 @media (max-width: 768px) {
-  .filter-container {
-    position: relative;
-    top: 0;
-    right: 0;
-    margin-bottom: 20px;
-    justify-content: flex-end;
-  }
-  
-  #booking-list {
-    padding-top: 20px;
-  }
+    #booking-list {
+        grid-template-columns: 1fr; /* Single column layout on smaller screens */
+        padding: 10px;
+    }
 }
+
 
 
 
