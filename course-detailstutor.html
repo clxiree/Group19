@@ -385,11 +385,7 @@
         // Update booking ID
         elements.bookingId.textContent = `#${bookingData.bookingId}`;
         elements.status.textContent = bookingData.status;
-
-        if (elements.courseCode) {
-        elements.courseCode.textContent = bookingData.courseCode;
-
-        if (bookingData.status === "Cancelled") {
+         if (bookingData.status === "Cancelled") {
         elements.status.style.color = "red";
         elements.status.style.fontWeight = "bold"; // Optional: make it bold
     } else if (bookingData.status === "Pending") {
@@ -398,7 +394,10 @@
     }else{
       elements.status.style.color = "green"; // Reset color if not cancelled
         elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
+    }
 
+        if (elements.courseCode) {
+        elements.courseCode.textContent = bookingData.courseCode;
     }
         if (elements.trainer) {
           elements.trainer.textContent = bookingData.tutorName;
@@ -543,9 +542,7 @@ function handleAcceptBooking(docId) {
       }
 
       fetchBookingDetails();
-    }
     });
-
   </script>
 
 </body>
