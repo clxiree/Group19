@@ -400,6 +400,7 @@
       opacity: 1;
     }
   </style>
+
 </head>
 
 <body class="chats-page">
@@ -839,20 +840,18 @@
     function updateChatItem(chatId, chatData) {
       let chatItem = chatItemsMap[chatId];
       if (!chatItem) {
-        console.warn(`Chat item for ${chatId} does not exist. Creating a new one.`);
-        createChatItem(chatId, chatData);
+        console.warn(`Chat item for ${chatId} does not exist. Skipping update.`);
         return;
       }
       const chatLastMessageDiv = chatItem.querySelector(".chat-item-last-message");
       if (chatLastMessageDiv) {
         chatLastMessageDiv.textContent = chatData.last_message
-          ? (chatData.last_message.type === 'text'
+          ? (chatData.last_message.type === 'text' || chatData.last_message.type === 'system'
             ? truncateText(chatData.last_message.content, 30)
             : '📎 Attachment')
           : '';
       }
     }
-
 
     function removeChatItem(chatId) {
       const chatItem = chatItemsMap[chatId];
@@ -1231,7 +1230,7 @@
                       content: 'Chat started',
                       sender_email: currentUser.email,
                       sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-                      type: 'system', // You can define a new type for system messages
+                      type: 'text', // You can define a new type for system messages
                       read_by_receiver: false
                     }
                   };
