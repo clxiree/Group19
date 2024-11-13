@@ -379,7 +379,7 @@
         if (elements.trainer) {
           elements.trainer.textContent = bookingData.tutorName;
         }
-        elements.courseFee.textContent = `$${bookingData.fee}`;
+        elements.courseFee.textContent = `$${bookingData.fee * 2}`;
 
         // Update schedule
         const existingSchedulePs = elements.schedule.querySelectorAll('p');
