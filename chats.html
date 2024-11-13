@@ -44,10 +44,11 @@
       border: none;
       cursor: pointer;
       transition: transform 0.2s;
+      z-index: 1;
     }
 
     .emoji-grid button:hover {
-      transform: scale(1.2);
+      transform: scale(2);
     }
 
     /* Modal Animations */
@@ -386,16 +387,21 @@
     @media (max-width: 767px) {
       .chat-container {
         flex-direction: column;
+        height: 100vh;
       }
 
       .chat-list {
         width: 100%;
+        height: 30%;
         border-right: none;
-        border-bottom: 1px solid #dee2e6;
+        background-color: #3e3e3e;
+        border-bottom: 1px solid #000000;
       }
 
       .chat-window {
         width: 100%;
+        height: 70%;
+        background-color: #f8f9fa;
       }
 
       .chat-list-header h4 {
@@ -409,6 +415,13 @@
       .chat-item-last-message {
         font-size: 0.85em;
       }
+
+      .chat-header {
+        background-color: #3e3e3e;
+        color: #ffffff;
+        border-bottom: 1px solid #000000;
+      }
+
     }
 
     @media (max-width: 576px) {
@@ -416,11 +429,13 @@
       /* Stack chat list and chat window vertically */
       .chat-container {
         flex-direction: column;
-        height: auto;
+        height: 100vh;
       }
 
       .chat-header {
-        background-color: rgb(243, 243, 243);
+        background-color: #3e3e3e;
+        color: #ffffff;
+        border-bottom: 1px solid #000000;
       }
 
       .fas {
@@ -428,10 +443,14 @@
       }
 
       /* Full width for chat list and chat window */
-      .chat-list,
+      .chat-list {
+        width: 100%;
+        height: 20%;
+      }
+
       .chat-window {
         width: 100%;
-        height: auto;
+        height: 80%;
       }
 
       /* Adjust chat header font sizes */
@@ -517,6 +536,10 @@
 
     .social-links a {
       font-size: 1.3em;
+    }
+
+    .modal-title {
+      color: #ffffff;
     }
   </style>
 
@@ -1285,63 +1308,63 @@
       });
     }
 
-      function populateEmojiGrid() {
-        const emojiGrid = document.getElementById('emoji-grid');
-        const commonEmojis = [
-          "😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊",
-          "😋", "😎", "😍", "😘", "🥰", "😗", "😙", "😚", "🙂", "🤗",
-          "🤩", "🤔", "🤨", "😐", "😑", "😶", "🙄", "😏", "😣", "😥",
-          "😮", "🤐", "😯", "😪", "😫", "🥱", "😴", "😌", "😛", "😜",
-          "😝", "🤤", "😒", "😓", "😔", "😕", "🙃", "🤑", "😲", "☹️",
-          "🙁", "😖", "😞", "😟", "😤", "😢", "😭", "😦", "😧", "😨",
-          "😩", "🤯", "😬", "😰", "😱", "🥵", "🥶", "😳", "🤪", "😵",
-          "😡", "😠", "🤬", "😷", "🤒", "🤕", "🤢", "🤮", "🤧", "😇",
-          "🥳", "🥺", "😈", "👿", "👹", "👺", "💀", "👻", "👽", "🤖",
-          "💩", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾"
-        ];
+    function populateEmojiGrid() {
+      const emojiGrid = document.getElementById('emoji-grid');
+      const commonEmojis = [
+        "😀", "😁", "😂", "🤣", "😃", "😄", "😅", "😆", "😉", "😊",
+        "😋", "😎", "😍", "😘", "🥰", "😗", "😙", "😚", "🙂", "🤗",
+        "🤩", "🤔", "🤨", "😐", "😑", "😶", "🙄", "😏", "😣", "😥",
+        "😮", "🤐", "😯", "😪", "😫", "🥱", "😴", "😌", "😛", "😜",
+        "😝", "🤤", "😒", "😓", "😔", "😕", "🙃", "🤑", "😲", "☹️",
+        "🙁", "😖", "😞", "😟", "😤", "😢", "😭", "😦", "😧", "😨",
+        "😩", "🤯", "😬", "😰", "😱", "🥵", "🥶", "😳", "🤪", "😵",
+        "😡", "😠", "🤬", "😷", "🤒", "🤕", "🤢", "🤮", "🤧", "😇",
+        "🥳", "🥺", "😈", "👿", "👹", "👺", "💀", "👻", "👽", "🤖",
+        "💩", "😺", "😸", "😹", "😻", "😼", "😽", "🙀", "😿", "😾"
+      ];
 
-        emojiGrid.innerHTML = ''; // Clear any existing emojis
+      emojiGrid.innerHTML = ''; // Clear any existing emojis
 
-        commonEmojis.forEach(emoji => {
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.classList.add('emoji-button');
-          button.innerHTML = emoji;
+      commonEmojis.forEach(emoji => {
+        const button = document.createElement('button');
+        button.type = 'button';
+        button.classList.add('emoji-button');
+        button.innerHTML = emoji;
 
-          // Add click event to insert emoji into message input
-          button.addEventListener('click', () => {
-            messageTextInput.value += emoji;
-            messageTextInput.focus();
+        // Add click event to insert emoji into message input
+        button.addEventListener('click', () => {
+          messageTextInput.value += emoji;
+          messageTextInput.focus();
 
-            // Close the modal after selecting an emoji using the instance
-            if (emojiPickerModal) {
-              emojiPickerModal.hide();
-            }
-          });
-
-          emojiGrid.appendChild(button);
+          // Close the modal after selecting an emoji using the instance
+          if (emojiPickerModal) {
+            emojiPickerModal.hide();
+          }
         });
-      }
+
+        emojiGrid.appendChild(button);
+      });
+    }
 
 
-      function showToast(message, type = "info") {
-        const toastClasses = {
-          success: "bg-success text-white",
-          info: "bg-info text-white",
-          warning: "bg-warning text-dark",
-          danger: "bg-danger text-white"
-        };
+    function showToast(message, type = "info") {
+      const toastClasses = {
+        success: "bg-success text-white",
+        info: "bg-info text-white",
+        warning: "bg-warning text-dark",
+        danger: "bg-danger text-white"
+      };
 
-        const toastClass = toastClasses[type] || toastClasses.info;
+      const toastClass = toastClasses[type] || toastClasses.info;
 
-        const toastElement = document.createElement("div");
-        toastElement.classList.add("toast", "align-items-center", "border-0");
-        toastElement.classList.add(...toastClass.split(" "));
-        toastElement.setAttribute("role", "alert");
-        toastElement.setAttribute("aria-live", "assertive");
-        toastElement.setAttribute("aria-atomic", "true");
+      const toastElement = document.createElement("div");
+      toastElement.classList.add("toast", "align-items-center", "border-0");
+      toastElement.classList.add(...toastClass.split(" "));
+      toastElement.setAttribute("role", "alert");
+      toastElement.setAttribute("aria-live", "assertive");
+      toastElement.setAttribute("aria-atomic", "true");
 
-        toastElement.innerHTML = `
+      toastElement.innerHTML = `
         <div class="d-flex">
           <div class="toast-body">
             ${escapeHTML(message)}
@@ -1350,328 +1373,328 @@
         </div>
       `;
 
-        const toastContainer = document.getElementById("toast-container");
-        toastContainer.appendChild(toastElement);
+      const toastContainer = document.getElementById("toast-container");
+      toastContainer.appendChild(toastElement);
 
-        const bsToast = new bootstrap.Toast(toastElement, { delay: 3000 });
-        bsToast.show();
+      const bsToast = new bootstrap.Toast(toastElement, { delay: 3000 });
+      bsToast.show();
 
-        toastElement.addEventListener('hidden.bs.toast', () => {
-          toastContainer.removeChild(toastElement);
-        });
+      toastElement.addEventListener('hidden.bs.toast', () => {
+        toastContainer.removeChild(toastElement);
+      });
+    }
+
+    function createNewChat(recipientEmail) {
+      if (recipientEmail === currentUser.email) {
+        showToast("You cannot start a chat with yourself.", "warning");
+        return;
       }
 
-      function createNewChat(recipientEmail) {
-        if (recipientEmail === currentUser.email) {
-          showToast("You cannot start a chat with yourself.", "warning");
-          return;
-        }
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailPattern.test(recipientEmail)) {
+        showToast("Please enter a valid email address.", "danger");
+        return;
+      }
 
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailPattern.test(recipientEmail)) {
-          showToast("Please enter a valid email address.", "danger");
-          return;
-        }
+      db.collection("Particulars").where("email", "==", recipientEmail).get()
+        .then(querySnapshot => {
+          if (!querySnapshot.empty) {
+            const recipientDoc = querySnapshot.docs[0];
+            const recipientName = recipientDoc.data().Name || "Chat";
+            const avatarFileName = recipientDoc.data().Image || "default.jpg";
 
-        db.collection("Particulars").where("email", "==", recipientEmail).get()
-          .then(querySnapshot => {
-            if (!querySnapshot.empty) {
-              const recipientDoc = querySnapshot.docs[0];
-              const recipientName = recipientDoc.data().Name || "Chat";
-              const avatarFileName = recipientDoc.data().Image || "default.jpg";
-
-              db.collection("Chats")
-                .where("members", "array-contains", currentUser.email)
-                .get()
-                .then(existingChats => {
-                  let chatExists = false;
-                  existingChats.forEach(chatDoc => {
-                    const chatData = chatDoc.data();
-                    if (chatData.members.includes(recipientEmail)) {
-                      chatExists = true;
-                      showToast("Chat with this user already exists.", "info");
-                      // Let the snapshot listener handle the chat item creation
-                    }
-                  });
-
-                  if (!chatExists) {
-                    const chatRef = db.collection("Chats").doc();
-                    const chatData = {
-                      chat_id: chatRef.id,
-                      chat_name: recipientName,
-                      chat_avatar: `images/team/${avatarFileName}`,
-                      members: [currentUser.email, recipientEmail],
-                      last_message: null
-                    };
-                    chatRef.set(chatData).then(() => {
-                      console.log("New chat created.");
-                      showToast("New chat created successfully.", "success");
-
-                      // Send "CHAT STARTED" system message
-                      sendSystemMessage(chatRef.id, "Chat started.");
-
-                    }).catch(error => {
-                      console.error("Error creating new chat:", error);
-                      showToast("Failed to create a new chat. Please try again.", "danger");
-                    });
+            db.collection("Chats")
+              .where("members", "array-contains", currentUser.email)
+              .get()
+              .then(existingChats => {
+                let chatExists = false;
+                existingChats.forEach(chatDoc => {
+                  const chatData = chatDoc.data();
+                  if (chatData.members.includes(recipientEmail)) {
+                    chatExists = true;
+                    showToast("Chat with this user already exists.", "info");
+                    // Let the snapshot listener handle the chat item creation
                   }
-
-                })
-                .catch(error => {
-                  console.error("Error checking existing chats:", error);
-                  showToast("Failed to verify existing chats. Please try again.", "danger");
                 });
-            } else {
-              showToast("No user found with that email.", "warning");
-            }
-          })
-          .catch(error => {
-            console.error("Error fetching user:", error);
-            showToast("Failed to fetch user details. Please try again.", "danger");
-          });
-      }
 
-      function sendSystemMessage(chatId, content) {
-        const messageRef = db.collection("Chats").doc(chatId).collection("messages").doc();
-        const messageData = {
-          message_id: messageRef.id,
-          content: content,
-          sender_email: currentUser.email,
-          sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-          type: "system",
-          read_by_receiver: false
-        };
+                if (!chatExists) {
+                  const chatRef = db.collection("Chats").doc();
+                  const chatData = {
+                    chat_id: chatRef.id,
+                    chat_name: recipientName,
+                    chat_avatar: `images/team/${avatarFileName}`,
+                    members: [currentUser.email, recipientEmail],
+                    last_message: null
+                  };
+                  chatRef.set(chatData).then(() => {
+                    console.log("New chat created.");
+                    showToast("New chat created successfully.", "success");
 
-        messageRef.set(messageData).then(() => {
-          // Update last_message in chat document
-          db.collection("Chats").doc(chatId).update({
-            last_message: {
-              ...messageData,
-              sent_at: firebase.firestore.FieldValue.serverTimestamp()
-            }
-          }).then(() => {
-            console.log("System message sent and last message updated.");
-          }).catch(error => {
-            console.error("Error updating last message after system message:", error);
-            showToast("Failed to update chat. Please try again.", "danger");
-          });
-        }).catch(error => {
-          console.error("Error sending system message:", error);
-          showToast("Failed to send system message. Please try again.", "danger");
-        });
-      }
+                    // Send "CHAT STARTED" system message
+                    sendSystemMessage(chatRef.id, "Chat started.");
 
+                  }).catch(error => {
+                    console.error("Error creating new chat:", error);
+                    showToast("Failed to create a new chat. Please try again.", "danger");
+                  });
+                }
 
-
-      function performChatSearch(searchTerm) {
-        if (!selectedChatId) {
-          showToast("No chat selected to search.", "warning");
-          return;
-        }
-
-        // Fetch all messages and filter in code
-        db.collection("Chats").doc(selectedChatId).collection("messages")
-          .orderBy("sent_at")
-          .get()
-          .then(querySnapshot => {
-            const matchingMessages = [];
-            querySnapshot.forEach(doc => {
-              const messageData = doc.data();
-              if (messageData.type === "text" && messageData.content.toLowerCase().includes(searchTerm.toLowerCase())) {
-                matchingMessages.push({ message_id: doc.id, ...messageData });
-              }
-            });
-
-            if (matchingMessages.length > 0) {
-              highlightMessages(matchingMessages);
-              showToast(`${matchingMessages.length} message(s) found.`, "info");
-            } else {
-              showToast("No messages found matching your search.", "info");
-            }
-          })
-          .catch(error => {
-            console.error("Error searching messages:", error);
-            showToast("Failed to perform search. Please try again.", "danger");
-          });
-      }
-
-      function highlightMessages(messages) {
-        const allMessages = messageList.querySelectorAll(".message");
-        allMessages.forEach(msg => {
-          msg.classList.remove("highlighted");
-        });
-
-        messages.forEach(message => {
-          const messageDiv = messageList.querySelector(`[data-message-id="${message.message_id}"]`);
-          if (messageDiv) {
-            messageDiv.classList.add("highlighted");
-            messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              })
+              .catch(error => {
+                console.error("Error checking existing chats:", error);
+                showToast("Failed to verify existing chats. Please try again.", "danger");
+              });
           } else {
-            console.warn(`Message div for ${message.message_id} not found.`);
+            showToast("No user found with that email.", "warning");
           }
+        })
+        .catch(error => {
+          console.error("Error fetching user:", error);
+          showToast("Failed to fetch user details. Please try again.", "danger");
         });
+    }
+
+    function sendSystemMessage(chatId, content) {
+      const messageRef = db.collection("Chats").doc(chatId).collection("messages").doc();
+      const messageData = {
+        message_id: messageRef.id,
+        content: content,
+        sender_email: currentUser.email,
+        sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+        type: "system",
+        read_by_receiver: false
+      };
+
+      messageRef.set(messageData).then(() => {
+        // Update last_message in chat document
+        db.collection("Chats").doc(chatId).update({
+          last_message: {
+            ...messageData,
+            sent_at: firebase.firestore.FieldValue.serverTimestamp()
+          }
+        }).then(() => {
+          console.log("System message sent and last message updated.");
+        }).catch(error => {
+          console.error("Error updating last message after system message:", error);
+          showToast("Failed to update chat. Please try again.", "danger");
+        });
+      }).catch(error => {
+        console.error("Error sending system message:", error);
+        showToast("Failed to send system message. Please try again.", "danger");
+      });
+    }
+
+
+
+    function performChatSearch(searchTerm) {
+      if (!selectedChatId) {
+        showToast("No chat selected to search.", "warning");
+        return;
       }
 
-      function sendMessage() {
-        const messageText = messageTextInput.value.trim();
-
-        if (!messageText) {
-          showToast("Cannot send an empty message.", "warning");
-          return;
-        }
-        if (messageText.length > 1000) {
-          showToast("Message is too long. Please limit to 1000 characters.", "warning");
-          return;
-        }
-
-        if (selectedChatId) {
-          const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
-          const messageData = {
-            message_id: messageRef.id,
-            content: messageText,
-            sender_email: currentUser.email,
-            sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-            type: "text",
-            read_by_receiver: false
-          };
-
-          messageRef.set(messageData).then(() => {
-            messageTextInput.value = "";
-
-            db.collection("Chats").doc(selectedChatId).update({
-              last_message: {
-                ...messageData,
-                sent_at: firebase.firestore.FieldValue.serverTimestamp()
-              }
-            }).then(() => {
-              console.log("Last message updated.");
-            }).catch(error => {
-              console.error("Error updating last message:", error);
-              showToast("Failed to update chat. Please try again.", "danger");
-            });
-          }).catch(error => {
-            console.error("Error sending message:", error);
-            showToast("Failed to send the message. Please try again.", "danger");
+      // Fetch all messages and filter in code
+      db.collection("Chats").doc(selectedChatId).collection("messages")
+        .orderBy("sent_at")
+        .get()
+        .then(querySnapshot => {
+          const matchingMessages = [];
+          querySnapshot.forEach(doc => {
+            const messageData = doc.data();
+            if (messageData.type === "text" && messageData.content.toLowerCase().includes(searchTerm.toLowerCase())) {
+              matchingMessages.push({ message_id: doc.id, ...messageData });
+            }
           });
+
+          if (matchingMessages.length > 0) {
+            highlightMessages(matchingMessages);
+            showToast(`${matchingMessages.length} message(s) found.`, "info");
+          } else {
+            showToast("No messages found matching your search.", "info");
+          }
+        })
+        .catch(error => {
+          console.error("Error searching messages:", error);
+          showToast("Failed to perform search. Please try again.", "danger");
+        });
+    }
+
+    function highlightMessages(messages) {
+      const allMessages = messageList.querySelectorAll(".message");
+      allMessages.forEach(msg => {
+        msg.classList.remove("highlighted");
+      });
+
+      messages.forEach(message => {
+        const messageDiv = messageList.querySelector(`[data-message-id="${message.message_id}"]`);
+        if (messageDiv) {
+          messageDiv.classList.add("highlighted");
+          messageDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
         } else {
-          showToast("No chat selected.", "warning");
+          console.warn(`Message div for ${message.message_id} not found.`);
         }
+      });
+    }
+
+    function sendMessage() {
+      const messageText = messageTextInput.value.trim();
+
+      if (!messageText) {
+        showToast("Cannot send an empty message.", "warning");
+        return;
+      }
+      if (messageText.length > 1000) {
+        showToast("Message is too long. Please limit to 1000 characters.", "warning");
+        return;
       }
 
-      function sendFileMessage(fileURL) {
-        if (!selectedChatId) {
-          showToast("No chat selected.", "warning");
-          return;
-        }
-
+      if (selectedChatId) {
         const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
         const messageData = {
           message_id: messageRef.id,
-          content: fileURL,
+          content: messageText,
           sender_email: currentUser.email,
           sent_at: firebase.firestore.FieldValue.serverTimestamp(),
-          type: "file",
+          type: "text",
           read_by_receiver: false
         };
 
         messageRef.set(messageData).then(() => {
+          messageTextInput.value = "";
+
           db.collection("Chats").doc(selectedChatId).update({
             last_message: {
               ...messageData,
               sent_at: firebase.firestore.FieldValue.serverTimestamp()
             }
           }).then(() => {
-            console.log("Last message updated with file.");
-            showToast("File sent successfully.", "success");
+            console.log("Last message updated.");
           }).catch(error => {
-            console.error("Error updating last message with file:", error);
-            showToast("Failed to update chat with file. Please try again.", "danger");
+            console.error("Error updating last message:", error);
+            showToast("Failed to update chat. Please try again.", "danger");
           });
         }).catch(error => {
-          console.error("Error sending file message:", error);
-          showToast("Failed to send the file. Please try again.", "danger");
+          console.error("Error sending message:", error);
+          showToast("Failed to send the message. Please try again.", "danger");
         });
+      } else {
+        showToast("No chat selected.", "warning");
+      }
+    }
+
+    function sendFileMessage(fileURL) {
+      if (!selectedChatId) {
+        showToast("No chat selected.", "warning");
+        return;
       }
 
-      function deleteMessage(chatId, messageId) {
-        chatToDeleteId = chatId;
-        const messageToDeleteId = messageId;
-        document.getElementById('delete-item-type').textContent = 'message';
-        const deleteModalElement = document.getElementById('deleteConfirmModal');
-        const deleteModal = new bootstrap.Modal(deleteModalElement);
-        deleteModal.show();
+      const messageRef = db.collection("Chats").doc(selectedChatId).collection("messages").doc();
+      const messageData = {
+        message_id: messageRef.id,
+        content: fileURL,
+        sender_email: currentUser.email,
+        sent_at: firebase.firestore.FieldValue.serverTimestamp(),
+        type: "file",
+        read_by_receiver: false
+      };
 
-        document.getElementById('confirm-delete-button').onclick = function () {
-          proceedToDeleteMessage(chatToDeleteId, messageToDeleteId);
-          deleteModal.hide();
-        };
-      }
-
-      function proceedToDeleteMessage(chatId, messageId) {
-        const messageRef = db.collection("Chats").doc(chatId).collection("messages").doc(messageId);
-
-        messageRef.get().then(docSnapshot => {
-          if (docSnapshot.exists) {
-            const deletedMessage = docSnapshot.data();
-
-            messageRef.delete()
-              .then(() => {
-                console.log("Message deleted successfully.");
-                showToast("Message deleted successfully.", "success");
-
-                const chatRef = db.collection("Chats").doc(chatId);
-                chatRef.get().then(chatDoc => {
-                  if (chatDoc.exists) {
-                    const chatData = chatDoc.data();
-                    if (chatData.last_message && chatData.last_message.message_id === messageId) {
-                      db.collection("Chats").doc(chatId).collection("messages")
-                        .orderBy("sent_at", "desc")
-                        .limit(1)
-                        .get()
-                        .then(lastMessageSnapshot => {
-                          if (!lastMessageSnapshot.empty) {
-                            const newLastMessage = lastMessageSnapshot.docs[0].data();
-                            chatRef.update({
-                              last_message: {
-                                ...newLastMessage
-                              }
-                            }).then(() => {
-                              console.log("Last message updated after deletion.");
-                            }).catch(error => {
-                              console.error("Error updating last message after deletion:", error);
-                              showToast("Failed to update last message.", "danger");
-                            });
-                          } else {
-                            chatRef.update({
-                              last_message: null
-                            }).then(() => {
-                              console.log("Last message cleared as no messages remain.");
-                            }).catch(error => {
-                              console.error("Error clearing last message:", error);
-                              showToast("Failed to clear last message.", "danger");
-                            });
-                          }
-                        })
-                        .catch(error => {
-                          console.error("Error fetching new last message:", error);
-                          showToast("Failed to update last message.", "danger");
-                        });
-                    }
-                  }
-                }).catch(error => {
-                  console.error("Error fetching chat data:", error);
-                });
-              })
-              .catch(error => {
-                console.error("Error deleting message:", error);
-                showToast("Failed to delete the message. Please try again.", "danger");
-              });
+      messageRef.set(messageData).then(() => {
+        db.collection("Chats").doc(selectedChatId).update({
+          last_message: {
+            ...messageData,
+            sent_at: firebase.firestore.FieldValue.serverTimestamp()
           }
+        }).then(() => {
+          console.log("Last message updated with file.");
+          showToast("File sent successfully.", "success");
         }).catch(error => {
-          console.error("Error fetching message before deletion:", error);
-          showToast("Failed to delete the message. Please try again.", "danger");
+          console.error("Error updating last message with file:", error);
+          showToast("Failed to update chat with file. Please try again.", "danger");
         });
-      }
+      }).catch(error => {
+        console.error("Error sending file message:", error);
+        showToast("Failed to send the file. Please try again.", "danger");
+      });
+    }
+
+    function deleteMessage(chatId, messageId) {
+      chatToDeleteId = chatId;
+      const messageToDeleteId = messageId;
+      document.getElementById('delete-item-type').textContent = 'message';
+      const deleteModalElement = document.getElementById('deleteConfirmModal');
+      const deleteModal = new bootstrap.Modal(deleteModalElement);
+      deleteModal.show();
+
+      document.getElementById('confirm-delete-button').onclick = function () {
+        proceedToDeleteMessage(chatToDeleteId, messageToDeleteId);
+        deleteModal.hide();
+      };
+    }
+
+    function proceedToDeleteMessage(chatId, messageId) {
+      const messageRef = db.collection("Chats").doc(chatId).collection("messages").doc(messageId);
+
+      messageRef.get().then(docSnapshot => {
+        if (docSnapshot.exists) {
+          const deletedMessage = docSnapshot.data();
+
+          messageRef.delete()
+            .then(() => {
+              console.log("Message deleted successfully.");
+              showToast("Message deleted successfully.", "success");
+
+              const chatRef = db.collection("Chats").doc(chatId);
+              chatRef.get().then(chatDoc => {
+                if (chatDoc.exists) {
+                  const chatData = chatDoc.data();
+                  if (chatData.last_message && chatData.last_message.message_id === messageId) {
+                    db.collection("Chats").doc(chatId).collection("messages")
+                      .orderBy("sent_at", "desc")
+                      .limit(1)
+                      .get()
+                      .then(lastMessageSnapshot => {
+                        if (!lastMessageSnapshot.empty) {
+                          const newLastMessage = lastMessageSnapshot.docs[0].data();
+                          chatRef.update({
+                            last_message: {
+                              ...newLastMessage
+                            }
+                          }).then(() => {
+                            console.log("Last message updated after deletion.");
+                          }).catch(error => {
+                            console.error("Error updating last message after deletion:", error);
+                            showToast("Failed to update last message.", "danger");
+                          });
+                        } else {
+                          chatRef.update({
+                            last_message: null
+                          }).then(() => {
+                            console.log("Last message cleared as no messages remain.");
+                          }).catch(error => {
+                            console.error("Error clearing last message:", error);
+                            showToast("Failed to clear last message.", "danger");
+                          });
+                        }
+                      })
+                      .catch(error => {
+                        console.error("Error fetching new last message:", error);
+                        showToast("Failed to update last message.", "danger");
+                      });
+                  }
+                }
+              }).catch(error => {
+                console.error("Error fetching chat data:", error);
+              });
+            })
+            .catch(error => {
+              console.error("Error deleting message:", error);
+              showToast("Failed to delete the message. Please try again.", "danger");
+            });
+        }
+      }).catch(error => {
+        console.error("Error fetching message before deletion:", error);
+        showToast("Failed to delete the message. Please try again.", "danger");
+      });
+    }
   </script>
 
   <!-- Footer -->

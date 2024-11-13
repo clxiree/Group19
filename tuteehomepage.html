@@ -88,13 +88,26 @@
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
         </nav>
 
-        <!-- Email Button with Dropdown for Larger Viewports -->
-        <div id="my-email-container">
-            <button id="my-email"></button>
-            <div id="dropdown-menu" class="dropdown-content">
-                <button id="logout-button">Logout</button>
-            </div>
-        </div>
+        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
+            </ul>
+         
+        </ul>
+          
+      </nav>
+      <!-- <a class="btn-getstarted">
+        <div id="my-email"></div>
+    </a> -->
+    <!-- Email Button with Dropdown -->
+<div id="my-email-container">
+  <button id="my-email"></button>
+  <div id="dropdown-menu" class="dropdown-content">
+      <button id="logout-button">Logout</button>
+  </div>
+</div> 
+
     </div>
 </header>
 
@@ -190,92 +203,6 @@
 
 
 
-/* Default styling to show the email display */
-#my-email-container {
-    display: flex; /* Display email button normally on larger screens */
-    align-items: center;
-    margin-right: 10px; /* Space between email button and hamburger */
-}
-
-
-
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
-}
-
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    min-width: 150px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
-}
-
-/* Show dropdown on hover */
-/* Container styling */
-#my-email-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
-    text-align: left;
-}
-
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
-    min-width: 100%; /* Match width to parent */
-}
-
-/* Show dropdown on hover */
-#my-email-container:hover .dropdown-content {
-    display: block;
-}
-
-/* Dropdown button styling */
-#logout-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px 20px;
-    text-align: left;
-    width: 100%; /* Match width to dropdown */
-    font-size: 14px;
-}
-
-#logout-button:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
 
 .card {
     border-radius: 15px; /* Match this with the card's corner radius /
@@ -304,42 +231,6 @@
     justify-content: center;
 }
 
-
-
-
-/* Hide email display and show only logout button on smaller screens */
-@media (max-width: 768px) {
-  #teamCardsContainer .col-lg-4 {
-        display: flex;
-        justify-content: center;
-        width: 100%;
-  }
-    
-    
-    #logout-container {
-        display: block; /* Show the logout button in smaller viewports */
-    }
-}
-
-/* Style for logout button in smaller viewports */
-#logout-button-small {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px;
-    font-size: 16px;
-    text-align: center;
-    width: 100%;
-}
-
-#logout-button-small:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
-
-
-
   </style>
 
   <!-- About Section -->
@@ -350,7 +241,9 @@
       <div class="row gy-4">
 
         <div class="col-lg-6 order-1 order-lg-2" data-aos="fade-up" data-aos-delay="100">
-
+          <video id="welcome-video" autoplay muted loop style="width: 100%; height: auto;">
+            Hi
+          </video>
         </div>
 
         <div class="col-lg-6 order-2 order-lg-1 content" data-aos="fade-up" data-aos-delay="200">
@@ -589,11 +482,6 @@
   <script>
 
 document.addEventListener("DOMContentLoaded", function () {
-    const myEmailButton = document.getElementById("my-email");
-    const logoutButton = document.getElementById("logout-button");
-    const logoutButtonSmall = document.getElementById("logout-button-small");
-    const myEmailContainer = document.getElementById("my-email-container");
-    const logoutContainer = document.getElementById("logout-container");
 
     // Display user's email on load
     firebase.auth().onAuthStateChanged((user) => {
@@ -604,34 +492,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    // Handle logout for both buttons
-    function handleLogout() {
-        firebase.auth().signOut().then(() => {
-            localStorage.setItem("logoutSuccess", "true");
-            window.location.href = 'index.html';
-        }).catch((error) => {
-            console.error("Error logging out:", error);
-        });
-    }
-
-    // Attach logout function to both buttons
-    logoutButton.addEventListener("click", handleLogout);
-    logoutButtonSmall.addEventListener("click", handleLogout);
-
-    // Toggle visibility based on viewport size
-    function toggleVisibility() {
-        if (window.innerWidth <= 1068) {
-            myEmailContainer.style.display = "none";
-            logoutContainer.style.display = "block";
-        } else {
-            myEmailContainer.style.display = "flex";
-            logoutContainer.style.display = "none";
-        }
-    }
-
-    // Initial check and event listener for resizing
-    toggleVisibility();
-    window.addEventListener("resize", toggleVisibility);
+    
 });
   
     

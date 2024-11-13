@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <title>Course Details - Mentor Bootstrap Template</title>
+  <title>Notes-Preview</title>
   <meta name="description" content="">
   <meta name="keywords" content="">
 
@@ -102,69 +102,63 @@
     const auth = firebase.auth();
 
     // Function to check user authentication
-    firebase.auth().onAuthStateChanged((user) => {
+    
+    // Extract the `notesId` from the URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const notesId = urlParams.get('notesId');
+
+    if (!notesId) {
+        console.error("No notesId found in URL");
+        return; // Exit if no notesId is provided in the URL
+    } else {
+        console.log("Notes ID from URL:", notesId);
+    }
+
+    // Function to fetch and display the note details
+    function fetchNoteDetails(notesId) {
+        db.collection("BrowseNotes").doc(notesId).get()
+          .then(doc => {
+            if (doc.exists) {
+              const note = doc.data();
+              console.log("Note data fetched:", note); // Log fetched data for debugging
+              displayNoteDetails(note);
+            } else {
+              console.error("No document found with notesId:", notesId);
+            }
+          })
+          .catch(error => {
+            console.error("Error fetching note details:", error);
+          });
+    }
+
+    // Function to display note details on the page
+    function displayNoteDetails(note) {
+        document.getElementById("courseCode").innerText = note.courseId || "Unknown Code";
+        document.getElementById("courseName").innerText = note.courseName || "Unknown Course";
+        document.getElementById("courseProf").innerText = note.courseProf || "Unknown Professor";
+        document.getElementById("courseOwner").innerText = note.owner || "Unknown Owner";
+        document.getElementById("coursePrice").innerText = `$${note.price || "0.00"}`;
+        
+        const previewImage = document.getElementById("previewImage");
+        previewImage.src = note.previewImage || "path/to/default_image.jpg";
+        
+        // Set Buy Notes button link
+        document.getElementById("buy-notes-btn").href = `payment_notes.html?notesId=${notesId}`;
+    }
+
+    // Check user authentication and fetch details if authenticated
+    auth.onAuthStateChanged((user) => {
         if (user) {
+            console.log("User authenticated:", user.email);
             document.getElementById("my-email").innerText = user.email;
+            // Fetch and display the note details
+            fetchNoteDetails(notesId);
         } else {
+            console.log("User not authenticated, redirecting to login...");
             window.location.href = 'login.html';
         }
     });
-
-    // Extract the `notesId` from the URL parameters
-const urlParams = new URLSearchParams(window.location.search);
-const notesId = urlParams.get('notesId');
-
-if (notesId) {
-    // Set the Buy Notes button link with notesId
-    const buyNotesButton = document.getElementById("buy-notes-btn");
-    buyNotesButton.href = `payment_notes.html?notesId=${notesId}`;
-
-    // Fetch and display note details from Firebase
-    fetchNoteDetails(notesId);
-} else {
-    console.error("No notesId found in URL");
-}
-
-// Function to fetch and display the note details
-function fetchNoteDetails(notesId) {
-    const db = firebase.firestore();
-
-    db.collection("BrowseNotes").doc(notesId).get()
-        .then(doc => {
-            if (doc.exists) {
-                const note = doc.data();
-                
-                // Display the note details on the page
-                document.getElementById("note-title").innerText = note.courseName || "No Title";
-                document.getElementById("note-course-code").innerText = note.courseId || "Unknown Code";
-                document.getElementById("note-professor").innerText = note.courseProf || "Unknown Professor";
-                document.getElementById("note-owner").innerText = note.owner || "Unknown Owner";
-                document.getElementById("note-price").innerText = `$${note.price || "0.00"}`;
-                
-                // Set image if available, otherwise use a default image
-                const noteImage = document.getElementById("note-image");
-                noteImage.src = note.img ? note.img : "path/to/default_image.jpg";
-            } else {
-                console.error("No such document!");
-            }
-        })
-        .catch(error => {
-            console.error("Error fetching note details:", error);
-        });
-}
-
-    // Function to populate the UI with the fetched data
-    function updateUI(note) {
-        document.querySelector('#courseCode').textContent = note.courseId || "N/A";
-        document.querySelector('#courseName').textContent = note.courseName || "N/A";
-        document.querySelector('#courseProf').textContent = note.courseProf || "N/A";
-        document.querySelector('#courseOwner').textContent = note.owner || "N/A";
-        document.querySelector('#coursePrice').textContent = note.price ? `$${note.price}` : "N/A";
-
-        const previewImageElement = document.getElementById("previewImage");
-        previewImageElement.src = note.previewImage || "assets/img/course-details.jpg"; // Fallback image
-    }
-});
+  });
 
 </script>
 <body class="course-details-page">
@@ -247,23 +241,23 @@ function fetchNoteDetails(notesId) {
           <div class="col-lg-4">
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Code:</h5>
-              <span id="courseCode">chi123</span>
+              <span id="courseCode"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Course Name:</h5>
-              <span id="courseName">Chinese</span>
+              <span id="courseName"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Professor:</h5>
-              <span id="courseProf">Chichi</span>
+              <span id="courseProf"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Owner:</h5>
-              <span id="courseOwner">Yichi</span>
+              <span id="courseOwner"></span>
             </div>
             <div class="course-info d-flex justify-content-between align-items-center">
               <h5>Price:</h5>
-              <span id="coursePrice">$11</span>
+              <span id="coursePrice"></span>
             </div>
             <div class="text-center mt-3"> <!-- Center-align the button and add some spacing -->
               <a id="buy-notes-btn" class="btn btn-primary" href="#">Buy Notes</a>

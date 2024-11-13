@@ -164,6 +164,23 @@
         z-index: 2; /* Ensure text appears above overlay */
         color: #333; /* Darker text color for contrast */
     }
+    /* Styling for course code label */
+.course-code {
+  display: inline-block;
+  padding: 5px 10px; /* Keep original padding for height */
+  background-color: #337ab7;
+  color: #ffffff; /* Set text color to white */
+  font-weight: bold;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
+  width: 100px; /* Set a specific width to control the length */
+  text-align: center; /* Center-align the text within the element */
+}
+
+/* Other note container text styling */
+
+
 .overlay {
     position: absolute;
     top: 0;
@@ -173,7 +190,95 @@
     background-color: rgba(255, 255, 255, 0.8); /* 20% transparency */
     z-index: 1;
 }
+/* Container styling */
+/* Default styling to show the email display */
+#my-email-container {
+    position: relative;
+    display: inline-block;
+    display: flex; /* Display email button normally on larger screens */
+    align-items: center;
+    margin-right: 10px; /* Space between email button and hamburger */
+}
 
+
+
+/* Email Button styling */
+#my-email {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    min-width: 150px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1;
+}
+
+/* Show dropdown on hover */
+/* Container styling */
+#my-email-container {
+    position: relative;
+    display: inline-block;
+}
+
+/* Email Button styling */
+#my-email {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 8px;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* Dropdown content styling */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: #fff;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 8px 0;
+    z-index: 1;
+    min-width: 100%; /* Match width to parent */
+}
+
+/* Show dropdown on hover */
+#my-email-container:hover .dropdown-content {
+    display: block;
+}
+
+/* Dropdown button styling */
+#logout-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 10px 20px;
+    text-align: left;
+    width: 100%; /* Match width to dropdown */
+    font-size: 14px;
+}
+
+#logout-button:hover {
+    background-color: #f1f1f1;
+    color: red;
+}
 
 
 
@@ -181,9 +286,24 @@
     @media (max-width: 768px) {
       .note-grid {
         grid-template-columns: 1fr;
-        /* Single column on smaller screens */
       }
-    }
+#logout-button-small {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #333;
+    padding: 10px;
+    font-size: 16px;
+    text-align: center;
+    width: 100%;
+}
+
+#logout-button-small:hover {
+    background-color: #f1f1f1;
+    color: red;
+}
+      }
+    
   </style>
 </head>
 
@@ -191,33 +311,36 @@
 
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg">
-      </a>
+        <a href="index.html" class="logo d-flex align-items-center me-auto">
+            <img src="assets/img/smootutor-logo.jpg">
+        </a>
 
-      <nav id="navmenu" class="navmenu">
-        <ul>
-          <li><a href="tuteehomepage.html">Home<br></a></li>
-          <li><a href="bookings.html">Bookings</a></li>
-
-          <li class="dropdown">
-            <a href="trainers.html" id="notesDropdown" aria-expanded="false">
-              Tutors <i class="bi bi-chevron-down toggle-dropdown"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-
-              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="tuteehomepage.html">Home</a></li>
+                <li><a href="bookings.html">Bookings</a></li>
+                <li class="dropdown">
+                    <a href="trainers.html" id="notesDropdown">Tutors <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+                        <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+                        <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+                    </ul>
+                </li>
+                <li><a href="chats.html">Chats</a></li>
+                <li class="dropdown">
+                    <a href="notes.html" id="notesDropdown">Notes <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+                        <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+                        <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+                    </ul>
+                </li>
+                <!-- Logout Button for Smaller Viewports -->
+                <li id="logout-container" style="display: none;"><button id="logout-button-small">Logout</button></li>
             </ul>
-          </li>
-          <li><a href="chats.html">Chats</a></li>
-          <li class="dropdown">
-            <a href="notes.html" id="notesDropdown" aria-expanded="false">
-              Notes <i class="bi bi-chevron-down toggle-dropdown"></i>
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
 
+        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
               <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
 
@@ -226,9 +349,19 @@
         </ul>
           <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
-      <a class="btn-getstarted" id="auth-button"><div id="my-email"></div></a>
+      <!-- <a class="btn-getstarted">
+        <div id="my-email"></div>
+    </a> -->
+    <!-- Email Button with Dropdown -->
+<div id="my-email-container">
+  <button id="my-email"></button>
+  <div id="dropdown-menu" class="dropdown-content">
+      <button id="logout-button">Logout</button>
+  </div>
+</div> 
+
     </div>
-  </header>
+</header>
 
   <main class="main">
 
@@ -327,6 +460,42 @@
 firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const storage = firebase.storage();
+    const urlParams = new URLSearchParams(window.location.search);
+    const section = urlParams.get("section");
+    
+    function loadNotesSection(userEmail) {
+        if (section === "saved") {
+            console.log("Loading Saved Notes"); // Debugging output
+            document.title = "Saved Notes";
+            document.querySelector("h2").innerText = "Saved Notes";
+            document.getElementById("browse-notes-section").style.display = "none";
+            document.getElementById("saved-notes-section").style.display = "block";
+            fetchSavedNotes(userEmail); // Fetch from SavedNotes collection
+        } else {
+            console.log("Loading Browse Notes"); // Debugging output
+            document.title = "Browse Notes";
+            document.querySelector("h2").innerText = "Browse Notes";
+            document.getElementById("browse-notes-section").style.display = "block";
+            document.getElementById("saved-notes-section").style.display = "none";
+            fetchBrowseNotes(); // Fetch from BrowseNotes collection
+        }
+    }
+
+    // Check user authentication and load the respective section
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            console.log("User logged in:", user.email); // Debugging output
+            document.getElementById("my-email").innerText = user.email;
+            loadNotesSection(user.email); // Pass email to load the right notes section
+        } else {
+            console.log("No user logged in, redirecting to login page."); // Debugging output
+            window.location.href = 'home/login.html';
+        }
+    });
+
+
+   
+
 
     // Array of image paths in Firebase Storage to be used as backgrounds
     const imagePaths = [
@@ -343,36 +512,107 @@ firebase.initializeApp(firebaseConfig);
         'images/notes/istockphoto-1480095869-612x612.jpg'
     ];
 
+
     // Function to fetch and display notes
-    function fetchNotes() {
-        db.collection("BrowseNotes").get().then(async (snapshot) => {
-            const notes = [];
+    function fetchBrowseNotes() {
+    db.collection("BrowseNotes").where("isSaved", "==", false)
+      .get()
+      .then(async (snapshot) => {
+        const notes = [];
+        for (const doc of snapshot.docs) {
+          const note = { id: doc.id, ...doc.data() };
 
-            // Fetch each note document
-            for (const doc of snapshot.docs) {
-                const note = { id: doc.id, ...doc.data() };
+          // Assign a random background image to each note
+          const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+          try {
+              // Get download URL from Firebase Storage
+              const url = await storage.ref(randomImagePath).getDownloadURL();
+              note.img = url;
+          } catch (error) {
+              console.error("Error fetching image from Firebase Storage:", error);
+              note.img = ""; // Fallback if image fetch fails
+          }
+          
+          notes.push(note);
+        }
+        renderNotes("browse-notes-container", notes);
+      })
+      .catch((error) => {
+        console.error("Error fetching browse notes:", error);
+      });
+}
 
-                // Select a random image from the array
-                const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+// Function to fetch and display saved notes
+function fetchSavedNotes(userEmail) {
+    db.collection("SavedNotes")
+      .where("isSaved", "==", true)
+      .where("email", "array-contains", userEmail)
+      .get()
+      .then(async (snapshot) => {
+        const notes = [];
+        for (const doc of snapshot.docs) {
+          const note = { id: doc.id, ...doc.data() };
 
-                try {
-                    // Fetch the URL of the random image from Firebase Storage
-                    const url = await storage.ref(randomImagePath).getDownloadURL();
-                    note.img = url; // Set the image URL for this note
-                } catch (error) {
-                    console.error("Error fetching image URL:", error);
-                    note.img = ""; // Use an empty string or a placeholder image URL
-                }
+          // Assign a random background image to each note
+          const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
+          try {
+              // Get download URL from Firebase Storage
+              const url = await storage.ref(randomImagePath).getDownloadURL();
+              note.img = url;
+          } catch (error) {
+              console.error("Error fetching image from Firebase Storage:", error);
+              note.img = ""; // Fallback if image fetch fails
+          }
+          
+          notes.push(note);
+        }
+        renderNotes("saved-notes-container", notes);
+      })
+      .catch((error) => {
+        console.error("Error fetching saved notes:", error);
+      });
+}
 
-                notes.push(note);
+
+      
+      function saveNoteAfterPayment(notesId, userEmail) {
+    const db = firebase.firestore();
+
+    // Get the note from BrowseNotes by notesId
+    db.collection("BrowseNotes").doc(notesId).get()
+        .then(doc => {
+            if (doc.exists) {
+                // Prepare the data for the new SavedNotes document
+                const noteData = doc.data();
+                noteData.isSaved = true; // Set isSaved to true
+                noteData.email = firebase.firestore.FieldValue.arrayUnion(userEmail); // Append user email to array
+
+                // Add the note to SavedNotes with the new data
+                db.collection("SavedNotes").doc(notesId).set(noteData)
+                    .then(() => {
+                        console.log("Note saved to SavedNotes with isSaved = true.");
+                        // Optionally, you could delete it from BrowseNotes if you no longer need it there
+                        // db.collection("BrowseNotes").doc(notesId).delete();
+                    })
+                    .catch(error => {
+                        console.error("Error saving note to SavedNotes:", error);
+                    });
+            } else {
+                console.error("No document found in BrowseNotes with the provided notesId.");
             }
-
-            // Render notes after all images are fetched
-            renderNotes("browse-notes-container", notes);
-        }).catch((error) => {
-            console.error("Error fetching notes:", error);
+        })
+        .catch(error => {
+            console.error("Error fetching note details from BrowseNotes:", error);
         });
-    }
+}
+// Assume this function is called once payment is confirmed
+function onPaymentSuccess(notesId) {
+    const userEmail = firebase.auth().currentUser.email; // Get the logged-in user's email
+    saveNoteAfterPayment(notesId, userEmail); // Call the function to save the note in SavedNotes
+}
+
+
+
 
     // Function to render notes in the specified container
     function renderNotes(containerId, notes) {
@@ -429,254 +669,7 @@ firebase.initializeApp(firebaseConfig);
     fetchNotes();
 });
 
-//       // Initialize Firebase
-//       firebase.initializeApp(firebaseConfig);
-//       const db = firebase.firestore();
-//       // Array of image paths in Firebase Storage to be used as backgrounds
-// const imagePaths = [
-//     'images/notes/istockphoto-1041740040-612x612.jpg',
-//     'images/notes/istockphoto-1132123971-612x612.jpg',
-//     'images/notes/istockphoto-1166978137-612x612.jpg',
-//     'images/notes/istockphoto-1309080507-612x612.jpg',
-//     'images/notes/istockphoto-1312139041-612x612.jpg',
-//     'images/notes/istockphoto-1366428092-612x612.jpg',
-//     'images/notes/istockphoto-1371160686-612x612.jpg',
-//     'images/notes/istockphoto-1385520247-612x612.jpg',
-//     'images/notes/istockphoto-1408304018-612x612.jpg',
-//     'images/notes/istockphoto-1410568357-640x640.jpg',
-//     'images/notes/istockphoto-1480095869-612x612.jpg'
-// ];
 
-// // Function to fetch and display notes
-// function fetchNotes() {
-//     const storage = firebase.storage();
-//     db.collection("BrowseNotes").get().then((snapshot) => {
-//         const notes = [];
-//         snapshot.forEach((doc) => {
-//             const note = { id: doc.id, ...doc.data() };
-
-//             // Select a random image from the array
-//             const randomImagePath = imagePaths[Math.floor(Math.random() * imagePaths.length)];
-            
-//             // Fetch the URL of the random image from Firebase Storage
-//             storage.ref(randomImagePath).getDownloadURL().then(url => {
-//                 note.img = url; // Set the image URL for this note
-//                 notes.push(note);
-                
-//                 // Render notes once all image URLs are set
-//                 renderNotes("browse-notes-container", notes);
-//             }).catch((error) => {
-//                 console.error("Error fetching image URL:", error);
-//             });
-//         });
-//     }).catch((error) => {
-//         console.error("Error fetching notes:", error);
-//     });
-// }
-
-// Function to render notes in the specified container
-// function renderNotes(containerId, notes) {
-//     const container = document.getElementById(containerId);
-//     container.textContent = ""; // Clear the container before adding new items
-
-//     notes.forEach(note => {
-//         const noteContainer = document.createElement("div");
-//         noteContainer.className = "note-container";
-
-//         // Apply the random background image
-//         if (note.img) {
-//             noteContainer.style.backgroundImage = `url('${note.img}')`;
-//         } else {
-//             console.warn("Missing image URL for note:", note);
-//         }
-
-//         const courseCode = document.createElement("span");
-//         courseCode.className = "course-code";
-//         courseCode.textContent = note.courseId || "No Title";
-
-//         const courseName = document.createElement("h3");
-//         courseName.textContent = note.courseName || "Untitled";
-
-//         const professor = document.createElement("p");
-//         professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
-
-//         const owner = document.createElement("p");
-//         owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
-
-//         const price = document.createElement("p");
-//         price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
-
-//         // Lock icon with link to preview.html
-//         const previewLink = document.createElement("a");
-//         previewLink.href = `preview.html?notesId=${note.id}`; // Ensure notesId is passed in the URL
-//         previewLink.target = "_blank";
-//         previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
-
-//         // Append elements to the note container
-//         noteContainer.appendChild(courseCode);
-//         noteContainer.appendChild(courseName);
-//         noteContainer.appendChild(professor);
-//         noteContainer.appendChild(owner);
-//         noteContainer.appendChild(price);
-//         noteContainer.appendChild(previewLink);
-
-//         // Append noteContainer to the main container
-//         container.appendChild(noteContainer);
-//     });
-// }
-
-
-
-      // const auth = firebase.auth();
-    //   firebase.auth().onAuthStateChanged((user) => {
-    //     if (user) {
-    //         console.log("User is logged in with email:", user.email);
-    //         document.getElementById("my-email").innerText = user.email;
-    //         // fetchAllTutors()
-    //         // You can use user.email to retrieve user-specific data
-    //     } else {
-    //         console.log("No user is logged in.");
-    //         // Redirect to login page if needed
-    //         window.location.href = 'login.html';
-    //     }
-    // });
-//     firebase.auth().onAuthStateChanged((user) => {
-//     if (user) {
-//         console.log("User is logged in with email:", user.email);
-        
-//         const emailDiv = document.getElementById("my-email");
-//         const authButton = document.getElementById("auth-button");
-
-//         // Display the user's email by default
-//         emailDiv.innerText = user.email;
-
-//         // Add a click event to handle changing to logout and then logging out
-//         authButton.addEventListener("click", function() {
-//             if (emailDiv.innerText === user.email) {
-//                 // Change to "LOGOUT" and apply red style
-//                 emailDiv.innerText = "LOGOUT";
-//                 emailDiv.classList.add("logout-button");
-//             } else if (emailDiv.innerText === "LOGOUT") {
-//                 // Sign out and redirect
-//                 firebase.auth().signOut().then(() => {
-//                     console.log("User has logged out.");
-//                     window.location.href = 'index.html'; // Redirect to home page
-//                 }).catch((error) => {
-//                     console.error("Error logging out:", error);
-//                 });
-//             }
-//         });
-//     } else {
-//         console.log("No user is logged in.");
-//         window.location.href = 'login.html';
-//     }
-// });
-
-
-
-      
-
-
-// Function to render notes in the specified container (Browse or Saved)
-// function renderNotes(containerId, notes) {
-//     const container = document.getElementById(containerId);
-//     container.textContent = ""; // Clear the container before adding new items
-
-//     notes.forEach(note => {
-//         const noteContainer = document.createElement("div");
-//         noteContainer.className = "note-container";
-
-//         if (note.img) {
-//             noteContainer.style.backgroundImage = `url('${note.img}')`;
-//         } else {
-//             console.warn("Missing image URL for note:", note);
-//         }
-
-//         const courseCode = document.createElement("span");
-//         courseCode.className = "course-code";
-//         courseCode.textContent = note.courseId || "No Title";
-
-//         const courseName = document.createElement("h3");
-//         courseName.textContent = note.courseName || "Untitled";
-
-//         const professor = document.createElement("p");
-//         professor.innerHTML = `<strong>Professor:</strong> ${note.courseProf || "Unknown"}`;
-
-//         const owner = document.createElement("p");
-//         owner.innerHTML = `<strong>Owner:</strong> ${note.owner || "Unknown"}`;
-
-//         const price = document.createElement("p");
-//         price.innerHTML = `<strong>Price:</strong> $${note.price || "0.00"}`;
-
-//         // Lock icon with link to preview.html
-//         const previewLink = document.createElement("a");
-//         previewLink.href = `preview.html?notesId=${note.notesId || ""}`; // Ensure notesId is passed in the URL
-//         previewLink.target = "_blank";
-//         previewLink.innerHTML = `<i class="fas fa-lock"></i> View Notes`;
-
-//         // Append elements to the note container
-//         noteContainer.appendChild(courseCode);
-//         noteContainer.appendChild(courseName);
-//         noteContainer.appendChild(professor);
-//         noteContainer.appendChild(owner);
-//         noteContainer.appendChild(price);
-//         noteContainer.appendChild(previewLink);
-
-//         // Append noteContainer to the main container
-//         container.appendChild(noteContainer);
-//     });
-// }
-
-
-
-
-  // Toggle between Browse and Saved notes sections
-  // function showSection(section) {
-  //   const browseSection = document.getElementById("browse-notes-section");
-  //   const savedSection = document.getElementById("saved-notes-section");
-  //   const pageTitle = document.querySelector(".page-title h1");
-
-  //   if (section === "browse") {
-  //     browseSection.style.display = "block";
-  //     savedSection.style.display = "none";
-  //     pageTitle.textContent = "Browse Notes";
-  //   } else if (section === "saved") {
-  //     browseSection.style.display = "none";
-  //     savedSection.style.display = "block";
-  //     pageTitle.textContent = "Saved Notes";
-  //   }
-  // }
-
-  // // Attach event listeners to dropdown items
-  // document.querySelector("a[href='notes.html?section=browse']").addEventListener("click", function (e) {
-  //   e.preventDefault();
-  //   showSection("browse");
-  // });
-
-  // document.querySelector("a[href='notes.html?section=saved']").addEventListener("click", function (e) {
-  //   e.preventDefault();
-  //   showSection("saved");
-  // });
-
-  // Initial load
-  // function fetchNotes() {
-  //       db.collection("BrowseNotes").get().then((snapshot) => {
-  //         const notes = [];
-  //         snapshot.forEach((doc) => {
-  //           notes.push(doc.data());
-  //         });
-  //         renderNotes("browse-notes-container", notes);
-  //       }).catch((error) => {
-  //         console.error("Error fetching notes:", error);
-  //       });
-  //     }
-
-  //     fetchNotes(); // Fetch notes on page load
-  //   });
-//   showSection("browse"); // Default to browse section on load
-// });
-    
-    // Initialize AOS (Animate on Scroll)
     
   </script>
 
