@@ -1116,7 +1116,7 @@
         }
 
         db.collection("Bookings")
-          .where("tuteeId", "==", userId) // Filter bookings based on UserID
+          .where("tutorId", "==", userId) // Filter bookings based on UserID
           .get()
           .then(snapshot => {
             allBookings = []; // Reset global variable for new data
