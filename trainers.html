@@ -969,20 +969,59 @@ window.addEventListener("resize", toggleVisibility);
               memberDiv.appendChild(infoDiv);
               trainersSection.appendChild(memberDiv);
 
-              // Video event listeners for autoplay and mute handling
-              video.addEventListener('mouseenter', () => {
-                console.log(`Hovering over video for ${userData.Name}`);
-                video.currentTime = 0;
-                video.muted = true;
-                muteButton.style.display = 'block';
-                video.play().catch(err => console.error("Error playing video on hover:", err));
-              });
+// Ensure mute button and video elements are set up properly
+video.addEventListener('mouseenter', () => {
+    console.log(`Hovering over video`);
+    video.currentTime = 0;
+    video.muted = true;
+    muteButton.style.display = 'block';
+    video.play().catch(err => console.error("Error playing video on hover:", err));
+});
 
-              video.addEventListener('mouseleave', () => {
-                console.log(`Mouse left video for ${userData.Name}`);
-                video.pause();
-                muteButton.style.display = 'none';
-              });
+// Show mute button on hover over video
+video.addEventListener('mouseenter', () => {
+    muteIcon.style.display = 'block';
+});
+
+// Show mute button on hover over video
+video.addEventListener('mouseenter', () => {
+    muteIcon.style.display = 'block';
+});
+
+// Keep mute button visible while hovering over it, and ensure video resumes
+muteIcon.addEventListener('mouseenter', () => {
+    muteIcon.style.display = 'block';
+    if (video.currentTime > 0) {
+        video.play(); // Resume video if paused
+    }
+});
+
+// Hide mute button only if the video is muted and mouse leaves the video and mute icon
+video.addEventListener('mouseleave', () => {
+    if (video.muted) {
+        muteIcon.style.display = 'none';
+    }
+    video.pause()
+});
+
+muteIcon.addEventListener('mouseleave', () => {
+    if (video.muted) {
+        muteIcon.style.display = 'none';
+    }
+});
+
+// Toggle mute/unmute on button click and ensure mute icon visibility
+muteIcon.addEventListener('click', () => {
+
+  if(video.muted ){
+    video.muted = false;
+    muteButton.style.display='none';
+  }else{
+    video.muted = true;
+    muteIcon.style.display = 'block';
+  }
+});
+
 
               video.addEventListener('click', () => {
                 video.muted = !video.muted;
