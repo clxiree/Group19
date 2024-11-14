@@ -39,6 +39,7 @@
       object-fit: cover;
       /* This property will ensure the image covers the space evenly */
     }
+    
 
     /* Custom Toast Notification Styles */
     .custom-toast {
@@ -127,6 +128,19 @@
       object-fit: cover;
       /* Maintain aspect ratio, covering the space */
     }
+    .img-fluid {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+/* Add spacing below the image for smaller screens */
+@media (max-width: 430px) {
+    .col-lg-8 {
+        margin-bottom: 20px; /* Add spacing below the image container on smaller screens */
+    }
+}
   </style>
 
   <!-- Firebase JS SDK -->
@@ -873,8 +887,9 @@
         <h5>Confirmation</h5>
       </div>
       <div class="custom-modal-body">
-        <p>If you would like to edit booking, please cancel the booking and rebook a new lesson.</p>
-        <p>Are you sure you want to cancel this booking?</p>
+        <p>To edit this booking, please cancel the current booking and make a new one.</p>
+        <p>Are you sure you want to proceed with the cancellation?</p>
+
       </div>
       <div class="custom-modal-footer">
         <button id="modalCancelBtn" class="btn btn-secondary">No</button>
@@ -946,17 +961,18 @@
       }
 
       function updateUIElements(bookingData) {
-        const elements = {
-          bookingId: document.querySelector('.course-info:nth-child(1) p'),
-          status: document.querySelector('.course-info:nth-child(2) p'),
-          courseCode: document.querySelector('.course-info:nth-child(3) p'),
-          trainer: document.querySelector('.course-info:nth-child(4) p'),
-          courseFee: document.querySelector('.course-info:nth-child(5) p'),
-          schedule: document.querySelector('.course-info:nth-child(6)'),
-          time: document.querySelector('.course-info:nth-child(7) p'),
-          mode: document.querySelector('.course-info:nth-child(8) p'),
-          courseImage: document.querySelector('.img-fluid')
-        };
+  const elements = {
+    bookingId: document.querySelector('.course-info:nth-child(1) p'),
+    status: document.querySelector('.course-info:nth-child(2) p'),
+    courseCode: document.querySelector('.course-info:nth-child(3) p'),
+    trainer: document.querySelector('.course-info:nth-child(4) p'),
+    courseFee: document.querySelector('.course-info:nth-child(5) p'),
+    schedule: document.querySelector('.course-info:nth-child(6)'),
+    time: document.querySelector('.course-info:nth-child(7) p'),
+    mode: document.querySelector('.course-info:nth-child(8) p'),
+    courseImage: document.querySelector('.img-fluid'),
+    cancelButton: document.querySelector('.btn-danger')
+  };
 
         // Update booking ID
         elements.bookingId.textContent = `#${bookingData.bookingId}`;
@@ -965,7 +981,10 @@
         elements.status.textContent = bookingData.status;
         if (bookingData.status === "Cancelled") {
           elements.status.style.color = "red";
-          elements.status.style.fontWeight = "bold"; // Optional: make it bold
+          elements.status.style.fontWeight = "bold";
+          if (elements.cancelButton) {
+      elements.cancelButton.style.display = 'none';
+    } // Optional: make it bold
         } else if (bookingData.status === "Pending") {
           elements.status.style.color = "#f5c022"; // Reset color if not cancelled
           elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
@@ -1057,41 +1076,46 @@
 
 
       function handleCancelBooking(docId) {
-        // Show custom modal for confirmation
-        const modal = document.getElementById('customModal');
-        modal.style.display = 'block';
+  // Show custom modal for confirmation
+  const modal = document.getElementById('customModal');
+  modal.style.display = 'block';
 
-        // Handle modal buttons
-        const modalCancelBtn = document.getElementById('modalCancelBtn');
-        const modalConfirmBtn = document.getElementById('modalConfirmBtn');
+  // Handle modal buttons
+  const modalCancelBtn = document.getElementById('modalCancelBtn');
+  const modalConfirmBtn = document.getElementById('modalConfirmBtn');
 
-        modalCancelBtn.onclick = function () {
-          modal.style.display = 'none';
-        };
+  modalCancelBtn.onclick = function () {
+    modal.style.display = 'none';
+  };
 
-        modalConfirmBtn.onclick = function () {
-          modal.style.display = 'none';
-          // Proceed to cancel booking
-          db.collection('Bookings').doc(docId).update({
-            status: 'Cancelled'
-          })
-            .then(() => {
-              showToast('Booking cancelled successfully.', 'success');
-              fetchBookingDetails(); // Refresh the booking details after cancellation
-            })
-            .catch((error) => {
-              console.error('Error cancelling booking:', error);
-              showToast('Failed to cancel booking. Please try again.', 'error');
-            });
-        };
+  modalConfirmBtn.onclick = function () {
+    modal.style.display = 'none';
+    // Proceed to cancel booking
+    db.collection('Bookings').doc(docId).update({
+      status: 'Cancelled'
+    })
+      .then(() => {
+        showToast('Booking cancelled successfully.', 'success');
+        
+        // Redirect to bookings page after successful cancellation
+        setTimeout(() => {
+          window.location.href = 'bookings.html';
+        }, 2000); // Wait for the toast to show, then redirect
+      })
+      .catch((error) => {
+        console.error('Error cancelling booking:', error);
+        showToast('Failed to cancel booking. Please try again.', 'error');
+      });
+  };
 
-        // Close the modal when clicking outside of it
-        window.onclick = function (event) {
-          if (event.target == modal) {
-            modal.style.display = 'none';
-          }
-        };
-      }
+  // Close the modal when clicking outside of it
+  window.onclick = function (event) {
+    if (event.target == modal) {
+      modal.style.display = 'none';
+    }
+  };
+}
+
 
       fetchBookingDetails();
     });
