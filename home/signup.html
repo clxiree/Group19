@@ -289,7 +289,7 @@
             <div class="logo">
                 <img src="SMOOTutor.png" alt="SMOOTutor Logo">
             </div>
-            <h2>Create Your Account</h2>
+            <h2>Create Your Account As A Tutee!</h2>
             <p class="subtitle">Personal Information</p>
             <form id="signup-form">
                 <div class="input-group">
@@ -299,7 +299,7 @@
                 </div>
                 <div class="input-group">
                     <label for="signup-email">Email</label>
-                    <input type="email" id="signup-email" placeholder="Enter your email" required>
+                    <input type="email" id="signup-email" placeholder="Enter your email (example@scis.tutee.edu.sg)" required>
                     <div class="input-underline"></div>
                 </div>
                 <div class="input-group">
@@ -314,8 +314,16 @@
                     <span class="toggle-password" data-toggle="#confirm-password"><i class="fas fa-eye"></i></span>
                     <div class="input-underline"></div>
                 </div>
+                <div class="input-group">
+                    <label for="image-upload">Upload Image</label>
+                    <input type="file" id="image-upload" accept="image/*" required>
+                    <div class="input-underline"></div>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+            <p class="signup-text">Already have an account? <a href="login.html">Log In</a></p>
         </div>
-        <div class="signup-box2">
+        <!-- <div class="signup-box2">
             <h2>Personalise Your Account</h2>
             <p class="subtitle">Login Information</p>
             <div class="input-group">
@@ -331,7 +339,7 @@
             <div class="input-group">
                 <label for="video-upload">Upload Video</label>
                 <input type="file" id="video-upload" accept="video/*" required>
-                <div class="input-underline"></div>
+                <div class="input-underline"></div>F
             </div>
             <div class="input-group" id="lesson-desc-group" style="display: none;">
                 <label for="lesson-desc">Lesson Description</label>
@@ -341,6 +349,10 @@
             <button type="submit" class="btn">Sign Up</button>
             </form>
             <p class="signup-text">Already have an account? <a href="login.html">Log In</a></p>
+        </div> -->
+        <div id="customToast" class="error">
+            <span id="toastMessage"></span>
+            <span class="close-toast" onclick="hideToast()">×</span>
         </div>
     </div>
 
@@ -369,14 +381,11 @@
             const password = document.getElementById('signup-password').value;
             const confirmPassword = document.getElementById('confirm-password').value;
             const name = document.getElementById('signup-name').value;
-            const about = document.getElementById('about').value;
+            // const about = document.getElementById('about').value;
             const imageFile = document.getElementById('image-upload').files[0];
-            const videoFile = document.getElementById('video-upload').files[0];
+            // const videoFile = document.getElementById('video-upload').files[0];
 
-            if (password !== confirmPassword) {
-                alert('Passwords do not match.');
-                return;
-            }
+            
 
             auth.createUserWithEmailAndPassword(email, password)
                 .then(userCredential => {
@@ -388,22 +397,22 @@
 
                         // Define promises for uploading image and video
                         const imageUploadPromise = storage.ref(`images/team/${imageFile.name}`).put(imageFile);
-                        const videoUploadPromise = storage.ref(`videos/${videoFile.name}`).put(videoFile);
+                        // const videoUploadPromise = storage.ref(`videos/${videoFile.name}`).put(videoFile);
 
                         // Wait for both files to be uploaded and get their URLs
-                        Promise.all([imageUploadPromise, videoUploadPromise])
-                            .then(async ([imageSnapshot, videoSnapshot]) => {
+                        Promise.all(imageUploadPromise)
+                            .then(async (imageSnapshot) => {
                                 const imageUrl = await imageSnapshot.ref.put(imageFile.name);
-                                const videoUrl = await videoSnapshot.ref.put(videoFile.name);
+                                // const videoUrl = await videoSnapshot.ref.put(videoFile.name);
 
                                 // Add user data, including URLs, to Firestore
                                 db.collection("Particulars").add({
                                     UserID: userId,
                                     email: email,
                                     Name: name,          // Store the Name field
-                                    About: about,        // Store the About field
+                                    // About: about,        // Store the About field
                                     Image: imageUrl,  // Store image URL
-                                    Video: videoUrl   // Store video URL
+                                    // Video: videoUrl   // Store video URL
                                 }).then(() => {
                                     console.log("User particulars added successfully.");
                                     window.location.href = '../tuteehomepage.html';
