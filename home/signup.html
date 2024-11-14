@@ -432,7 +432,8 @@
 
                         // Create a reference in Firebase Storage with the name format "name.jpg"
                         const imageExtension = imageFile.type.split('/')[1]; // Get the file extension (e.g., "jpg", "png")
-                        const imageRef = storage.ref(`images/team/${name}.${imageExtension}`);
+                        const imageFileName = `${name}.${imageExtension}`;
+                        const imageRef = storage.ref(`images/team/${imageFileName}`);
 
                         // Upload the file with the new name
                         imageRef.put(imageFile)
@@ -444,7 +445,7 @@
                                 UserID: userId,
                                 email: email,
                                 Name: name,
-                                Image: imageUrl
+                                Image: imageFileName 
                             }).then(() => {
                                 console.log("User particulars added successfully.");
                                 window.location.href = '../tuteehomepage.html';
