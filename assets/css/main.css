@@ -2122,115 +2122,26 @@ nav.breadcrumbs {
   padding-bottom: 5px; 
 }
 
-* Container styling */
-/* Default styling to show the email display */
-#my-email-container {
-    position: relative;
-    display: inline-block;
-    display: flex; /* Display email button normally on larger screens */
-    align-items: center;
-    margin-right: 10px; /* Space between email button and hamburger */
+/* Ensure the dropdown menu is hidden by default */
+#header .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  min-width: 200px;
+  z-index: 1000;
 }
 
-
-
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
+/* Show the dropdown menu on hover */
+#header .nav-item:hover .dropdown-menu {
+  display: block;
 }
 
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    min-width: 150px;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
+#header #my-email-container:hover #dropdown-menu {
+  display: block;
 }
 
-/* Show dropdown on hover */
-/* Container styling */
-#my-email-container {
-    position: relative;
-    display: inline-block;
-}
-
-/* Email Button styling */
-#my-email {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 8px;
-    font-size: 14px;
-    text-align: left;
-}
-
-/* Dropdown content styling */
-.dropdown-content {
-    display: none;
-    position: absolute;
-    top: 100%;
-    right: 0;
-    background-color: #fff;
-    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-    border-radius: 8px;
-    padding: 8px 0;
-    z-index: 1;
-    min-width: 100%; /* Match width to parent */
-}
-
-/* Show dropdown on hover */
-#my-email-container:hover .dropdown-content {
-    display: block;
-}
-
-/* Dropdown button styling */
-#logout-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #333;
-    padding: 10px 20px;
-    text-align: left;
-    width: 100%; /* Match width to dropdown */
-    font-size: 14px;
-}
-
-#logout-button:hover {
-    background-color: #f1f1f1;
-    color: red;
-}
-/* Hide email display and show only logout button on smaller screens */
-@media (max-width: 768px) {
-  #logout-container {
-      display: block; /* Show the logout button in smaller viewports */
-  }
-  /* Style for logout button in smaller viewports */
-  #logout-button-small {
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
-      color: #333;
-      padding: 10px;
-      font-size: 16px;
-      text-align: center;
-      width: 100%;
-  }
-
-  #logout-button-small:hover {
-      background-color: #f1f1f1;
-      color: red;
-  }
-}
 
