@@ -8,7 +8,7 @@ SMOOTutor is a centralized platform designed for SMU students to connect with tu
 https://smootutor1.netlify.app/
 
 
-## GitHub 
+## GitHub Repository
 https://github.com/clxiree/Group19
 
 
