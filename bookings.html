@@ -50,59 +50,62 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
 
-
   <style>
-.course-item {
-    width: 500px; /* Ensure the card takes up the full width within its column */
-    height: 500px; /* Ensure the card takes up the full height within its column */
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    border-radius: 10px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s;
-}
+    /* Booking List Styles */
+    .st-course-item {
+      width: 100%;
+      /* Adjusted to be responsive */
+      height: auto;
+      /* Allow height to adjust based on content */
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border-radius: 10px;
+      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+      background-color: #fff;
+      /* Ensure background is set to prevent overlap */
+      margin-bottom: 20px;
+      /* Add spacing between items */
+    }
 
-.course-item:hover {
-    transform: scale(1.05);
-}
+    .st-course-item:hover {
+      transform: scale(1.02);
+    }
 
-.card-img-top {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-}
+    .st-card-img-top {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
 
-
-
-
-    .courses.section {
+    .st-courses-section {
       position: relative;
       padding: 20px;
     }
 
-    .filter-container {
-      /* margin: 20px ; */
+    .st-filter-container {
       position: absolute;
       top: 20px;
       right: 20px;
-      /* z-index: 10; */
       display: flex;
       align-items: center;
-      /* gap: 10px; */
       background-color: #fff;
-      /* padding: 10px 15px; */
-      /* border-radius: 6px; */
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 10px 15px;
+      border-radius: 6px;
+      z-index: 10;
+      /* Ensure it stays above other elements */
     }
 
-    .filter-container label {
+    .st-filter-container label {
       font-weight: 500;
       color: #333;
       margin-bottom: 0;
+      margin-right: 10px;
     }
 
-    .filter-container select {
+    .st-filter-container select {
       padding: 6px 12px;
       border: 1px solid #ddd;
       border-radius: 4px;
@@ -114,33 +117,95 @@
       transition: border-color 0.2s ease;
     }
 
-    .filter-container select:hover {
+    .st-filter-container select:hover {
       border-color: #999;
     }
 
-    .filter-container select:focus {
+    .st-filter-container select:focus {
       border-color: #5fcf80;
       box-shadow: 0 0 0 2px rgba(95, 207, 128, 0.2);
     }
 
     /* Ensure the booking list accommodates the filter */
     #booking-list {
-      padding-top: 60px;
-      /* Add space for the filter at the top */
+      padding-top: 80px;
+      /* Adjusted to account for the filter container */
     }
 
     /* Make the filter container responsive */
     @media (max-width: 768px) {
-      .filter-container {
+      .st-filter-container {
         position: relative;
         top: 0;
         right: 0;
         margin-bottom: 20px;
         justify-content: flex-end;
+        width: 100%;
       }
+    }
 
+    /* Booking Content Styles */
+    .st-course-content {
+      padding: 15px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .st-category {
+      font-weight: 600;
+      color: #007bff;
+      margin-bottom: 5px;
+    }
+
+    .st-price {
+      font-weight: 700;
+      color: #28a745;
+      margin-bottom: 10px;
+    }
+
+    .st-description {
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    .st-trainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .st-trainer-profile {
+      display: flex;
+      align-items: center;
+    }
+
+    .st-trainer-link {
+      margin-left: 10px;
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    .st-trainer-link:hover {
+      text-decoration: underline;
+    }
+
+    .st-stars i {
+      color: #FFD700;
+      margin-right: 2px;
+    }
+
+    .st-trainer-rank {
+      display: flex;
+      align-items: center;
+      color: #555;
+    }
+
+    .st-user-icon {
+      margin-right: 5px;
     }
   </style>
+
 </head>
 
 <body class="courses-page">
@@ -148,17 +213,17 @@
   <!-- Header -->
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-  
+
       <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
       <button class="mobile-nav-toggle d-xl-none ms-3">
         <i class="bi bi-list"></i>
       </button>
-  
+
       <!-- Logo (Visible on screens >= 1200px) -->
       <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
         <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
       </a>
-  
+
       <!-- Navigation Menu (Visible on screens >= 1200px) -->
       <nav id="navmenu" class="navmenu d-none d-xl-flex">
         <ul class="navbar-nav">
@@ -168,21 +233,20 @@
           <li class="nav-item">
             <a href="bookings.html" class="nav-link">Bookings</a>
           </li>
-  
+
           <!-- Tutors Dropdown -->
           <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
-                class=""></i></a>
+            <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i class=""></i></a>
             <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
               <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
               <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
             </ul>
           </li>
-  
+
           <li class="nav-item">
             <a href="chats.html" class="nav-link">Chats</a>
           </li>
-  
+
           <!-- Notes Dropdown -->
           <li class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class=""></i></a>
@@ -193,7 +257,7 @@
           </li>
         </ul>
       </nav>
-  
+
       <!-- Email Display -->
       <div id="my-email-container" class="ms-auto position-relative">
         <button id="my-email" class="btn btn-secondary">
@@ -203,597 +267,599 @@
           <button id="logout-button" class="dropdown-item">Sign Out</button>
         </div>
       </div>
-  
+
     </div>
   </header>
   <!-- Mobile Menu Modal -->
-<div id="mobile-menu-mmodal" class="mmodal">
-  <div class="mmodal-content">
-    <ul><span class="close-button">&times;</span></ul>
-    <ul class="mobile-nav-list">
-      <li>
-        <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
-      </li>
-      <li>
-        <a href="bookings.html" class="mobile-nav-link">Bookings</a>
-      </li>
+  <div id="mobile-menu-mmodal" class="mmodal">
+    <div class="mmodal-content">
+      <ul><span class="close-button">&times;</span></ul>
+      <ul class="mobile-nav-list">
+        <li>
+          <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
+        </li>
+        <li>
+          <a href="bookings.html" class="mobile-nav-link">Bookings</a>
+        </li>
 
-      <!-- Tutors Dropdown -->
-      <li class="mobile-nav-item dropdown">
-        <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
-        <ul class="mobile-dropdown-menu">
-          <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-          <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-        </ul>
-      </li>
+        <!-- Tutors Dropdown -->
+        <li class="mobile-nav-item dropdown">
+          <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
+          <ul class="mobile-dropdown-menu">
+            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+          </ul>
+        </li>
 
-      <li>
-        <a href="chats.html" class="mobile-nav-link">Chats</a>
-      </li>
+        <li>
+          <a href="chats.html" class="mobile-nav-link">Chats</a>
+        </li>
 
-      <!-- Notes Dropdown -->
-      <li class="mobile-nav-item dropdown">
-        <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
-        <ul class="mobile-dropdown-menu">
-          <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-          <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-        </ul>
-      </li>
+        <!-- Notes Dropdown -->
+        <li class="mobile-nav-item dropdown">
+          <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
+          <ul class="mobile-dropdown-menu">
+            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+          </ul>
+        </li>
 
-      <!-- Logout Button -->
-      <li class="mobile-nav-item">
-        <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
-      </li>
-    </ul>
+        <!-- Logout Button -->
+        <li class="mobile-nav-item">
+          <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
+        </li>
+      </ul>
+    </div>
   </div>
-</div>
 
 
 
-<!-- JavaScript -->
-<!-- Bootstrap JS (Optional, for additional functionality) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Your Custom JavaScript -->
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Dropdown Toggle Functionality for Desktop
-    const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
+  <!-- JavaScript -->
+  <!-- Bootstrap JS (Optional, for additional functionality) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Your Custom JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Dropdown Toggle Functionality for Desktop
+      const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
 
-    dropdownToggles.forEach(function (toggle) {
-      toggle.addEventListener('click', function (event) {
-        event.preventDefault();
-        const dropdownMenu = this.nextElementSibling;
-        dropdownMenu.classList.toggle('show');
+      dropdownToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function (event) {
+          event.preventDefault();
+          const dropdownMenu = this.nextElementSibling;
+          dropdownMenu.classList.toggle('show');
+        });
       });
-    });
 
-    // Hamburger Menu Toggle
-    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-    const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
-    const closeButton = document.querySelector('.close-button');
+      // Hamburger Menu Toggle
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
+      const closeButton = document.querySelector('.close-button');
 
-    mobileNavToggle.addEventListener('click', function () {
-      mobileMenuMModal.style.display = 'block';
-    });
+      mobileNavToggle.addEventListener('click', function () {
+        mobileMenuMModal.style.display = 'block';
+      });
 
-    closeButton.addEventListener('click', function () {
-      mobileMenuMModal.style.display = 'none';
-    });
-
-    // Close Mobile Menu When Clicking Outside
-    window.addEventListener('click', function (event) {
-      if (event.target == mobileMenuMModal) {
+      closeButton.addEventListener('click', function () {
         mobileMenuMModal.style.display = 'none';
-      }
-    });
+      });
 
-    // Mobile Dropdown Toggle
-    const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
-
-    mobileDropdownToggles.forEach(function (toggle) {
-      toggle.addEventListener('click', function () {
-        const mobileDropdownMenu = this.nextElementSibling;
-        mobileDropdownMenu.classList.toggle('show');
-        // Rotate the chevron icon
-        const icon = this.querySelector('i');
-        if (mobileDropdownMenu.classList.contains('show')) {
-          icon.classList.remove('bi-chevron-down');
-          icon.classList.add('bi-chevron-up');
-        } else {
-          icon.classList.remove('bi-chevron-up');
-          icon.classList.add('bi-chevron-down');
+      // Close Mobile Menu When Clicking Outside
+      window.addEventListener('click', function (event) {
+        if (event.target == mobileMenuMModal) {
+          mobileMenuMModal.style.display = 'none';
         }
       });
-    });
 
-    // Email Dropdown Toggle (Visible on screens <1200px)
-    const myEmailButton = document.getElementById('my-email');
-    const emailDropdown = document.getElementById('dropdown-menu');
+      // Mobile Dropdown Toggle
+      const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
 
-    myEmailButton.addEventListener('click', function (event) {
-      event.stopPropagation();
-      emailDropdown.classList.toggle('show');
-    });
-
-    // Close Email Dropdown When Clicking Outside
-    document.addEventListener('click', function (event) {
-      if (!myEmailButton.contains(event.target)) {
-        emailDropdown.classList.remove('show');
-      }
-    });
-
-    // Logout Button Functionality
-    const logoutButton = document.getElementById('logout-button');
-    const logoutButtonMobile = document.getElementById('logout-button-mobile');
-
-    if (logoutButton) {
-      logoutButton.addEventListener('click', function () {
-        window.location.href = 'index.html';
+      mobileDropdownToggles.forEach(function (toggle) {
+        toggle.addEventListener('click', function () {
+          const mobileDropdownMenu = this.nextElementSibling;
+          mobileDropdownMenu.classList.toggle('show');
+          // Rotate the chevron icon
+          const icon = this.querySelector('i');
+          if (mobileDropdownMenu.classList.contains('show')) {
+            icon.classList.remove('bi-chevron-down');
+            icon.classList.add('bi-chevron-up');
+          } else {
+            icon.classList.remove('bi-chevron-up');
+            icon.classList.add('bi-chevron-down');
+          }
+        });
       });
-    }
 
-    if (logoutButtonMobile) {
-      logoutButtonMobile.addEventListener('click', function () {
-        window.location.href = 'index.html';
+      // Email Dropdown Toggle (Visible on screens <1200px)
+      const myEmailButton = document.getElementById('my-email');
+      const emailDropdown = document.getElementById('dropdown-menu');
+
+      myEmailButton.addEventListener('click', function (event) {
+        event.stopPropagation();
+        emailDropdown.classList.toggle('show');
       });
-    }
 
-    // Handle Responsive Logo and Email Display
-    const logo = document.querySelector('.logo');
-    const myEmailContainer = document.getElementById('my-email-container');
+      // Close Email Dropdown When Clicking Outside
+      document.addEventListener('click', function (event) {
+        if (!myEmailButton.contains(event.target)) {
+          emailDropdown.classList.remove('show');
+        }
+      });
 
-    function handleResize() {
-      if (window.innerWidth < 1200) {
-        logo.classList.add('d-none');
-      } else {
-        logo.classList.remove('d-none');
+      // Logout Button Functionality
+      const logoutButton = document.getElementById('logout-button');
+      const logoutButtonMobile = document.getElementById('logout-button-mobile');
+
+      if (logoutButton) {
+        logoutButton.addEventListener('click', function () {
+          window.location.href = 'index.html';
+        });
       }
+
+      if (logoutButtonMobile) {
+        logoutButtonMobile.addEventListener('click', function () {
+          window.location.href = 'index.html';
+        });
+      }
+
+      // Handle Responsive Logo and Email Display
+      const logo = document.querySelector('.logo');
+      const myEmailContainer = document.getElementById('my-email-container');
+
+      function handleResize() {
+        if (window.innerWidth < 1200) {
+          logo.classList.add('d-none');
+        } else {
+          logo.classList.remove('d-none');
+        }
+      }
+
+      window.addEventListener('resize', handleResize);
+      handleResize(); // Initial check on page load
+    });
+  </script>
+
+  <style>
+    /* Header Container */
+    #header {
+      background-color: #ffffff;
+      /* Header background */
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      /* Subtle shadow */
+      padding: 10px 0;
+      /* Vertical padding */
+      position: relative;
+      z-index: 1000;
+      /* Ensure it stays on top */
     }
 
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Initial check on page load
-  });
-</script>
-
-<style>
-  /* Header Container */
-  #header {
-    background-color: #ffffff;
-    /* Header background */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    /* Subtle shadow */
-    padding: 10px 0;
-    /* Vertical padding */
-    position: relative;
-    z-index: 1000;
-    /* Ensure it stays on top */
-  }
-
-  /* Logo Styling */
-  #header .logo img {
-    height: 50px;
-    /* Adjust logo height as needed */
-    width: auto;
-  }
-
-  /* Navigation Menu */
-  #header #navmenu {
-    display: flex;
-    align-items: center;
-  }
-
-  /* Navbar List */
-  #header .navbar-nav {
-    list-style: none;
-    display: flex;
-    flex-direction: row;
-    /* Arrange items horizontally */
-    margin: 0;
-    padding: 0;
-  }
-
-  /* Navbar Items */
-  #header .nav-item {
-    position: relative;
-    /* For dropdown positioning */
-  }
-
-  /* Navbar Links */
-  #header .nav-link {
-    color: #333333;
-    /* Link color */
-    padding: 10px 15px;
-    text-decoration: none;
-    transition: color 0.3s, background-color 0.3s;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Navbar Link Hover Effect */
-  #header .nav-link:hover {
-    color: #007bff;
-    /* Hover color */
-    background-color: rgba(0, 123, 255, 0.1);
-    /* Optional background on hover */
-    border-radius: 4px;
-    /* Rounded corners on hover */
-  }
-
-  /* Dropdown Menu Styling */
-  #header .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    display: none;
-    /* Hidden by default */
-    min-width: 200px;
-    z-index: 1000;
-  }
-
-  /* Show Dropdown Menu */
-  #header .dropdown-menu.show {
-    display: block;
-  }
-
-  /* Dropdown Items */
-  #header .dropdown-item {
-    padding: 10px 15px;
-    color: #333333;
-    text-decoration: none;
-    display: block;
-    transition: background-color 0.3s, color 0.3s;
-  }
-
-  /* Dropdown Item Hover Effect */
-  #header .dropdown-item:hover {
-    background-color: #f8f9fa;
-    color: #007bff;
-  }
-
-  /* Mobile Navigation Toggle Button */
-  #header .mobile-nav-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5em;
-    cursor: pointer;
-    color: #333333;
-    margin-left: auto;
-    /* Push the toggle to the right */
-  }
-
-  /* Email Display Container */
-  #header #my-email-container {
-    position: relative;
-  }
-
-  /* Email Button Styling */
-  #header #my-email {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 1em;
-    color: #333333;
-    display: flex;
-    align-items: center;
-  }
-
-  /* Email Dropdown Menu */
-  #header #dropdown-menu {
-    position: absolute;
-    right: 0;
-    top: 100%;
-    background-color: #ffffff;
-    border: 1px solid #dee2e6;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-    display: none;
-    /* Hidden by default */
-    min-width: 150px;
-    z-index: 1000;
-  }
-
-  /* Show Email Dropdown Menu */
-  #header #dropdown-menu.show {
-    display: block;
-  }
-
-  /* Dropdown Items in Email Dropdown */
-  #header #dropdown-menu .dropdown-item {
-    padding: 10px 15px;
-    color: #333333;
-    text-decoration: none;
-    display: block;
-    transition: background-color 0.3s, color 0.3s;
-  }
-
-  /* Dropdown Item Hover Effect in Email Dropdown */
-  #header #dropdown-menu .dropdown-item:hover {
-    background-color: #f8f9fa;
-    color: #007bff;
-  }
-
-  /* Logout Button Styling */
-  #header .btn-outline-danger {
-    color: #dc3545;
-    border-color: #dc3545;
-    transition: background-color 0.3s, color 0.3s;
-  }
-
-  /* Logout Button Hover Effect */
-  #header .btn-outline-danger:hover {
-    background-color: #dc3545;
-    color: #ffffff;
-    border-color: #dc3545;
-  }
-
-  /* Responsive Styles */
-
-  /* For screens less than 1200px */
-  @media (max-width: 1199.98px) {
-
-    /* Hide Logo */
-    #header .logo {
-      display: none;
+    /* Logo Styling */
+    #header .logo img {
+      height: 50px;
+      /* Adjust logo height as needed */
+      width: auto;
     }
 
-    /* Show Email Container */
-    #header #my-email-container {
-      display: block;
-    }
-
-    /* Show Mobile Nav Toggle Button */
-    #header .mobile-nav-toggle {
-      display: block;
-    }
-
-    /* Hide Navmenu Initially */
-    #header #navmenu {
-      display: none;
-    }
-  }
-
-  /* For screens 1200px and above */
-  @media (min-width: 1200px) {
-
-    /* Show Logo */
-    #header .logo {
-      display: flex;
-    }
-
-    /* Show Navmenu */
+    /* Navigation Menu */
     #header #navmenu {
       display: flex;
+      align-items: center;
     }
 
-    /* Hide Mobile Nav Toggle Button */
+    /* Navbar List */
+    #header .navbar-nav {
+      list-style: none;
+      display: flex;
+      flex-direction: row;
+      /* Arrange items horizontally */
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Navbar Items */
+    #header .nav-item {
+      position: relative;
+      /* For dropdown positioning */
+    }
+
+    /* Navbar Links */
+    #header .nav-link {
+      color: #333333;
+      /* Link color */
+      padding: 10px 15px;
+      text-decoration: none;
+      transition: color 0.3s, background-color 0.3s;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Navbar Link Hover Effect */
+    #header .nav-link:hover {
+      color: #007bff;
+      /* Hover color */
+      background-color: rgba(0, 123, 255, 0.1);
+      /* Optional background on hover */
+      border-radius: 4px;
+      /* Rounded corners on hover */
+    }
+
+    /* Dropdown Menu Styling */
+    #header .dropdown-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #ffffff;
+      border: 1px solid #dee2e6;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      display: none;
+      /* Hidden by default */
+      min-width: 200px;
+      z-index: 1000;
+    }
+
+    /* Show Dropdown Menu */
+    #header .dropdown-menu.show {
+      display: block;
+    }
+
+    /* Dropdown Items */
+    #header .dropdown-item {
+      padding: 10px 15px;
+      color: #333333;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dropdown Item Hover Effect */
+    #header .dropdown-item:hover {
+      background-color: #f8f9fa;
+      color: #007bff;
+    }
+
+    /* Mobile Navigation Toggle Button */
     #header .mobile-nav-toggle {
+      background: none;
+      border: none;
+      font-size: 1.5em;
+      cursor: pointer;
+      color: #333333;
+      margin-left: auto;
+      /* Push the toggle to the right */
+    }
+
+    /* Email Display Container */
+    #header #my-email-container {
+      position: relative;
+    }
+
+    /* Email Button Styling */
+    #header #my-email {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1em;
+      color: #333333;
+      display: flex;
+      align-items: center;
+    }
+
+    /* Email Dropdown Menu */
+    #header #dropdown-menu {
+      position: absolute;
+      right: 0;
+      top: 100%;
+      background-color: #ffffff;
+      border: 1px solid #dee2e6;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      display: none;
+      /* Hidden by default */
+      min-width: 150px;
+      z-index: 1000;
+    }
+
+    /* Show Email Dropdown Menu */
+    #header #dropdown-menu.show {
+      display: block;
+    }
+
+    /* Dropdown Items in Email Dropdown */
+    #header #dropdown-menu .dropdown-item {
+      padding: 10px 15px;
+      color: #333333;
+      text-decoration: none;
+      display: block;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Dropdown Item Hover Effect in Email Dropdown */
+    #header #dropdown-menu .dropdown-item:hover {
+      background-color: #f8f9fa;
+      color: #007bff;
+    }
+
+    /* Logout Button Styling */
+    #header .btn-outline-danger {
+      color: #dc3545;
+      border-color: #dc3545;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    /* Logout Button Hover Effect */
+    #header .btn-outline-danger:hover {
+      background-color: #dc3545;
+      color: #ffffff;
+      border-color: #dc3545;
+    }
+
+    /* Responsive Styles */
+
+    /* For screens less than 1200px */
+    @media (max-width: 1199.98px) {
+
+      /* Hide Logo */
+      #header .logo {
+        display: none;
+      }
+
+      /* Show Email Container */
+      #header #my-email-container {
+        display: block;
+      }
+
+      /* Show Mobile Nav Toggle Button */
+      #header .mobile-nav-toggle {
+        display: block;
+      }
+
+      /* Hide Navmenu Initially */
+      #header #navmenu {
+        display: none;
+      }
+    }
+
+    /* For screens 1200px and above */
+    @media (min-width: 1200px) {
+
+      /* Show Logo */
+      #header .logo {
+        display: flex;
+      }
+
+      /* Show Navmenu */
+      #header #navmenu {
+        display: flex;
+      }
+
+      /* Hide Mobile Nav Toggle Button */
+      #header .mobile-nav-toggle {
+        display: none;
+      }
+
+      #header #my-email-container {
+        display: block;
+      }
+    }
+
+
+    /* Mobile Menu Modal Styles */
+    .mmodal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1050;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgba(0, 0, 0, 0.5);
+      /* Black w/ opacity */
+    }
+
+    .mmodal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      /* 10% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      /* Could be more or less, depending on screen size */
+      max-width: 400px;
+      border-radius: 8px;
+      position: relative;
+    }
+
+    .close-button {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      cursor: pointer;
+    }
+
+    .close-button:hover,
+    .close-button:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .mobile-nav-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .mobile-nav-list li {
+      margin-bottom: 10px;
+    }
+
+    .mobile-nav-link {
+      color: #333333;
+      text-decoration: none;
+      display: block;
+      padding: 10px 15px;
+      border-radius: 4px;
+      transition: color 0.3s, background-color 0.3s;
+    }
+
+    .mobile-nav-link:hover {
+      color: #007bff;
+      background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .mobile-dropdown-toggle {
+      color: #333333;
+      background: none;
+      border: none;
+      width: 100%;
+      text-align: left;
+      padding: 10px 15px;
+      font-size: 1em;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 4px;
+      transition: color 0.3s, background-color 0.3s;
+    }
+
+    .mobile-dropdown-toggle:hover {
+      color: #007bff;
+      background-color: rgba(0, 123, 255, 0.1);
+    }
+
+    .mobile-dropdown-menu {
+      list-style: none;
+      padding-left: 15px;
       display: none;
     }
 
-    #header #my-email-container {
+    .mobile-dropdown-menu.show {
       display: block;
     }
-  }
-  
 
-  /* Mobile Menu Modal Styles */
-  .mmodal {
-    display: none;
-    /* Hidden by default */
-    position: fixed;
-    /* Stay in place */
-    z-index: 1050;
-    /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgba(0, 0, 0, 0.5);
-    /* Black w/ opacity */
-  }
+    .mobile-dropdown-menu .dropdown-item {
+      color: #333333;
+      text-decoration: none;
+      display: block;
+      padding: 8px 15px;
+      border-radius: 4px;
+      transition: color 0.3s, background-color 0.3s;
+    }
 
-  .mmodal-content {
-    background-color: #fefefe;
-    margin: 10% auto;
-    /* 10% from the top and centered */
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    /* Could be more or less, depending on screen size */
-    max-width: 400px;
-    border-radius: 8px;
-    position: relative;
-  }
+    .mobile-dropdown-menu .dropdown-item:hover {
+      color: #007bff;
+      background-color: rgba(0, 123, 255, 0.1);
+    }
 
-  .close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    cursor: pointer;
-  }
+    /* Logout Button Styling in Mobile Menu */
+    #logout-button-mobile {
+      color: #dc3545;
+      border-color: #dc3545;
+      background-color: transparent;
+      padding: 10px 15px;
+      border-radius: 4px;
+      transition: background-color 0.3s, color 0.3s;
+      width: 100%;
+      margin-top: 15px;
+    }
 
-  .close-button:hover,
-  .close-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
-  }
+    #logout-button-mobile:hover {
+      background-color: #dc3545;
+      color: #ffffff;
+    }
 
-  .mobile-nav-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-  }
-
-  .mobile-nav-list li {
-    margin-bottom: 10px;
-  }
-
-  .mobile-nav-link {
-    color: #333333;
-    text-decoration: none;
-    display: block;
-    padding: 10px 15px;
-    border-radius: 4px;
-    transition: color 0.3s, background-color 0.3s;
-  }
-
-  .mobile-nav-link:hover {
-    color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
-  }
-
-  .mobile-dropdown-toggle {
-    color: #333333;
-    background: none;
-    border: none;
-    width: 100%;
-    text-align: left;
-    padding: 10px 15px;
-    font-size: 1em;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-radius: 4px;
-    transition: color 0.3s, background-color 0.3s;
-  }
-
-  .mobile-dropdown-toggle:hover {
-    color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
-  }
-
-  .mobile-dropdown-menu {
-    list-style: none;
-    padding-left: 15px;
-    display: none;
-  }
-
-  .mobile-dropdown-menu.show {
-    display: block;
-  }
-
-  .mobile-dropdown-menu .dropdown-item {
-    color: #333333;
-    text-decoration: none;
-    display: block;
-    padding: 8px 15px;
-    border-radius: 4px;
-    transition: color 0.3s, background-color 0.3s;
-  }
-
-  .mobile-dropdown-menu .dropdown-item:hover {
-    color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
-  }
-
-  /* Logout Button Styling in Mobile Menu */
-  #logout-button-mobile {
-    color: #dc3545;
-    border-color: #dc3545;
-    background-color: transparent;
-    padding: 10px 15px;
-    border-radius: 4px;
-    transition: background-color 0.3s, color 0.3s;
-    width: 100%;
-    margin-top: 15px;
-  }
-
-  #logout-button-mobile:hover {
-    background-color: #dc3545;
-    color: #ffffff;
-  }
-
-  /* ==============================
+    /* ==============================
    Hover Animations for Navigation
 =============================== */
 
-  /* Hover Animation for Desktop Navigation Links */
-  #navmenu .nav-link {
-    transition: color 0.3s, background-color 0.3s;
-  }
+    /* Hover Animation for Desktop Navigation Links */
+    #navmenu .nav-link {
+      transition: color 0.3s, background-color 0.3s;
+    }
 
-  #navmenu .nav-link:hover {
-    color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
-    border-radius: 4px;
-  }
+    #navmenu .nav-link:hover {
+      color: #007bff;
+      background-color: rgba(0, 123, 255, 0.1);
+      border-radius: 4px;
+    }
 
-  /* Hover Animation for Dropdown Items */
-  #navmenu .dropdown-item {
-    transition: background-color 0.3s, color 0.3s;
-  }
+    /* Hover Animation for Dropdown Items */
+    #navmenu .dropdown-item {
+      transition: background-color 0.3s, color 0.3s;
+    }
 
-  #navmenu .dropdown-item:hover {
-    background-color: #f8f9fa;
-    color: #007bff;
-  }
-  
-  /* Hover Animation for Mobile Navigation Links */
-  .mobile-nav-link {
-    transition: color 0.3s, background-color 0.3s;
-  }
+    #navmenu .dropdown-item:hover {
+      background-color: #f8f9fa;
+      color: #007bff;
+    }
 
-  .mobile-nav-link:hover {
-    color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
-  }
+    /* Hover Animation for Mobile Navigation Links */
+    .mobile-nav-link {
+      transition: color 0.3s, background-color 0.3s;
+    }
 
-  /* Hover Animation for Mobile Dropdown Toggle */
-  .mobile-dropdown-toggle {
-    transition: color 0.3s, background-color 0.3s;
-  }
+    .mobile-nav-link:hover {
+      color: #007bff;
+      background-color: rgba(0, 123, 255, 0.1);
+    }
 
-  .mobile-dropdown-toggle:hover {
-    color: #007bff;
-    background-color: rgba(0, 123, 255, 0.1);
-  }
+    /* Hover Animation for Mobile Dropdown Toggle */
+    .mobile-dropdown-toggle {
+      transition: color 0.3s, background-color 0.3s;
+    }
 
-  /* Hover Animation for Logout Button in Mobile Menu */
-  #logout-button-mobile:hover {
-    background-color: #dc3545;
-    color: #ffffff;
-  }
-</style>
+    .mobile-dropdown-toggle:hover {
+      color: #007bff;
+      background-color: rgba(0, 123, 255, 0.1);
+    }
 
-  <main class="main">
+    /* Hover Animation for Logout Button in Mobile Menu */
+    #logout-button-mobile:hover {
+      background-color: #dc3545;
+      color: #ffffff;
+    }
+  </style>
 
-    <!-- Page Title -->
-    <div class="page-title" data-aos="fade">
-      <div class="heading">
-        <div class="container">
-          <div class="row d-flex justify-content-center text-center">
-            <div class="col-lg-8">
-              <h1>Bookings</h1>
-              <p class="mb-0">Track and manage all your bookings here</p>
-            </div>
+<main class="main">
+  <!-- Page Title -->
+  <div class="page-title" data-aos="fade">
+    <div class="heading">
+      <div class="container">
+        <div class="row d-flex justify-content-center text-center">
+          <div class="col-lg-8">
+            <h1>Bookings</h1>
+            <p class="mb-0">Track and manage all your bookings here</p>
           </div>
         </div>
       </div>
+    </div>
+  </div><!-- End Page Title -->
 
-    </div><!-- End Page Title -->
-
-    <!-- Courses Section -->
-
-
-    <section class="courses section">
-
-      <div id="booking-list"></div>
-    </section>
-
-
-  </main>
+  <!-- Courses Section -->
+  <section class="st-courses-section section">
+    <div class="st-filter-container">
+      <label for="statusFilter">Filter by Status:</label>
+      <select id="statusFilter">
+        <option value="">All</option>
+        <option value="Confirmed">Confirmed</option>
+        <option value="Pending">Pending</option>
+        <option value="Cancelled">Cancelled</option>
+      </select>
+    </div>
+    <div id="booking-list"></div>
+  </section>
+</main>
 
   <footer id="footer" class="footer position-relative light-background">
     <div class="container footer-top">
@@ -948,186 +1014,364 @@
       });
 
 
+      // function displayFilteredBookings(status) {
+      //   const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
+      //   // console.log(filteredBookings)
+      //   const bookingList = document.getElementById("booking-list");
+      //   bookingList.innerText = '';
+
+      //   const row = document.createElement('div');
+      //   row.classList.add('row', 'g-3', 'd-flex', 'justify-content-center'); // Add a Bootstrap gutter class for spacing
+
+      //   filteredBookings.forEach(bookingData => {
+      //     const col = document.createElement('div');
+      //     // Responsive column classes for different screen sizes
+      //     col.classList.add('col-sm-12', 'col-md-6', 'col-lg-4');
+      //     col.setAttribute('data-aos', 'zoom-in');
+      //     col.setAttribute('data-aos-delay', '100');
+
+      //     // Wrap the entire card in an anchor tag
+      //     const linkWrapper = document.createElement('a');
+      //     linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
+      //     linkWrapper.style.textDecoration = 'none';
+      //     linkWrapper.style.color = 'inherit';
+
+      //     const courseItem = document.createElement('div');
+      //     courseItem.classList.add('course-item');
+
+      //     if (bookingData.status === 'Cancelled') {
+      //       courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)';
+      //       courseItem.style.position = 'relative';
+
+      //       const overlay = document.createElement('div');
+      //       overlay.style.position = 'absolute';
+      //       overlay.style.top = '0';
+      //       overlay.style.left = '0';
+      //       overlay.style.right = '0';
+      //       overlay.style.bottom = '0';
+      //       overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)';
+      //       overlay.style.pointerEvents = 'none';
+      //       courseItem.appendChild(overlay);
+      //     }
+
+      //     const img = document.createElement('img');
+      //     img.classList.add('card-img-top');
+      //     img.alt = 'Course Image';
+
+      //     // Fetch image URL from Firebase Storage
+      //     firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
+      //       .then(url => {
+      //         img.src = url;
+      //       })
+      //       .catch(error => {
+      //         console.error("Error fetching image:", error);
+      //         img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
+      //       });
+
+      //     const courseContent = document.createElement('div');
+      //     courseContent.classList.add('course-content');
+
+      //     const categoryPriceDiv = document.createElement('div');
+      //     categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
+
+      //     const category = document.createElement('p');
+      //     category.classList.add('category');
+      //     category.textContent = bookingData.courseCode;
+
+      //     const price = document.createElement('p');
+      //     price.classList.add('price');
+      //     price.textContent = `$${bookingData.fee * 2}`;
+
+      //     categoryPriceDiv.appendChild(category);
+      //     categoryPriceDiv.appendChild(price);
+
+      //     const titleContainer = document.createElement('h3');
+      //     const titleText = document.createElement('span');
+      //     titleText.textContent = bookingData.courseName;
+      //     titleContainer.appendChild(titleText);
+
+      //     // Status
+      //     const status = document.createElement('p');
+      //     status.classList.add('description');
+      //     const statusLabel = document.createElement('b');
+      //     statusLabel.textContent = 'Status: ';
+      //     status.appendChild(statusLabel);
+      //     status.appendChild(document.createTextNode(bookingData.status));
+
+      //     // Date of Lesson
+      //     const dateOfLesson = document.createElement('p');
+      //     dateOfLesson.classList.add('description');
+      //     const dateLabel = document.createElement('b');
+      //     dateLabel.textContent = 'Date of Booking: ';
+      //     dateOfLesson.appendChild(dateLabel);
+      //     dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
+
+      //     // Mode
+      //     const mode = document.createElement('p');
+      //     mode.classList.add('description');
+      //     const modeLabel = document.createElement('b');
+      //     modeLabel.textContent = 'Mode: ';
+      //     mode.appendChild(modeLabel);
+      //     mode.appendChild(document.createTextNode(bookingData.mode));
+
+      //     const trainerDiv = document.createElement('div');
+      //     trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
+
+      //     const trainerProfile = document.createElement('div');
+      //     trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
+
+      //     const trainerImg = document.createElement('img');
+      //     trainerImg.classList.add('img-fluid');
+      //     trainerImg.alt = '';
+
+      //     // Fetch trainer image URL from Firebase Storage
+      //     firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
+      //       .then(url => {
+      //         trainerImg.src = url;
+      //       })
+      //       .catch(error => {
+      //         console.error("Error fetching trainer image:", error);
+      //         trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
+      //       });
+
+      //     const trainerLink = document.createElement('a');
+      //     trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
+      //     trainerLink.classList.add('trainer-link');
+      //     trainerLink.textContent = bookingData.tutorName;
+
+      //     const tutorStars = document.createElement("div");
+      //     tutorStars.style.marginLeft = "10px";
+      //     tutorStars.classList.add("stars");
+
+      //     const rating = bookingData.tutorStars || 0;
+      //     for (let i = 1; i <= 5; i++) {
+      //       const star = document.createElement("i");
+      //       star.style.color = "#FFD700";
+
+      //       if (i <= Math.floor(rating)) {
+      //         star.className = "bi bi-star-fill";
+      //       } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
+      //         star.className = "bi bi-star-half";
+      //       } else {
+      //         star.className = "bi bi-star";
+      //       }
+      //       tutorStars.appendChild(star);
+      //     }
+
+      //     trainerProfile.appendChild(trainerImg);
+      //     trainerProfile.appendChild(trainerLink);
+      //     trainerProfile.appendChild(tutorStars);
+
+      //     trainerDiv.appendChild(trainerProfile);
+
+      //     const trainerRank = document.createElement('div');
+      //     trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
+
+      //     const personIcon = document.createElement('i');
+      //     personIcon.classList.add('bi', 'bi-person', 'user-icon');
+      //     trainerRank.appendChild(personIcon);
+      //     trainerRank.innerText += ` ${bookingData.tutorReview}`;
+
+      //     trainerDiv.appendChild(trainerRank);
+
+      //     courseContent.appendChild(categoryPriceDiv);
+      //     courseContent.appendChild(titleContainer);
+      //     courseContent.appendChild(status);
+      //     courseContent.appendChild(dateOfLesson);
+      //     courseContent.appendChild(mode);
+      //     courseContent.appendChild(trainerDiv);
+
+      //     courseItem.appendChild(img);
+      //     courseItem.appendChild(courseContent);
+
+      //     // Append the course item to the link wrapper
+      //     linkWrapper.appendChild(courseItem);
+      //     col.appendChild(linkWrapper);
+      //     row.appendChild(col);
+      //   });
+
+      //   bookingList.appendChild(row);
+      // }
+
       function displayFilteredBookings(status) {
-    const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
-    // console.log(filteredBookings)
-    const bookingList = document.getElementById("booking-list");
-    bookingList.innerText = '';
+      const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
+      const bookingList = document.getElementById("booking-list");
+      bookingList.innerHTML = ''; // Clear previous content
 
-    const row = document.createElement('div');
-    row.classList.add('row', 'g-3', 'd-flex', 'justify-content-center'); // Add a Bootstrap gutter class for spacing
+      const row = document.createElement('div');
+      row.classList.add('row', 'g-3', 'd-flex', 'justify-content-center'); // Bootstrap classes
 
-    filteredBookings.forEach(bookingData => {
-        const col = document.createElement('div');
-        // Responsive column classes for different screen sizes
-        col.classList.add('col-sm-12', 'col-md-6', 'col-lg-4');
-        col.setAttribute('data-aos', 'zoom-in');
-        col.setAttribute('data-aos-delay', '100');
+      filteredBookings.forEach(bookingData => {
+          const col = document.createElement('div');
+          col.classList.add('col-sm-12', 'col-md-6', 'col-lg-4');
+          col.setAttribute('data-aos', 'zoom-in');
+          col.setAttribute('data-aos-delay', '100');
 
-        // Wrap the entire card in an anchor tag
-        const linkWrapper = document.createElement('a');
-        linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
-        linkWrapper.style.textDecoration = 'none';
-        linkWrapper.style.color = 'inherit';
+          // Wrap the entire card in an anchor tag
+          const linkWrapper = document.createElement('a');
+          linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
+          linkWrapper.style.textDecoration = 'none';
+          linkWrapper.style.color = 'inherit';
 
-        const courseItem = document.createElement('div');
-        courseItem.classList.add('course-item');
+          const courseItem = document.createElement('div');
+          courseItem.classList.add('st-course-item');
 
-        if (bookingData.status === 'Cancelled') {
-            courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)';
-            courseItem.style.position = 'relative';
+          if (bookingData.status === 'Cancelled') {
+              courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)';
+              courseItem.style.position = 'relative';
 
-            const overlay = document.createElement('div');
-            overlay.style.position = 'absolute';
-            overlay.style.top = '0';
-            overlay.style.left = '0';
-            overlay.style.right = '0';
-            overlay.style.bottom = '0';
-            overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)';
-            overlay.style.pointerEvents = 'none';
-            courseItem.appendChild(overlay);
-        }
+              const overlay = document.createElement('div');
+              overlay.style.position = 'absolute';
+              overlay.style.top = '0';
+              overlay.style.left = '0';
+              overlay.style.right = '0';
+              overlay.style.bottom = '0';
+              overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)';
+              overlay.style.pointerEvents = 'none';
+              courseItem.appendChild(overlay);
+          }
 
-        const img = document.createElement('img');
-        img.classList.add('card-img-top');
-        img.alt = 'Course Image';
+          const img = document.createElement('img');
+          img.classList.add('st-card-img-top');
+          img.alt = 'Course Image';
 
-        // Fetch image URL from Firebase Storage
-        firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
-            .then(url => {
-                img.src = url;
-            })
-            .catch(error => {
-                console.error("Error fetching image:", error);
-                img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
-            });
+          // Fetch image URL from Firebase Storage
+          firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
+              .then(url => {
+                  img.src = url;
+              })
+              .catch(error => {
+                  console.error("Error fetching image:", error);
+                  img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
+              });
 
-        const courseContent = document.createElement('div');
-        courseContent.classList.add('course-content');
+          const courseContent = document.createElement('div');
+          courseContent.classList.add('st-course-content');
 
-        const categoryPriceDiv = document.createElement('div');
-        categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
+          const categoryPriceDiv = document.createElement('div');
+          categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
 
-        const category = document.createElement('p');
-        category.classList.add('category');
-        category.textContent = bookingData.courseCode;
+          const category = document.createElement('p');
+          category.classList.add('st-category');
+          category.textContent = bookingData.courseCode;
 
-        const price = document.createElement('p');
-        price.classList.add('price');
-        price.textContent = `$${bookingData.fee * 2}`;
+          const price = document.createElement('p');
+          price.classList.add('st-price');
+          price.textContent = `$${bookingData.fee * 2}`;
 
-        categoryPriceDiv.appendChild(category);
-        categoryPriceDiv.appendChild(price);
+          categoryPriceDiv.appendChild(category);
+          categoryPriceDiv.appendChild(price);
 
-        const titleContainer = document.createElement('h3');
-        const titleText = document.createElement('span');
-        titleText.textContent = bookingData.courseName;
-        titleContainer.appendChild(titleText);
+          const titleContainer = document.createElement('h3');
+          const titleText = document.createElement('span');
+          titleText.textContent = bookingData.courseName;
+          titleContainer.appendChild(titleText);
 
-        // Status
-        const status = document.createElement('p');
-        status.classList.add('description');
-        const statusLabel = document.createElement('b');
-        statusLabel.textContent = 'Status: ';
-        status.appendChild(statusLabel);
-        status.appendChild(document.createTextNode(bookingData.status));
+          // Status
+          const status = document.createElement('p');
+          status.classList.add('st-description');
+          const statusLabel = document.createElement('b');
+          statusLabel.textContent = 'Status: ';
+          status.appendChild(statusLabel);
+          status.appendChild(document.createTextNode(bookingData.status));
 
-        // Date of Lesson
-        const dateOfLesson = document.createElement('p');
-        dateOfLesson.classList.add('description');
-        const dateLabel = document.createElement('b');
-        dateLabel.textContent = 'Date of Booking: ';
-        dateOfLesson.appendChild(dateLabel);
-        dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
+          // Date of Lesson
+          const dateOfLesson = document.createElement('p');
+          dateOfLesson.classList.add('st-description');
+          const dateLabel = document.createElement('b');
+          dateLabel.textContent = 'Date of Booking: ';
+          dateOfLesson.appendChild(dateLabel);
+          dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
 
-        // Mode
-        const mode = document.createElement('p');
-        mode.classList.add('description');
-        const modeLabel = document.createElement('b');
-        modeLabel.textContent = 'Mode: ';
-        mode.appendChild(modeLabel);
-        mode.appendChild(document.createTextNode(bookingData.mode));
+          // Mode
+          const mode = document.createElement('p');
+          mode.classList.add('st-description');
+          const modeLabel = document.createElement('b');
+          modeLabel.textContent = 'Mode: ';
+          mode.appendChild(modeLabel);
+          mode.appendChild(document.createTextNode(bookingData.mode));
 
-        const trainerDiv = document.createElement('div');
-        trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
+          const trainerDiv = document.createElement('div');
+          trainerDiv.classList.add('st-trainer', 'd-flex', 'justify-content-between', 'align-items-center');
 
-        const trainerProfile = document.createElement('div');
-        trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
+          const trainerProfile = document.createElement('div');
+          trainerProfile.classList.add('st-trainer-profile', 'd-flex', 'align-items-center');
 
-        const trainerImg = document.createElement('img');
-        trainerImg.classList.add('img-fluid');
-        trainerImg.alt = '';
+          const trainerImg = document.createElement('img');
+          trainerImg.classList.add('img-fluid');
+          trainerImg.alt = 'Trainer Image';
+          trainerImg.style.width = '40px';
+          trainerImg.style.height = '40px';
+          trainerImg.style.borderRadius = '50%';
 
-        // Fetch trainer image URL from Firebase Storage
-        firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
-            .then(url => {
-                trainerImg.src = url;
-            })
-            .catch(error => {
-                console.error("Error fetching trainer image:", error);
-                trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
-            });
+          // Fetch trainer image URL from Firebase Storage
+          firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
+              .then(url => {
+                  trainerImg.src = url;
+              })
+              .catch(error => {
+                  console.error("Error fetching trainer image:", error);
+                  trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
+              });
 
-        const trainerLink = document.createElement('a');
-        trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
-        trainerLink.classList.add('trainer-link');
-        trainerLink.textContent = bookingData.tutorName;
+          const trainerLink = document.createElement('a');
+          trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
+          trainerLink.classList.add('st-trainer-link');
+          trainerLink.textContent = bookingData.tutorName;
 
-        const tutorStars = document.createElement("div");
-        tutorStars.style.marginLeft = "10px";
-        tutorStars.classList.add("stars");
+          const tutorStars = document.createElement("div");
+          tutorStars.style.marginLeft = "10px";
+          tutorStars.classList.add("st-stars");
 
-        const rating = bookingData.tutorStars || 0;
-        for (let i = 1; i <= 5; i++) {
-            const star = document.createElement("i");
-            star.style.color = "#FFD700";
+          const rating = bookingData.tutorStars || 0;
+          for (let i = 1; i <= 5; i++) {
+              const star = document.createElement("i");
+              star.style.color = "#FFD700";
 
-            if (i <= Math.floor(rating)) {
-                star.className = "bi bi-star-fill";
-            } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
-                star.className = "bi bi-star-half";
-            } else {
-                star.className = "bi bi-star";
-            }
-            tutorStars.appendChild(star);
-        }
+              if (i <= Math.floor(rating)) {
+                  star.className = "bi bi-star-fill";
+              } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
+                  star.className = "bi bi-star-half";
+              } else {
+                  star.className = "bi bi-star";
+              }
+              tutorStars.appendChild(star);
+          }
 
-        trainerProfile.appendChild(trainerImg);
-        trainerProfile.appendChild(trainerLink);
-        trainerProfile.appendChild(tutorStars);
+          trainerProfile.appendChild(trainerImg);
+          trainerProfile.appendChild(trainerLink);
+          trainerProfile.appendChild(tutorStars);
 
-        trainerDiv.appendChild(trainerProfile);
+          trainerDiv.appendChild(trainerProfile);
 
-        const trainerRank = document.createElement('div');
-        trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
+          const trainerRank = document.createElement('div');
+          trainerRank.classList.add('st-trainer-rank', 'd-flex', 'align-items-center');
 
-        const personIcon = document.createElement('i');
-        personIcon.classList.add('bi', 'bi-person', 'user-icon');
-        trainerRank.appendChild(personIcon);
-        trainerRank.innerText += ` ${bookingData.tutorReview}`;
+          const personIcon = document.createElement('i');
+          personIcon.classList.add('bi', 'bi-person', 'st-user-icon');
+          trainerRank.appendChild(personIcon);
+          trainerRank.appendChild(document.createTextNode(` ${bookingData.tutorReview}`));
 
-        trainerDiv.appendChild(trainerRank);
+          trainerDiv.appendChild(trainerRank);
 
-        courseContent.appendChild(categoryPriceDiv);
-        courseContent.appendChild(titleContainer);
-        courseContent.appendChild(status);
-        courseContent.appendChild(dateOfLesson);
-        courseContent.appendChild(mode);
-        courseContent.appendChild(trainerDiv);
+          courseContent.appendChild(categoryPriceDiv);
+          courseContent.appendChild(titleContainer);
+          courseContent.appendChild(status);
+          courseContent.appendChild(dateOfLesson);
+          courseContent.appendChild(mode);
+          courseContent.appendChild(trainerDiv);
 
-        courseItem.appendChild(img);
-        courseItem.appendChild(courseContent);
+          courseItem.appendChild(img);
+          courseItem.appendChild(courseContent);
 
-        // Append the course item to the link wrapper
-        linkWrapper.appendChild(courseItem);
-        col.appendChild(linkWrapper);
-        row.appendChild(col);
-    });
+          // Append the course item to the link wrapper
+          linkWrapper.appendChild(courseItem);
+          col.appendChild(linkWrapper);
+          row.appendChild(col);
+      });
 
-    bookingList.appendChild(row);
-}
-
-
+      bookingList.appendChild(row);
+    }
 
 
       function fetchBookings(userId) {
