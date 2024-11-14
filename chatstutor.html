@@ -550,52 +550,40 @@
   <!-- Header -->
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
-
+  
       <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
-      <button class="mobile-nav-toggle d-xl-none btn btn-primary ms-3">
+      <button class="mobile-nav-toggle d-xl-none ms-3">
         <i class="bi bi-list"></i>
       </button>
-
+  
       <!-- Logo (Visible on screens >= 1200px) -->
       <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
         <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
       </a>
-
+  
       <!-- Navigation Menu (Visible on screens >= 1200px) -->
       <nav id="navmenu" class="navmenu d-none d-xl-flex">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a href="tuteehomepage.html" class="nav-link">Home</a>
+            <a href="tutorhomepage.html" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
-            <a href="bookings.html" class="nav-link">Bookings</a>
+            <a href="bookingstutor.html" class="nav-link">Bookings</a>
           </li>
 
-          <!-- Tutors Dropdown -->
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
-                class="bi bi-chevron-down"></i></a>
-            <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
-              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-            </ul>
+  
+          <li class="nav-item">
+            <a href="chatstutor.html" class="nav-link">Chats</a>
           </li>
 
           <li class="nav-item">
-            <a href="chats.html" class="nav-link">Chats</a>
+            <a href="notestutor.html" class="nav-link">Upload Notes</a>
           </li>
-
-          <!-- Notes Dropdown -->
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class="bi bi-chevron-down"></i></a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-            </ul>
-          </li>
+  
+         
         </ul>
       </nav>
-
+  
       <!-- Email Display -->
       <div id="my-email-container" class="ms-auto position-relative">
         <button id="my-email" class="btn btn-secondary">
@@ -605,51 +593,42 @@
           <button id="logout-button" class="dropdown-item">Sign Out</button>
         </div>
       </div>
-
+  
     </div>
   </header>
 
-  <!-- Mobile Menu Modal -->
-  <div id="mobile-menu-mmodal" class="mmodal">
-    <div class="mmodal-content">
-      <span class="close-button">&times;</span>
-      <ul class="mobile-nav-list">
-        <li>
-          <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
-        </li>
-        <li>
-          <a href="bookings.html" class="mobile-nav-link">Bookings</a>
-        </li>
 
-        <!-- Tutors Dropdown -->
-        <li class="mobile-nav-item dropdown">
-          <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
-          <ul class="mobile-dropdown-menu">
-            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-          </ul>
-        </li>
+<!-- Mobile Menu Modal -->
+<div id="mobile-menu-mmodal" class="mmodal">
+  <div class="mmodal-content">
+    <ul><span class="close-button">&times;</span></ul>
+    <ul class="mobile-nav-list">
+      <li>
+        <a href="tutorhomepage.html" class="mobile-nav-link">Home</a>
+      </li>
+      <li>
+        <a href="bookingstutor.html" class="mobile-nav-link">Bookings</a>
+      </li>
 
-        <li>
-          <a href="chats.html" class="mobile-nav-link">Chats</a>
-        </li>
+      
 
-        <!-- Notes Dropdown -->
-        <li class="mobile-nav-item dropdown">
-          <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
-          <ul class="mobile-dropdown-menu">
-            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-          </ul>
-        </li>
+      <li>
+        <a href="chatstutor.html" class="mobile-nav-link">Chats</a>
+      </li>
 
-        <!-- Logout Button -->
-        <li class="mobile-nav-item">
-          <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
-        </li>
-      </ul>
-    </div>
+      <li>
+        <a href="notestutor.html" class="mobile-nav-link">Upload Notes</a>
+      </li>
+
+      
+
+      <!-- Logout Button -->
+      <li class="mobile-nav-item">
+        <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
+      </li>
+    </ul>
   </div>
+</div>
 
   <!-- JavaScript -->
   <!-- Bootstrap JS (Optional, for additional functionality) -->
