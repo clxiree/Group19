@@ -12,6 +12,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- CSS Files -->
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon"
+    href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
+
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
@@ -432,7 +435,8 @@
 
                         // Create a reference in Firebase Storage with the name format "name.jpg"
                         const imageExtension = imageFile.type.split('/')[1]; // Get the file extension (e.g., "jpg", "png")
-                        const imageRef = storage.ref(`images/team/${name}.${imageExtension}`);
+                        const imageFileName = `${name}.${imageExtension}`;
+                        const imageRef = storage.ref(`images/team/${imageFileName}`);
 
                         // Upload the file with the new name
                         imageRef.put(imageFile)
@@ -444,7 +448,7 @@
                                 UserID: userId,
                                 email: email,
                                 Name: name,
-                                Image: imageUrl
+                                Image: imageFileName 
                             }).then(() => {
                                 console.log("User particulars added successfully.");
                                 window.location.href = '../tuteehomepage.html';
