@@ -1031,12 +1031,46 @@
         qrImage.style.width = "300px"; // Adjust size as needed
         qrImage.style.height = "300px";
 
+
+
         // Append the image to the container
         qrCodeContainer.appendChild(qrImage);
-      }).catch((error) => {
-        console.error("Error fetching QR code:", error);
-      });
-    }
+
+
+        // Create a paragraph element
+        const textElement = document.createElement("p");
+        textElement.style.textAlign = "center"; // Center align the text if desired
+        textElement.style.marginTop = "10px"; // Add some space above the text
+
+        // Create and add plain text nodes
+        const beforeText = document.createTextNode("Please attach your ");
+        const afterText = document.createTextNode(" under your reference number in PAYNOW");
+
+        // Create bolded "Name" and "Subject" spans
+        const nameSpan = document.createElement("span");
+        nameSpan.style.fontWeight = "bold";
+        nameSpan.style.color = "red";
+        nameSpan.innerText = "Name";
+
+        const subjectSpan = document.createElement("span");
+        subjectSpan.style.fontWeight = "bold";
+        subjectSpan.style.color = "red";
+        subjectSpan.innerText = "Subject";
+
+        // Append all parts in order to the paragraph
+        textElement.appendChild(beforeText);
+        textElement.appendChild(nameSpan);
+        textElement.appendChild(document.createTextNode(" and corresponding "));
+        textElement.appendChild(subjectSpan);
+        textElement.appendChild(afterText);
+
+        // Append the paragraph to the container
+        qrCodeContainer.appendChild(textElement);
+
+          }).catch((error) => {
+            console.error("Error fetching QR code:", error);
+          });
+        }
 
     // Function to apply discount
     async function applyDiscount() {

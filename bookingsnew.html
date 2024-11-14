@@ -11,15 +11,12 @@
   <!-- Favicons -->
   <!-- <link href="assets/img/favicon.png" rel="icon"> -->
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link rel="icon"
-    href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
+  <link rel="icon" href="https://firebasestorage.googleapis.com/v0/b/smootutor-ed94a.appspot.com/o/images%2Fstlogo.jpg?alt=media">
 
   <!-- Fonts -->
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Raleway:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -37,11 +34,11 @@
   <!-- Axios CDN -->
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
-  <!-- Firebase JS SDK -->
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
+ <!-- Firebase JS SDK -->
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-storage-compat.js"></script>
   <!-- =======================================================
   * Template Name: Mentor
   * Template URL: https://bootstrapmade.com/mentor-free-education-bootstrap-theme/
@@ -49,726 +46,156 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-
-
+  
+  
   <style>
-    .course-item {
-      width: 400px;
-      /* Set a fixed width for the card */
-      height: 500px;
-      /* Set a fixed height for the card */
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    }
+    
 
-    .course-item:hover {
-      transform: scale(1.06);
-      transition: 0.5s;
-    }
+.course-item {
+    width: 400px;           /* Set a fixed width for the card */
+    height: 500px;          /* Set a fixed height for the card */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+}
 
-    .card-img-top {
-      width: 100%;
-      /* Image takes full width of the card */
-      height: 200px;
-      /* Fixed height for the image */
-      object-fit: cover;
-      /* Ensures the image covers the area without stretching */
-    }
+.course-item:hover {
+  transform: scale(1.06);
+  transition: 0.5s;
+}
 
-    .courses.section {
-      position: relative;
-      padding: 20px;
-    }
+.card-img-top {
+    width: 100%;            /* Image takes full width of the card */
+    height: 200px;          /* Fixed height for the image */
+    object-fit: cover;      /* Ensures the image covers the area without stretching */
+}
 
-    .filter-container {
-      /* margin: 20px ; */
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      /* z-index: 10; */
-      display: flex;
-      align-items: center;
-      /* gap: 10px; */
-      background-color: #fff;
-      /* padding: 10px 15px; */
-      /* border-radius: 6px; */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+.courses.section {
+  position: relative;
+  padding: 20px;
+}
 
-    .filter-container label {
-      font-weight: 500;
-      color: #333;
-      margin-bottom: 0;
-    }
+.filter-container {
+  /* margin: 20px ; */
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  /* z-index: 10; */
+  display: flex;
+  align-items: center;
+  /* gap: 10px; */
+  background-color: #fff;
+  /* padding: 10px 15px; */
+  /* border-radius: 6px; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-    .filter-container select {
-      padding: 6px 12px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      background-color: #fff;
-      font-size: 14px;
-      color: #444;
-      cursor: pointer;
-      outline: none;
-      transition: border-color 0.2s ease;
-    }
+.filter-container label {
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 0;
+}
 
-    .filter-container select:hover {
-      border-color: #999;
-    }
+.filter-container select {
+  padding: 6px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #444;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
 
-    .filter-container select:focus {
-      border-color: #5fcf80;
-      box-shadow: 0 0 0 2px rgba(95, 207, 128, 0.2);
-    }
+.filter-container select:hover {
+  border-color: #999;
+}
 
-    /* Ensure the booking list accommodates the filter */
-    #booking-list {
-      padding-top: 60px;
-      /* Add space for the filter at the top */
-    }
+.filter-container select:focus {
+  border-color: #5fcf80;
+  box-shadow: 0 0 0 2px rgba(95, 207, 128, 0.2);
+}
 
-    /* Make the filter container responsive */
-    @media (max-width: 768px) {
-      .filter-container {
-        position: relative;
-        top: 0;
-        right: 0;
-        margin-bottom: 20px;
-        justify-content: flex-end;
-      }
+/* Ensure the booking list accommodates the filter */
+#booking-list {
+  padding-top: 60px;  /* Add space for the filter at the top */
+}
 
-      #booking-list {
-        padding-top: 20px;
-      }
-    }
+/* Make the filter container responsive */
+@media (max-width: 768px) {
+  .filter-container {
+    position: relative;
+    top: 0;
+    right: 0;
+    margin-bottom: 20px;
+    justify-content: flex-end;
+  }
+  
+  #booking-list {
+    padding-top: 20px;
+  }
+}
+
+
+
+
   </style>
 </head>
 
 <body class="courses-page">
 
-  <!-- Header -->
   <header id="header" class="header d-flex align-items-center sticky-top">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
+        <a href="index.html" class="logo d-flex align-items-center me-auto">
+            <img src="assets/img/smootutor-logo.jpg">
+        </a>
 
-      <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
-      <button class="mobile-nav-toggle d-xl-none btn btn-primary ms-3">
-        <i class="bi bi-list"></i>
-      </button>
-
-      <!-- Logo (Visible on screens >= 1200px) -->
-      <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
-      </a>
-
-      <!-- Navigation Menu (Visible on screens >= 1200px) -->
-      <nav id="navmenu" class="navmenu d-none d-xl-flex">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="tuteehomepage.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="bookings.html" class="nav-link">Bookings</a>
-          </li>
-
-          <!-- Tutors Dropdown -->
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
-                class="bi bi-chevron-down"></i></a>
-            <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
-              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+        <nav id="navmenu" class="navmenu">
+            <ul>
+                <li><a href="tuteehomepage.html">Home</a></li>
+                <li><a href="bookings.html">Bookings</a></li>
+                <li class="dropdown">
+                    <a href="trainers.html" id="notesDropdown">Tutors <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+                        <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+                        <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+                    </ul>
+                </li>
+                <li><a href="chats.html">Chats</a></li>
+                <li class="dropdown">
+                    <a href="notes.html" id="notesDropdown">Notes <i class="bi bi-chevron-down toggle-dropdown"></i></a>
+                    <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+                        <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+                        <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+                    </ul>
+                </li>
+                <!-- Logout Button for Smaller Viewports -->
+                <li id="logout-container" style="display: none;"><button id="logout-button-small">Logout</button></li>
             </ul>
-          </li>
+            <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
+        </nav>
 
-          <li class="nav-item">
-            <a href="chats.html" class="nav-link">Chats</a>
-          </li>
-
-          <!-- Notes Dropdown -->
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class="bi bi-chevron-down"></i></a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+        <ul class="dropdown-menu" aria-labelledby="notesDropdown">
               <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
               <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+
             </ul>
-          </li>
+         
         </ul>
+          
       </nav>
-
-      <!-- Email Display -->
-      <div id="my-email-container" class="ms-auto position-relative">
-        <button id="my-email" class="btn btn-secondary">
-          user@example.com <i class="bi bi-chevron-down"></i>
-        </button>
-        <div id="dropdown-menu" class="dropdown-content">
-          <button id="logout-button" class="dropdown-item">Sign Out</button>
-        </div>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- Mobile Menu Modal -->
-  <div id="mobile-menu-mmodal" class="mmodal">
-    <div class="mmodal-content">
-      <span class="close-button">&times;</span>
-      <ul class="mobile-nav-list">
-        <li>
-          <a href="tuteehomepage.html" class="mobile-nav-link">Home</a>
-        </li>
-        <li>
-          <a href="bookings.html" class="mobile-nav-link">Bookings</a>
-        </li>
-
-        <!-- Tutors Dropdown -->
-        <li class="mobile-nav-item dropdown">
-          <button class="mobile-dropdown-toggle">Tutors <i class="bi bi-chevron-down"></i></button>
-          <ul class="mobile-dropdown-menu">
-            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-          </ul>
-        </li>
-
-        <li>
-          <a href="chats.html" class="mobile-nav-link">Chats</a>
-        </li>
-
-        <!-- Notes Dropdown -->
-        <li class="mobile-nav-item dropdown">
-          <button class="mobile-dropdown-toggle">Notes <i class="bi bi-chevron-down"></i></button>
-          <ul class="mobile-dropdown-menu">
-            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-          </ul>
-        </li>
-
-        <!-- Logout Button -->
-        <li class="mobile-nav-item">
-          <button id="logout-button-mobile" class="btn btn-outline-danger w-100 mt-3">Logout</button>
-        </li>
-      </ul>
-    </div>
+<div id="my-email-container">
+  <button id="my-email"></button>
+  <div id="dropdown-menu" class="dropdown-content">
+      <button id="logout-button">Logout</button>
   </div>
+</div> 
 
-  <!-- JavaScript -->
-  <!-- Bootstrap JS (Optional, for additional functionality) -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-  <!-- Your Custom JavaScript -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      // Dropdown Toggle Functionality for Desktop
-      const dropdownToggles = document.querySelectorAll('#navmenu .dropdown-toggle');
-
-      dropdownToggles.forEach(function (toggle) {
-        toggle.addEventListener('click', function (event) {
-          event.preventDefault();
-          const dropdownMenu = this.nextElementSibling;
-          dropdownMenu.classList.toggle('show');
-        });
-      });
-
-      // Hamburger Menu Toggle
-      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
-      const mobileMenuMModal = document.getElementById('mobile-menu-mmodal');
-      const closeButton = document.querySelector('.close-button');
-
-      mobileNavToggle.addEventListener('click', function () {
-        mobileMenuMModal.style.display = 'block';
-      });
-
-      closeButton.addEventListener('click', function () {
-        mobileMenuMModal.style.display = 'none';
-      });
-
-      // Close Mobile Menu When Clicking Outside
-      window.addEventListener('click', function (event) {
-        if (event.target == mobileMenuMModal) {
-          mobileMenuMModal.style.display = 'none';
-        }
-      });
-
-      // Mobile Dropdown Toggle
-      const mobileDropdownToggles = document.querySelectorAll('.mobile-dropdown-toggle');
-
-      mobileDropdownToggles.forEach(function (toggle) {
-        toggle.addEventListener('click', function () {
-          const mobileDropdownMenu = this.nextElementSibling;
-          mobileDropdownMenu.classList.toggle('show');
-          // Rotate the chevron icon
-          const icon = this.querySelector('i');
-          if (mobileDropdownMenu.classList.contains('show')) {
-            icon.classList.remove('bi-chevron-down');
-            icon.classList.add('bi-chevron-up');
-          } else {
-            icon.classList.remove('bi-chevron-up');
-            icon.classList.add('bi-chevron-down');
-          }
-        });
-      });
-
-      // Email Dropdown Toggle (Visible on screens <1200px)
-      const myEmailButton = document.getElementById('my-email');
-      const emailDropdown = document.getElementById('dropdown-menu');
-
-      myEmailButton.addEventListener('click', function (event) {
-        event.stopPropagation();
-        emailDropdown.classList.toggle('show');
-      });
-
-      // Close Email Dropdown When Clicking Outside
-      document.addEventListener('click', function (event) {
-        if (!myEmailButton.contains(event.target)) {
-          emailDropdown.classList.remove('show');
-        }
-      });
-
-      // Logout Button Functionality
-      const logoutButton = document.getElementById('logout-button');
-      const logoutButtonMobile = document.getElementById('logout-button-mobile');
-
-      if (logoutButton) {
-        logoutButton.addEventListener('click', function () {
-          window.location.href = 'index.html';
-        });
-      }
-
-      if (logoutButtonMobile) {
-        logoutButtonMobile.addEventListener('click', function () {
-          window.location.href = 'index.html';
-        });
-      }
-
-      // Handle Responsive Logo and Email Display
-      const logo = document.querySelector('.logo');
-      const myEmailContainer = document.getElementById('my-email-container');
-
-      function handleResize() {
-        if (window.innerWidth < 1200) {
-          logo.classList.add('d-none');
-        } else {
-          logo.classList.remove('d-none');
-        }
-      }
-
-      window.addEventListener('resize', handleResize);
-      handleResize(); // Initial check on page load
-    });
-  </script>
-
-  <style>
-    /* Header Container */
-    #header {
-      background-color: #ffffff;
-      /* Header background */
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      /* Subtle shadow */
-      padding: 10px 0;
-      /* Vertical padding */
-      position: relative;
-      z-index: 1000;
-      /* Ensure it stays on top */
-    }
-
-    /* Logo Styling */
-    #header .logo img {
-      height: 50px;
-      /* Adjust logo height as needed */
-      width: auto;
-    }
-
-    /* Navigation Menu */
-    #header #navmenu {
-      display: flex;
-      align-items: center;
-    }
-
-    /* Navbar List */
-    #header .navbar-nav {
-      list-style: none;
-      display: flex;
-      flex-direction: row;
-      /* Arrange items horizontally */
-      margin: 0;
-      padding: 0;
-    }
-
-    /* Navbar Items */
-    #header .nav-item {
-      position: relative;
-      /* For dropdown positioning */
-    }
-
-    /* Navbar Links */
-    #header .nav-link {
-      color: #333333;
-      /* Link color */
-      padding: 10px 15px;
-      text-decoration: none;
-      transition: color 0.3s, background-color 0.3s;
-      display: flex;
-      align-items: center;
-    }
-
-    /* Navbar Link Hover Effect */
-    #header .nav-link:hover {
-      color: #007bff;
-      /* Hover color */
-      background-color: rgba(0, 123, 255, 0.1);
-      /* Optional background on hover */
-      border-radius: 4px;
-      /* Rounded corners on hover */
-    }
-
-    /* Dropdown Menu Styling */
-    #header .dropdown-menu {
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background-color: #ffffff;
-      border: 1px solid #dee2e6;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      display: none;
-      /* Hidden by default */
-      min-width: 200px;
-      z-index: 1000;
-    }
-
-    /* Show Dropdown Menu */
-    #header .dropdown-menu.show {
-      display: block;
-    }
-
-    /* Dropdown Items */
-    #header .dropdown-item {
-      padding: 10px 15px;
-      color: #333333;
-      text-decoration: none;
-      display: block;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    /* Dropdown Item Hover Effect */
-    #header .dropdown-item:hover {
-      background-color: #f8f9fa;
-      color: #007bff;
-    }
-
-    /* Mobile Navigation Toggle Button */
-    #header .mobile-nav-toggle {
-      background: none;
-      border: none;
-      font-size: 1.5em;
-      cursor: pointer;
-      color: #333333;
-      margin-left: auto;
-      /* Push the toggle to the right */
-    }
-
-    /* Email Display Container */
-    #header #my-email-container {
-      position: relative;
-    }
-
-    /* Email Button Styling */
-    #header #my-email {
-      background: none;
-      border: none;
-      cursor: pointer;
-      font-size: 1em;
-      color: #333333;
-      display: flex;
-      align-items: center;
-    }
-
-    /* Email Dropdown Menu */
-    #header #dropdown-menu {
-      position: absolute;
-      right: 0;
-      top: 100%;
-      background-color: #ffffff;
-      border: 1px solid #dee2e6;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-      display: none;
-      /* Hidden by default */
-      min-width: 150px;
-      z-index: 1000;
-    }
-
-    /* Show Email Dropdown Menu */
-    #header #dropdown-menu.show {
-      display: block;
-    }
-
-    /* Dropdown Items in Email Dropdown */
-    #header #dropdown-menu .dropdown-item {
-      padding: 10px 15px;
-      color: #333333;
-      text-decoration: none;
-      display: block;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    /* Dropdown Item Hover Effect in Email Dropdown */
-    #header #dropdown-menu .dropdown-item:hover {
-      background-color: #f8f9fa;
-      color: #007bff;
-    }
-
-    /* Logout Button Styling */
-    #header .btn-outline-danger {
-      color: #dc3545;
-      border-color: #dc3545;
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    /* Logout Button Hover Effect */
-    #header .btn-outline-danger:hover {
-      background-color: #dc3545;
-      color: #ffffff;
-      border-color: #dc3545;
-    }
-
-    /* Responsive Styles */
-
-    /* For screens less than 1200px */
-    @media (max-width: 1199.98px) {
-
-      /* Hide Logo */
-      #header .logo {
-        display: none;
-      }
-
-      /* Show Email Container */
-      #header #my-email-container {
-        display: block;
-      }
-
-      /* Show Mobile Nav Toggle Button */
-      #header .mobile-nav-toggle {
-        display: block;
-      }
-
-      /* Hide Navmenu Initially */
-      #header #navmenu {
-        display: none;
-      }
-    }
-
-    /* For screens 1200px and above */
-    @media (min-width: 1200px) {
-
-      /* Show Logo */
-      #header .logo {
-        display: flex;
-      }
-
-      /* Show Navmenu */
-      #header #navmenu {
-        display: flex;
-      }
-
-      /* Hide Mobile Nav Toggle Button */
-      #header .mobile-nav-toggle {
-        display: none;
-      }
-
-      #header #my-email-container {
-        display: block;
-      }
-    }
-
-    /* Mobile Menu Modal Styles */
-    .mmodal {
-      display: none;
-      /* Hidden by default */
-      position: fixed;
-      /* Stay in place */
-      z-index: 1050;
-      /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%;
-      /* Full width */
-      height: 100%;
-      /* Full height */
-      overflow: auto;
-      /* Enable scroll if needed */
-      background-color: rgba(0, 0, 0, 0.5);
-      /* Black w/ opacity */
-    }
-
-    .mmodal-content {
-      background-color: #fefefe;
-      margin: 10% auto;
-      /* 10% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      /* Could be more or less, depending on screen size */
-      max-width: 400px;
-      border-radius: 8px;
-      position: relative;
-    }
-
-    .close-button {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      position: absolute;
-      top: 10px;
-      right: 20px;
-      cursor: pointer;
-    }
-
-    .close-button:hover,
-    .close-button:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
-    .mobile-nav-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-
-    .mobile-nav-list li {
-      margin-bottom: 10px;
-    }
-
-    .mobile-nav-link {
-      color: #333333;
-      text-decoration: none;
-      display: block;
-      padding: 10px 15px;
-      border-radius: 4px;
-      transition: color 0.3s, background-color 0.3s;
-    }
-
-    .mobile-nav-link:hover {
-      color: #007bff;
-      background-color: rgba(0, 123, 255, 0.1);
-    }
-
-    .mobile-dropdown-toggle {
-      color: #333333;
-      background: none;
-      border: none;
-      width: 100%;
-      text-align: left;
-      padding: 10px 15px;
-      font-size: 1em;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      border-radius: 4px;
-      transition: color 0.3s, background-color 0.3s;
-    }
-
-    .mobile-dropdown-toggle:hover {
-      color: #007bff;
-      background-color: rgba(0, 123, 255, 0.1);
-    }
-
-    .mobile-dropdown-menu {
-      list-style: none;
-      padding-left: 15px;
-      display: none;
-    }
-
-    .mobile-dropdown-menu.show {
-      display: block;
-    }
-
-    .mobile-dropdown-menu .dropdown-item {
-      color: #333333;
-      text-decoration: none;
-      display: block;
-      padding: 8px 15px;
-      border-radius: 4px;
-      transition: color 0.3s, background-color 0.3s;
-    }
-
-    .mobile-dropdown-menu .dropdown-item:hover {
-      color: #007bff;
-      background-color: rgba(0, 123, 255, 0.1);
-    }
-
-    /* Logout Button Styling in Mobile Menu */
-    #logout-button-mobile {
-      color: #dc3545;
-      border-color: #dc3545;
-      background-color: transparent;
-      padding: 10px 15px;
-      border-radius: 4px;
-      transition: background-color 0.3s, color 0.3s;
-      width: 100%;
-      margin-top: 15px;
-    }
-
-    #logout-button-mobile:hover {
-      background-color: #dc3545;
-      color: #ffffff;
-    }
-
-    /* ==============================
-     Hover Animations for Navigation
-  =============================== */
-
-    /* Hover Animation for Desktop Navigation Links */
-    #navmenu .nav-link {
-      transition: color 0.3s, background-color 0.3s;
-    }
-
-    #navmenu .nav-link:hover {
-      color: #007bff;
-      background-color: rgba(0, 123, 255, 0.1);
-      border-radius: 4px;
-    }
-
-    /* Hover Animation for Dropdown Items */
-    #navmenu .dropdown-item {
-      transition: background-color 0.3s, color 0.3s;
-    }
-
-    #navmenu .dropdown-item:hover {
-      background-color: #f8f9fa;
-      color: #007bff;
-    }
-
-    /* Hover Animation for Mobile Navigation Links */
-    .mobile-nav-link {
-      transition: color 0.3s, background-color 0.3s;
-    }
-
-    .mobile-nav-link:hover {
-      color: #007bff;
-      background-color: rgba(0, 123, 255, 0.1);
-    }
-
-    /* Hover Animation for Mobile Dropdown Toggle */
-    .mobile-dropdown-toggle {
-      transition: color 0.3s, background-color 0.3s;
-    }
-
-    .mobile-dropdown-toggle:hover {
-      color: #007bff;
-      background-color: rgba(0, 123, 255, 0.1);
-    }
-
-    /* Hover Animation for Logout Button in Mobile Menu */
-    #logout-button-mobile:hover {
-      background-color: #dc3545;
-      color: #ffffff;
-    }
-  </style>
+    </div>
+</header>
 
   <main class="main">
 
@@ -784,32 +211,32 @@
           </div>
         </div>
       </div>
-
+      
     </div><!-- End Page Title -->
 
     <!-- Courses Section -->
-
-
-    <section class="courses section">
-      <div class="filter-container">
-        <!-- <label for="statusFilter">Filter by Status:</label> -->
-        <select id="statusFilter">
-          <option value="">All</option>
-          <option value="Pending">Pending</option>
-          <option value="Confirmed">Confirmed</option>
-          <option value="Cancelled">Cancelled</option>
-        </select>
+    
+    
+      <section class="courses section">
+        <div class="filter-container">
+          <!-- <label for="statusFilter">Filter by Status:</label> -->
+          <select id="statusFilter">
+              <option value="">All</option>
+              <option value="Pending">Pending</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Cancelled">Cancelled</option>
+          </select>
       </div>
-      <div id="booking-list"></div>
-    </section>
-
+        <div id="booking-list"></div>
+      </section>
+  
 
   </main>
 
   <footer id="footer" class="footer position-relative light-background">
     <div class="container footer-top">
       <div class="row gy-4">
-
+        
         <!-- About Section with Social Links -->
         <div class="col-lg-3 md-6 sm-6 footer-about">
           <a href="index.html" class="logo d-flex align-items-center">
@@ -827,25 +254,22 @@
             <a href="https://www.instagram.com/"><i class="bi bi-instagram"></i></a>
             <a href="https://sg.linkedin.com/"><i class="bi bi-linkedin"></i></a>
           </div>
-
+       
         </div>
-
+  
         <!-- Google Maps Section -->
         <div class="col-lg-9 md-6 sm-6">
-          <iframe style="border:0; width: 100%; height: 350px;"
-            src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street"
-            frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          <iframe style="border:0; width: 100%; height: 350px;" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyDTmlOgQi6twlbyUKuCF3iivbFS0FI9fSo&q=81+Victoria+Street" frameborder="0" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
-
-
+  
+  
       </div>
     </div>
   </footer>
-
+   
 
   <!-- Scroll Top -->
-  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i
-      class="bi bi-arrow-up-short"></i></a>
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
   <!-- Preloader -->
   <div id="preloader"></div>
@@ -862,128 +286,128 @@
   <script src="assets/js/main.js"></script>
   <script>
     document.addEventListener("DOMContentLoaded", function () {
-      // Ensure Firebase is initialized correctly
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      var firebaseConfig = {
-        apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
-        authDomain: "smootutor-ed94a.firebaseapp.com",
-        databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
-        projectId: "smootutor-ed94a",
-        storageBucket: "smootutor-ed94a.appspot.com",
-        messagingSenderId: "289686522861",
-        appId: "1:289686522861:web:5811385ced42106d78b5e4",
-        measurementId: "G-46QED8ZFKJ"
-      };
-      firebase.initializeApp(firebaseConfig);
+    // Ensure Firebase is initialized correctly
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    var firebaseConfig = {
+      apiKey: "AIzaSyDpmHo8Y79lMhABi1WuRaJ25ulV4JMdRGY",
+      authDomain: "smootutor-ed94a.firebaseapp.com",
+      databaseURL: "https://smootutor-ed94a-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "smootutor-ed94a",
+      storageBucket: "smootutor-ed94a.appspot.com",
+      messagingSenderId: "289686522861",
+      appId: "1:289686522861:web:5811385ced42106d78b5e4",
+      measurementId: "G-46QED8ZFKJ"
+    };
+    firebase.initializeApp(firebaseConfig);
 
-      const db = firebase.firestore();
-      const auth = firebase.auth();
-
-      let currentUser = null;
-
-
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+    
+    let currentUser = null;
 
 
-      // Declare userId in the outer scope
-      let userId = null;
-      const myEmailButton = document.getElementById("my-email");
-      const logoutButton = document.getElementById("logout-button");
-      const logoutButtonSmall = document.getElementById("logout-button-small");
-      const myEmailContainer = document.getElementById("my-email-container");
-      const logoutContainer = document.getElementById("logout-container");
+    
 
-      firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-          console.log("User is logged in with email:", user.email);
-          document.getElementById("my-email").innerText = user.email;
+    // Declare userId in the outer scope
+let userId = null;
+const myEmailButton = document.getElementById("my-email");
+const logoutButton = document.getElementById("logout-button");
+const logoutButtonSmall = document.getElementById("logout-button-small");
+const myEmailContainer = document.getElementById("my-email-container");
+const logoutContainer = document.getElementById("logout-container");
 
-          // Reference to the Firestore database
-          const db = firebase.firestore();
+firebase.auth().onAuthStateChanged((user) => {
+    if (user) {
+        console.log("User is logged in with email:", user.email);
+        document.getElementById("my-email").innerText = user.email;
 
-          // Query Firestore for the document in 'Particulars' collection where email matches the logged-in user's email
-          db.collection("Particulars")
+        // Reference to the Firestore database
+        const db = firebase.firestore();
+
+        // Query Firestore for the document in 'Particulars' collection where email matches the logged-in user's email
+        db.collection("Particulars")
             .where("email", "==", user.email)
             .get()
             .then((querySnapshot) => {
-              if (!querySnapshot.empty) {
-                querySnapshot.forEach((doc) => {
-                  // Assign userId from Firestore document
-                  userId = doc.data().UserID;
-                  console.log("UserID:", userId);
+                if (!querySnapshot.empty) {
+                    querySnapshot.forEach((doc) => {
+                        // Assign userId from Firestore document
+                        userId = doc.data().UserID;
+                        console.log("UserID:", userId);
 
-                  // Now you can call other functions that depend on userId
-                  fetchBookings(userId); // Example of using userId in another function
-                });
-
-              } else {
-                console.log("No matching user found with this email.");
-              }
+                        // Now you can call other functions that depend on userId
+                        fetchBookings(userId); // Example of using userId in another function
+                    });
+                    
+                } else {
+                    console.log("No matching user found with this email.");
+                }
             })
             .catch((error) => {
-              console.error("Error retrieving user ID:", error);
+                console.error("Error retrieving user ID:", error);
             });
-        } else {
-          console.log("No user is logged in.");
-          // Redirect to login page if needed
-          window.location.href = 'login.html';
-        }
-      });
-      function handleLogout() {
+    } else {
+        console.log("No user is logged in.");
+        // Redirect to login page if needed
+        window.location.href = 'login.html';
+    }
+});
+function handleLogout() {
         firebase.auth().signOut().then(() => {
-          localStorage.setItem("logoutSuccess", "true");
-          window.location.href = 'index.html';
+            localStorage.setItem("logoutSuccess", "true");
+            window.location.href = 'index.html';
         }).catch((error) => {
-          console.error("Error logging out:", error);
+            console.error("Error logging out:", error);
         });
-      }
-      logoutButton.addEventListener("click", handleLogout);
-      logoutButtonSmall.addEventListener("click", handleLogout);
-      function toggleVisibility() {
-        if (window.innerWidth <= 1068) {
-          myEmailContainer.style.display = "none";
-          logoutContainer.style.display = "block";
-        } else {
-          myEmailContainer.style.display = "flex";
-          logoutContainer.style.display = "none";
-        }
-      }
-      toggleVisibility();
-      window.addEventListener("resize", toggleVisibility);
+    }
+    logoutButton.addEventListener("click", handleLogout);
+    logoutButtonSmall.addEventListener("click", handleLogout);
+function toggleVisibility() {
+    if (window.innerWidth <= 1068) {
+        myEmailContainer.style.display = "none";
+        logoutContainer.style.display = "block";
+    } else {
+        myEmailContainer.style.display = "flex";
+        logoutContainer.style.display = "none";
+    }
+}
+toggleVisibility();
+window.addEventListener("resize", toggleVisibility);
 
 
 
-      // Add event listener for the filter select
-      document.getElementById('statusFilter').addEventListener('change', function (e) {
-        const selectedStatus = e.target.value;
-        displayFilteredBookings(selectedStatus);
-      });
+// Add event listener for the filter select
+document.getElementById('statusFilter').addEventListener('change', function(e) {
+    const selectedStatus = e.target.value;
+    displayFilteredBookings(selectedStatus);
+    console.log(selectedStatus)
+});
 
 
-      function displayFilteredBookings(status) {
-        const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
-        const bookingList = document.getElementById("booking-list");
-        bookingList.innerText = '';
+function displayFilteredBookings(status) {
+    const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
+    const bookingList = document.getElementById("booking-list");
+    bookingList.innerText = '';
 
-        const row = document.createElement('div');
-        row.classList.add('row', 'g-4'); // Bootstrap row with gap
+    const row = document.createElement('div');
+    row.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-md-3', 'g-4');
 
-        filteredBookings.forEach(bookingData => {
-          const col = document.createElement('div');
-          col.classList.add('col-lg-3', 'col-md-4', 'col-sm-6', 'd-flex', 'align-items-stretch'); // 4 cards per row on large screens
+    filteredBookings.forEach(bookingData => {
+        const col = document.createElement('div');
+        col.classList.add('col-lg-4', 'col-md-6', 'd-flex', 'justify-content-center');
+        col.setAttribute('data-aos', 'zoom-in');
+        col.setAttribute('data-aos-delay', '100');
 
-          col.setAttribute('data-aos', 'zoom-in');
-          col.setAttribute('data-aos-delay', '100');
+        // Wrap the entire card in an anchor tag
+        const linkWrapper = document.createElement('a');
+        linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
+        linkWrapper.style.textDecoration = 'none';
+        linkWrapper.style.color = 'inherit';
 
-          // Wrap the entire card in an anchor tag
-          const linkWrapper = document.createElement('a');
-          linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
-          linkWrapper.style.textDecoration = 'none';
-          linkWrapper.style.color = 'inherit';
+        const courseItem = document.createElement('div');
+        courseItem.classList.add('course-item');
 
-          const courseItem = document.createElement('div');
-          courseItem.classList.add('course-item');
-
-          if (bookingData.status === 'Cancelled') {
+        if (bookingData.status === 'Cancelled') {
             courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)';
             courseItem.style.position = 'relative';
 
@@ -996,197 +420,195 @@
             overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)';
             overlay.style.pointerEvents = 'none';
             courseItem.appendChild(overlay);
-          }
+        }
 
-          const img = document.createElement('img');
-          img.classList.add('card-img-top');
-          img.alt = 'Course Image';
+        const img = document.createElement('img');
+        img.classList.add('card-img-top');
+        img.alt = 'Course Image';
 
-          // Fetch image URL from Firebase Storage
-          firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
+        // Fetch image URL from Firebase Storage
+        firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
             .then(url => {
-              img.src = url;
+                img.src = url;
             })
             .catch(error => {
-              console.error("Error fetching image:", error);
-              img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
+                console.error("Error fetching image:", error);
+                img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
             });
 
-          const courseContent = document.createElement('div');
-          courseContent.classList.add('course-content');
+        const courseContent = document.createElement('div');
+        courseContent.classList.add('course-content');
 
-          const categoryPriceDiv = document.createElement('div');
-          categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
+        const categoryPriceDiv = document.createElement('div');
+        categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
 
-          const category = document.createElement('p');
-          category.classList.add('category');
-          category.textContent = bookingData.courseCode;
+        const category = document.createElement('p');
+        category.classList.add('category');
+        category.textContent = bookingData.courseCode;
 
-          const price = document.createElement('p');
-          price.classList.add('price');
-          price.textContent = `$${bookingData.fee * 2}`;
+        const price = document.createElement('p');
+        price.classList.add('price');
+        price.textContent = `$${bookingData.fee * 2}`;
 
-          categoryPriceDiv.appendChild(category);
-          categoryPriceDiv.appendChild(price);
+        categoryPriceDiv.appendChild(category);
+        categoryPriceDiv.appendChild(price);
 
-          const titleContainer = document.createElement('h3');
-          const titleText = document.createElement('span');
-          titleText.textContent = bookingData.courseName;
-          titleContainer.appendChild(titleText);
+        const titleContainer = document.createElement('h3');
+        const titleText = document.createElement('span');
+        titleText.textContent = bookingData.courseName;
+        titleContainer.appendChild(titleText);
 
-          // Status
-          const status = document.createElement('p');
-          status.classList.add('description');
-          const statusLabel = document.createElement('b');
-          statusLabel.textContent = 'Status: ';
-          status.appendChild(statusLabel);
-          status.appendChild(document.createTextNode(bookingData.status));
+        // Status
+        const status = document.createElement('p');
+        status.classList.add('description');
+        const statusLabel = document.createElement('b');
+        statusLabel.textContent = 'Status: ';
+        status.appendChild(statusLabel);
+        status.appendChild(document.createTextNode(bookingData.status));
 
-          // Date of Lesson
-          const dateOfLesson = document.createElement('p');
-          dateOfLesson.classList.add('description');
-          const dateLabel = document.createElement('b');
-          dateLabel.textContent = 'Date of Booking: ';
-          dateOfLesson.appendChild(dateLabel);
-          dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
+        // Date of Lesson
+        const dateOfLesson = document.createElement('p');
+        dateOfLesson.classList.add('description');
+        const dateLabel = document.createElement('b');
+        dateLabel.textContent = 'Date of Booking: ';
+        dateOfLesson.appendChild(dateLabel);
+        dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
 
-          // Mode
-          const mode = document.createElement('p');
-          mode.classList.add('description');
-          const modeLabel = document.createElement('b');
-          modeLabel.textContent = 'Mode: ';
-          mode.appendChild(modeLabel);
-          mode.appendChild(document.createTextNode(bookingData.mode));
+        // Mode
+        const mode = document.createElement('p');
+        mode.classList.add('description');
+        const modeLabel = document.createElement('b');
+        modeLabel.textContent = 'Mode: ';
+        mode.appendChild(modeLabel);
+        mode.appendChild(document.createTextNode(bookingData.mode));
 
-          const trainerDiv = document.createElement('div');
-          trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
+        const trainerDiv = document.createElement('div');
+        trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
 
-          const trainerProfile = document.createElement('div');
-          trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
+        const trainerProfile = document.createElement('div');
+        trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
 
-          const trainerImg = document.createElement('img');
-          trainerImg.classList.add('img-fluid');
-          trainerImg.alt = '';
+        const trainerImg = document.createElement('img');
+        trainerImg.classList.add('img-fluid');
+        trainerImg.alt = '';
 
-          // Fetch trainer image URL from Firebase Storage
-          firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
+        // Fetch trainer image URL from Firebase Storage
+        firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
             .then(url => {
-              trainerImg.src = url;
+                trainerImg.src = url;
             })
             .catch(error => {
-              console.error("Error fetching trainer image:", error);
-              trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
+                console.error("Error fetching trainer image:", error);
+                trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
             });
 
-          const trainerLink = document.createElement('a');
-          trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
-          trainerLink.classList.add('trainer-link');
-          trainerLink.textContent = bookingData.tutorName;
+        const trainerLink = document.createElement('a');
+        trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
+        trainerLink.classList.add('trainer-link');
+        trainerLink.textContent = bookingData.tutorName;
 
-          const tutorStars = document.createElement("div");
-          tutorStars.style.marginLeft = "10px";
-          tutorStars.classList.add("stars");
+        const tutorStars = document.createElement("div");
+        tutorStars.style.marginLeft = "10px";
+        tutorStars.classList.add("stars");
 
-          const rating = bookingData.tutorStars || 0;
-          for (let i = 1; i <= 5; i++) {
+        const rating = bookingData.tutorStars || 0;
+        for (let i = 1; i <= 5; i++) {
             const star = document.createElement("i");
             star.style.color = "#FFD700";
 
             if (i <= Math.floor(rating)) {
-              star.className = "bi bi-star-fill";
+                star.className = "bi bi-star-fill";
             } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
-              star.className = "bi bi-star-half";
+                star.className = "bi bi-star-half";
             } else {
-              star.className = "bi bi-star";
+                star.className = "bi bi-star";
             }
             tutorStars.appendChild(star);
-          }
-
-          trainerProfile.appendChild(trainerImg);
-          trainerProfile.appendChild(trainerLink);
-          trainerProfile.appendChild(tutorStars);
-
-          trainerDiv.appendChild(trainerProfile);
-
-          const trainerRank = document.createElement('div');
-          trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
-
-          const personIcon = document.createElement('i');
-          personIcon.classList.add('bi', 'bi-person', 'user-icon');
-          trainerRank.appendChild(personIcon);
-          trainerRank.innerText += ` ${bookingData.tutorReview}`;
-
-          trainerDiv.appendChild(trainerRank);
-
-          courseContent.appendChild(categoryPriceDiv);
-          courseContent.appendChild(titleContainer);
-          courseContent.appendChild(status);
-          courseContent.appendChild(dateOfLesson);
-          courseContent.appendChild(mode);
-          courseContent.appendChild(trainerDiv);
-
-          courseItem.appendChild(img);
-          courseItem.appendChild(courseContent);
-
-          // Append the course item to the link wrapper
-          linkWrapper.appendChild(courseItem);
-          col.appendChild(linkWrapper);
-          row.appendChild(col);
-        });
-
-        bookingList.appendChild(row);
-      }
-
-
-
-
-      function fetchBookings(userId) {
-        if (!userId) {
-          console.log("UserID is not available yet.");
-          return;
         }
 
-        db.collection("Bookings")
-          .where("tuteeId", "==", userId) // Filter bookings based on UserID
-          .get()
-          .then(snapshot => {
+        trainerProfile.appendChild(trainerImg);
+        trainerProfile.appendChild(trainerLink);
+        trainerProfile.appendChild(tutorStars);
+
+        trainerDiv.appendChild(trainerProfile);
+
+        const trainerRank = document.createElement('div');
+        trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
+
+        const personIcon = document.createElement('i');
+        personIcon.classList.add('bi', 'bi-person', 'user-icon');
+        trainerRank.appendChild(personIcon);
+        trainerRank.innerText += ` ${bookingData.tutorReview}`;
+
+        trainerDiv.appendChild(trainerRank);
+
+        courseContent.appendChild(categoryPriceDiv);
+        courseContent.appendChild(titleContainer);
+        courseContent.appendChild(status);
+        courseContent.appendChild(dateOfLesson);
+        courseContent.appendChild(mode);
+        courseContent.appendChild(trainerDiv);
+
+        courseItem.appendChild(img);
+        courseItem.appendChild(courseContent);
+
+        // Append the course item to the link wrapper
+        linkWrapper.appendChild(courseItem);
+        col.appendChild(linkWrapper);
+        row.appendChild(col);
+    });
+
+    bookingList.appendChild(row);
+}
+
+
+
+function fetchBookings(userId) {
+    if (!userId) {
+        console.log("UserID is not available yet.");
+        return;
+    }
+
+    db.collection("Bookings")
+        .where("tuteeId", "==", userId) // Filter bookings based on UserID
+        .get()
+        .then(snapshot => {
             allBookings = []; // Reset global variable for new data
 
             snapshot.forEach(doc => {
-              const booking = doc.data();
-              allBookings.push(booking);
-              console.log(booking); // Log each booking for debugging if needed
+                const booking = doc.data();
+                allBookings.push(booking);
+                console.log(booking); // Log each booking for debugging if needed
             });
 
             // Sort bookings so that "Cancelled" bookings appear at the end
             allBookings.sort((a, b) => {
-              if (a.status === "Cancelled" && b.status !== "Cancelled") {
-                return 1;
-              } else if (a.status !== "Cancelled" && b.status === "Cancelled") {
-                return -1;
-              } else {
-                return 0; // If both are the same, keep the original order
-              }
+                if (a.status === "Cancelled" && b.status !== "Cancelled") {
+                    return 1;
+                } else if (a.status !== "Cancelled" && b.status === "Cancelled") {
+                    return -1;
+                } else {
+                    return 0; // If both are the same, keep the original order
+                }
             });
 
             // Display all bookings initially
             displayFilteredBookings('');
-          })
-          .catch(error => {
+        })
+        .catch(error => {
             console.error("Error fetching bookings:", error);
-          });
-      }
-    })
+        });
+}})
 
 
 
 
-
+  
 
   </script>
+  
 
-
-
+  
 
 </body>
 

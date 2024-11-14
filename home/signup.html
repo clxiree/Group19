@@ -393,8 +393,8 @@
                         // Wait for both files to be uploaded and get their URLs
                         Promise.all([imageUploadPromise, videoUploadPromise])
                             .then(async ([imageSnapshot, videoSnapshot]) => {
-                                const imageUrl = await imageSnapshot.ref.getDownloadURL();
-                                const videoUrl = await videoSnapshot.ref.getDownloadURL();
+                                const imageUrl = await imageSnapshot.ref.put(imageFile.name);
+                                const videoUrl = await videoSnapshot.ref.put(videoFile.name);
 
                                 // Add user data, including URLs, to Firestore
                                 db.collection("Particulars").add({
