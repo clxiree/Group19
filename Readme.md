@@ -18,11 +18,16 @@ email: cloudyng@scis.tutee.edu.sg
 pw: cloudyng
 
 email: student@scis.tutee.edu.sg
-pw: 
+pw: student
 
 TUTOR
 email: zennypotato@scis.tutor.edu.sg
 pw: zennypotato
+
+
+## Sign Up 
+- A new user can only sign up as a tutee 
+(no sign up for tutors as we would need to verify new tutors)
 
 ## Tutee Directory (FEATURES)
 - Tutors Page
