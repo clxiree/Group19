@@ -969,64 +969,50 @@ window.addEventListener("resize", toggleVisibility);
               memberDiv.appendChild(infoDiv);
               trainersSection.appendChild(memberDiv);
 
-// Ensure mute button and video elements are set up properly
-video.addEventListener('mouseenter', () => {
-    console.log(`Hovering over video`);
-    video.currentTime = 0;
-    video.muted = true;
-    muteButton.style.display = 'block';
-    video.play().catch(err => console.error("Error playing video on hover:", err));
-});
+              video.addEventListener('mouseenter', () => {
+              video.muted = true; // Ensure the video is muted
+              muteButton.style.display = 'block'; // Show the mute icon
+              muteIcon.className = "fas fa-volume-mute"
+              video.currentTime = 0;
+              video.loop = true; // Enable looping
+              video.play(); // Play the video only if it's paused, without restarting
+  
+              });
 
-// Show mute button on hover over video
-video.addEventListener('mouseenter', () => {
-    muteIcon.style.display = 'block';
-});
+            // Hide mute button if the video is muted and the mouse leaves both video and mute icon
+            video.addEventListener('mouseleave', () => {
+                video.pause();
+            });
 
-// Show mute button on hover over video
-video.addEventListener('mouseenter', () => {
-    muteIcon.style.display = 'block';
-});
+            // Keep mute button visible while hovering over it, and ensure video resumes without restarting
+            muteButton.addEventListener('mouseenter', () => {
+              muteIcon.className = "fas fa-volume-mute"
+                if (video.paused && video.currentTime > 0) {
+                    video.play(); // Resume video if it’s paused and not at the start
+                }
+            });
 
-// Keep mute button visible while hovering over it, and ensure video resumes
-muteIcon.addEventListener('mouseenter', () => {
-    muteIcon.style.display = 'block';
-    if (video.currentTime > 0) {
-        video.play(); // Resume video if paused
-    }
-});
 
-// Hide mute button only if the video is muted and mouse leaves the video and mute icon
-video.addEventListener('mouseleave', () => {
-    if (video.muted) {
-        muteIcon.style.display = 'none';
-    }
-    video.pause()
-});
 
-muteIcon.addEventListener('mouseleave', () => {
-    if (video.muted) {
-        muteIcon.style.display = 'none';
-    }
-});
+            muteButton.addEventListener('mouseleave', () => {
+                if (video.muted) {
+                  muteButton.style.display = 'none';
+                }
+            });
 
-// Toggle mute/unmute on button click and ensure mute icon visibility
-muteIcon.addEventListener('click', () => {
+            muteButton.addEventListener('click', (event) => {
+                event.stopPropagation(); // Prevent event from affecting video playback
+                video.muted = !video.muted;
+                muteButton.style.display = 'block'; // Keep the mute icon visible
+                muteIcon.className = video.muted ? "fas fa-volume-mute" : "fas fa-volume-up"; // Update icon
+            });
 
-  if(video.muted ){
-    video.muted = false;
-    muteButton.style.display='none';
-  }else{
-    video.muted = true;
-    muteIcon.style.display = 'block';
-  }
-});
 
 
               video.addEventListener('click', () => {
                 video.muted = !video.muted;
-                muteButton.style.display = video.muted ? 'block' : 'none';
-                console.log(`Video for ${userData.Name} is now ${video.muted ? "muted" : "unmuted"}`);
+                muteIcon.className = video.muted ? "fas fa-volume-mute" : "fas fa-volume-up"; // Update icon
+                // console.log(`Video for ${userData.Name} is now ${video.muted ? "muted" : "unmuted"}`);
               });
 
               
