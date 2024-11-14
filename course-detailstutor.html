@@ -940,19 +940,18 @@
 
       // Function to update UI elements
       function updateUIElements(bookingData) {
-        const elements = {
-          bookingId: document.querySelector('.course-info:nth-child(1) p'),
-          status: document.querySelector('.course-info:nth-child(2) p'),
-          courseCode: document.querySelector('.course-info:nth-child(3) p'),
-          trainer: document.querySelector('.course-info:nth-child(4) p'),
-          courseFee: document.querySelector('.course-info:nth-child(5) p'),
-          schedule: document.querySelector('.course-info:nth-child(6)'),
-          time: document.querySelector('.course-info:nth-child(7) p'),
-          mode: document.querySelector('.course-info:nth-child(8) p'),
-          courseImage: document.querySelector('.img-fluid')
-        };
-
-
+  const elements = {
+    bookingId: document.querySelector('.course-info:nth-child(1) p'),
+    status: document.querySelector('.course-info:nth-child(2) p'),
+    courseCode: document.querySelector('.course-info:nth-child(3) p'),
+    trainer: document.querySelector('.course-info:nth-child(4) p'),
+    courseFee: document.querySelector('.course-info:nth-child(5) p'),
+    schedule: document.querySelector('.course-info:nth-child(6)'),
+    time: document.querySelector('.course-info:nth-child(7) p'),
+    mode: document.querySelector('.course-info:nth-child(8) p'),
+    acceptButton: document.querySelector('.btn-success'),
+    cancelButton: document.querySelector('.btn-danger')
+  };
         // Update booking ID
         elements.bookingId.textContent = `#${bookingData.bookingId}`;
         elements.status.textContent = bookingData.status;
@@ -966,6 +965,16 @@
           elements.status.style.color = "green"; // Reset color if not cancelled
           elements.status.style.fontWeight = "bold"; // Reset font-weight if not cancelled
         }
+        if (bookingData.status === "Cancelled") {
+        elements.acceptButton.style.display = "none";
+        elements.cancelButton.style.display = "none";
+      } else if (bookingData.status === "Confirmed") {
+        elements.acceptButton.style.display = "none";
+        elements.cancelButton.style.display = "block";
+      } else {
+        elements.acceptButton.style.display = "block";
+        elements.cancelButton.style.display = "block";
+      }
 
         if (elements.courseCode) {
           elements.courseCode.textContent = bookingData.courseCode;
