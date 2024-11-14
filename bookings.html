@@ -160,8 +160,9 @@
 
     .st-price {
       font-weight: 700;
-      color: #28a745;
+      color: #903ace;
       margin-bottom: 10px;
+      font-size: 20px;
     }
 
     .st-description {
@@ -848,15 +849,7 @@
 
   <!-- Courses Section -->
   <section class="st-courses-section section">
-    <div class="st-filter-container">
-      <label for="statusFilter">Filter by Status:</label>
-      <select id="statusFilter">
-        <option value="">All</option>
-        <option value="Confirmed">Confirmed</option>
-        <option value="Pending">Pending</option>
-        <option value="Cancelled">Cancelled</option>
-      </select>
-    </div>
+
     <div id="booking-list"></div>
   </section>
 </main>
@@ -1268,12 +1261,34 @@
           titleContainer.appendChild(titleText);
 
           // Status
+
           const status = document.createElement('p');
           status.classList.add('st-description');
+
           const statusLabel = document.createElement('b');
           statusLabel.textContent = 'Status: ';
           status.appendChild(statusLabel);
-          status.appendChild(document.createTextNode(bookingData.status));
+
+          // Create a span for the status text to apply color conditionally
+          const statusText = document.createElement('span');
+          statusText.textContent = bookingData.status;
+
+          if (bookingData.status === "Pending") {
+              statusText.style.color = "#f5c022"; 
+              statusText.style.fontWeight = "bold";
+              }else if(bookingData.status === "Confirmed"){
+                statusText.style.color = "green";
+                statusText.style.fontWeight = "bold";
+              }else{
+                statusText.style.color = "red";
+                statusText.style.fontWeight = "bold";
+              }
+
+          // Append the status text to the status element
+          status.appendChild(statusText);
+
+// Now, append the entire status element to the parent container as needed
+
 
           // Date of Lesson
           const dateOfLesson = document.createElement('p');
