@@ -837,46 +837,45 @@
 
       // Set the message and apply success/error style
       toastMessage.textContent = message;
-      toast.classList.add("show");
-      toast.classList.toggle("success", type === "success");
-      toast.classList.toggle("error", type === "error");
+  toast.classList.add("show");
+  toast.classList.toggle("success", type === "success");
+  toast.classList.toggle("error", type === "error");
 
-      // Hide the toast after 5 seconds
-      setTimeout(() => {
-        toast.classList.remove("show", "success", "error");
-      }, 5000);
-    }
+  // Hide the toast after 5 seconds
+  setTimeout(() => {
+    toast.classList.remove("show", "success", "error");
+  }, 5000);
+}
 
-    // Close button function for the toast
-    function closeToast() {
-      const toast = document.getElementById("customToast");
-      toast.classList.remove("show", "success", "error");
-    }
+// Close button function for the toast
+function closeToast() {
+  const toast = document.getElementById("customToast");
+  toast.classList.remove("show", "success", "error");
+}
 
     // Upload Notes Functionality
     document.getElementById("uploadForm").addEventListener("submit", function (e) {
       e.preventDefault();
 
       const courseId = document.getElementById("courseId").value;
-      const courseName = document.getElementById("courseName").value;
-      const courseProf = document.getElementById("courseProf").value;
-      const owner = document.getElementById("owner").value;
-      const price = document.getElementById("price").value;
-      const file = document.getElementById("file").files[0];
-      const previewImageFile = document.getElementById("previewImage").files[0];
+  const courseName = document.getElementById("courseName").value;
+  const courseProf = document.getElementById("courseProf").value;
+  const owner = document.getElementById("owner").value;
+  const price = parseFloat(document.getElementById("price").value);
+  const file = document.getElementById("file").files[0];
+  const previewImageFile = document.getElementById("previewImage").files[0];
 
-      if (!file || !previewImageFile) {
-        alert("Please select both a file and a preview image.");
-        return;
-      }
+  if (!file || !previewImageFile) {
+    showToast("Please select both a file and a preview image.", "error");
+    return;
+  }
 
-      // Validate preview image file type
-      const allowedTypes = ["image/jpeg", "image/png"];
-      if (!allowedTypes.includes(previewImageFile.type)) {
-        alert("Only .jpeg and .png images are allowed for the preview image.");
-        return;
-      }
-
+  // Validate preview image file type
+  const allowedTypes = ["image/jpeg", "image/png"];
+  if (!allowedTypes.includes(previewImageFile.type)) {
+    showToast("Only .jpeg and .png images are allowed for the preview image.", "error");
+    return;
+  }
       // Proceed with upload if file type is valid
       const notesRef = storage.ref(`notes/${courseId}/${Date.now()}_${file.name}`);
       notesRef.put(file).then((notesSnapshot) => {
@@ -893,7 +892,8 @@
                 owner: owner,
                 price: parseFloat(price),
                 courseLink: notesURL,
-                previewImage: previewURL
+                previewImage: previewURL,
+                isSaved: false
               }).then(() => {
                 showToast("Note and preview image uploaded successfully!", "success");
                 document.getElementById("uploadForm").reset();
