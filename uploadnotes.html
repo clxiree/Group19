@@ -476,66 +476,66 @@
 <body class="course-details-page">
 
   <!-- Header -->
-  <header id="header" class="header d-flex align-items-center sticky-top">
-    <div class="container-fluid container-xl position-relative d-flex align-items-center">
-  
-      <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
-      <button class="mobile-nav-toggle d-xl-none ms-3">
-        <i class="bi bi-list"></i>
+<header id="header" class="header d-flex align-items-center sticky-top">
+  <div class="container-fluid container-xl position-relative d-flex align-items-center">
+
+    <!-- Hamburger Menu Toggle (Visible on screens < 1200px) -->
+    <button class="mobile-nav-toggle d-xl-none ms-3">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <!-- Logo (Visible on screens >= 1200px) -->
+    <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
+      <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
+    </a>
+
+    <!-- Navigation Menu (Visible on screens >= 1200px) -->
+    <nav id="navmenu" class="navmenu d-none d-xl-flex">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a href="tuteehomepage.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item">
+          <a href="bookings.html" class="nav-link">Bookings</a>
+        </li>
+
+        <!-- Tutors Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
+              class=""></i></a>
+          <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
+            <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
+            <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a href="chats.html" class="nav-link">Chats</a>
+        </li>
+
+        <!-- Notes Dropdown -->
+        <li class="nav-item dropdown">
+          <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class=""></i></a>
+          <ul class="dropdown-menu" aria-labelledby="notesDropdown">
+            <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
+            <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Email Display -->
+    <div id="my-email-container" class="ms-auto position-relative">
+      <button id="my-email" class="btn btn-secondary">
+        user@example.com <i class="bi bi-chevron-down"></i>
       </button>
-  
-      <!-- Logo (Visible on screens >= 1200px) -->
-      <a href="index.html" class="logo d-none d-xl-flex align-items-center me-auto">
-        <img src="assets/img/smootutor-logo.jpg" alt="Smootutor Logo">
-      </a>
-  
-      <!-- Navigation Menu (Visible on screens >= 1200px) -->
-      <nav id="navmenu" class="navmenu d-none d-xl-flex">
-        <ul class="navbar-nav">
-          <li class="nav-item">
-            <a href="tuteehomepage.html" class="nav-link">Home</a>
-          </li>
-          <li class="nav-item">
-            <a href="bookings.html" class="nav-link">Bookings</a>
-          </li>
-  
-          <!-- Tutors Dropdown -->
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="tutorsDropdown">Tutors <i
-                class=""></i></a>
-            <ul class="dropdown-menu" aria-labelledby="tutorsDropdown">
-              <li><a href="trainers.html" class="dropdown-item">All Tutors</a></li>
-              <li><a href="tinder.html" class="dropdown-item">Find My Tutor</a></li>
-            </ul>
-          </li>
-  
-          <li class="nav-item">
-            <a href="chats.html" class="nav-link">Chats</a>
-          </li>
-  
-          <!-- Notes Dropdown -->
-          <li class="nav-item dropdown">
-            <a href="#" class="nav-link dropdown-toggle" id="notesDropdown">Notes <i class=""></i></a>
-            <ul class="dropdown-menu" aria-labelledby="notesDropdown">
-              <li><a href="notes.html?section=browse" class="dropdown-item">Browse Notes</a></li>
-              <li><a href="notes.html?section=saved" class="dropdown-item">Saved Notes</a></li>
-            </ul>
-          </li>
-        </ul>
-      </nav>
-  
-      <!-- Email Display -->
-      <div id="my-email-container" class="ms-auto position-relative">
-        <button id="my-email" class="btn btn-secondary">
-          user@example.com <i class="bi bi-chevron-down"></i>
-        </button>
-        <div id="dropdown-menu" class="dropdown-content">
-          <button id="logout-button" class="dropdown-item">Sign Out</button>
-        </div>
+      <div id="dropdown-menu" class="dropdown-content">
+        <button id="logout-button" class="dropdown-item">Sign Out</button>
       </div>
-  
     </div>
-  </header>
+
+  </div>
+</header>
 <!-- Mobile Menu Modal -->
 <div id="mobile-menu-mmodal" class="mmodal">
   <div class="mmodal-content">
@@ -834,14 +834,20 @@
     function toggleVisibility() {
       const myEmailContainer = document.getElementById("my-email-container");
       const logoutContainer = document.getElementById("logout-container");
-      if (window.innerWidth <= 1068) {
-        myEmailContainer.style.display = "none";
-        logoutContainer.style.display = "block";
+      // Check if elements exist before attempting to modify their style
+      if (myEmailContainer && logoutContainer) {
+        if (window.innerWidth <= 1068) {
+          myEmailContainer.style.display = "none";
+          logoutContainer.style.display = "block";
+        } else {
+          myEmailContainer.style.display = "flex";
+          logoutContainer.style.display = "none";
+        }
       } else {
-        myEmailContainer.style.display = "flex";
-        logoutContainer.style.display = "none";
+        console.warn("One or more elements (my-email-container, logout-container) not found in the DOM.");
       }
     }
+
 
     window.addEventListener("resize", toggleVisibility);
     toggleVisibility();
