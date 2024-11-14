@@ -52,31 +52,27 @@
 
 
   <style>
-    .course-item {
-      width: 400px;
-      /* Set a fixed width for the card */
-      height: 500px;
-      /* Set a fixed height for the card */
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      border-radius: 10px;
-      box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
-    }
+.course-item {
+    width: 400px; /* Ensure the card takes up the full width within its column */
+    height: 500px; /* Ensure the card takes up the full height within its column */
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+}
 
-    .course-item:hover {
-      transform: scale(1.06);
-      transition: 0.5s;
-    }
+.course-item:hover {
+    transform: scale(1.05);
+}
 
-    .card-img-top {
-      width: 100%;
-      /* Image takes full width of the card */
-      height: 200px;
-      /* Fixed height for the image */
-      object-fit: cover;
-      /* Ensures the image covers the area without stretching */
-    }
+.card-img-top {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
 
     .courses.section {
       position: relative;
@@ -954,29 +950,30 @@
 
 
       function displayFilteredBookings(status) {
-        const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
-        const bookingList = document.getElementById("booking-list");
-        bookingList.innerText = '';
+    const filteredBookings = status ? allBookings.filter(booking => booking.status === status) : allBookings;
+    const bookingList = document.getElementById("booking-list");
+    bookingList.innerText = '';
 
-        const row = document.createElement('div');
-        row.classList.add('row', 'row-cols-1', 'row-cols-sm-2', 'row-cols-md-3', 'g-4');
+    const row = document.createElement('div');
+    row.classList.add('row', 'g-3'); // Add a Bootstrap gutter class for spacing
 
-        filteredBookings.forEach(bookingData => {
-          const col = document.createElement('div');
-          col.classList.add('col-lg-4', 'col-md-6', 'd-flex', 'align-items-stretch');
-          col.setAttribute('data-aos', 'zoom-in');
-          col.setAttribute('data-aos-delay', '100');
+    filteredBookings.forEach(bookingData => {
+        const col = document.createElement('div');
+        // Responsive column classes for different screen sizes
+        col.classList.add('col-12', 'col-md-6', 'col-lg-4', 'd-flex', 'align-items-stretch', 'justify-content-center');
+        col.setAttribute('data-aos', 'zoom-in');
+        col.setAttribute('data-aos-delay', '100');
 
-          // Wrap the entire card in an anchor tag
-          const linkWrapper = document.createElement('a');
-          linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
-          linkWrapper.style.textDecoration = 'none';
-          linkWrapper.style.color = 'inherit';
+        // Wrap the entire card in an anchor tag
+        const linkWrapper = document.createElement('a');
+        linkWrapper.href = `course-details.html?bookingId=${bookingData.bookingId}`;
+        linkWrapper.style.textDecoration = 'none';
+        linkWrapper.style.color = 'inherit';
 
-          const courseItem = document.createElement('div');
-          courseItem.classList.add('course-item');
+        const courseItem = document.createElement('div');
+        courseItem.classList.add('course-item');
 
-          if (bookingData.status === 'Cancelled') {
+        if (bookingData.status === 'Cancelled') {
             courseItem.style.backgroundColor = 'rgba(240, 240, 240, 0.9)';
             courseItem.style.position = 'relative';
 
@@ -989,146 +986,147 @@
             overlay.style.backgroundColor = 'rgba(128, 128, 128, 0.1)';
             overlay.style.pointerEvents = 'none';
             courseItem.appendChild(overlay);
-          }
+        }
 
-          const img = document.createElement('img');
-          img.classList.add('card-img-top');
-          img.alt = 'Course Image';
+        const img = document.createElement('img');
+        img.classList.add('card-img-top');
+        img.alt = 'Course Image';
 
-          // Fetch image URL from Firebase Storage
-          firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
+        // Fetch image URL from Firebase Storage
+        firebase.storage().ref(`images/courses/${bookingData.courseCode}.jpg`).getDownloadURL()
             .then(url => {
-              img.src = url;
+                img.src = url;
             })
             .catch(error => {
-              console.error("Error fetching image:", error);
-              img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
+                console.error("Error fetching image:", error);
+                img.src = 'path/to/default-image.jpg'; // Optionally, use a fallback image
             });
 
-          const courseContent = document.createElement('div');
-          courseContent.classList.add('course-content');
+        const courseContent = document.createElement('div');
+        courseContent.classList.add('course-content');
 
-          const categoryPriceDiv = document.createElement('div');
-          categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
+        const categoryPriceDiv = document.createElement('div');
+        categoryPriceDiv.classList.add('d-flex', 'justify-content-between', 'align-items-center', 'mb-3');
 
-          const category = document.createElement('p');
-          category.classList.add('category');
-          category.textContent = bookingData.courseCode;
+        const category = document.createElement('p');
+        category.classList.add('category');
+        category.textContent = bookingData.courseCode;
 
-          const price = document.createElement('p');
-          price.classList.add('price');
-          price.textContent = `$${bookingData.fee * 2}`;
+        const price = document.createElement('p');
+        price.classList.add('price');
+        price.textContent = `$${bookingData.fee * 2}`;
 
-          categoryPriceDiv.appendChild(category);
-          categoryPriceDiv.appendChild(price);
+        categoryPriceDiv.appendChild(category);
+        categoryPriceDiv.appendChild(price);
 
-          const titleContainer = document.createElement('h3');
-          const titleText = document.createElement('span');
-          titleText.textContent = bookingData.courseName;
-          titleContainer.appendChild(titleText);
+        const titleContainer = document.createElement('h3');
+        const titleText = document.createElement('span');
+        titleText.textContent = bookingData.courseName;
+        titleContainer.appendChild(titleText);
 
-          // Status
-          const status = document.createElement('p');
-          status.classList.add('description');
-          const statusLabel = document.createElement('b');
-          statusLabel.textContent = 'Status: ';
-          status.appendChild(statusLabel);
-          status.appendChild(document.createTextNode(bookingData.status));
+        // Status
+        const status = document.createElement('p');
+        status.classList.add('description');
+        const statusLabel = document.createElement('b');
+        statusLabel.textContent = 'Status: ';
+        status.appendChild(statusLabel);
+        status.appendChild(document.createTextNode(bookingData.status));
 
-          // Date of Lesson
-          const dateOfLesson = document.createElement('p');
-          dateOfLesson.classList.add('description');
-          const dateLabel = document.createElement('b');
-          dateLabel.textContent = 'Date of Booking: ';
-          dateOfLesson.appendChild(dateLabel);
-          dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
+        // Date of Lesson
+        const dateOfLesson = document.createElement('p');
+        dateOfLesson.classList.add('description');
+        const dateLabel = document.createElement('b');
+        dateLabel.textContent = 'Date of Booking: ';
+        dateOfLesson.appendChild(dateLabel);
+        dateOfLesson.appendChild(document.createTextNode(bookingData.dateOfLesson));
 
-          // Mode
-          const mode = document.createElement('p');
-          mode.classList.add('description');
-          const modeLabel = document.createElement('b');
-          modeLabel.textContent = 'Mode: ';
-          mode.appendChild(modeLabel);
-          mode.appendChild(document.createTextNode(bookingData.mode));
+        // Mode
+        const mode = document.createElement('p');
+        mode.classList.add('description');
+        const modeLabel = document.createElement('b');
+        modeLabel.textContent = 'Mode: ';
+        mode.appendChild(modeLabel);
+        mode.appendChild(document.createTextNode(bookingData.mode));
 
-          const trainerDiv = document.createElement('div');
-          trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
+        const trainerDiv = document.createElement('div');
+        trainerDiv.classList.add('trainer', 'd-flex', 'justify-content-between', 'align-items-center');
 
-          const trainerProfile = document.createElement('div');
-          trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
+        const trainerProfile = document.createElement('div');
+        trainerProfile.classList.add('trainer-profile', 'd-flex', 'align-items-center');
 
-          const trainerImg = document.createElement('img');
-          trainerImg.classList.add('img-fluid');
-          trainerImg.alt = '';
+        const trainerImg = document.createElement('img');
+        trainerImg.classList.add('img-fluid');
+        trainerImg.alt = '';
 
-          // Fetch trainer image URL from Firebase Storage
-          firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
+        // Fetch trainer image URL from Firebase Storage
+        firebase.storage().ref(`images/team/${bookingData.tutorImg}`).getDownloadURL()
             .then(url => {
-              trainerImg.src = url;
+                trainerImg.src = url;
             })
             .catch(error => {
-              console.error("Error fetching trainer image:", error);
-              trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
+                console.error("Error fetching trainer image:", error);
+                trainerImg.src = 'path/to/default-trainer-image.jpg'; // Optionally, use a fallback image
             });
 
-          const trainerLink = document.createElement('a');
-          trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
-          trainerLink.classList.add('trainer-link');
-          trainerLink.textContent = bookingData.tutorName;
+        const trainerLink = document.createElement('a');
+        trainerLink.href = `tutorprofileupdated.html?userid=${bookingData.tutorId}`;
+        trainerLink.classList.add('trainer-link');
+        trainerLink.textContent = bookingData.tutorName;
 
-          const tutorStars = document.createElement("div");
-          tutorStars.style.marginLeft = "10px";
-          tutorStars.classList.add("stars");
+        const tutorStars = document.createElement("div");
+        tutorStars.style.marginLeft = "10px";
+        tutorStars.classList.add("stars");
 
-          const rating = bookingData.tutorStars || 0;
-          for (let i = 1; i <= 5; i++) {
+        const rating = bookingData.tutorStars || 0;
+        for (let i = 1; i <= 5; i++) {
             const star = document.createElement("i");
             star.style.color = "#FFD700";
 
             if (i <= Math.floor(rating)) {
-              star.className = "bi bi-star-fill";
+                star.className = "bi bi-star-fill";
             } else if (i === Math.ceil(rating) && rating % 1 >= 0.5) {
-              star.className = "bi bi-star-half";
+                star.className = "bi bi-star-half";
             } else {
-              star.className = "bi bi-star";
+                star.className = "bi bi-star";
             }
             tutorStars.appendChild(star);
-          }
+        }
 
-          trainerProfile.appendChild(trainerImg);
-          trainerProfile.appendChild(trainerLink);
-          trainerProfile.appendChild(tutorStars);
+        trainerProfile.appendChild(trainerImg);
+        trainerProfile.appendChild(trainerLink);
+        trainerProfile.appendChild(tutorStars);
 
-          trainerDiv.appendChild(trainerProfile);
+        trainerDiv.appendChild(trainerProfile);
 
-          const trainerRank = document.createElement('div');
-          trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
+        const trainerRank = document.createElement('div');
+        trainerRank.classList.add('trainer-rank', 'd-flex', 'align-items-center');
 
-          const personIcon = document.createElement('i');
-          personIcon.classList.add('bi', 'bi-person', 'user-icon');
-          trainerRank.appendChild(personIcon);
-          trainerRank.innerText += ` ${bookingData.tutorReview}`;
+        const personIcon = document.createElement('i');
+        personIcon.classList.add('bi', 'bi-person', 'user-icon');
+        trainerRank.appendChild(personIcon);
+        trainerRank.innerText += ` ${bookingData.tutorReview}`;
 
-          trainerDiv.appendChild(trainerRank);
+        trainerDiv.appendChild(trainerRank);
 
-          courseContent.appendChild(categoryPriceDiv);
-          courseContent.appendChild(titleContainer);
-          courseContent.appendChild(status);
-          courseContent.appendChild(dateOfLesson);
-          courseContent.appendChild(mode);
-          courseContent.appendChild(trainerDiv);
+        courseContent.appendChild(categoryPriceDiv);
+        courseContent.appendChild(titleContainer);
+        courseContent.appendChild(status);
+        courseContent.appendChild(dateOfLesson);
+        courseContent.appendChild(mode);
+        courseContent.appendChild(trainerDiv);
 
-          courseItem.appendChild(img);
-          courseItem.appendChild(courseContent);
+        courseItem.appendChild(img);
+        courseItem.appendChild(courseContent);
 
-          // Append the course item to the link wrapper
-          linkWrapper.appendChild(courseItem);
-          col.appendChild(linkWrapper);
-          row.appendChild(col);
-        });
+        // Append the course item to the link wrapper
+        linkWrapper.appendChild(courseItem);
+        col.appendChild(linkWrapper);
+        row.appendChild(col);
+    });
 
-        bookingList.appendChild(row);
-      }
+    bookingList.appendChild(row);
+}
+
 
 
 
